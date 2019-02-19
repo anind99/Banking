@@ -1,3 +1,5 @@
+package atm;
+
 public class ATM {
 
     public static int[] bills;
@@ -28,7 +30,7 @@ public class ATM {
 
     }
 
-    public shutDown() {
+    public void shutDown() {
 
     }
 
