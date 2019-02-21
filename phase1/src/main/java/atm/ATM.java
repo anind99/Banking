@@ -5,7 +5,7 @@ public class ATM {
     /** Stores the total amount of the bills in the ATM in an array with the following order:
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
     private static int[] bills;
-
+    String name = "atm 1";
     public ATM() {
         bills = new int[4];
     }
