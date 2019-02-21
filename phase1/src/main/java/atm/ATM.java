@@ -7,12 +7,18 @@ public class ATM {
     private static int[] bills;
 
     public ATM() {
-        bills = new int[4];}
+        bills = new int[4];
+    }
+
+    public static void main(String[] args){
+
+    }
 
 
     /** set the number of bills at array index "bill" */
     public static void set_bills(int bill, int number){
-        bills[bill] = number;}
+        bills[bill] = number;
+    }
 
 
     /** Logs in the user.*/
@@ -32,7 +38,6 @@ public class ATM {
         for(int i =0; i<=3; i++){
             if(bills[i] < 20){BankManager.restock(i);}
         }
-
     }
 
     public void shutDown() {
