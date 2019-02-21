@@ -22,7 +22,16 @@ public class Account {
             return this.balance;
         }
 
-        public void transfer_in(double amount, Account acct_outof){
+        public void transfer_in(double amount, Account acct_from) {
+            //this.increase_balance(amount);
+            //acct_from.decrease_balance(amount)
+        }
 
+        public void increase_balance (double amount){
+            this.balance += amount;
+        }
+
+        public void decrease_balance (double amount){
+            this.balance -= amount;
         }
 }
