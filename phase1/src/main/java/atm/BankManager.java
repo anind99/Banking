@@ -2,10 +2,10 @@ package atm;
 
 public class BankManager {
 
-        public static String users_txt;
+        private static String users_txt;
 
         public BankManager(){
-            this.users_txt = "users.txt";
+            users_txt = "users.txt";
         }
 
 
@@ -14,7 +14,7 @@ public class BankManager {
 
         }
 
-        public String create_user(){
+        public User create_user(){
         }
 
         public void undo_transaction{}

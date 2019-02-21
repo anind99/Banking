@@ -25,4 +25,6 @@ public class User {
         return this.accounts;
     }
 
+    /** add get_string method */
+
 }
