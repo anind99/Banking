@@ -1,16 +1,24 @@
 package atm;
 
+import java.util.ArrayList;
+
 public class ATM {
 
     /** Stores the total amount of the bills in the ATM in an array with the following order:
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
     private static int[] bills;
-    String name = "atm 1";
+    private static ArrayList<User> listOfUsers;
+
     public ATM() {
         bills = new int[4];
     }
 
-    public static void main(String[] args){
+    public static void main(String[] arg){
+        boolean running = true;
+
+        while (running){
+
+        }
 
     }
 
