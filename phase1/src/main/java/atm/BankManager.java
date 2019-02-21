@@ -14,7 +14,7 @@ public class BankManager {
 
         }
 
-        public String create_user(){
+        public User create_user(){
         }
 
         public void undo_transaction(){}
