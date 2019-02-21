@@ -18,9 +18,7 @@ public class Account {
         }
 
 
-        public float view_balance(){
-
+        public float getBalance(){
             return 0;
-
         }
 }
