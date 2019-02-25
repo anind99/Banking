@@ -25,6 +25,18 @@ public class User {
         return this.accounts;
     }
 
-    /** add get_string method */
+    public String getUsername(){
+        return this.username;
+    }
+    public String getPassword(){
+        return this.pass;
+    }
+
+    public void setUsername(String s){
+        this.username = s;
+    }
+    public void setPassword(String s){
+        this.pass = s;
+    }
 
 }
