@@ -81,7 +81,7 @@ public class ATM {
     /**Alerts the manager when the amount of any denomination goes below 20.*/
     public void alertManager() {
         for(int i =0; i<=3; i++){
-            if(bills[i] < 20){BankManager.restock(i);}
+            if(bills[i] < 20){BankManager.restock(i);} // STILL NEEDS TO SEND A MESSAGE TO THE ALERT FILE
         }
     }
 
