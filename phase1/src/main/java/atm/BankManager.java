@@ -21,6 +21,6 @@ public class BankManager {
 
         public void undo_transaction(){}
 
-        public void create_account(){}
+        public void create_account(String username, String password){}
 
 }
