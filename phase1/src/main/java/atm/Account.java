@@ -3,19 +3,18 @@ package atm;
 public class Account {
 
         public double balance;
-        public String acct_num;
-        public Transaction last_transaction;
-        public String date_created;
-        public String acct_txt;
+        public String accountNum;
+        public Transaction lastTransaction;
+        public String dateCreated;
+        public String accountTxt;
 
 
 
-        public Account(String acct_num, double balance, String date_created, String acct_txt){
-            this.acct_num = acct_num;
+        public Account(String accountNum, String accountTxt, Transaction lastTransaction, double balance){
+            this.accountNum = accountNum;
+            this.accountTxt = accountTxt;
+            this.lastTransaction = lastTransaction;
             this.balance = balance;
-            this.date_created = date_created;
-            this.acct_txt = acct_txt;
-            this.last_transaction = null;
         }
 
         public double getBalance(){
