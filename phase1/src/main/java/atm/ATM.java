@@ -18,7 +18,7 @@ public class ATM {
         boolean running = true;
         debugSetup();
         while (running){
-            displayMenu();
+            displayLoginMenu();
 
         }
     }
@@ -33,7 +33,7 @@ public class ATM {
 
     }
 
-    private static void displayMenu(){
+    private static void displayLoginMenu(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome. Please login.");
         User loginUser = null;
