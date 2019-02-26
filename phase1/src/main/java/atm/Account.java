@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-public class Account {
+public abstract class Account {
 
 
     public String accountNum;
@@ -29,14 +29,20 @@ public class Account {
         return this.balance;
     }
 
+    abstract void addMoney (double amount);
+
+    abstract boolean removeMoney (double amount);
+
     public void transferIn(double amount, Account accountFrom) {
-        addMoney(amount);
-        accountFrom.removeMoney(amount);
+        boolean removed = accountFrom.removeMoney(amount);
+        if(removed){addMoney(amount);}
+        else{System.out.println("This transaction is not possible: insufficient funds");}
     }
 
     public void transferOut(double amount, Account accountTo) {
-        removeMoney(amount);
-        accountTo.addMoney(amount);
+        boolean removed = removeMoney(amount);
+        if(removed){accountTo.addMoney(amount);}
+        else{System.out.println("This transaction is not possible: insufficient funds");}
     }
 
     public void deposit() {
@@ -46,18 +52,13 @@ public class Account {
     }
 
     public void withdraw(double amount) {
-        removeMoney(amount);
-    }
-
-    public void addMoney (double amount){
-    }
-
-    public void removeMoney (double amount){
+        removeMoney(amount); //override in checking account to allow negative balances
     }
 
     public void payBill(double amount, String receiver){
-        removeMoney(amount);
-        payBillWriting(amount, receiver);
+        boolean removed = removeMoney(amount);
+        if(removed){payBillWriting(amount, receiver);}
+        else{System.out.println("This transaction is not possible: insufficient funds");}
     }
 
     public void payBillWriting(double amount, String receiver) {

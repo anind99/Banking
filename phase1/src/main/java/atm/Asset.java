@@ -1,6 +1,6 @@
 package atm;
 
-public class Asset extends Account{
+public abstract class Asset extends Account{
 
     public Asset(String accountNum) {
         super(accountNum);
@@ -9,6 +9,10 @@ public class Asset extends Account{
         //Adding money to an asset account will increase its balance
         public void addMoney(double amount){balance += amount;}
 
-        //Removing money from an asset account will decrease its balance
-        public void removeMoney(double amount){ balance -= amount;}
-}
+        //Removing money from an asset account will decrease its balance this will be implemented in children
+        // but if it creases might need to implement is as an abstract method here as well
+        //public abstract boolean removeMoney(double amount); { balance -= amount;
+
+
+    }
+
