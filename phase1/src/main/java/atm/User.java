@@ -8,6 +8,11 @@ public class User {
     private String pass;
     private ArrayList<Account> accounts;
 
+    public User(String username, String password, ArrayList accounts){
+        this.username = username;
+        this.pass = password;
+        this.accounts = accounts;
+    }
 
     public double getNetTotal(){
         double sum = 0;
