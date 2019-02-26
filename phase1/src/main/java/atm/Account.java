@@ -47,7 +47,7 @@ public class Account {
         public void removeMoney (double amount){
         }
 
-        public void payBill(double amount, String ('txtfile'){
+        public void payBill(double amount, String 'txtfile'){
 
         }
 
