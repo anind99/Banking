@@ -4,7 +4,7 @@ public class Account {
 
         public String accountTxt;
         public String accountNum;
-        private double balance;
+        protected double balance;
         public Transaction lastTransaction;
         public String dateCreated;
 
@@ -14,7 +14,6 @@ public class Account {
             this.accountTxt = accountTxt;
             this.balance = 0;
             this.lastTransaction = null;
-
         }
 
         public double getBalance(){
