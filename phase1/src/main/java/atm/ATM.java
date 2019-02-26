@@ -38,11 +38,9 @@ public class ATM {
 
     }
     private static void displayUserMenu(User user){
-        System.out.println("Select an option:");
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
-        boolean Continue = true;
-        while (!validselection && Continue){
+        while (!validselection){
             System.out.println("Select an option:");
             System.out.println("1. Create Account");
             System.out.println("2. Deposit");
@@ -55,6 +53,8 @@ public class ATM {
                 System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
                 String t = scanner.next();
 
+                System.out.println("Type the password for the new user");
+                String password = scanner.next();
                 validselection = true;
 
             } else if (option.equals("2")){
@@ -66,7 +66,7 @@ public class ATM {
             } else if (option.equals("5")) {
 
             } else if (option.equals("6")) {
-                Continue = false;
+                //Doing nothing works fine here.
             } else {
                 System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
             }
@@ -95,7 +95,7 @@ public class ATM {
                 validselection = true;
 
             } else if (option.equals("2")){
-
+                System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
             } else if (option.equals("3")) {
 
             } else if (option.equals("4")) {
@@ -143,10 +143,6 @@ public class ATM {
     public static void set_bills(int bill, int number){
         bills[bill] = number;
     }
-
-
-    /** Logs in the user.*/
-    public void login(String username, String password) { }
 
 
     public void processRequest() {
