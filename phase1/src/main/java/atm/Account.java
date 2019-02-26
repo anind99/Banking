@@ -4,7 +4,7 @@ public class Account {
 
         public String accountTxt;
         public String accountNum;
-        public double balance;
+        private double balance;
         public Transaction lastTransaction;
         public String dateCreated;
 
@@ -21,16 +21,30 @@ public class Account {
             return this.balance;
         }
 
-        public void transfer_in(double amount, Account acct_from) {
-            //this.increase_balance(amount);
-            //acct_from.decrease_balance(amount)
+        public void transferIn(double amount, Account accountFrom) {
+            this.balance += amount;
+            accountFrom.decreaseBalance(amount);
         }
 
-        public void increase_balance (double amount){
+        public void transferOut(double amount, Account accountTo) {
+            this.balance -= amount;
+            accountTo.increaseBalance(amount);
+        }
+
+        public void deposit(double amount) {
+            this.increaseBalance(amount);
+        }
+
+        public void withdraw(double amount) {
+            this.decreaseBalance(amount);
+        }
+
+        public void increaseBalance (double amount){
             this.balance += amount;
         }
 
-        public void decrease_balance (double amount){
+        public void decreaseBalance (double amount){
             this.balance -= amount;
         }
+
 }

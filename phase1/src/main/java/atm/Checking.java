@@ -1,4 +1,4 @@
 package atm;
 
-public class Checking extends Asset {
+public class Checking {
 }
