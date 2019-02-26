@@ -1,18 +1,24 @@
 package atm;
 
 import java.util.Date;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
 public class Account {
 
-    public String accountTxt;
+
     public String accountNum;
     protected double balance;
     public Transaction lastTransaction;
     public Date dateCreated;
 
 
-    public Account(String accountNum, String accountTxt) {
+    public Account(String accountNum) {
         this.accountNum = accountNum;
-        this.accountTxt = accountTxt;
         this.balance = 0;
         this.lastTransaction = null;
         this.dateCreated = new Date();
@@ -33,7 +39,9 @@ public class Account {
         accountTo.addMoney(amount);
     }
 
-    public void deposit(double amount) {
+    public void deposit() {
+        amount =
+
         addMoney(amount);
     }
 
@@ -47,10 +55,22 @@ public class Account {
     public void removeMoney (double amount){
     }
 
-    public void payBill(double amount) {
+    public void payBill(double amount, String receiver){
         removeMoney(amount);
+        payBillWriting(amount, receiver);
+    }
 
-
+    public void payBillWriting(double amount, String receiver) {
+        try {
+            File file = new File("outgoing.txt");
+            FileOutputStream is = new FileOutputStream(file);
+            OutputStreamWriter osw = new OutputStreamWriter(is);
+            Writer w = new BufferedWriter(osw);
+            w.write(accountNum + " payed " + amount + " to" + receiver);
+            w.close();
+        } catch (IOException e) {
+            System.err.println("Problem writing to the file outgoing.txt");
+        }
     }
 
 }

@@ -4,8 +4,8 @@ public class Savings extends Asset {
 
     public double interestRate;
 
-    public Savings(String accountNum, String accountTxt){
-        super(accountNum, accountTxt);
+    public Savings(String accountNum){
+        super(accountNum);
         interestRate = 1.001;
     }
 

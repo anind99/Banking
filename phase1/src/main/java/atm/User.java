@@ -1,6 +1,7 @@
 package atm;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class User {
 
@@ -42,6 +43,14 @@ public class User {
     }
     public void setPassword(String s){
         this.pass = s;
+    }
+
+    public String getDateCreated(Account account) {
+        return account.dateCreated.toString();
+    }
+
+    public Transaction getLastTransaction(Account account) {
+        return account.lastTransaction;
     }
 
 }

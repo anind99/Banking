@@ -1,4 +1,7 @@
 package atm;
 
-public class LOC {
+public class LOC extends Debt{
+    public LOC(String accountNum) {
+        super(accountNum);
+    }
 }
