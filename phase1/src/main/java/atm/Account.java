@@ -34,11 +34,11 @@ public class Account {
         }
 
         public void deposit(double amount) {
-//            this.increaseBalance(amount);
+            addMoney(amount);
         }
 
         public void withdraw(double amount) {
-//            this.decreaseBalance(amount);
+            removeMoney(amount);
         }
 
         public void addMoney (double amount){
