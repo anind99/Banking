@@ -2,6 +2,10 @@ package atm;
 
 public class Debt extends Account{
 
+    public Debt(String accountNum, String accountTxt){
+        super(accountNum, accountTxt);
+    }
+
     protected int AccountNumber;
     protected String Tectfile;
     Transaction LastTrnsaction;
