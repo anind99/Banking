@@ -41,12 +41,10 @@ public class Account {
 //            this.decreaseBalance(amount);
         }
 
-        public void increaseBalance (double amount){
-            this.balance += amount;
+        public void addMoney (double amount){
         }
 
-        public void decreaseBalance (double amount){
-            this.balance -= amount;
+        public void removeMoney (double amount){
         }
 
         public void payBill(double amount, String 'txtfile'){
