@@ -49,4 +49,8 @@ public class User {
         return account.dateCreated.toString();
     }
 
+    public Transaction getLastTransaction(Account account) {
+        return account.lastTransaction;
+    }
+
 }
