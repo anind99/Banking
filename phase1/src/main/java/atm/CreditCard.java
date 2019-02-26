@@ -1,4 +1,5 @@
 package atm;
 
-public class CreditCard {
+public class CreditCard extends Debt {
+
 }
