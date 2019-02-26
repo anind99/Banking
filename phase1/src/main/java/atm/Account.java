@@ -1,12 +1,10 @@
 package atm;
 //import
-import java.util.Date;
-
 public class Account {
 
         public String accountTxt;
         public String accountNum;
-        private double balance;
+        protected double balance;
         public Transaction lastTransaction;
         public Date dateCreated;
 
