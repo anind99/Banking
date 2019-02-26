@@ -24,13 +24,13 @@ public class Account {
         }
 
         public void transferIn(double amount, Account accountFrom) {
-//            balance += amount;
-//            accountFrom.decreaseBalance(amount);
+            addMoney(amount);
+            accountFrom.removeMoney(amount);
         }
 
         public void transferOut(double amount, Account accountTo) {
-//            this.balance -= amount;
-//            accountTo.increaseBalance(amount);
+            removeMoney(amount);
+            accountTo.addMoney(amount);
         }
 
         public void deposit(double amount) {
@@ -47,7 +47,7 @@ public class Account {
         public void removeMoney (double amount){
         }
 
-        public void payBill(double amount, String 'txtfile'){
+        public void payBill(double amount, String ('txtfile'){
 
         }
 
