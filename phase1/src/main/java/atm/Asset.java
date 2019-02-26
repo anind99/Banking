@@ -10,5 +10,8 @@ public class Asset extends Account{
         public void addMoney(double amount){balance += amount;}
 
         //Removing money from an asset account will decrease its balance
-        public void removeMoney(double amount){ balance -= amount;}
+        public boolean removeMoney(double amount){ balance -= amount;
+
+
+    }
 }
