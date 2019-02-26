@@ -7,24 +7,22 @@ public class Asset extends Account{
 
    }
 
-    public void transferIn(double amount, Account acct_from) {
-        //this.increase_balance(amount);
-        //acct_from.decrease_balance(amount)
+    public void transferIn(double amount, Account accountFrom) {
+//            balance += amount;
+//            accountFrom.decreaseBalance(amount);
     }
 
-    public void transferOut(double amount, Account acct_from) {
-        //this.increase_balance(amount);
-        //acct_from.decrease_balance(amount)
+    public void transferOut(double amount, Account accountTo) {
+//            this.balance -= amount;
+//            accountTo.increaseBalance(amount);
     }
 
-    public void deposit (double amount) {
-        //this.increase_balance(amount);
-        //acct_from.decrease_balance(amount)
+    public void deposit(double amount) {
+//            this.increaseBalance(amount);
     }
 
-    public void withdraw (double amount) {
-        //this.increase_balance(amount);
-        //acct_from.decrease_balance(amount)
+    public void withdraw(double amount) {
+//            this.decreaseBalance(amount);
     }
 
 }

@@ -9,7 +9,7 @@ public class Checking extends Asset {
         primary = false;
     }
 
+    //set this account as the primary account
     public void setPrimary(){primary = true;}
-
 
 }

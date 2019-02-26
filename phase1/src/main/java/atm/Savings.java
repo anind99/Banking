@@ -9,8 +9,7 @@ public class Savings extends Asset {
         interestRate = 1.001;
     }
 
+    //add the interest according the interestRate
     public void addInterest(){balance = (balance * interestRate);}
-
-
 
 }
