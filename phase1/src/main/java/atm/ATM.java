@@ -41,7 +41,8 @@ public class ATM {
         System.out.println("Select an option:");
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
-        while (!validselection){
+        boolean Continue = true;
+        while (!validselection && Continue){
             System.out.println("Select an option:");
             System.out.println("1. Create Account");
             System.out.println("2. Deposit");
@@ -65,7 +66,7 @@ public class ATM {
             } else if (option.equals("5")) {
 
             } else if (option.equals("6")) {
-
+                Continue = false;
             } else {
                 System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
             }
