@@ -1,6 +1,7 @@
 package atm;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class User {
 
@@ -8,6 +9,11 @@ public class User {
     private String pass;
     private ArrayList<Account> accounts;
 
+    public User(String username, String password, ArrayList accounts){
+        this.username = username;
+        this.pass = password;
+        this.accounts = accounts;
+    }
 
     public double getNetTotal(){
         double sum = 0;
@@ -37,6 +43,14 @@ public class User {
     }
     public void setPassword(String s){
         this.pass = s;
+    }
+
+    public String getDateCreated(Account account) {
+        return account.dateCreated.toString();
+    }
+
+    public Transaction getLastTransaction(Account account) {
+        return account.lastTransaction;
     }
 
 }

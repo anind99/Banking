@@ -2,8 +2,8 @@ package atm;
 
 public class Asset extends Account{
 
-    public Asset(String accountNum, String accountTxt) {
-        super(accountNum, accountTxt);
+    public Asset(String accountNum) {
+        super(accountNum);
     }
 
         //Adding money to an asset account will increase its balance
