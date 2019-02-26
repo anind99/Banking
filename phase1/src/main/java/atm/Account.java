@@ -1,6 +1,7 @@
 package atm;
-
+//import
 import java.util.Date;
+
 public class Account {
 
         public String accountTxt;
@@ -24,7 +25,7 @@ public class Account {
         }
 
         public void transferIn(double amount, Account accountFrom) {
-//            balance += amount;
+//            this.balance += amount;
 //            accountFrom.decreaseBalance(amount);
         }
 
@@ -47,10 +48,6 @@ public class Account {
 
         public void decreaseBalance (double amount){
             this.balance -= amount;
-        }
-
-        public void payBill(double amount, String 'txtfile'){
-
         }
 
 }
