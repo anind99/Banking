@@ -19,9 +19,9 @@ public class ATM {
         debugSetup();
         while (running){
             String userType = displayLoginMenu();
-            if (userType == "user"){
+            if (userType.equals("user")){
                 displayUserMenu();
-            } else {
+            } else if (userType.equals("Manager")) {
                 displayManagerMenu();
             }
 
@@ -31,21 +31,54 @@ public class ATM {
     private static void debugSetup(){
         //This function sets up our ATM environment for debugging purposes.
         //Breaking it for merging is fine, but it shouldn't happen.
-        User user1 = new User();
-        user1.setPassword("password");
-        user1.setUsername("user");
-        addUserToList(user1);
+////        User user1 = new User(String username, String password, ArrayList accounts);
+////        user1.setPassword("password");
+////        user1.setUsername("user");
+//        addUserToList(user1);
 
     }
-    private static void displayUserMenu(){
+    private static void displayUserMenu(User user){
         System.out.println("Select an option:");
+        Scanner scanner = new Scanner(System.in);
+        boolean validselection = false;
+        boolean Continue = true;
+        while (!validselection && Continue){
+            System.out.println("Select an option:");
+            System.out.println("1. Create Account");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Transfer In");
+            System.out.println("5. Transfer Out");
+            System.out.println("6. Logout");
+            String option = scanner.next();
+            if (option.equals("1")){
+                System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
+                String t = scanner.next();
 
+                validselection = true;
+
+            } else if (option.equals("2")){
+
+            } else if (option.equals("3")) {
+
+            } else if (option.equals("4")) {
+
+            } else if (option.equals("5")) {
+
+            } else if (option.equals("6")) {
+                Continue = false;
+            } else {
+                System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
+            }
+        }
 
     }
+
+
     private static void displayManagerMenu(){
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
-        while (validselection){
+        while (!validselection){
             System.out.println("Select an option:");
             System.out.println("1. Create User");
             System.out.println("2. Create Account");
@@ -59,6 +92,7 @@ public class ATM {
                 String username = scanner.next();
                 System.out.println("Type the password for the new user");
                 String password = scanner.next();
+                validselection = true;
 
             } else if (option.equals("2")){
 
@@ -82,28 +116,26 @@ public class ATM {
     private static String displayLoginMenu(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome. Please login.");
-        User loginUser = null;
-        boolean loginSuccessful = false;
-        while (!loginSuccessful) {
+            User loginUser;
             System.out.println("Username: ");
             String usernameAttempt = scanner.next();
             System.out.println("Password: ");
             String passwordAttempt = scanner.next();
-            for (User usr : listOfUsers) {
-                if (usr.getUsername().equals(usernameAttempt) && usr.getPassword().equals(passwordAttempt)) {
-                    loginUser = usr;
-                    loginSuccessful = true;
-                } else if (usernameAttempt.equals("manager") && passwordAttempt.equals("password")) {
-                    System.out.println("Login Successful. Logging in as bank manager");
-                    return "manager";
+            if (usernameAttempt.equals("manager") && passwordAttempt.equals("password")) {
+                System.out.println("Login Successful. Logging in as bank manager");
+                return "manager";
+            } else {
+                for (User usr : listOfUsers) {
+                    if (usr.getUsername().equals(usernameAttempt) && usr.getPassword().equals(passwordAttempt)) {
+                        loginUser = usr;
+                        System.out.println("Login Successful. Logging into " + loginUser.getUsername());
+                        return "user";
+                    }
                 }
             }
-            if (!loginSuccessful){
-                System.out.println("Login Failed, please try again");
-            }
-        }
-        System.out.println("Login Successful. Logging into " + loginUser.getUsername());
-        return "user";
+
+        System.out.println("Login Failed, please try again");
+        return "";
     }
 
 
