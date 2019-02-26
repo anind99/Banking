@@ -31,13 +31,13 @@ public class ATM {
     private static void debugSetup(){
         //This function sets up our ATM environment for debugging purposes.
         //Breaking it for merging is fine, but it shouldn't happen.
-        User user1 = new User();
-        user1.setPassword("password");
-        user1.setUsername("user");
-        addUserToList(user1);
+////        User user1 = new User(String username, String password, ArrayList accounts);
+////        user1.setPassword("password");
+////        user1.setUsername("user");
+//        addUserToList(user1);
 
     }
-    private static void displayUserMenu(){
+    private static void displayUserMenu(User user){
         System.out.println("Select an option:");
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
@@ -54,8 +54,6 @@ public class ATM {
                 System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
                 String t = scanner.next();
 
-                System.out.println("Type the password for the new user");
-                String password = scanner.next();
                 validselection = true;
 
             } else if (option.equals("2")){
@@ -74,6 +72,8 @@ public class ATM {
         }
 
     }
+
+
     private static void displayManagerMenu(){
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
