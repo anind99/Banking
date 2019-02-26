@@ -7,12 +7,12 @@ public class Asset extends Account{
 
    }
 
-    public void transfer_in(double amount, Account acct_from) {
+    public void transferIn(double amount, Account acct_from) {
         //this.increase_balance(amount);
         //acct_from.decrease_balance(amount)
     }
 
-    public void transfer_out(double amount, Account acct_from) {
+    public void transferOut(double amount, Account acct_from) {
         //this.increase_balance(amount);
         //acct_from.decrease_balance(amount)
     }
