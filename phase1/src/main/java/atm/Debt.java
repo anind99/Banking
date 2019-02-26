@@ -2,17 +2,6 @@ package atm;
 
 public class Debt extends Account{
 
-    protected int AccountNumber;
-    protected String Tectfile;
-    Transaction LastTrnsaction;
-    String DateCreated;
-    double Balance;
-    BankManager Manager;
-
-    public void TransferIn(Account AccIn, int amount){
-
-    }
-
     //Adding money to a debt account will decrease its balance
     public void addMoney(double amount){
         this.balance -= amount;
