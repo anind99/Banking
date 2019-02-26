@@ -42,11 +42,9 @@ public class Account {
         }
 
         public void increaseBalance (double amount){
-            this.balance += amount;
         }
 
         public void decreaseBalance (double amount){
-            this.balance -= amount;
         }
 
         public void payBill(double amount, String 'txtfile'){
