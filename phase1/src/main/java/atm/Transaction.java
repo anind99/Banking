@@ -16,6 +16,5 @@ public class Transaction {
     public Transaction(Double Amount){
         this.Type = "Deposit";
         this.Amount = Amount;
-
     }
 }
