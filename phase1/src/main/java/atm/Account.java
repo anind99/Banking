@@ -1,12 +1,14 @@
 package atm;
 //import
+import java.util.Date;
+
 public class Account {
 
         public String accountTxt;
         public String accountNum;
         private double balance;
         public Transaction lastTransaction;
-        public String dateCreated;
+        public Date dateCreated;
 
 
         public Account(String accountNum, String accountTxt) {
@@ -14,6 +16,7 @@ public class Account {
             this.accountTxt = accountTxt;
             this.balance = 0;
             this.lastTransaction = null;
+            this.dateCreated = new Date();
 
         }
 
@@ -22,21 +25,21 @@ public class Account {
         }
 
         public void transferIn(double amount, Account accountFrom) {
-            this.balance += amount;
-            accountFrom.decreaseBalance(amount);
+//            this.balance += amount;
+//            accountFrom.decreaseBalance(amount);
         }
 
         public void transferOut(double amount, Account accountTo) {
-            this.balance -= amount;
-            accountTo.increaseBalance(amount);
+//            this.balance -= amount;
+//            accountTo.increaseBalance(amount);
         }
 
         public void deposit(double amount) {
-            this.increaseBalance(amount);
+//            this.increaseBalance(amount);
         }
 
         public void withdraw(double amount) {
-            this.decreaseBalance(amount);
+//            this.decreaseBalance(amount);
         }
 
         public void increaseBalance (double amount){
