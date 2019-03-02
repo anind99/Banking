@@ -7,16 +7,29 @@ public class BankManager {
 
     public static String users_txt;
     private String last, line;
-    private int acct_num_counter;
+    private int acct_counter;
 
         public BankManager(){
             this.users_txt = "users.txt";
             BufferedReader input = new BufferedReader(new FileReader("bankmanager.txt"));
-
-            while ((line = input.readLine()) != null) {
-                last = line;
+            try {
+                while ((line = input.readLine()) != null) {
+                    last = line;
+                }
+                input.close();
+            }catch (FileNotFoundException e){
+                System.out.println(
+                        "Unable to open file '" +
+                                "bankmanager.txt" + "'");
             }
-            this.acct_num_counter = Integer.parseInt(last);
+            catch(IOException ex) {
+                System.out.println(
+                        "Error reading file '"
+                                + "bankmanager.txt" + "'");
+                ex.printStackTrace();
+            }
+
+            this.acct_counter = Integer.parseInt(last);
         }
 
 
@@ -37,9 +50,11 @@ public class BankManager {
 
         public void undo_transaction(){}
 
-        public void create_account(User user, String acct_type, String acct_num){
-            if (actt_type.equalsignorecase("credit card"))
-                CreditCard newCreditCard = new CreditCard(acct_num);
+        public void create_account(User user, String acct_type){
+            if (actt_type.equalsignorecase("credit card")) {
+                CreditCard newCreditCard = new CreditCard(this.acct_counter);
+
+            }
             if (actt_type.equalsignorecase("loc"))
 
         }
