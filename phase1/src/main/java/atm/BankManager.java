@@ -52,22 +52,22 @@ public class BankManager {
         public void undo_transaction(){}
 
         public void create_account(User user, String acct_type){
-            if (acct_type.equalsignorecase("credit card")) {
+            if (acct_type.equalsIgnoreCase("credit card")) {
                 CreditCard newCreditCard = new CreditCard(this.acct_counter);
                 user.accounts.add(newCreditCard);
                 this.acct_counter += 1;
             }
-            if (acct_type.equalsignorecase("loc")){
+            if (acct_type.equalsIgnoreCase("loc")){
                 LOC newLoc = new LOC(this.acct_counter);
                 user.accounts.add(newLoc);
                 this.acct_counter += 1;
             }
-            if (acct_type.equalsignorecase("checking")){
+            if (acct_type.equalsIgnoreCase("checking")){
                 Checking newChecking = new Checking(this.acct_counter);
                 user.accounts.add(newChecking);
                 this.acct_counter += 1;
             }
-            if (acct_type.equalsignorecase("saving")){
+            if (acct_type.equalsIgnoreCase("saving")){
                 Savings newSaving = new Savings(this.acct_counter);
                 user.accounts.add(newSaving);
                 this.acct_counter += 1;
