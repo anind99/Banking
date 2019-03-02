@@ -11,13 +11,13 @@ import java.io.Writer;
 public abstract class Account {
 
 
-    public String accountNum;
+    public int accountNum;
     protected double balance;
     public Transaction lastTransaction;
     public Date dateCreated;
 
 
-    public Account(String accountNum) {
+    public Account(int accountNum) {
         this.accountNum = accountNum;
         this.balance = 0;
         this.lastTransaction = null;
@@ -61,7 +61,7 @@ public abstract class Account {
         else{System.out.println("This transaction is not possible: insufficient funds");}
     }
 
-    public void payBillWriting(double amount, String receiver) {
+    public boolean payBillWriting(double amount, String receiver) {
         try {
             File file = new File("outgoing.txt");
             FileOutputStream is = new FileOutputStream(file);
@@ -71,7 +71,7 @@ public abstract class Account {
             w.close();
         } catch (IOException e) {
             System.err.println("Problem writing to the file outgoing.txt");
-        }
+        } return true;
     }
 
 }
