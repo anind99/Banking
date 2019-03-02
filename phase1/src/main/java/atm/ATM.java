@@ -25,6 +25,7 @@ public class ATM {
                 displayManagerMenu();
             }
 
+
         }
     }
 
@@ -87,25 +88,48 @@ public class ATM {
             System.out.println("5. Undo transaction");
             System.out.println("6. Logout");
             String option = scanner.next();
-            if (option.equals("1")){
-                System.out.println("Type the username for the new user");
-                String username = scanner.next();
-                System.out.println("Type the password for the new user");
-                String password = scanner.next();
-                validselection = true;
+            switch (option) {
+                case "1": {
+                    System.out.println("Type the username for the new user");
+                    String username = scanner.next();
+                    System.out.println("Type the password for the new user");
+                    String password = scanner.next();
+                    validselection = true;
+                }
+                case "2": {
+                    System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
+                }
+                case "3": {
 
-            } else if (option.equals("2")){
-                System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
-            } else if (option.equals("3")) {
+                }
+                case "4": {
+                    System.out.println("Set which dollar bill amount to 100?");
+                    System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars 5. Quit menu");
+                    String dollarType = scanner.next();
+                    if (dollarType.equals("1")) {
+                        BankManager.restock(1);
+                    } else if (dollarType.equals("2")) {
+                        BankManager.restock(2);
+                    } else if (dollarType.equals("3")) {
+                        BankManager.restock(3);
+                    } else if (dollarType.equals("4")) {
+                        BankManager.restock(4);
+                    } else if (dollarType.equals("5")) {
+                        BankManager.restock(5);
+                    } else {
+                        System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 6.");
+                    }
 
-            } else if (option.equals("4")) {
+                }
+                case "5": {
 
-            } else if (option.equals("5")) {
+                }
+                case "6": {
 
-            } else if (option.equals("6")) {
-
-            } else {
-                System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
+                }
+                default: {
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
+                }
             }
         }
 
