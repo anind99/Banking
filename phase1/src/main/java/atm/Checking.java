@@ -2,6 +2,8 @@ package atm;
 
 public class Checking extends Asset {
 
+    public String type = "checking";
+
     public boolean primary;
 
     public Checking(int accountNum){

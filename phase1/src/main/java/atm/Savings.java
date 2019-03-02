@@ -2,6 +2,8 @@ package atm;
 
 public class Savings extends Asset {
 
+    public String type = "Savings";
+
     public double interestRate;
 
     public Savings(int accountNum){

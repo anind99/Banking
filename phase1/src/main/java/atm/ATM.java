@@ -63,7 +63,8 @@ public class ATM {
             } else if (option.equals("2")){
                 user.Deposit();
             } else if (option.equals("3")) {
-
+                Withdraw(user);
+                validselection = true;
             } else if (option.equals("4")) {
 
             } else if (option.equals("5")) {
@@ -78,12 +79,21 @@ public class ATM {
 
     }
 
-    private void Withdraw(User user){
+    private static void Withdraw(User user){
+        System.out.println("Choose Accounts by account number: ");
         for (Account acc : user.accounts){
-
-
+         System.out.println(acc.type +" " + acc.accountNum + " Balance: " + " ");
         }
-
+        Scanner scanner = new Scanner(System.in);
+        int account_num = scanner.nextInt();
+        for (Account acc: user.accounts){
+            if (account_num == acc.accountNum){
+                System.out.println("Input amount");
+                double amount = scanner.nextDouble();
+                acc.withdraw(amount);
+                break;
+            }
+        }
     }
 
 
@@ -91,21 +101,21 @@ public class ATM {
     private static void CreateAccount(User usr){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type the type of Account: 1 : Saving, 2: Checking, 3: Credit 4: Line of Credit");
-        String t = scanner.next();
+        int t = scanner.nextInt();
         String type = null;
         while (type == null) {
-            if (t.equals('1')) {
+            if (t == 1) {
                 type = "Saving";
-            } else if (t.equals('2')) {
+            } else if (t == 2) {
                 type = "Checking";
-            } else if (t.equals("3")) {
+            } else if (t == 3) {
                 type = "Credit Card";
-            } else if (t.equals("4")) {
+            } else if (t == 4) {
                 type = "LOC";
             }
             else{
                 System.out.println("Type the type of Account: 1 : Saving, 2: Checking, 3: Credit 4: Line of Credit");
-                t = scanner.next();
+                t = scanner.nextInt();
             }
         }
         BM.create_account(usr, type);
