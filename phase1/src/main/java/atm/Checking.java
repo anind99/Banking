@@ -4,7 +4,7 @@ public class Checking extends Asset {
 
     public boolean primary;
 
-    public Checking(String accountNum){
+    public Checking(int accountNum){
         super(accountNum);
         primary = false;
     }

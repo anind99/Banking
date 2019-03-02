@@ -2,7 +2,7 @@ package atm;
 
 public class CreditCard extends Debt {
 
-    public CreditCard(String accountNum) {
+    public CreditCard(int accountNum) {
         super(accountNum);
     }
 

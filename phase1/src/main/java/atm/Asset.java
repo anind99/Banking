@@ -2,7 +2,7 @@ package atm;
 
 public abstract class Asset extends Account{
 
-    public Asset(String accountNum) {
+    public Asset(int accountNum) {
         super(accountNum);
     }
 
