@@ -22,6 +22,9 @@ public class User {
         }
         return sum;
     }
+    public void Deposit(){
+        
+    }
 
     public void updatePassword(String s){
         this.pass = s;
