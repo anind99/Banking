@@ -58,11 +58,8 @@ public class ATM {
             System.out.println("6. Logout");
             String option = scanner.next();
             if (option.equals("1")){
-                System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
-                String t = scanner.next();
-                BM.create_account(user, t);
+                CreateAccount(user);
                 validselection = true;
-
             } else if (option.equals("2")){
 
             } else if (option.equals("3")) {
@@ -79,6 +76,31 @@ public class ATM {
             }
         }
 
+    }
+
+
+
+    private static void CreateAccount(User usr){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Type the type of Account: 1 : Saving, 2: Checking, 3: Credit 4: Line of Credit");
+        String t = scanner.next();
+        String type = null;
+        while (type == null) {
+            if (t.equals('1')) {
+                type = "Saving";
+            } else if (t.equals('2')) {
+                type = "Checking";
+            } else if (t.equals("3")) {
+                type = "Credit Card";
+            } else if (t.equals("4")) {
+                type = "LOC";
+            }
+            else{
+                System.out.println("Type the type of Account: 1 : Saving, 2: Checking, 3: Credit 4: Line of Credit");
+                t = scanner.next();
+            }
+        }
+        BM.create_account(usr, type);
     }
 
 
