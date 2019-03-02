@@ -49,7 +49,7 @@ public class BankManager {
             ATM.addUserToList(newUser);
         }
 
-        public void undo_transaction(){}
+
 
         public void create_account(User user, String acct_type){
             if (acct_type.equalsIgnoreCase("credit card")) {
@@ -79,9 +79,44 @@ public class BankManager {
             }catch(IOException e){e.printStackTrace();}
         }
 
-        public Date setDate(){
-            Date today;
-            return today;
+        public void undo_transaction(Account acct){
+            if (acct.lastTransaction.Type.equalsIgnoreCase("deposit")){
+                acct.balance -= acct.lastTransaction.Amount;
+                acct.lastTransaction = null;
+            }
+            if (acct.lastTransaction.Type.equalsIgnoreCase("withdrawal")){
+                acct.balance += acct.lastTransaction.Amount;
+                acct.lastTransaction = null;
+            }
+            if (acct.lastTransaction.Type.equalsIgnoreCase("transferin")){
+                acct.balance -= acct.lastTransaction.Amount;
+                acct.lastTransaction.Account.balance += acct.lastTransaction.Amount;
+                if (check_other_acct(acct))
+                    acct.lastTransaction.Account.lastTransaction = null;
+                acct.lastTransaction = null;
+            }
+            if (acct.lastTransaction.Type.equalsIgnoreCase("trasnferout")){
+                acct.balance += acct.lastTransaction.Amount;
+                acct.lastTransaction.Account.balance -= acct.lastTransaction.Amount;
+                if (check_other_acct(acct)){
+                    acct.lastTransaction.Account.lastTransaction = null;
+                }
+                acct.lastTransaction = null;
+            }
+            if (acct.lastTransaction.Type.equalsIgnoreCase("paybill")){
+                acct.balance += acct.lastTransaction.Amount;
+                acct.lastTransaction = null;
+            }
         }
+
+        public boolean check_other_acct(Account acct){
+            return (acct.lastTransaction.Account.lastTransaction.Type.equalsIgnoreCase(acct.lastTransaction.Type)
+                    && (acct.lastTransaction.Account.lastTransaction.Account.accountNum == acct.accountNum)
+                    && (acct.lastTransaction.Account.lastTransaction.Amount == acct.lastTransaction.Amount));
+        }
+//        public Date setDate(){
+//            Date today;
+//            return today;
+//        }
 
 }
