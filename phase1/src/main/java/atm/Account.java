@@ -45,7 +45,7 @@ public abstract class Account {
         else{System.out.println("This transaction is not possible: insufficient funds");}
     }
 
-    public void deposit() {
+    public void deposit(int type) {
         amount =
 
         addMoney(amount);
