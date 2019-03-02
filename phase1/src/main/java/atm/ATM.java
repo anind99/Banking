@@ -18,10 +18,15 @@ public class ATM {
         boolean running = true;
         debugSetup();
         while (running){
-            String userType = displayLoginMenu();
-            if (userType.equals("user")){
-                displayUserMenu();
-            } else if (userType.equals("Manager")) {
+            String username = displayLoginMenu();
+            if (username.equals("user")){
+                for (User usr : listOfUsers) {
+                    if (usr.getUsername().equals(username)) {
+                        displayUserMenu(usr);
+                    }
+                }
+
+            } else if (username.equals("Manager")) {
                 displayManagerMenu();
             }
 
@@ -153,7 +158,7 @@ public class ATM {
                     if (usr.getUsername().equals(usernameAttempt) && usr.getPassword().equals(passwordAttempt)) {
                         loginUser = usr;
                         System.out.println("Login Successful. Logging into " + loginUser.getUsername());
-                        return "user";
+                        return loginUser.getUsername();
                     }
                 }
             }
