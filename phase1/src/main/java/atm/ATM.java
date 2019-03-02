@@ -25,6 +25,7 @@ public class ATM {
                 displayManagerMenu();
             }
 
+
         }
     }
 
@@ -38,11 +39,9 @@ public class ATM {
 
     }
     private static void displayUserMenu(User user){
-        System.out.println("Select an option:");
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
-        boolean Continue = true;
-        while (!validselection && Continue){
+        while (!validselection){
             System.out.println("Select an option:");
             System.out.println("1. Create Account");
             System.out.println("2. Deposit");
@@ -55,6 +54,8 @@ public class ATM {
                 System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
                 String t = scanner.next();
 
+                System.out.println("Type the password for the new user");
+                String password = scanner.next();
                 validselection = true;
 
             } else if (option.equals("2")){
@@ -66,7 +67,7 @@ public class ATM {
             } else if (option.equals("5")) {
 
             } else if (option.equals("6")) {
-                Continue = false;
+                //Doing nothing works fine here.
             } else {
                 System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
             }
@@ -87,25 +88,48 @@ public class ATM {
             System.out.println("5. Undo transaction");
             System.out.println("6. Logout");
             String option = scanner.next();
-            if (option.equals("1")){
-                System.out.println("Type the username for the new user");
-                String username = scanner.next();
-                System.out.println("Type the password for the new user");
-                String password = scanner.next();
-                validselection = true;
+            switch (option) {
+                case "1": {
+                    System.out.println("Type the username for the new user");
+                    String username = scanner.next();
+                    System.out.println("Type the password for the new user");
+                    String password = scanner.next();
+                    validselection = true;
+                }
+                case "2": {
+                    System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
+                }
+                case "3": {
 
-            } else if (option.equals("2")){
+                }
+                case "4": {
+                    System.out.println("Set which dollar bill amount to 100?");
+                    System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars 5. Quit menu");
+                    String dollarType = scanner.next();
+                    if (dollarType.equals("1")) {
+                        BankManager.restock(1);
+                    } else if (dollarType.equals("2")) {
+                        BankManager.restock(2);
+                    } else if (dollarType.equals("3")) {
+                        BankManager.restock(3);
+                    } else if (dollarType.equals("4")) {
+                        BankManager.restock(4);
+                    } else if (dollarType.equals("5")) {
+                        BankManager.restock(5);
+                    } else {
+                        System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 6.");
+                    }
 
-            } else if (option.equals("3")) {
+                }
+                case "5": {
 
-            } else if (option.equals("4")) {
+                }
+                case "6": {
 
-            } else if (option.equals("5")) {
-
-            } else if (option.equals("6")) {
-
-            } else {
-                System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
+                }
+                default: {
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
+                }
             }
         }
 
@@ -143,10 +167,6 @@ public class ATM {
     public static void set_bills(int bill, int number){
         bills[bill] = number;
     }
-
-
-    /** Logs in the user.*/
-    public void login(String username, String password) { }
 
 
     public void processRequest() {
