@@ -38,15 +38,14 @@ public class BankManager {
             ATM.set_bills(index, 100);
         }
 
-        public User create_user(String username, String password){
+        public void create_user(String username, String password){
             ArrayList accounts = new ArrayList<>();
             User newUser = new User(username, password, accounts);
             create_account(newUser, "credit card");
             create_account(newUser, "loc");
             create_account(newUser, "checking");
             create_account(newUser, "saving");
-            //atm.
-            return newUser;
+            ATM.addUserToList(newUser);
         }
 
         public void undo_transaction(){}
