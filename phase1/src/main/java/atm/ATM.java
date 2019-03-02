@@ -24,7 +24,7 @@ public class ATM {
     public static void main(String[] arg){
         boolean running = true;
         debugSetup();
-        setup()
+        setup();
         while (running){
             String username = displayLoginMenu();
             if (username.equals("user")){

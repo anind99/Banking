@@ -1,0 +1,11 @@
+Username: a1234
+Password: test pass
+
+Type AccountNum Balance
+LastTransaction: Type Account-from/to Amount
+
+Checking 01234 98.99
+Withdraw Self 70.70
+
+Saving 01233 1900
+TransferIn 01234 6800
