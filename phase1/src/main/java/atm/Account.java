@@ -1,12 +1,7 @@
 package atm;
 
+import java.io.*;
 import java.util.Date;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 public abstract class Account {
 
@@ -15,6 +10,7 @@ public abstract class Account {
     protected double balance;
     public Transaction lastTransaction;
     public Date dateCreated;
+    protected int depositNum;
 
 
     public Account(int accountNum) {
@@ -22,6 +18,7 @@ public abstract class Account {
         this.balance = 0;
         this.lastTransaction = null;
         this.dateCreated = new Date();
+        this.depositNum = 0;
 
     }
 
@@ -45,14 +42,37 @@ public abstract class Account {
         else{System.out.println("This transaction is not possible: insufficient funds");}
     }
 
-    public void deposit(int type) {
-        amount =
+    public void deposit() {
+        double amount = depositReader();
 
         addMoney(amount);
     }
 
+    public Double depositReader() {
+        String amount = "10";
+        try {
+            File file = new File("outgoing.txt");
+            FileInputStream is = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader r = new BufferedReader(isr);
+            String line = r.readLine();
+
+            int count = 0;
+            while (line != null && count <= depositNum){
+            count += 1;
+            line = r.readLine();}
+
+
+
+            amount = line;
+            r.close();
+        } catch (IOException e) {
+            System.err.println("Problem reading the file deposits.txt");
+        }return Double.valueOf(amount);
+    }
+
     public void withdraw(double amount) {
-        removeMoney(amount); //override in checking account to allow negative balances
+        removeMoney(amount);
     }
 
     public void payBill(double amount, String receiver){
@@ -61,6 +81,7 @@ public abstract class Account {
         else{System.out.println("This transaction is not possible: insufficient funds");}
     }
 
+    //Helper function to Paybill that adds the information of the paid bill to a text file
     public boolean payBillWriting(double amount, String receiver) {
         try {
             File file = new File("outgoing.txt");
