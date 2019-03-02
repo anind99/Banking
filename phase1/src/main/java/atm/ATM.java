@@ -160,6 +160,16 @@ public class ATM {
 
                 accountFrom.transferOut(amount, accountTo);
             } else if (option.equals("6")) {
+                printChoices(user);
+                Account accountFrom = selectAccount(user, "pay the bill from");
+                System.out.println("Enter the name of the receiver of the bill: ");
+                String receiver = scanner.nextLine();
+
+                double amount = selectAmount();
+
+                accountFrom.payBill(amount, receiver.trim());
+
+            } else if (option.equals("7")) {
                 //Doing nothing works fine here.
                 logout = true;
             } else {
