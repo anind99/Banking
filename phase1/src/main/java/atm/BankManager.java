@@ -54,8 +54,11 @@ public class BankManager {
             if (actt_type.equalsignorecase("credit card")) {
                 CreditCard newCreditCard = new CreditCard(this.acct_counter);
 
+
             }
-            if (actt_type.equalsignorecase("loc"))
+            if (actt_type.equalsignorecase("loc")){
+
+            }
 
         }
 
