@@ -9,6 +9,7 @@ public class ATM {
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
     private static int[] bills;
     private static ArrayList<User> listOfUsers = new ArrayList<User>();
+    private static BankManager BM;
 
     public ATM() {
         bills = new int[4];
@@ -46,7 +47,8 @@ public class ATM {
     private static void displayUserMenu(User user){
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
-        while (!validselection){
+        boolean logout = false;
+        while (!validselection && !logout){
             System.out.println("Select an option:");
             System.out.println("1. Create Account");
             System.out.println("2. Deposit");
@@ -58,9 +60,7 @@ public class ATM {
             if (option.equals("1")){
                 System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
                 String t = scanner.next();
-
-                System.out.println("Type the password for the new user");
-                String password = scanner.next();
+                BM.create_account(user, t);
                 validselection = true;
 
             } else if (option.equals("2")){
@@ -73,6 +73,7 @@ public class ATM {
 
             } else if (option.equals("6")) {
                 //Doing nothing works fine here.
+                logout = true;
             } else {
                 System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
             }
