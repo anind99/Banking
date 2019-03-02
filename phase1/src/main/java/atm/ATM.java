@@ -1,6 +1,10 @@
 package atm;
 
+import java.io.*;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class ATM {
@@ -11,6 +15,8 @@ public class ATM {
     private static ArrayList<User> listOfUsers = new ArrayList<User>();
     private static BankManager BM;
 
+    private static Calendar date;
+
     public ATM() {
         bills = new int[4];
     }
@@ -18,6 +24,7 @@ public class ATM {
     public static void main(String[] arg){
         boolean running = true;
         debugSetup();
+        setup()
         while (running){
             String username = displayLoginMenu();
             if (username.equals("user")){
@@ -30,9 +37,9 @@ public class ATM {
             } else if (username.equals("Manager")) {
                 displayManagerMenu();
             }
-
-
         }
+        addSavingsInterest();
+        dateIncrement();
     }
 
     private static void debugSetup(){
@@ -44,6 +51,77 @@ public class ATM {
 //        addUserToList(user1);
 
     }
+
+    private static void addSavingsInterest(){
+        if (date.get(Calendar.DAY_OF_MONTH) == 1){
+            for (User user : listOfUsers){
+                ArrayList<Account> listOfAccounts = user.getAccounts();
+                for (Account account: listOfAccounts){
+                    if (account instanceof Savings){
+                        ((Savings)account).addInterest();
+                    }
+                }
+            }
+        }
+
+    }
+
+
+    private static void dateIncrement(){
+        try {
+            File file = new File("date.txt");
+            file.delete();
+            file.createNewFile();
+            BufferedWriter writer = new BufferedWriter(new FileWriter("date.txt"));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            date.add(Calendar.DATE, 1);
+            writer.write(sdf.format(date.getTime()));
+            writer.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("error, quitting system!");
+            System.exit(-1);
+        }
+
+    }
+    private static void setup() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("date.txt"));
+            String line;
+            if ((line = reader.readLine()) != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar c = Calendar.getInstance();
+                c.setTime(sdf.parse(line));
+                date = c;
+                reader.close();
+                System.out.println("Booting system on" + line);
+            }
+        }
+        catch(FileNotFoundException e){
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("date.txt"));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar c = Calendar.getInstance();
+                date = c;
+                writer.write(sdf.format(date.getTime()));
+                writer.close();
+
+            }
+            catch (Exception ee) {
+                System.out.println(ee.getMessage());
+                System.out.println("error, quitting system!");
+                System.exit(-1);
+            }
+        }
+
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("error, quitting system!");
+            System.exit(-1);
+        }
+    }
+
+
     private static void displayUserMenu(User user){
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
@@ -222,16 +300,4 @@ public class ATM {
             if(bills[i] < 20){BankManager.restock(i);} // STILL NEEDS TO SEND A MESSAGE TO THE ALERT FILE
         }
     }
-
-    public void shutDown() {
-
-    }
-
-    public void restart() {
-
-    }
-
-
-
-
 }
