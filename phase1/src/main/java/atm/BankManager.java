@@ -1,16 +1,22 @@
 package atm;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Date;
+import java.io.*;
 
 public class BankManager {
 
-        public static String users_txt;
-        Random rand;
+    public static String users_txt;
+    private String last, line;
+    private int acct_num_counter;
 
         public BankManager(){
             this.users_txt = "users.txt";
-            rand  = new Random();
+            BufferedReader input = new BufferedReader(new FileReader("bankmanager.txt"));
+
+            while ((line = input.readLine()) != null) {
+                last = line;
+            }
+            this.acct_num_counter = Integer.parseInt(last);
         }
 
 
@@ -23,8 +29,8 @@ public class BankManager {
             //String password = "" + (char)(r.nextInt(26) + 'a') + rand.nextInt(1000);
             User newUser = new User(username, password, );
             ArrayList accounts = new ArrayList<>();
-            create_account()
-            return new User();
+            create_account(newUser, "credit card", );
+            return newUser;
 
             //temp value to calm down compiler
         }
@@ -32,9 +38,10 @@ public class BankManager {
         public void undo_transaction(){}
 
         public void create_account(User user, String acct_type, String acct_num){
-            if (actt_type.equalsignorecase("credit card")){
+            if (actt_type.equalsignorecase("credit card"))
                 CreditCard newCreditCard = new CreditCard(acct_num);
-            }
+            if (actt_type.equalsignorecase("loc"))
+
         }
 
         public Date setDate(){
