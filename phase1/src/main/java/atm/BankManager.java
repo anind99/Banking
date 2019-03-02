@@ -31,9 +31,9 @@ public class BankManager {
 
         public void undo_transaction(){}
 
-        public void create_account(User user, String acct_type){
+        public void create_account(User user, String acct_type, String acct_num){
             if (actt_type.equalsignorecase("credit card")){
-                CreditCard newCreditCard =
+                CreditCard newCreditCard = new CreditCard(acct_num);
             }
         }
 
