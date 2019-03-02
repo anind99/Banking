@@ -24,7 +24,7 @@ public class ATM {
     public static void main(String[] arg){
         boolean running = true;
         debugSetup();
-        setup()
+        setup();
         while (running){
             String username = displayLoginMenu();
             if (username.equals("user")){
@@ -133,7 +133,8 @@ public class ATM {
             System.out.println("3. Withdraw");
             System.out.println("4. Transfer In");
             System.out.println("5. Transfer Out");
-            System.out.println("6. Logout");
+            System.out.println("6. Pay Bills");
+            System.out.println("7. Logout");
             String option = scanner.next();
             if (option.equals("1")){
                 CreateAccount(user);
@@ -144,9 +145,20 @@ public class ATM {
                 Withdraw(user);
                 validselection = true;
             } else if (option.equals("4")) {
+                printChoices(user);
+                Account accountTo = selectAccount(user, "transfer to");
+                Account accountFrom = selectAccount(user, "transfer from");
+                double amount = selectAmount();
 
+                accountTo.transferIn(amount, accountFrom);
             } else if (option.equals("5")) {
+                printChoices(user);
+                System.out.println("Note that you cannot transfer out of a credit card account.");
+                Account accountFrom = selectAccount(user, "transfer out from");
+                Account accountTo = selectAccount(user, "transfer to");
+                double amount = selectAmount();
 
+                accountFrom.transferOut(amount, accountTo);
             } else if (option.equals("6")) {
                 //Doing nothing works fine here.
                 logout = true;
@@ -154,6 +166,88 @@ public class ATM {
                 System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
             }
         }
+
+    }
+
+    private static void printChoices(User user) {
+        // Prints list of account numbers a user has.
+
+        ArrayList<Account> creditCardAccounts = new ArrayList<>();
+        ArrayList<Account> locAccounts = new ArrayList<>();
+        ArrayList<Account> chequingAccounts = new ArrayList<>();
+        ArrayList<Account> savingsAccounts = new ArrayList<>();
+
+        for (Account a : user.getAccounts()) {
+            if (a instanceof CreditCard) {
+                creditCardAccounts.add(a);
+            } else if (a instanceof LOC) {
+                locAccounts.add(a);
+            } else if (a instanceof Checking) {
+                chequingAccounts.add(a);
+            } else if (a instanceof Savings) {
+                savingsAccounts.add(a);
+            }
+        }
+
+        StringBuilder choices = new StringBuilder("Here are your list of accounts: \n");
+
+        // Add Credit Card accounts to String.
+        for (Account i : creditCardAccounts) {
+            choices.append("1. Credit Card Accounts: \n");
+            choices.append(i.accountNum);
+            choices.append("\n");
+        }
+
+        // Add LOC accounts to String.
+        for (Account i: locAccounts) {
+            choices.append("2. Line of Credit Accounts: \n");
+            choices.append(i.accountNum);
+            choices.append("\n");
+        }
+
+        // Add Chequing Accounts to String.
+
+        for (Account i: chequingAccounts) {
+            choices.append("3. Chequing Accounts: \n");
+            choices.append(i.accountNum);
+            choices.append("\n");
+        }
+
+        for (Account i : savingsAccounts) {
+            choices.append("4. Savings Accounts: ");
+            choices.append(i.accountNum);
+            choices.append("\n");
+        }
+
+        System.out.println(choices);
+    }
+
+    private static Account selectAccount(User user, String action) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the account number you want to " + action + ": ");
+        String accountTo = scanner.nextLine();
+        int accountNumTo = Integer.parseInt(accountTo.trim());
+        Account account = null;
+
+        for (Account a : user.getAccounts()) {
+            if (a.accountNum == accountNumTo) {
+                account = a;
+            }
+        }
+
+        if (account != null) {
+            return account;
+        } else {
+            System.out.println("The account number you entered is not valid. Please try again.");
+            return selectAccount(user, action);
+        }
+    }
+
+    private static double selectAmount() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the desired amount you would like to transfer: ");
+        String num = scanner.nextLine();
+        return Double.parseDouble(num);
 
     }
 
