@@ -7,7 +7,7 @@ public class User {
 
     private String username;
     private String pass;
-    private ArrayList<Account> accounts;
+    protected ArrayList<Account> accounts;
 
     public User(String username, String password, ArrayList accounts){
         this.username = username;
@@ -23,7 +23,7 @@ public class User {
         return sum;
     }
     public void Deposit(){
-        
+
     }
 
     public void updatePassword(String s){

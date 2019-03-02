@@ -61,7 +61,7 @@ public class ATM {
                 CreateAccount(user);
                 validselection = true;
             } else if (option.equals("2")){
-
+                user.Deposit();
             } else if (option.equals("3")) {
 
             } else if (option.equals("4")) {
@@ -74,6 +74,14 @@ public class ATM {
             } else {
                 System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
             }
+        }
+
+    }
+
+    private void Withdraw(User user){
+        for (Account acc : user.accounts){
+
+
         }
 
     }
