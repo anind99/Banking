@@ -10,7 +10,7 @@ import java.io.Writer;
 
 public abstract class Account {
 
-
+    public String type = null;
     public int accountNum;
     protected double balance;
     public Transaction lastTransaction;
