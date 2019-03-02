@@ -44,25 +44,31 @@ public abstract class Account {
 
     public void deposit() {
         double amount = depositReader();
+
         addMoney(amount);
     }
 
-    public double depositReader() {
-       double amount;
+    public Double depositReader() {
+        String amount = "10";
         try {
             File file = new File("outgoing.txt");
             FileInputStream is = new FileInputStream(file);
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader r = new BufferedReader(isr);
             String line = r.readLine();
-            while (line != null);
 
-            amount = ;
+            int count = 0;
+            while (line != null && count <= depositNum){
+            count += 1;
+            line = r.readLine();}
+
+
+
+            amount = line;
             r.close();
         } catch (IOException e) {
             System.err.println("Problem reading the file deposits.txt");
-
-        return amount;
+        }return Double.valueOf(amount);
     }
 
     public void withdraw(double amount) {
