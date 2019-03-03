@@ -25,6 +25,7 @@ public class ATM {
         boolean running = true;
         debugSetup();
         setup();
+        addSavingsInterest();
         while (running){
             String username = displayLoginMenu();
             if (username.equals("user")){
@@ -38,17 +39,14 @@ public class ATM {
                 displayManagerMenu();
             }
         }
-        addSavingsInterest();
         dateIncrement();
     }
 
     private static void debugSetup(){
-        //This function sets up our ATM environment for debugging purposes.
-        //Breaking it for merging is fine, but it shouldn't happen.
-////        User user1 = new User(String username, String password, ArrayList accounts);
-////        user1.setPassword("password");
-////        user1.setUsername("user");
-//        addUserToList(user1);
+//        This function sets up our ATM environment for debugging purposes.
+//        Breaking it for merging is fine, but it shouldn't happen.
+        User user1 = new User("manager", "password", null);
+        addUserToList(user1);
 
     }
 
