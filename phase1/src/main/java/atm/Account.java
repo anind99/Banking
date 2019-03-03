@@ -44,12 +44,11 @@ public abstract class Account {
 
     public void deposit() {
         double amount = depositReader();
-
         addMoney(amount);
     }
 
     public Double depositReader() {
-        String amount = "10";
+        Double amount = 0.0;
         try {
             File file = new File("outgoing.txt");
             FileInputStream is = new FileInputStream(file);
@@ -58,17 +57,29 @@ public abstract class Account {
             String line = r.readLine();
 
             int count = 0;
-            while (line != null && count <= depositNum){
-            count += 1;
-            line = r.readLine();}
+            while (line != null && count < depositNum) {
+                count += 1;
+                line = r.readLine();
+            }
+            if (count >= depositNum) {
+                depositNum += 1;
+            } else {
+                line = r.readLine();
+                depositNum = 0;
+            }
 
-
-
-            amount = line;
+            if (line.contains(".")) {
+                amount = Double.valueOf(line);
+            }else{amount = Double.valueOf((Integer.valueOf(line.charAt(0))*5 + Integer.valueOf(line.charAt(1)) * 10 +
+                    Integer.valueOf(line.charAt(2))*20 + Integer.valueOf(line.charAt(3))*50));
+                ATM.set_bills(0, Integer.valueOf(line.charAt(0)));
+                ATM.set_bills(1, Integer.valueOf(line.charAt(1)));
+                ATM.set_bills(2, Integer.valueOf(line.charAt(2)));
+                ATM.set_bills(3, Integer.valueOf(line.charAt(3)));}
             r.close();
         } catch (IOException e) {
             System.err.println("Problem reading the file deposits.txt");
-        }return Double.valueOf(amount);
+        }return amount;
     }
 
     public void withdraw(double amount) {
