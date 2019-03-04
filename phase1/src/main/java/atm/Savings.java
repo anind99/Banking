@@ -2,13 +2,12 @@ package atm;
 
 public class Savings extends Asset {
 
-    public String type = "Savings";
-
     public double interestRate;
 
     public Savings(int accountNum){
         super(accountNum);
         interestRate = 1.001;
+        this.type = "savings";
     }
 
     //add the interest according the interestRate
