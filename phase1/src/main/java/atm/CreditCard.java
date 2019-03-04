@@ -12,7 +12,7 @@ public class CreditCard extends Debt {
         System.out.println("You cannot transfer out from a Credit Card account. Please try again.");
     }
 
-    public void payBills(double amount, String receiver) {
+    public void payBill(double amount, String receiver) {
         System.out.println("You cannot transfer out from a Credit Card account. Please try again.");
     }
 }
