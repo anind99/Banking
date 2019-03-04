@@ -1,10 +1,7 @@
 Username,a1234
 Password,test pass
-
 Checking,01234,98.99
 Withdraw,Self,70.70
-
 Saving,01233,1900
 TransferIn,01234,6800
-
 Credit,01235,-100
