@@ -34,17 +34,23 @@ public abstract class Account {
         boolean removed = accountFrom.removeMoney(amount);
         if(removed){addMoney(amount);}
         else{System.out.println("This transaction is not possible: insufficient funds");}
+
+        this.lastTransaction = new Transaction(accountFrom, amount, "transferin");
     }
 
     public void transferOut(double amount, Account accountTo) {
         boolean removed = removeMoney(amount);
         if(removed){accountTo.addMoney(amount);}
         else{System.out.println("This transaction is not possible: insufficient funds");}
+
+        this.lastTransaction = new Transaction(accountTo, amount, "transferout");
     }
 
     public void deposit() {
         Double amount = depositReader();
         addMoney(amount);
+
+        this.lastTransaction = new Transaction(amount, "deposit");
     }
 
     public Double depositReader() {
@@ -97,12 +103,16 @@ public abstract class Account {
 
     public void withdraw(double amount) {
         removeMoney(amount);
+
+        this.lastTransaction = new Transaction(amount, "withdraw");
     }
 
     public void payBill(double amount, String receiver){
         boolean removed = removeMoney(amount);
         if(removed){payBillWriting(amount, receiver);}
         else{System.out.println("This transaction is not possible: insufficient funds");}
+
+        this.lastTransaction = new Transaction(receiver, amount);
     }
 
     //Helper function to Paybill that adds the information of the paid bill to a text file
