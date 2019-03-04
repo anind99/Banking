@@ -2,13 +2,12 @@ package atm;
 
 public class Checking extends Asset {
 
-    public String type = "checking";
-
     public boolean primary;
 
     public Checking(int accountNum){
         super(accountNum);
         primary = false;
+        this.type = "checking";
     }
 
     //set this account as the primary account
