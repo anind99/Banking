@@ -394,6 +394,10 @@ public class ATM {
         bills[bill] = number;
     }
 
+    public static void add_bills(int bill, int number){
+        bills[bill] += number;
+    }
+
 
     public void processRequest() {
 

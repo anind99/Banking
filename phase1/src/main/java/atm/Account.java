@@ -18,7 +18,7 @@ public abstract class Account {
         this.balance = 0;
         this.lastTransaction = null;
         this.dateCreated = new Date();
-        this.depositNum = 0;
+        this.depositNum = 3;
 
     }
 
@@ -50,12 +50,12 @@ public abstract class Account {
     public Double depositReader() {
         Double amount;
         try {
-            File file = new File("/Users/isabelkerrebijn/Desktop/deposits.txt");
+            File file = new File("/Users/isabelkerrebijn/Desktop/deposits.txt"); //FIX
             FileInputStream is = new FileInputStream(file);
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader r = new BufferedReader(isr);
             String line = r.readLine();
-            System.out.println(line);
+            String firstLine = line;
 
             int count = 0;
             while (line != null && count < depositNum) {
@@ -63,32 +63,36 @@ public abstract class Account {
                 line = r.readLine();
             }
 
-            if (count >= depositNum) {
+            if (line != null && count >= depositNum) {
                 depositNum += 1;
             } else {
-                line = r.readLine();
+                line = firstLine;
+                System.out.println(line);
                 depositNum = 0;
+                System.out.println("boo");
             }
 
             if (line.contains(".")) {
                 amount = Double.valueOf(line);
-            }else{
+                System.out.println("You have deposited a cheque for $" + amount);
+            }else {
 
-                amount = Double.valueOf((Character.getNumericValue(line.charAt(0)))*5 +
+                amount = Double.valueOf((Character.getNumericValue(line.charAt(0))) * 5 +
                         Character.getNumericValue(line.charAt(1)) * 10 +
-                        Character.getNumericValue(line.charAt(2))*20 +
-                        Character.getNumericValue(line.charAt(3))*50);
-            System.out.println(amount);
-                ATM.set_bills(0, Character.getNumericValue(line.charAt(0)));
-                ATM.set_bills(1, Character.getNumericValue(line.charAt(1)));
-                ATM.set_bills(2, Character.getNumericValue(line.charAt(2)));
-                ATM.set_bills(3, Character.getNumericValue(line.charAt(3)));}
-            r.close();
-            return Double.valueOf(amount);
+                        Character.getNumericValue(line.charAt(2)) * 20 +
+                        Character.getNumericValue(line.charAt(3)) * 50);
+                System.out.println(amount);
+                //ATM.add_bills(0, Character.getNumericValue(line.charAt(0)));
+                //ATM.add_bills(1, Character.getNumericValue(line.charAt(1)));
+                // ATM.set_bills(2, Character.getNumericValue(line.charAt(2)));
+                //ATM.set_bills(3, Character.getNumericValue(line.charAt(3)));}
+                System.out.println("You have deposited $" + amount + " in cash");
+            }r.close();
+            return amount;
         } catch (IOException e) {
             System.err.println("Problem reading the file deposits.txt");
             return 0.0;
-        }//return 0.0;
+        }
     }
 
     public void withdraw(double amount) {
