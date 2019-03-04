@@ -25,6 +25,7 @@ public class ATM {
         boolean running = true;
         debugSetup();
         setup();
+        addSavingsInterest();
         while (running){
             String username = displayLoginMenu();
             if (username.equals("user")){
@@ -38,17 +39,14 @@ public class ATM {
                 displayManagerMenu();
             }
         }
-        addSavingsInterest();
         dateIncrement();
     }
 
     private static void debugSetup(){
-        //This function sets up our ATM environment for debugging purposes.
-        //Breaking it for merging is fine, but it shouldn't happen.
-////        User user1 = new User(String username, String password, ArrayList accounts);
-////        user1.setPassword("password");
-////        user1.setUsername("user");
-//        addUserToList(user1);
+//        This function sets up our ATM environment for debugging purposes.
+//        Breaking it for merging is fine, but it shouldn't happen.
+        User user1 = new User("manager", "password", null);
+        addUserToList(user1);
 
     }
 
@@ -160,6 +158,16 @@ public class ATM {
 
                 accountFrom.transferOut(amount, accountTo);
             } else if (option.equals("6")) {
+                printChoices(user);
+                Account accountFrom = selectAccount(user, "pay the bill from");
+                System.out.println("Enter the name of the receiver of the bill: ");
+                String receiver = scanner.nextLine();
+
+                double amount = selectAmount();
+
+                accountFrom.payBill(amount, receiver.trim());
+
+            } else if (option.equals("7")) {
                 //Doing nothing works fine here.
                 logout = true;
             } else {
@@ -384,6 +392,10 @@ public class ATM {
     /** set the number of bills at array index "bill" */
     public static void set_bills(int bill, int number){
         bills[bill] = number;
+    }
+
+    public static void add_bills(int bill, int number){
+        bills[bill] += number;
     }
 
 
