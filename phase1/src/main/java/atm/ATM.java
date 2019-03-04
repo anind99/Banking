@@ -120,6 +120,7 @@ public class ATM {
     }
 
 
+
     private static void displayUserMenu(User user){
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
