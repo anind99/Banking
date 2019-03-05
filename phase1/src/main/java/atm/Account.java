@@ -104,9 +104,11 @@ public abstract class Account {
 
 
     public void withdraw(double amount) {
-        removeMoney(amount);
+        if(ATM.get_amount() >= amount) {
+            removeMoney(amount);
+            this.lastTransaction = new Transaction(amount, "withdraw");
+        }else{System.out.println("transaction not possible: not enough funds in ATM");}
 
-        this.lastTransaction = new Transaction(amount, "withdraw");
     }
 
     public void payBill(double amount, String receiver){

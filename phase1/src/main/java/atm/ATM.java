@@ -470,6 +470,12 @@ public class ATM {
     public static void set_bills(int bill, int number){
         bills[bill] = number;
     }
+    public static void get_bills(int bill, int number){
+        bills[bill] = number;
+    }
+    public static double get_amount(){
+       return (bills[0]*5.0 + bills[1]*10.0 + bills[2]*20.0 + bills[3]* 50.0);
+    }
 
     public static void add_bills(int bill, int number){
         bills[bill] += number;
