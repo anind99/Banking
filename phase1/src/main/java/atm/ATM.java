@@ -194,7 +194,7 @@ public class ATM {
                 creditCardAccounts.add(a);
             } else if (a instanceof LOC) {
                 locAccounts.add(a);
-            } else if (a instanceof Checking) {
+            } else if (a instanceof Chequing) {
                 chequingAccounts.add(a);
             } else if (a instanceof Savings) {
                 savingsAccounts.add(a);
@@ -284,21 +284,21 @@ public class ATM {
 
     private static void CreateAccount(User usr){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type the type of Account: 1 : Saving, 2: Checking, 3: Credit 4: Line of Credit");
+        System.out.println("Type the type of Account: 1 : Saving, 2: Chequing, 3: Credit 4: Line of Credit");
         int t = scanner.nextInt();
         String type = null;
         while (type == null) {
             if (t == 1) {
                 type = "Saving";
             } else if (t == 2) {
-                type = "Checking";
+                type = "Chequing";
             } else if (t == 3) {
                 type = "Credit Card";
             } else if (t == 4) {
                 type = "LOC";
             }
             else{
-                System.out.println("Type the type of Account: 1 : Saving, 2: Checking, 3: Credit 4: Line of Credit");
+                System.out.println("Type the type of Account: 1 : Saving, 2: Chequing, 3: Credit 4: Line of Credit");
                 t = scanner.nextInt();
             }
         }
@@ -327,7 +327,7 @@ public class ATM {
                     validselection = true;
                 }
                 case "2": {
-                    System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
+                    System.out.println("Type the type of Account: 1 : Savings, 2: Chequing, 3: Credit 4: Line of Credit");
                 }
                 case "3": {
 
