@@ -18,7 +18,7 @@ public abstract class Account {
         this.balance = 0;
         this.lastTransaction = null;
         this.dateCreated = new Date();
-        this.depositNum = 3;
+        this.depositNum = 0;
 
     }
 
@@ -55,6 +55,7 @@ public abstract class Account {
 
     public Double depositReader() {
         Double amount;
+        //System.out.println(System.getProperty("user.dir"));
         try {
             File file = new File(System.getProperty("user.dir") + "/Text Files/deposits.txt"); //FIX
             FileInputStream is = new FileInputStream(file);
@@ -119,6 +120,7 @@ public abstract class Account {
     //Helper function to Paybill that adds the information of the paid bill to a text file
     public boolean payBillWriting(double amount, String receiver) {
         try {
+            //System.out.println(System.getProperty("user.dir"));
             File file = new File(System.getProperty("user.dir") + "/Text Files/outgoing.txt");
             FileOutputStream is = new FileOutputStream(file);
             OutputStreamWriter osw = new OutputStreamWriter(is);
