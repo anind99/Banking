@@ -424,7 +424,22 @@ public class ATM {
                     validselection = true;
                 }
                 case "3": {
+                    try {
+                        File file = new File(System.getProperty("user.dir") + "/Text Files/alerts.txt");
+                        FileInputStream is = new FileInputStream(file);
+                        InputStreamReader isr = new InputStreamReader(is);
+                        BufferedReader r = new BufferedReader(isr);
 
+                        String line = r.readLine();
+                        System.out.println(line);
+
+                        while (line != null) {
+                            line = r.readLine();
+                            System.out.println(line);
+                        }
+                    } catch (IOException e) {
+                        System.err.println("Problem reading the file deposits.txt");
+                    }
                 }
                 case "4": {
                     System.out.println("Set which dollar bill amount to 100?");
