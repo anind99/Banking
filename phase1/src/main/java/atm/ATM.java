@@ -299,8 +299,7 @@ public class ATM {
     private static Account selectAccount(User user, String action) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the account number you want to " + action + ": ");
-        String accountTo = scanner.nextLine();
-        int accountNumTo = Integer.parseInt(accountTo.trim());
+        int accountNumTo = scanner.nextInt();
         Account account = null;
 
         for (Account a : user.getAccounts()) {
@@ -320,8 +319,8 @@ public class ATM {
     private static double selectAmount() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the desired amount you would like to transfer: ");
-        String num = scanner.nextLine();
-        return Double.parseDouble(num);
+        Double num = scanner.nextDouble();
+        return num;
 
     }
 
