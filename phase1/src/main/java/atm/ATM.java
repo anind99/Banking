@@ -136,7 +136,8 @@ public class ATM {
             System.out.println("4. Transfer In");
             System.out.println("5. Transfer Out");
             System.out.println("6. Pay Bills");
-            System.out.println("7. Logout");
+            System.out.println("7. Request Account");
+            System.out.println("8. Logout");
             String option = scanner.next();
             if (option.equals("1")){
                 CreateAccount(user);
@@ -272,11 +273,28 @@ public class ATM {
         int account_num = scanner.nextInt();
         for (Account acc: user.accounts){
             if (account_num == acc.accountNum){
-                System.out.println("Input amount");
-                double amount = scanner.nextDouble();
-                acc.withdraw(amount);
+                boolean running = true;
+                while (running) {
+                    System.out.println("Input amount (The amount has to be a multiple of five, no cents allowed): ");
+                    int amount = scanner.nextInt();
+                    if (divisibleByFive(amount)) {
+                        acc.withdraw(amount);
+                        running = false;
+                    }
+                    else {
+                        System.out.println("The amount you entered is not possible, please try again.");
+                    }
+                }
                 break;
             }
+        }
+    }
+
+    private static boolean divisibleByFive(int amount) {
+        if (amount % 5 == 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 
