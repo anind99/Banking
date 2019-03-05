@@ -430,6 +430,21 @@ public class ATM {
 
                 }
                 case "5": {
+                    User user = null;
+                    while (user == null) {
+                        System.out.println("Type in the username of the user that would like to undo their last transaction: ");
+                        String username = scanner.nextLine();
+                        for (User parameter : listOfUsers) {
+                            if (parameter.getUsername().equals(username)) {
+                                user = parameter;
+                                break;
+                            }
+                        }
+                        System.out.println("The username is not valid, please try again.");
+                    }
+
+                    Account account = selectAccount(user, "undo its last transaction");
+                    BM.undo_transaction(account);
 
                 }
                 case "6": {
