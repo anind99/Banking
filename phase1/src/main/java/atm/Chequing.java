@@ -17,7 +17,7 @@ public class Chequing extends Asset {
     }
 
     public void setPrimary(){primary = true;}
-    
+
     //Removing money from an asset account will decrease its balance
     // 0 is considered a positive balance
     public boolean removeMoney(double amount){
