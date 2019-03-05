@@ -537,32 +537,36 @@ public class ATM {
     }
 
     private void Restart(String Dir){
+
         String Storeloc = Dir + "/users";
 
-        File dir = new File(Dir);
+        File dir = new File(Storeloc);
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
             for (File child : directoryListing) {
-                FileReader fr = new FileReader(child);
-                BufferedReader br = new BufferedReader(fr);
-                String line = br.readLine();
-                while (line != null){
-                    if (line.split("," )[0].equals("Username")){
-                        String name = line.split(",")[1];
-                        line = br.readLine();
-                        String pass = line.split(",")[1];
-                        ArrayList<Account> usract = new ArrayList<Account>();
-                        line = br.readLine();
-                        if (!line.split("," )[0].equals("Username")) {
+                try {
+                    FileReader fr = new FileReader(child);
+                    BufferedReader br = new BufferedReader(fr);
+                    String line = br.readLine();
+                    while (line != null) {
+                        if (line.split(",")[0].equals("Username")) {
+                            String name = line.split(",")[1];
+                            line = br.readLine();
+                            String pass = line.split(",")[1];
+                            ArrayList<Account> usract = new ArrayList<Account>();
+                            line = br.readLine();
+                            if (!line.split(",")[0].equals("Username")) {
 
-                            String acttype = line.split(",")[0];
-                            String actbal = line.split(",")[2];
-                            String actnum = line.split(",")[1];
-                                                        
+                                String acttype = line.split(",")[0];
+                                String actbal = line.split(",")[2];
+                                String actnum = line.split(",")[1];
+
+                            }
                         }
-
                     }
 
+                } catch(Exception e){
+                    System.out.println("error");
                 }
             }
         } else {
