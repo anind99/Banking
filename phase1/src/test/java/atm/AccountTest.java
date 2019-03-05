@@ -33,4 +33,18 @@ public class AccountTest {
         //assertEquals(1000, balance, 0.0);
     }
 
+    @Test
+    public void testWithdraw() {
+        ATM.set_bills(0,100);
+        ATM.set_bills(1,100);
+        ATM.set_bills(2,100);
+        ATM.set_bills(3,100);
+        account.addMoney(500.00);
+        account.withdraw(285.00);
+
+        assertEquals(215.00, account.getBalance(), 0.0);
+        //double balance = account.getBalance();
+        //assertEquals(1000, balance, 0.0);
+    }
+
 }
