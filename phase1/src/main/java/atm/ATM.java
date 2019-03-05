@@ -96,7 +96,7 @@ public class ATM {
                 c.setTime(sdf.parse(line));
                 date = c;
                 reader.close();
-                System.out.println("Booting system on" + line);
+                System.out.println("Booting system on date " + line);
             }
         }
         catch(FileNotFoundException e){
@@ -448,7 +448,7 @@ public class ATM {
 
                 }
                 case "6": {
-
+                    validselection = true;
                 }
                 default: {
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");

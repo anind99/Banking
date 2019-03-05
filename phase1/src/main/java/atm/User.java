@@ -34,6 +34,10 @@ public class User {
         return this.accounts;
     }
 
+    public void addAccount(Account account){
+        this.accounts.add(account);
+    }
+
     public String getUsername(){
         return this.username;
     }
