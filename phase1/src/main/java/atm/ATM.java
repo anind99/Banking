@@ -440,6 +440,7 @@ public class ATM {
                     } catch (IOException e) {
                         System.err.println("Problem reading the file deposits.txt");
                     }
+                    validselection = true;
                 }
                 case "4": {
                     System.out.println("Set which dollar bill amount to 100?");
