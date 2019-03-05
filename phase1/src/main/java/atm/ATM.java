@@ -525,11 +525,33 @@ public class ATM {
     }
 
     /**Alerts the manager when the amount of any denomination goes below 20.*/
-    public void alertManager() {
-        for(int i =0; i<=3; i++){
-            if(bills[i] < 20){BankManager.restock(i);} // STILL NEEDS TO SEND A MESSAGE TO THE ALERT FILE
+    public static void alertManager() {
+        boolean fiveBills = true;
+        boolean tenBills = true;
+        boolean twentyBills = true;
+        boolean fiftyBills = true;
+
+        if(bills[0]*5 < 20){fiveBills = false;}
+        if(bills[1]*10 < 20){tenBills = false;}
+        if(bills[2]*20 < 20){twentyBills = false;}
+        if(bills[3]*50 < 20){fiftyBills = false;}
+
+        try {
+            //System.out.println(System.getProperty("user.dir"));
+            File file = new File(System.getProperty("user.dir") + "/Text Files/alerts.txt");
+            FileOutputStream is = new FileOutputStream(file);
+            OutputStreamWriter osw = new OutputStreamWriter(is);
+            Writer w = new BufferedWriter(osw);
+            if(!fiveBills){w.write("ALERT 5$ bills are low");}
+            if(!tenBills){w.write("ALERT 10$ bills are low");}
+            if(!twentyBills){w.write("ALERT 20$ bills are low");}
+            if(!fiftyBills){w.write("ALERT 50$ bills are low");}
+            w.close();
+        } catch (IOException e) {
+            System.err.println("Problem writing to the file alert.txt");
         }
     }
+
 
     private void Shutdown(String Dir){
         String Storeloc = Dir + "users.dir";

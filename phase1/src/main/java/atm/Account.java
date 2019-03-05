@@ -102,10 +102,10 @@ public abstract class Account {
     }
 
 
-
     public void withdraw(double amount) {
         if(ATM.get_amount() >= amount) {
             ATM.withdrawBills(amount);
+            ATM.alertManager();
             removeMoney(amount);
             this.lastTransaction = new Transaction(amount, "withdraw");
         }else{System.out.println("transaction not possible: not enough funds in ATM");}
@@ -130,9 +130,11 @@ public abstract class Account {
             Writer w = new BufferedWriter(osw);
             w.write(accountNum + " payed " + amount + " to " + receiver);
             w.close();
+            return true;
         } catch (IOException e) {
             System.err.println("Problem writing to the file outgoing.txt");
-        } return true;
+            return false;
+        }
     }
 
 }
