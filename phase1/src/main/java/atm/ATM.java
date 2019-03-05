@@ -137,8 +137,9 @@ public class ATM {
             System.out.println("4. Transfer In");
             System.out.println("5. Transfer Out");
             System.out.println("6. Pay Bills");
-            System.out.println("7. Request Account");
-            System.out.println("8. Logout");
+            System.out.println("7. Request Account Creation");
+            System.out.println("8. View Summary of Accounts");
+            System.out.println("9. Logout");
             String option = scanner.next();
             if (option.equals("1")){
                 CreateAccount(user);
@@ -174,6 +175,13 @@ public class ATM {
                 accountFrom.payBill(amount, receiver.trim());
 
             } else if (option.equals("7")) {
+                System.out.println("Select the type of account you would like to create. \n 1. Credit Card \n " +
+                        "2. Checking \n 3. Line of Credit \n 4. Savings");
+
+
+            } else if (option.equals("8")) {
+
+            } else if (option.equals("9")) {
                 //Doing nothing works fine here.
                 logout = true;
             } else {
