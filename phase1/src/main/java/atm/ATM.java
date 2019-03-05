@@ -18,7 +18,10 @@ public class ATM {
     private static Calendar date;
 
     public ATM() {
-        bills = new int[4];
+        bills[0] = 100;
+        bills[1] = 100;
+        bills[2] = 100;
+        bills[3] = 100;
     }
 
     public static void main(String[] arg){
