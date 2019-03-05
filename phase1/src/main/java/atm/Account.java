@@ -56,7 +56,7 @@ public abstract class Account {
     public Double depositReader() {
         Double amount;
         try {
-            File file = new File("/Users/isabelkerrebijn/Desktop/deposits.txt"); //FIX
+            File file = new File(System.getProperty("user.dir") + "/Text Files/deposits.txt"); //FIX
             FileInputStream is = new FileInputStream(file);
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader r = new BufferedReader(isr);
@@ -74,8 +74,7 @@ public abstract class Account {
             } else {
                 line = firstLine;
                 System.out.println(line);
-                depositNum = 0;
-                System.out.println("boo");
+                depositNum = 1;
             }
 
             if (line.contains(".")) {
@@ -88,10 +87,10 @@ public abstract class Account {
                         Character.getNumericValue(line.charAt(2)) * 20 +
                         Character.getNumericValue(line.charAt(3)) * 50);
                 System.out.println(amount);
-                //ATM.add_bills(0, Character.getNumericValue(line.charAt(0)));
-                //ATM.add_bills(1, Character.getNumericValue(line.charAt(1)));
-                // ATM.set_bills(2, Character.getNumericValue(line.charAt(2)));
-                //ATM.set_bills(3, Character.getNumericValue(line.charAt(3)));}
+                ATM.add_bills(0, Character.getNumericValue(line.charAt(0)));
+                ATM.add_bills(1, Character.getNumericValue(line.charAt(1)));
+                ATM.set_bills(2, Character.getNumericValue(line.charAt(2)));
+                ATM.set_bills(3, Character.getNumericValue(line.charAt(3)));
                 System.out.println("You have deposited $" + amount + " in cash");
             }r.close();
             return amount;
@@ -100,6 +99,7 @@ public abstract class Account {
             return 0.0;
         }
     }
+
 
 
     public void withdraw(double amount) {
@@ -119,7 +119,7 @@ public abstract class Account {
     //Helper function to Paybill that adds the information of the paid bill to a text file
     public boolean payBillWriting(double amount, String receiver) {
         try {
-            File file = new File("outgoing.txt");
+            File file = new File(System.getProperty("user.dir") + "/Text Files/outgoing.txt");
             FileOutputStream is = new FileOutputStream(file);
             OutputStreamWriter osw = new OutputStreamWriter(is);
             Writer w = new BufferedWriter(osw);
