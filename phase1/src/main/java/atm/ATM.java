@@ -150,14 +150,14 @@ public class ATM {
                 Withdraw(user);
                 validselection = true;
             } else if (option.equals("4")) {
-                printChoices(user);
+                printChoices(user, false);
                 Account accountTo = selectAccount(user, "transfer to");
                 Account accountFrom = selectAccount(user, "transfer from");
                 double amount = selectAmount();
 
                 accountTo.transferIn(amount, accountFrom);
             } else if (option.equals("5")) {
-                printChoices(user);
+                printChoices(user, false);
                 System.out.println("Note that you cannot transfer out of a credit card account.");
                 Account accountFrom = selectAccount(user, "transfer out from");
                 Account accountTo = selectAccount(user, "transfer to");
@@ -165,7 +165,7 @@ public class ATM {
 
                 accountFrom.transferOut(amount, accountTo);
             } else if (option.equals("6")) {
-                printChoices(user);
+                printChoices(user, false);
                 Account accountFrom = selectAccount(user, "pay the bill from");
                 System.out.println("Enter the name of the receiver of the bill: ");
                 String receiver = scanner.nextLine();
@@ -175,11 +175,9 @@ public class ATM {
                 accountFrom.payBill(amount, receiver.trim());
 
             } else if (option.equals("7")) {
-                System.out.println("Select the type of account you would like to create. \n 1. Credit Card \n " +
-                        "2. Checking \n 3. Line of Credit \n 4. Savings");
-
+                CreateAccount(user);
             } else if (option.equals("8")) {
-
+                summary(user);
             } else if (option.equals("9")) {
                 //Doing nothing works fine here.
                 logout = true;
@@ -190,7 +188,14 @@ public class ATM {
 
     }
 
-    private static void printChoices(User user) {
+
+    private static void summary(User user) {
+        printChoices(user, true);
+        System.out.println("Your net total is: " + user.getNetTotal());
+
+    }
+
+    private static void printChoices(User user, boolean summary) {
         // Prints list of account numbers a user has.
 
         ArrayList<Account> creditCardAccounts = new ArrayList<>();
@@ -216,6 +221,14 @@ public class ATM {
         for (Account i : creditCardAccounts) {
             choices.append("1. Credit Card Accounts: \n");
             choices.append(i.accountNum);
+            choices.append(", Balance: ");
+            choices.append(i.balance);
+            if (summary) {
+                choices.append(", Last Transaction: ");
+                choices.append(i.lastTransaction);
+                choices.append(", Date Created");
+                choices.append(i.dateCreated);
+            }
             choices.append("\n");
         }
 
@@ -223,6 +236,14 @@ public class ATM {
         for (Account i: locAccounts) {
             choices.append("2. Line of Credit Accounts: \n");
             choices.append(i.accountNum);
+            choices.append(", Balance: ");
+            choices.append(i.balance);
+            if (summary) {
+                choices.append(", Last Transaction: ");
+                choices.append(i.lastTransaction);
+                choices.append(", Date Created");
+                choices.append(i.dateCreated);
+            }
             choices.append("\n");
         }
 
@@ -231,12 +252,28 @@ public class ATM {
         for (Account i: chequingAccounts) {
             choices.append("3. Chequing Accounts: \n");
             choices.append(i.accountNum);
+            choices.append(", Balance: ");
+            choices.append(i.balance);
+            if (summary) {
+                choices.append(", Last Transaction: ");
+                choices.append(i.lastTransaction);
+                choices.append(", Date Created");
+                choices.append(i.dateCreated);
+            }
             choices.append("\n");
         }
 
         for (Account i : savingsAccounts) {
             choices.append("4. Savings Accounts: ");
             choices.append(i.accountNum);
+            choices.append(", Balance: ");
+            choices.append(i.balance);
+            if (summary) {
+                choices.append(", Last Transaction: ");
+                choices.append(i.lastTransaction);
+                choices.append(", Date Created");
+                choices.append(i.dateCreated);
+            }
             choices.append("\n");
         }
 
