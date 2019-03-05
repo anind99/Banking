@@ -185,9 +185,9 @@ public class ATM {
                 CreateAccount(user);
             } else if (option.equals("8")) {
                 summary(user);
-            } else if (option.equals("10")) {
-                changePassword(user);
             } else if (option.equals("9")) {
+                changePassword(user);
+            } else if (option.equals("10")) {
                 //Doing nothing works fine here.
                 logout = true;
             } else {
