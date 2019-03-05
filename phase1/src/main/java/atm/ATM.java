@@ -441,12 +441,12 @@ public class ATM {
     }
 
     private void Shutdown(String Dir){
-        String Storeloc = Dir + "/users";
+        String Storeloc = Dir + "users.dir";
         File f = new File(Storeloc);
 
         for (User usr: listOfUsers){
             String filename = usr.getUsername() + ".txt";
-            File userfile = new File(Storeloc +"/" + "filename");
+            File userfile = new File(System.getProperty(Storeloc)+"/" + filename);
             if ( !userfile.exists() )
                 userfile.createNewFile();
             FileWriter Fw = new FileWriter(userfile, false);
