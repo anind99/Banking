@@ -550,7 +550,7 @@ public class ATM {
             rounded -= ((rounded / 10)*10);
             remove_bills(1, (rounded / 10));
             System.out.println("You have received " + (prevRounded) + " 10$ bills");}
-        
+
         remove_bills(0, (rounded / 5));
         System.out.println("You have received " + (rounded / 5) + " 5$ bills");
     }
@@ -577,10 +577,10 @@ public class ATM {
             FileOutputStream is = new FileOutputStream(file);
             OutputStreamWriter osw = new OutputStreamWriter(is);
             Writer w = new BufferedWriter(osw);
-            if(!fiveBills){w.write("ALERT 5$ bills are low");}
-            if(!tenBills){w.write("ALERT 10$ bills are low");}
-            if(!twentyBills){w.write("ALERT 20$ bills are low");}
-            if(!fiftyBills){w.write("ALERT 50$ bills are low");}
+            if(!fiveBills){w.write("ALERT 5$ bills are low \n");}
+            if(!tenBills){w.write("ALERT 10$ bills are low \n");}
+            if(!twentyBills){w.write("ALERT 20$ bills are low \n");}
+            if(!fiftyBills){w.write("ALERT 50$ bills are low \n");}
             w.close();
         } catch (IOException e) {
             System.err.println("Problem writing to the file alert.txt");
