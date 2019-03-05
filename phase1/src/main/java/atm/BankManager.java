@@ -14,8 +14,8 @@ public class BankManager {
         public BankManager(){
             this.users_txt = "users.txt";
             try {
-                input = new BufferedReader(new FileReader("bankmanager.txt"));
-                output = new BufferedWriter(new FileWriter("bankmanager.txt"));
+                input = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/Text Files/bankmanager.txt"));
+                output = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "/Text Files/bankmanager.txt"));
                 while ((line = input.readLine()) != null) {
                     last = line;
                 }
