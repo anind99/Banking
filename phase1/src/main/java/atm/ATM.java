@@ -178,7 +178,6 @@ public class ATM {
                 System.out.println("Select the type of account you would like to create. \n 1. Credit Card \n " +
                         "2. Checking \n 3. Line of Credit \n 4. Savings");
 
-
             } else if (option.equals("8")) {
 
             } else if (option.equals("9")) {
