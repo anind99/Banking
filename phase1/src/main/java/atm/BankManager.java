@@ -12,7 +12,7 @@ public class BankManager {
     private BufferedWriter output;
 
         public BankManager(){
-            this.users_txt = "users.txt";
+            this.users_txt = System.getProperty("user.dir") + "/Text Files/users.txt"; //NEED TO FIX!
             try {
                 input = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/Text Files/bankmanager.txt"));
                 output = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "/Text Files/bankmanager.txt"));
