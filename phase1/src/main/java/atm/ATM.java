@@ -6,6 +6,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 public class ATM {
@@ -70,10 +71,11 @@ public class ATM {
 
 
     private static void dateIncrement(){
+        boolean done;
         try {
             File file = new File("date.txt");
-            file.delete();
-            file.createNewFile();
+            done = file.delete();
+            done = file.createNewFile();
             BufferedWriter writer = new BufferedWriter(new FileWriter("date.txt"));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             date.add(Calendar.DATE, 1);
@@ -637,14 +639,18 @@ public class ATM {
                             String name = line.split(",")[1];
                             line = br.readLine();
                             String pass = line.split(",")[1];
-                            ArrayList<Account> usract = new ArrayList<Account>();
+                            ArrayList<Account> usracts = new ArrayList<Account>();
                             line = br.readLine();
                             if (!line.split(",")[0].equals("Username")) {
-
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                 String acttype = line.split(",")[0];
                                 String actbal = line.split(",")[2];
                                 String actnum = line.split(",")[1];
-
+                                String Dat = line.split(",")[3];
+                                Calendar dat = Calendar.getInstance();
+                                dat.setTime(sdf.parse(Dat));
+                                line = br.readLine();
+                                
                             }
                         }
                     }
