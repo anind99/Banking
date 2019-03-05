@@ -139,7 +139,8 @@ public class ATM {
             System.out.println("6. Pay Bills");
             System.out.println("7. Request Account Creation");
             System.out.println("8. View Summary of Accounts");
-            System.out.println("9. Logout");
+            System.out.println("9. Change Password");
+            System.out.println("10. Logout");
             String option = scanner.next();
             if (option.equals("1")){
                 CreateAccount(user);
@@ -178,16 +179,25 @@ public class ATM {
                 CreateAccount(user);
             } else if (option.equals("8")) {
                 summary(user);
+            } else if (option.equals("10")) {
+                changePassword(user);
             } else if (option.equals("9")) {
                 //Doing nothing works fine here.
                 logout = true;
             } else {
-                System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
+                System.out.println("There is no option " + option + ". Pick a number from 1 to 10.");
             }
         }
 
     }
 
+
+    private static void changePassword(User user) {
+        System.out.println("Type in your new password:");
+        Scanner scanner = new Scanner(System.in);
+        String newPassword = scanner.nextLine();
+        user.setPassword(newPassword);
+    }
 
     private static void summary(User user) {
         printChoices(user, true);
