@@ -44,7 +44,7 @@ public class BankManager {
             User newUser = new User(username, password, accounts);
             create_account(newUser, "credit card");
             create_account(newUser, "loc");
-            create_account(newUser, "checking");
+            create_account(newUser, "chequing");
             create_account(newUser, "saving");
             ATM.addUserToList(newUser);
         }
@@ -62,9 +62,9 @@ public class BankManager {
                 user.accounts.add(newLoc);
                 this.acct_counter += 1;
             }
-            if (acct_type.equalsIgnoreCase("checking")){
-                Checking newChecking = new Checking(this.acct_counter);
-                user.accounts.add(newChecking);
+            if (acct_type.equalsIgnoreCase("chequing")){
+                Chequing newChequing = new Chequing(this.acct_counter);
+                user.accounts.add(newChequing);
                 this.acct_counter += 1;
             }
             if (acct_type.equalsIgnoreCase("saving")){
@@ -95,7 +95,7 @@ public class BankManager {
                     acct.lastTransaction.Account.lastTransaction = null;
                 acct.lastTransaction = null;
             }
-            if (acct.lastTransaction.Type.equalsIgnoreCase("trasnferout")){
+            if (acct.lastTransaction.Type.equalsIgnoreCase("transferout")){
                 acct.balance += acct.lastTransaction.Amount;
                 acct.lastTransaction.Account.balance -= acct.lastTransaction.Amount;
                 if (check_other_acct(acct)){

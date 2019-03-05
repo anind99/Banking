@@ -12,7 +12,7 @@ public class AccountTest {
 
     @Before
     public void setUp() {
-        account = new Checking(000);
+        account = new Chequing(000);
     }
 
     @Test

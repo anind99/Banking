@@ -12,14 +12,17 @@ public class ATM {
 
     /** Stores the total amount of the bills in the ATM in an array with the following order:
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
-    private static int[] bills;
+    private static int[] bills = new int[4];
     private static ArrayList<User> listOfUsers = new ArrayList<User>();
     private static BankManager BM;
 
     private static Calendar date;
 
     public ATM() {
-        bills = new int[4];
+        bills[0] = 100;
+        bills[1] = 100;
+        bills[2] = 100;
+        bills[3] = 100;
     }
 
     public static void main(String[] arg){
@@ -134,7 +137,8 @@ public class ATM {
             System.out.println("4. Transfer In");
             System.out.println("5. Transfer Out");
             System.out.println("6. Pay Bills");
-            System.out.println("7. Logout");
+            System.out.println("7. Request Account");
+            System.out.println("8. Logout");
             String option = scanner.next();
             if (option.equals("1")){
                 CreateAccount(user);
@@ -192,7 +196,7 @@ public class ATM {
                 creditCardAccounts.add(a);
             } else if (a instanceof LOC) {
                 locAccounts.add(a);
-            } else if (a instanceof Checking) {
+            } else if (a instanceof Chequing) {
                 chequingAccounts.add(a);
             } else if (a instanceof Savings) {
                 savingsAccounts.add(a);
@@ -270,11 +274,28 @@ public class ATM {
         int account_num = scanner.nextInt();
         for (Account acc: user.accounts){
             if (account_num == acc.accountNum){
-                System.out.println("Input amount");
-                double amount = scanner.nextDouble();
-                acc.withdraw(amount);
+                boolean running = true;
+                while (running) {
+                    System.out.println("Input amount (The amount has to be a multiple of five, no cents allowed): ");
+                    int amount = scanner.nextInt();
+                    if (divisibleByFive(amount)) {
+                        acc.withdraw(amount);
+                        running = false;
+                    }
+                    else {
+                        System.out.println("The amount you entered is not possible, please try again.");
+                    }
+                }
                 break;
             }
+        }
+    }
+
+    private static boolean divisibleByFive(int amount) {
+        if (amount % 5 == 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -282,21 +303,21 @@ public class ATM {
 
     private static void CreateAccount(User usr){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type the type of Account: 1 : Saving, 2: Checking, 3: Credit 4: Line of Credit");
+        System.out.println("Type the type of Account: 1 : Saving, 2: Chequing, 3: Credit 4: Line of Credit");
         int t = scanner.nextInt();
         String type = null;
         while (type == null) {
             if (t == 1) {
                 type = "Saving";
             } else if (t == 2) {
-                type = "Checking";
+                type = "Chequing";
             } else if (t == 3) {
                 type = "Credit Card";
             } else if (t == 4) {
                 type = "LOC";
             }
             else{
-                System.out.println("Type the type of Account: 1 : Saving, 2: Checking, 3: Credit 4: Line of Credit");
+                System.out.println("Type the type of Account: 1 : Saving, 2: Chequing, 3: Credit 4: Line of Credit");
                 t = scanner.nextInt();
             }
         }
@@ -325,7 +346,7 @@ public class ATM {
                     validselection = true;
                 }
                 case "2": {
-                    System.out.println("Type the type of Account: 1 : Savings, 2: Checking, 3: Credit 4: Line of Credit");
+                    System.out.println("Type the type of Account: 1 : Savings, 2: Chequing, 3: Credit 4: Line of Credit");
                 }
                 case "3": {
 
