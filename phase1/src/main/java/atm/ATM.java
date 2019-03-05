@@ -508,8 +508,9 @@ public class ATM {
             for (User usr : listOfUsers) {
                 String filename = usr.getUsername() + ".txt";
                 File userfile = new File(Storeloc + "/" + filename);
-                if (!userfile.exists())
-                    userfile.createNewFile();
+                boolean success;
+                    if (!userfile.exists())
+                        success = userfile.createNewFile();
                 FileWriter Fw = new FileWriter(userfile, false);
                 BufferedWriter writer = new BufferedWriter(Fw);
                 writer.write("Username," + usr.getUsername());
