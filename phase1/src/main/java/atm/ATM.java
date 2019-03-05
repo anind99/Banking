@@ -30,6 +30,7 @@ public class ATM {
         boolean running = true;
         debugSetup();
         setup();
+        System.out.println(System.getProperty("user.dir"));
         addSavingsInterest();
         while (running){
             String username = displayLoginMenu();

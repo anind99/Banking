@@ -46,7 +46,7 @@ public class BankManager {
                 w.write("Alerts addressed");
                 w.close();
             } catch (IOException e) {
-                System.err.println("Problem writing to the file alert.txt");
+                System.err.println("Problem writing to the file alerts.txt");
             }
         }
 
