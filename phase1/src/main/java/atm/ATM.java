@@ -421,6 +421,7 @@ public class ATM {
                     }
 
                     CreateAccount(user);
+                    validselection = true;
                 }
                 case "3": {
 
@@ -460,7 +461,7 @@ public class ATM {
 
                     Account account = selectAccount(user, "undo its last transaction");
                     BM.undo_transaction(account);
-
+                    validselection = true;
                 }
                 case "6": {
                     validselection = true;
