@@ -95,7 +95,7 @@ public class BankManager {
                     acct.lastTransaction.Account.lastTransaction = null;
                 acct.lastTransaction = null;
             }
-            if (acct.lastTransaction.Type.equalsIgnoreCase("trasnferout")){
+            if (acct.lastTransaction.Type.equalsIgnoreCase("transferout")){
                 acct.balance += acct.lastTransaction.Amount;
                 acct.lastTransaction.Account.balance -= acct.lastTransaction.Amount;
                 if (check_other_acct(acct)){
