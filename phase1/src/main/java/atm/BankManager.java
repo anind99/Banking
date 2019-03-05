@@ -37,6 +37,17 @@ public class BankManager {
         //Bank manager will always add 100 new bills when restocking
         public static void restock(int index){
             ATM.set_bills(index, 100);
+            try {
+                //System.out.println(System.getProperty("user.dir"));
+                File file = new File(System.getProperty("user.dir") + "/Text Files/alerts.txt");
+                FileOutputStream is = new FileOutputStream(file);
+                OutputStreamWriter osw = new OutputStreamWriter(is);
+                Writer w = new BufferedWriter(osw);
+                w.write("Alerts addressed");
+                w.close();
+            } catch (IOException e) {
+                System.err.println("Problem writing to the file alert.txt");
+            }
         }
 
         public void create_user(String username, String password){
