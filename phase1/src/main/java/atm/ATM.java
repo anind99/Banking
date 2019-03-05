@@ -539,16 +539,16 @@ public class ATM {
 
 
         if(rounded / 50 > bills[3]) {
-            rounded -= bills[3];
-            set_bills(3, 0);
+            rounded -= bills[3]*50;
             System.out.println("You have received " + bills[3] + " 50$ bills");
+            set_bills(3, 0);
         }else{int prevRounded = (rounded / 50);
             rounded -= ((rounded / 50)*50);
             remove_bills(3, (rounded / 50));
             System.out.println("You have received " + (prevRounded) + " 50$ bills");}
 
         if(rounded / 20 > bills[2]) {
-            rounded -= bills[2];
+            rounded -= bills[2]*20;
             System.out.println("You have received " + bills[2] + " 20$ bills");
             set_bills(2, 0);
         }else{int prevRounded = (rounded / 20);
@@ -558,7 +558,7 @@ public class ATM {
         }
 
         if(rounded / 10 > bills[1]) {
-            rounded -= bills[1];
+            rounded -= bills[1]*10;
             System.out.println("You have received " + bills[1] + " 10$ bills");
             set_bills(1, 0);
         }else{int prevRounded = (rounded / 10);
