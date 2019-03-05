@@ -18,7 +18,7 @@ public abstract class Account {
         this.balance = 0;
         this.lastTransaction = null;
         this.dateCreated = new Date();
-        this.depositNum = 0;
+        this.depositNum = 1;
 
     }
 
@@ -87,11 +87,11 @@ public abstract class Account {
                         Character.getNumericValue(line.charAt(1)) * 10 +
                         Character.getNumericValue(line.charAt(2)) * 20 +
                         Character.getNumericValue(line.charAt(3)) * 50);
-                System.out.println(amount);
+                //System.out.println(amount);
                 ATM.add_bills(0, Character.getNumericValue(line.charAt(0)));
                 ATM.add_bills(1, Character.getNumericValue(line.charAt(1)));
-                ATM.set_bills(2, Character.getNumericValue(line.charAt(2)));
-                ATM.set_bills(3, Character.getNumericValue(line.charAt(3)));
+                ATM.add_bills(2, Character.getNumericValue(line.charAt(2)));
+                ATM.add_bills(3, Character.getNumericValue(line.charAt(3)));
                 System.out.println("You have deposited $" + amount + " in cash");
             }r.close();
             return amount;
