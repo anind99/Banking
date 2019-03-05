@@ -482,13 +482,6 @@ public class ATM {
     }
 
 
-    public void processRequest() {
-
-    }
-
-    public void chooseAccount() {
-
-    }
     public static void addUserToList(User u){
         listOfUsers.add(u);
     }
