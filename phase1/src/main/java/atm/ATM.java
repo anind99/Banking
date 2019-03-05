@@ -405,7 +405,20 @@ public class ATM {
                     validselection = true;
                 }
                 case "2": {
-                    System.out.println("Type the type of Account: 1 : Savings, 2: Chequing, 3: Credit 4: Line of Credit");
+                    User user = null;
+                    while (user == null) {
+                        System.out.println("Type in the username of the user that would like to create an account: ");
+                        String username = scanner.nextLine();
+                        for (User parameter : listOfUsers) {
+                            if (parameter.getUsername().equals(username)) {
+                                user = parameter;
+                                break;
+                            }
+                        }
+                        System.out.println("The username is not valid, please try again.");
+                    }
+
+                    CreateAccount(user);
                 }
                 case "3": {
 
