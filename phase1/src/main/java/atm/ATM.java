@@ -417,6 +417,46 @@ public class ATM {
             if(bills[i] < 20){BankManager.restock(i);} // STILL NEEDS TO SEND A MESSAGE TO THE ALERT FILE
         }
     }
+
+    private void Shutdown(String Dir){
+        String Storeloc = Dir + "/users";
+        File f = new File(Storeloc);
+
+
+
+        for (User usr: listOfUsers){
+            String filename = usr.getUsername() + ".txt";
+            File userfile = new File(Storeloc +"/" + "filename");
+            if ( !userfile.exists() )
+                userfile.createNewFile();
+            FileWriter Fw = new FileWriter(userfile, false);
+            BufferedWriter writer = new BufferedWriter( Fw );
+            writer.write("Username,"+usr.getUsername());
+            writer.write("Password,"+usr.getPassword());
+            String last;
+            for (Account act: usr.accounts){
+                String header = act.type + "," + act.accountNum + "," + act.balance;
+                if (act.lastTransaction.Type.equals("withdraw") || act.lastTransaction.Type.equals("deposit")){
+                    last = act.lastTransaction.Type + "," + act.lastTransaction.Amount;
+                } else if (act.lastTransaction.Type.equals("TransferIn") || act.lastTransaction.Type.equals("TransferOut")){
+                    last = act.lastTransaction.Type + "," + act.lastTransaction.Account.accountNum + "," + act.lastTransaction.Amount;
+                } else if (act.lastTransaction.Type.equals("Paybill")){
+                    last = "Paybill," + act.lastTransaction.billname + "," +act.lastTransaction.Amount;
+                } else{
+                    last = "None";
+                }
+                writer.write(header);
+                writer.write(last);
+
+            }
+
+        }
+
+    }
+
+    private void Restart(){
+
+    }
 }
 
 
