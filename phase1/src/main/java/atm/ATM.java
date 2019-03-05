@@ -15,7 +15,7 @@ public class ATM {
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
     private static int[] bills = new int[4];
     private static ArrayList<User> listOfUsers = new ArrayList<User>();
-    private static BankManager BM;
+    private static BankManager BM = new BankManager();
 
     private static Calendar date;
 
