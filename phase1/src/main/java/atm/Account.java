@@ -1,7 +1,7 @@
 package atm;
 
 import java.io.*;
-import java.util.Date;
+import java.util.Calendar;
 
 public abstract class Account {
 
@@ -9,7 +9,7 @@ public abstract class Account {
     public int accountNum;
     protected double balance;
     public Transaction lastTransaction;
-    public Date dateCreated;
+    public Calendar dateCreated;
     protected int depositNum;
 
 
@@ -17,7 +17,7 @@ public abstract class Account {
         this.accountNum = accountNum;
         this.balance = 0;
         this.lastTransaction = null;
-        this.dateCreated = new Date();
+        this.dateCreated = ATM.getDate();
         this.depositNum = 1;
 
     }

@@ -123,6 +123,10 @@ public class ATM {
         }
     }
 
+    public static Calendar getDate() {
+        return date;
+    }
+
 
 
     private static void displayUserMenu(User user){
