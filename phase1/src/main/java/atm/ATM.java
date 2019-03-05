@@ -401,6 +401,7 @@ public class ATM {
                     String username = scanner.next();
                     System.out.println("Type the password for the new user");
                     String password = scanner.next();
+                    BM.create_user(username, password);
                     validselection = true;
                 }
                 case "2": {
