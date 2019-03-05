@@ -1,6 +1,7 @@
 package atm;
 
 import java.io.*;
+import java.io.File;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -422,8 +423,6 @@ public class ATM {
         String Storeloc = Dir + "/users";
         File f = new File(Storeloc);
 
-
-
         for (User usr: listOfUsers){
             String filename = usr.getUsername() + ".txt";
             File userfile = new File(Storeloc +"/" + "filename");
@@ -454,7 +453,38 @@ public class ATM {
 
     }
 
-    private void Restart(){
+    private void Restart(String Dir){
+        String Storeloc = Dir + "/users";
+
+        File dir = new File(Dir);
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                FileReader fr = new FileReader(child);
+                BufferedReader br = new BufferedReader(fr);
+                String line = br.readLine();
+                while (line != null){
+                    if (line.split("," )[0].equals("Username")){
+                        String name = line.split(",")[1];
+                        line = br.readLine();
+                        String pass = line.split(",")[1];
+                        ArrayList<Account> usract = new ArrayList<Account>();
+                        line = br.readLine();
+                        if (!line.split("," )[0].equals("Username")) {
+
+                            String acttype = line.split(",")[0];
+                            String actbal = line.split(",")[2];
+                            String actnum = line.split(",")[1];
+                                                        
+                        }
+
+                    }
+
+                }
+            }
+        } else {
+            System.out.println("not a directory");
+        }
 
     }
 }
