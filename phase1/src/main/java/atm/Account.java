@@ -56,7 +56,7 @@ public abstract class Account {
     private Double depositReader() {
         Double amount;
         try {
-            File file = new File(System.getProperty("user.dir") + "/Text Files/deposits.txt");
+            File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/deposits.txt");
             FileInputStream is = new FileInputStream(file);
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader r = new BufferedReader(isr);
@@ -118,7 +118,7 @@ public abstract class Account {
     //Helper function to Paybill that adds the information of the paid bill to a text file
     public boolean payBillWriting(double amount, String receiver) {
         try {
-            File file = new File(System.getProperty("user.dir") + "/Text Files/outgoing.txt");
+            File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/outgoing.txt");
             FileOutputStream is = new FileOutputStream(file);
             OutputStreamWriter osw = new OutputStreamWriter(is);
             Writer w = new BufferedWriter(osw);

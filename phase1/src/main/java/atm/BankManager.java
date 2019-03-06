@@ -38,7 +38,7 @@ public class BankManager {
             ATM.set_bills(index, 100);
             try {
                 //System.out.println(System.getProperty("user.dir"));
-                File file = new File(System.getProperty("user.dir") + "/Text Files/alerts.txt");
+                File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/alerts.txt");
                 FileOutputStream is = new FileOutputStream(file);
                 OutputStreamWriter osw = new OutputStreamWriter(is);
                 Writer w = new BufferedWriter(osw);
@@ -85,7 +85,7 @@ public class BankManager {
 
             //update the account counter number in bankmanager.txt
             try{
-                File file = new File(System.getProperty("user.dir") + "/Text Files/bankmanager.txt");
+                File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt");
                 FileOutputStream is = new FileOutputStream(file);
                 OutputStreamWriter osw = new OutputStreamWriter(is);
                 Writer w = new BufferedWriter(osw);
