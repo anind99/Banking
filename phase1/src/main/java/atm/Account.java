@@ -17,7 +17,7 @@ public abstract class Account {
         this.accountNum = accountNum;
         this.balance = 0;
         this.lastTransaction = null;
-        //this.dateCreated = ATM.getDate();
+        this.dateCreated = ATM.getDate();
         this.depositNum = 0;
 
     }

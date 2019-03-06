@@ -48,7 +48,7 @@ public class AccountTest {
         //assertEquals(1000, balance, 0.0);
     }
 
-    /**@Test
+   @Test
     public void testWithdraw() {
         ATM.set_bills(0,100);
         ATM.set_bills(1,100);
@@ -60,6 +60,6 @@ public class AccountTest {
         assertEquals(215.00, account.getBalance(), 0.0);
         //double balance = account.getBalance();
         //assertEquals(1000, balance, 0.0);
-    } */
+    }
 
 }
