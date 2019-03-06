@@ -55,7 +55,6 @@ public abstract class Account {
 
     public Double depositReader() {
         Double amount;
-        //System.out.println(System.getProperty("user.dir"));
         try {
             File file = new File(System.getProperty("user.dir") + "/Text Files/deposits.txt");
             FileInputStream is = new FileInputStream(file);
@@ -68,32 +67,8 @@ public abstract class Account {
             while (line != null && count < depositNum) {
                 count += 1;
                 line = r.readLine();
-            }
-
-            if (line != null && count >= depositNum) {
-                depositNum += 1;
-            } else {
-                line = firstLine;
-                System.out.println(line);
-                depositNum = 1;
-            }
-
-            if (line.contains(".")) {
-                amount = Double.valueOf(line);
-                System.out.println("You have deposited a cheque for $" + amount);
-            }else {
-
-                amount = Double.valueOf((Character.getNumericValue(line.charAt(0))) * 5 +
-                        Character.getNumericValue(line.charAt(1)) * 10 +
-                        Character.getNumericValue(line.charAt(2)) * 20 +
-                        Character.getNumericValue(line.charAt(3)) * 50);
-                //System.out.println(amount);
-                ATM.add_bills(0, Character.getNumericValue(line.charAt(0)));
-                ATM.add_bills(1, Character.getNumericValue(line.charAt(1)));
-                ATM.add_bills(2, Character.getNumericValue(line.charAt(2)));
-                ATM.add_bills(3, Character.getNumericValue(line.charAt(3)));
-                System.out.println("You have deposited $" + amount + " in cash");
-            }r.close();
+            } amount = depositReaderHelper(line, count, firstLine);
+            r.close();
             return amount;
         } catch (IOException e) {
             System.err.println("Problem reading the file deposits.txt");
@@ -101,6 +76,27 @@ public abstract class Account {
         }
     }
 
+    public double depositReaderHelper(String line, int count, String firstLine){
+        Double amount;
+        if (line != null && count >= depositNum){depositNum += 1;
+        }else{line = firstLine;
+                depositNum = 1;}
+
+        if (line.contains(".")){
+            amount = Double.valueOf(line);
+            System.out.println("You have deposited a cheque for $" + amount);
+        }else{ amount = Double.valueOf((Character.getNumericValue(line.charAt(0))) * 5 +
+                    Character.getNumericValue(line.charAt(1)) * 10 +
+                    Character.getNumericValue(line.charAt(2)) * 20 +
+                    Character.getNumericValue(line.charAt(3)) * 50);
+
+            ATM.add_bills(0, Character.getNumericValue(line.charAt(0)));
+            ATM.add_bills(1, Character.getNumericValue(line.charAt(1)));
+            ATM.add_bills(2, Character.getNumericValue(line.charAt(2)));
+            ATM.add_bills(3, Character.getNumericValue(line.charAt(3)));
+            System.out.println("You have deposited $" + amount + " in cash");
+        }return amount;
+    }
 
     public void withdraw(double amount) {
         if(ATM.get_amount() >= amount) {
@@ -116,14 +112,12 @@ public abstract class Account {
         boolean removed = removeMoney(amount);
         if(removed){payBillWriting(amount, receiver);}
         else{System.out.println("This transaction is not possible: insufficient funds");}
-
         this.lastTransaction = new Transaction(receiver, amount);
     }
 
     //Helper function to Paybill that adds the information of the paid bill to a text file
     public boolean payBillWriting(double amount, String receiver) {
         try {
-            //System.out.println(System.getProperty("user.dir"));
             File file = new File(System.getProperty("user.dir") + "/Text Files/outgoing.txt");
             FileOutputStream is = new FileOutputStream(file);
             OutputStreamWriter osw = new OutputStreamWriter(is);
