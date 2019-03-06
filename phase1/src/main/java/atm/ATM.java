@@ -6,8 +6,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Scanner;
 
 public class ATM {
 
@@ -28,33 +26,25 @@ public class ATM {
 
     public static void main(String[] arg){
         boolean running = true;
-        debugSetup();
         setup();
         System.out.println(System.getProperty("user.dir"));
         addSavingsInterest();
         while (running){
-            String username = displayLoginMenu();
+            String username = BankManagerInterface.displayLoginMenu();
             if (username.equals("user")){
                 for (User usr : listOfUsers) {
                     if (usr.getUsername().equals(username)) {
-                        displayUserMenu(usr);
+                        UserInterface.displayUserMenu(usr);
                     }
                 }
 
             } else if (username.equals("Manager")) {
-                displayManagerMenu();
+                BankManagerInterface.displayManagerMenu();
             }
         }
         dateIncrement();
     }
 
-    private static void debugSetup(){
-//        This function sets up our ATM environment for debugging purposes.
-//        Breaking it for merging is fine, but it shouldn't happen.
-        User user1 = new User("manager", "password", null);
-        addUserToList(user1);
-
-    }
 
     private static void addSavingsInterest(){
         if (date.get(Calendar.DAY_OF_MONTH) == 1){
@@ -131,393 +121,6 @@ public class ATM {
     }
 
 
-
-    private static void displayUserMenu(User user){
-        Scanner scanner = new Scanner(System.in);
-        boolean validselection = false;
-        boolean logout = false;
-        while (!validselection && !logout){
-            System.out.println("Select an option:");
-            System.out.println("1. Create Account");
-            System.out.println("2. Deposit");
-            System.out.println("3. Withdraw");
-            System.out.println("4. Transfer In");
-            System.out.println("5. Transfer Out");
-            System.out.println("6. Pay Bills");
-            System.out.println("7. Request Account Creation");
-            System.out.println("8. View Summary of Accounts");
-            System.out.println("9. Change Password");
-            System.out.println("10. Logout");
-            String option = scanner.next();
-            if (option.equals("1")){
-                CreateAccount(user);
-                validselection = true;
-            } else if (option.equals("2")){
-                user.Deposit();
-            } else if (option.equals("3")) {
-                Withdraw(user);
-                validselection = true;
-            } else if (option.equals("4")) {
-                printChoices(user, false);
-                Account accountTo = selectAccount(user, "transfer to");
-                Account accountFrom = selectAccount(user, "transfer from");
-                double amount = selectAmount();
-
-                accountTo.transferIn(amount, accountFrom);
-            } else if (option.equals("5")) {
-                printChoices(user, false);
-                System.out.println("Note that you cannot transfer out of a credit card account.");
-                Account accountFrom = selectAccount(user, "transfer out from");
-                Account accountTo = selectAccount(user, "transfer to");
-                double amount = selectAmount();
-
-                accountFrom.transferOut(amount, accountTo);
-            } else if (option.equals("6")) {
-                printChoices(user, false);
-                Account accountFrom = selectAccount(user, "pay the bill from");
-                System.out.println("Enter the name of the receiver of the bill: ");
-                String receiver = scanner.nextLine();
-
-                double amount = selectAmount();
-
-                accountFrom.payBill(amount, receiver.trim());
-
-            } else if (option.equals("7")) {
-                CreateAccount(user);
-            } else if (option.equals("8")) {
-                summary(user);
-            } else if (option.equals("9")) {
-                changePassword(user);
-            } else if (option.equals("10")) {
-                //Doing nothing works fine here.
-                logout = true;
-            } else {
-                System.out.println("There is no option " + option + ". Pick a number from 1 to 10.");
-            }
-        }
-
-    }
-
-
-    private static void changePassword(User user) {
-        System.out.println("Type in your new password:");
-        Scanner scanner = new Scanner(System.in);
-        String newPassword = scanner.nextLine();
-        user.setPassword(newPassword);
-    }
-
-    private static void summary(User user) {
-        printChoices(user, true);
-        System.out.println("Your net total is: " + user.getNetTotal());
-
-    }
-
-    private static void printChoices(User user, boolean summary) {
-        // Prints list of account numbers a user has.
-
-        ArrayList<Account> creditCardAccounts = new ArrayList<>();
-        ArrayList<Account> locAccounts = new ArrayList<>();
-        ArrayList<Account> chequingAccounts = new ArrayList<>();
-        ArrayList<Account> savingsAccounts = new ArrayList<>();
-
-        for (Account a : user.getAccounts()) {
-            if (a instanceof CreditCard) {
-                creditCardAccounts.add(a);
-            } else if (a instanceof LOC) {
-                locAccounts.add(a);
-            } else if (a instanceof Chequing) {
-                chequingAccounts.add(a);
-            } else if (a instanceof Savings) {
-                savingsAccounts.add(a);
-            }
-        }
-
-        StringBuilder choices = new StringBuilder("Here are your list of accounts: \n");
-
-        // Add Credit Card accounts to String.
-        for (Account i : creditCardAccounts) {
-            choices.append("1. Credit Card Accounts: \n");
-            choices.append(i.accountNum);
-            choices.append(", Balance: ");
-            choices.append(i.balance);
-            if (summary) {
-                choices.append(", Last Transaction: ");
-                choices.append(i.lastTransaction);
-                choices.append(", Date Created");
-                choices.append(i.dateCreated);
-            }
-            choices.append("\n");
-        }
-
-        // Add LOC accounts to String.
-        for (Account i: locAccounts) {
-            choices.append("2. Line of Credit Accounts: \n");
-            choices.append(i.accountNum);
-            choices.append(", Balance: ");
-            choices.append(i.balance);
-            if (summary) {
-                choices.append(", Last Transaction: ");
-                choices.append(i.lastTransaction);
-                choices.append(", Date Created");
-                choices.append(i.dateCreated);
-            }
-            choices.append("\n");
-        }
-
-        // Add Chequing Accounts to String.
-
-        for (Account i: chequingAccounts) {
-            choices.append("3. Chequing Accounts: \n");
-            choices.append(i.accountNum);
-            choices.append(", Balance: ");
-            choices.append(i.balance);
-            if (summary) {
-                choices.append(", Last Transaction: ");
-                choices.append(i.lastTransaction);
-                choices.append(", Date Created");
-                choices.append(i.dateCreated);
-            }
-            choices.append("\n");
-        }
-
-        for (Account i : savingsAccounts) {
-            choices.append("4. Savings Accounts: ");
-            choices.append(i.accountNum);
-            choices.append(", Balance: ");
-            choices.append(i.balance);
-            if (summary) {
-                choices.append(", Last Transaction: ");
-                choices.append(i.lastTransaction);
-                choices.append(", Date Created");
-                choices.append(i.dateCreated);
-            }
-            choices.append("\n");
-        }
-
-        System.out.println(choices);
-    }
-
-    private static Account selectAccount(User user, String action) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the account number you want to " + action + ": ");
-        int accountNumTo = scanner.nextInt();
-        Account account = null;
-
-        for (Account a : user.getAccounts()) {
-            if (a.accountNum == accountNumTo) {
-                account = a;
-            }
-        }
-
-        if (account != null) {
-            return account;
-        } else {
-            System.out.println("The account number you entered is not valid. Please try again.");
-            return selectAccount(user, action);
-        }
-    }
-
-    private static double selectAmount() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the desired amount you would like to transfer: ");
-        Double num = scanner.nextDouble();
-        return num;
-
-    }
-
-    private static void Withdraw(User user){
-        System.out.println("Choose Accounts by account number: ");
-        for (Account acc : user.accounts){
-         System.out.println(acc.type +" " + acc.accountNum + " Balance: " + " ");
-        }
-        Scanner scanner = new Scanner(System.in);
-        int account_num = scanner.nextInt();
-        for (Account acc: user.accounts){
-            if (account_num == acc.accountNum){
-                boolean running = true;
-                while (running) {
-                    System.out.println("Input amount (The amount has to be a multiple of five, no cents allowed): ");
-                    int amount = scanner.nextInt();
-                    if (divisibleByFive(amount)) {
-                        acc.withdraw(amount);
-                        running = false;
-                    }
-                    else {
-                        System.out.println("The amount you entered is not possible, please try again.");
-                    }
-                }
-                break;
-            }
-        }
-    }
-
-    private static boolean divisibleByFive(int amount) {
-        if (amount % 5 == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-
-    private static void CreateAccount(User usr){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type the type of Account: 1 : Saving, 2: Chequing, 3: Credit 4: Line of Credit");
-        int t = scanner.nextInt();
-        String type = null;
-        while (type == null) {
-            if (t == 1) {
-                type = "Saving";
-            } else if (t == 2) {
-                type = "Chequing";
-            } else if (t == 3) {
-                type = "Credit Card";
-            } else if (t == 4) {
-                type = "LOC";
-            }
-            else{
-                System.out.println("Type the type of Account: 1 : Saving, 2: Chequing, 3: Credit 4: Line of Credit");
-                t = scanner.nextInt();
-            }
-        }
-        BM.create_account(usr, type);
-    }
-
-
-    private static void displayManagerMenu(){
-        Scanner scanner = new Scanner(System.in);
-        boolean validselection = false;
-        while (!validselection){
-            System.out.println("Select an option:");
-            System.out.println("1. Create User");
-            System.out.println("2. Create Account");
-            System.out.println("3. Check Alerts");
-            System.out.println("4. Restock Machine");
-            System.out.println("5. Undo transaction");
-            System.out.println("6. Logout");
-            String option = scanner.next();
-            switch (option) {
-                case "1": {
-                    System.out.println("Type the username for the new user");
-                    String username = scanner.next();
-                    System.out.println("Type the password for the new user");
-                    String password = scanner.next();
-                    BM.create_user(username, password);
-                    validselection = true;
-                }
-                case "2": {
-                    User user = null;
-                    while (user == null) {
-                        System.out.println("Type in the username of the user that would like to create an account: ");
-                        String username = scanner.nextLine();
-                        for (User parameter : listOfUsers) {
-                            if (parameter.getUsername().equals(username)) {
-                                user = parameter;
-                                break;
-                            }
-                        }
-                        System.out.println("The username is not valid, please try again.");
-                    }
-
-                    CreateAccount(user);
-                    validselection = true;
-                }
-                case "3": {
-                    try {
-                        File file = new File(System.getProperty("user.dir") + "/Text Files/alerts.txt");
-                        FileInputStream is = new FileInputStream(file);
-                        InputStreamReader isr = new InputStreamReader(is);
-                        BufferedReader r = new BufferedReader(isr);
-
-                        String line = r.readLine();
-                        System.out.println(line);
-
-                        while (line != null) {
-                            line = r.readLine();
-                            System.out.println(line);
-                        }
-                    } catch (IOException e) {
-                        System.err.println("Problem reading the file deposits.txt");
-                    }
-                    validselection = true;
-                }
-                case "4": {
-                    System.out.println("Set which dollar bill amount to 100?");
-                    System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars 5. Quit menu");
-                    String dollarType = scanner.next();
-                    if (dollarType.equals("1")) {
-                        BankManager.restock(1);
-                    } else if (dollarType.equals("2")) {
-                        BankManager.restock(2);
-                    } else if (dollarType.equals("3")) {
-                        BankManager.restock(3);
-                    } else if (dollarType.equals("4")) {
-                        BankManager.restock(4);
-                    } else if (dollarType.equals("5")) {
-                        BankManager.restock(5);
-                    } else {
-                        System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 6.");
-                    }
-
-                }
-                case "5": {
-                    User user = null;
-                    while (user == null) {
-                        System.out.println("Type in the username of the user that would like to undo their last transaction: ");
-                        String username = scanner.nextLine();
-                        for (User parameter : listOfUsers) {
-                            if (parameter.getUsername().equals(username)) {
-                                user = parameter;
-                                break;
-                            }
-                        }
-                        System.out.println("The username is not valid, please try again.");
-                    }
-
-                    Account account = selectAccount(user, "undo its last transaction");
-                    BM.undo_transaction(account);
-                    validselection = true;
-                }
-                case "6": {
-                    validselection = true;
-                }
-                default: {
-                    System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
-                }
-            }
-        }
-
-
-
-    }
-
-    private static String displayLoginMenu(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome. Please login.");
-            User loginUser;
-            System.out.println("Username: ");
-            String usernameAttempt = scanner.next();
-            System.out.println("Password: ");
-            String passwordAttempt = scanner.next();
-            if (usernameAttempt.equals("manager") && passwordAttempt.equals("password")) {
-                System.out.println("Login Successful. Logging in as bank manager");
-                return "manager";
-            } else {
-                for (User usr : listOfUsers) {
-                    if (usr.getUsername().equals(usernameAttempt) && usr.getPassword().equals(passwordAttempt)) {
-                        loginUser = usr;
-                        System.out.println("Login Successful. Logging into " + loginUser.getUsername());
-                        return loginUser.getUsername();
-                    }
-                }
-            }
-
-        System.out.println("Login Failed, please try again");
-        return "";
-    }
-
-
     /** set the number of bills at array index "bill" */
     public static void set_bills(int bill, int number){
         bills[bill] = number;
@@ -572,7 +175,7 @@ public class ATM {
     }
 
     public static void addUserToList(User u){
-        listOfUsers.add(u);
+        ATM.getListOfUsers().add(u);
     }
 
     /**Alerts the manager when the amount of any denomination goes below 20.*/
@@ -685,6 +288,14 @@ public class ATM {
         }
 
     }
+    protected static ArrayList<User> getListOfUsers(){
+        return listOfUsers;
+    }
+
+    protected static BankManager getBM(){
+        return BM;
+    }
+
 }
 
 
