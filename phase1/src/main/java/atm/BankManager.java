@@ -50,34 +50,34 @@ public class BankManager {
         }
 
         public void create_user(String username, String password){
-            ArrayList accounts = new ArrayList<>();
+            ArrayList<Account> accounts = new ArrayList<Account>();
             User newUser = new User(username, password, accounts);
-            create_account(newUser, "credit card");
-            create_account(newUser, "loc");
-            create_account(newUser, "chequing");
-            create_account(newUser, "saving");
+            create_account(newUser, "CreditCard");
+            create_account(newUser, "LOC");
+            create_account(newUser, "Chequing");
+            create_account(newUser, "Saving");
             ATM.addUserToList(newUser);
         }
 
 
 
         public void create_account(User user, String acct_type){
-            if (acct_type.equalsIgnoreCase("credit card")) {
+            if (acct_type.equalsIgnoreCase("CreditCard")) {
                 CreditCard newCreditCard = new CreditCard(this.acct_counter);
                 user.accounts.add(newCreditCard);
                 this.acct_counter += 1;
             }
-            if (acct_type.equalsIgnoreCase("loc")){
+            else if (acct_type.equalsIgnoreCase("LOC")){
                 LOC newLoc = new LOC(this.acct_counter);
                 user.accounts.add(newLoc);
                 this.acct_counter += 1;
             }
-            if (acct_type.equalsIgnoreCase("chequing")){
+            else if (acct_type.equalsIgnoreCase("chequing")){
                 Chequing newChequing = new Chequing(this.acct_counter);
                 user.accounts.add(newChequing);
                 this.acct_counter += 1;
             }
-            if (acct_type.equalsIgnoreCase("saving")){
+            else if (acct_type.equalsIgnoreCase("saving")){
                 Savings newSaving = new Savings(this.acct_counter);
                 user.accounts.add(newSaving);
                 this.acct_counter += 1;
