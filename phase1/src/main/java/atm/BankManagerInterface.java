@@ -6,8 +6,10 @@ import java.util.Scanner;
 public class BankManagerInterface {
     static void displayManagerMenu(){
         Scanner scanner = new Scanner(System.in);
+        boolean loggedOut = false;
         boolean validselection = false;
         while (!validselection){
+            System.out.println("\nWelcome bank manager, please press * at any point to return to this main menu \n");
             System.out.println("Select an option:");
             System.out.println("1. Create User");
             System.out.println("2. Create Account");
@@ -20,6 +22,7 @@ public class BankManagerInterface {
                 case "1": {
                     System.out.println("Type the username for the new user");
                     String username = scanner.next();
+                    if(username.equals("*")){displayManagerMenu();}
                     System.out.println("Type the password for the new user");
                     String password = scanner.next();
                     ATM.getBM().create_user(username, password);
@@ -28,16 +31,23 @@ public class BankManagerInterface {
                 }
                 case "2": {
                     User user = null;
+                    int count = 0;
+                    int count2 = 0;
                     while (user == null) {
-                        System.out.println("Type in the username of the user that would like to create an account: ");
+                        if (count != 0){
+                            System.out.println("Type in the username of the user that would like to create an account: ");
+                        }
                         String username = scanner.nextLine();
+                        if(username.equals("*")){displayManagerMenu();}
                         for (User parameter : ATM.getListOfUsers()) {
                             if (parameter.getUsername().equals(username)) {
                                 user = parameter;
                                 break;
                             }
                         }
-                        System.out.println("The username is not valid, please try again.");
+                        if (count2 !=0){System.out.println("The username is not valid, please try again.");}
+                        count += 1;
+                        count2 += 1;
                     }
 
                     UserInterface.CreateAccount(user);
@@ -64,7 +74,7 @@ public class BankManagerInterface {
                 }
                 case "4": {
                     System.out.println("Set which dollar bill amount to 100?");
-                    System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars 5. Quit menu");
+                    System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars *. Quit menu");
                     String dollarType = scanner.next();
                     switch (dollarType) {
                         case "1":
@@ -79,11 +89,11 @@ public class BankManagerInterface {
                         case "4":
                             BankManager.restock(4);
                             break;
-                        case "5":
+                        case "*":
                             displayManagerMenu();
                             break;
                         default:
-                            System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 5.");
+                            System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 4 or quit.");
                             break;
                     }
                     validselection = true;
@@ -92,16 +102,24 @@ public class BankManagerInterface {
                 }
                 case "5": {
                     User user = null;
+                    int count = 0;
+                    int count2 = 0;
                     while (user == null) {
-                        System.out.println("Type in the username of the user that would like to undo their last transaction: ");
+                        if (count2 != 0){
+                            System.out.println("Type in the username of the user that would like to undo their last transaction: ");
+                        }
                         String username = scanner.nextLine();
+                        if(username.equals("*")){displayManagerMenu();}
+                        System.out.println(username);
                         for (User parameter : ATM.getListOfUsers()) {
                             if (parameter.getUsername().equals(username)) {
                                 user = parameter;
                                 break;
                             }
-                        }
-                        System.out.println("The username is not valid, please try again.");
+                        } if (count != 0){System.out.println("The username is not valid, please try again.");}
+                        count += 1;
+                        count2 += 1;
+                        //System.out.println("The username is not valid, please try again.");
                     }
 
                     Account account = UserInterface.selectAccount(user, "undo its last transaction");
@@ -111,13 +129,14 @@ public class BankManagerInterface {
                 }
                 case "6": {
                     validselection = true;
+                    loggedOut = true;
                     break;
                 }
                 default: {
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
                     break;
                 }
-            }displayManagerMenu();
+            }if (!loggedOut) displayManagerMenu();
         }
 
 
