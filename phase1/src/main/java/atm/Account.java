@@ -6,11 +6,11 @@ import java.util.Calendar;
 public abstract class Account {
 
     public String type = null;
-    public int accountNum;
+    public final int accountNum;
     protected double balance;
     public Transaction lastTransaction;
-    public Calendar dateCreated;
-    protected int depositNum;
+    public final Calendar dateCreated;
+    private int depositNum;
 
 
     public Account(int accountNum) {
@@ -53,7 +53,7 @@ public abstract class Account {
         this.lastTransaction = new Transaction(amount, "deposit");
     }
 
-    public Double depositReader() {
+    private Double depositReader() {
         Double amount;
         try {
             File file = new File(System.getProperty("user.dir") + "/Text Files/deposits.txt");
@@ -76,19 +76,19 @@ public abstract class Account {
         }
     }
 
-    public double depositReaderHelper(String line, int count, String firstLine){
-        Double amount;
+    private double depositReaderHelper(String line, int count, String firstLine){
+        double amount;
         if (line != null && count >= depositNum){depositNum += 1;
         }else{line = firstLine;
                 depositNum = 1;}
 
         if (line.contains(".")){
-            amount = Double.valueOf(line);
+            amount = Double.parseDouble(line);
             System.out.println("You have deposited a cheque for $" + amount);
-        }else{ amount = Double.valueOf((Character.getNumericValue(line.charAt(0))) * 5 +
-                    Character.getNumericValue(line.charAt(1)) * 10 +
-                    Character.getNumericValue(line.charAt(2)) * 20 +
-                    Character.getNumericValue(line.charAt(3)) * 50);
+        }else{ amount = (double) ((Character.getNumericValue(line.charAt(0))) * 5 +
+                Character.getNumericValue(line.charAt(1)) * 10 +
+                Character.getNumericValue(line.charAt(2)) * 20 +
+                Character.getNumericValue(line.charAt(3)) * 50);
 
             ATM.add_bills(0, Character.getNumericValue(line.charAt(0)));
             ATM.add_bills(1, Character.getNumericValue(line.charAt(1)));
