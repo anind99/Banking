@@ -1,7 +1,7 @@
 package atm;
 
 public class LOC extends Debt{
-    public String type = "LOC";
+    public final String type;
     public LOC(int accountNum) {
         super(accountNum);
         this.type = "LOC";

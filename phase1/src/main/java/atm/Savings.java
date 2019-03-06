@@ -2,7 +2,7 @@ package atm;
 
 public class Savings extends Asset {
 
-    public double interestRate;
+    public final double interestRate;
 
     public Savings(int accountNum){
         super(accountNum);
