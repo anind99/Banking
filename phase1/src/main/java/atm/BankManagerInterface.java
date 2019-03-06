@@ -44,7 +44,7 @@ public class BankManagerInterface {
                 }
                 case "3": {
                     try {
-                        File file = new File(System.getProperty("user.dir") + "/Text Files/alerts.txt");
+                        File file = new File(System.getProperty("user.dir") + "phase1/src/main/Text Files/alerts.txt");
                         FileInputStream is = new FileInputStream(file);
                         InputStreamReader isr = new InputStreamReader(is);
                         BufferedReader r = new BufferedReader(isr);
@@ -57,7 +57,7 @@ public class BankManagerInterface {
                             System.out.println(line);
                         }
                     } catch (IOException e) {
-                        System.err.println("Problem reading the file deposits.txt");
+                        System.err.println("Problem reading the file alerts.txt");
                     }
                     validselection = true;
                 }
