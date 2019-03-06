@@ -11,7 +11,7 @@ public class BankManager {
         public BankManager(){
             last = "0";
             try {
-                File file = new File(System.getProperty("user.dir") + "/Text Files/bankmanager.txt"); //FIX
+                File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt"); //FIX
                 FileInputStream is = new FileInputStream(file);
                 InputStreamReader isr = new InputStreamReader(is);
                 BufferedReader r = new BufferedReader(isr);
