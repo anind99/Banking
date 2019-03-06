@@ -123,7 +123,7 @@ public class BankManagerInterface {
                     }
 
                     Account account = UserInterface.selectAccount(user, "undo its last transaction");
-                    ATM.getBM().undo_transaction(account);
+                    ATM.getBM().undo_transaction(user, account);
                     validselection = true;
                     break;
                 }

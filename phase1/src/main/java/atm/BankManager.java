@@ -94,41 +94,73 @@ public class BankManager {
             }catch(IOException e){e.printStackTrace();}
         }
 
-        public void undo_transaction(Account acct){
-            if (acct.lastTransaction.Type.equalsIgnoreCase("deposit")){
-                acct.balance -= acct.lastTransaction.Amount;
-                acct.lastTransaction = null;
-            }
-            if (acct.lastTransaction.Type.equalsIgnoreCase("withdrawal")){
-                acct.balance += acct.lastTransaction.Amount;
-                acct.lastTransaction = null;
-            }
-            if (acct.lastTransaction.Type.equalsIgnoreCase("transferin")){
-                acct.balance -= acct.lastTransaction.Amount;
-                acct.lastTransaction.Account.balance += acct.lastTransaction.Amount;
-                if (check_other_acct(acct))
-                    acct.lastTransaction.Account.lastTransaction = null;
-                acct.lastTransaction = null;
-            }
-            if (acct.lastTransaction.Type.equalsIgnoreCase("transferout")){
-                acct.balance += acct.lastTransaction.Amount;
-                acct.lastTransaction.Account.balance -= acct.lastTransaction.Amount;
-                if (check_other_acct(acct)){
-                    acct.lastTransaction.Account.lastTransaction = null;
+    public void undo_transaction(User usr, Account acct){
+        if (acct.lastTransaction == null){
+            System.out.println("No previous transactions");
+        }
+        else if (acct.lastTransaction.Type.equalsIgnoreCase("deposit")){
+            acct.balance -= acct.lastTransaction.Amount;
+            acct.lastTransaction = null;
+        }
+        else if (acct.lastTransaction.Type.equalsIgnoreCase("withdrawal")){
+            acct.balance += acct.lastTransaction.Amount;
+            acct.lastTransaction = null;
+        }
+        else if (acct.lastTransaction.Type.equalsIgnoreCase("transferin")){
+            Account TransferAct = null;
+            for (Account ac2:usr.accounts){
+                if (ac2.accountNum == acct.lastTransaction.Account){
+                    TransferAct = ac2;
                 }
-                acct.lastTransaction = null;
             }
-            if (acct.lastTransaction.Type.equalsIgnoreCase("paybill")){
-                acct.balance += acct.lastTransaction.Amount;
+            if (TransferAct != null) {
+                acct.balance -= acct.lastTransaction.Amount;
+                TransferAct.balance += acct.lastTransaction.Amount;
+                if (check_other_acct(usr, acct))
+                    TransferAct.lastTransaction = null;
                 acct.lastTransaction = null;
             }
         }
 
-        public boolean check_other_acct(Account acct){
-            return (acct.lastTransaction.Account.lastTransaction.Type.equalsIgnoreCase(acct.lastTransaction.Type)
-                    && (acct.lastTransaction.Account.lastTransaction.Account.accountNum == acct.accountNum)
-                    && (acct.lastTransaction.Account.lastTransaction.Amount == acct.lastTransaction.Amount));
+        else if (acct.lastTransaction.Type.equalsIgnoreCase("transferout")) {
+            Account TransferAct = null;
+            for (Account ac2 : usr.accounts) {
+                if (ac2.accountNum == acct.lastTransaction.Account) {
+                    TransferAct = ac2;
+                }
+            }
+            if (TransferAct != null) {
+                acct.balance += acct.lastTransaction.Amount;
+                TransferAct.balance -= acct.lastTransaction.Amount;
+                if (check_other_acct(usr, acct)) {
+                    TransferAct.lastTransaction = null;
+                }
+                acct.lastTransaction = null;
+            }
         }
+        else if (acct.lastTransaction.Type.equalsIgnoreCase("paybill")){
+            acct.balance += acct.lastTransaction.Amount;
+            acct.lastTransaction = null;
+        }
+    }
+
+
+    public boolean check_other_acct(User usr, Account acct){
+        Account otheract = null;
+
+        for (Account ac2 : usr.accounts) {
+            if (ac2.accountNum == acct.lastTransaction.Account){
+                otheract = ac2;
+            }
+        }
+        if (otheract == null || otheract.lastTransaction == null){
+            return false;
+        }
+        return (otheract.lastTransaction.Type.equalsIgnoreCase(acct.lastTransaction.Type)
+                && (otheract.lastTransaction.Account == acct.accountNum)
+                && (otheract.lastTransaction.Amount.equals(acct.lastTransaction.Amount)));
+    }
+
 //        public Date setDate(){
 //            Date today;
 //            return today;

@@ -35,7 +35,7 @@ public abstract class Account {
         if(removed){addMoney(amount);}
         else{System.out.println("This transaction is not possible: insufficient funds");}
 
-        this.lastTransaction = new Transaction(accountFrom, amount, "transferin");
+        this.lastTransaction = new Transaction(accountFrom.accountNum, amount, "TransferIn");
     }
 
     public void transferOut(double amount, Account accountTo) {
@@ -43,7 +43,7 @@ public abstract class Account {
         if(removed){accountTo.addMoney(amount);}
         else{System.out.println("This transaction is not possible: insufficient funds");}
 
-        this.lastTransaction = new Transaction(accountTo, amount, "transferout");
+        this.lastTransaction = new Transaction(accountTo.accountNum, amount, "TransferOut");
     }
 
     public void deposit() {

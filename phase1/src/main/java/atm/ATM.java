@@ -216,46 +216,58 @@ public class ATM {
     }
 
 
-    private void Shutdown(String Dir){
+    public void Shutdown(String Dir){
         String Storeloc = Dir + "users.dir";
-        File f = new File(Storeloc);
 
-        try {
-            for (User usr : listOfUsers) {
-                String filename = usr.getUsername() + ".txt";
-                File userfile = new File(Storeloc + "/" + filename);
-                boolean success;
-                    if (!userfile.exists())
-                        success = userfile.createNewFile();
-                FileWriter Fw = new FileWriter(userfile, false);
-                BufferedWriter writer = new BufferedWriter(Fw);
-                writer.write("Username," + usr.getUsername());
-                writer.write("Password," + usr.getPassword());
-                String last;
-                for (Account act : usr.accounts) {
-                    String header = act.type + "," + act.accountNum + "," + act.balance;
-                    if (act.lastTransaction.Type.equals("withdraw") || act.lastTransaction.Type.equals("deposit")) {
-                        last = act.lastTransaction.Type + "," + act.lastTransaction.Amount;
-                    } else if (act.lastTransaction.Type.equals("TransferIn") || act.lastTransaction.Type.equals("TransferOut")) {
-                        last = act.lastTransaction.Type + "," + act.lastTransaction.Account.accountNum + "," + act.lastTransaction.Amount;
-                    } else if (act.lastTransaction.Type.equals("Paybill")) {
-                        last = "Paybill," + act.lastTransaction.billname + "," + act.lastTransaction.Amount;
-                    } else {
-                        last = "None";
+        for (User usr : listOfUsers) {
+            String filename = usr.getUsername() + ".txt";
+            File userfile = new File(Storeloc + "/" + filename);
+            boolean success = true;
+            if (!userfile.exists())
+                try {
+                    success = userfile.createNewFile();
+                } catch (Exception e) {
+                    System.out.println("error creating file");
+                }
+
+            if (success) {
+                try{
+
+                    FileWriter Fw = new FileWriter(userfile, false);
+                    BufferedWriter writer = new BufferedWriter(Fw);
+                    writer.write("Username," + usr.getUsername());
+                    writer.write("Password," + usr.getPassword());
+                    String last = "None";
+
+                    for (Account act : usr.accounts) {
+                        String header = act.type + "," + act.accountNum + "," + act.balance;
+                        if (act.lastTransaction == null){
+                            last = "None";
+                        }
+                        else if (act.lastTransaction.Type.equals("withdraw") || act.lastTransaction.Type.equals("deposit")) {
+                            last = act.lastTransaction.Type + "," + act.lastTransaction.Amount;
+                        } else if (act.lastTransaction.Type.equals("TransferIn") || act.lastTransaction.Type.equals("TransferOut")) {
+                            last = act.lastTransaction.Type + "," + act.lastTransaction.Account + "," + act.lastTransaction.Amount;
+                        } else if (act.lastTransaction.Type.equals("Paybill")) {
+                            last = "Paybill," + act.lastTransaction.billname + "," + act.lastTransaction.Amount;
+                        }
+                        writer.write(header);
+                        writer.write(last);
+
                     }
-                    writer.write(header);
-                    writer.write(last);
 
+                }
+                catch(Exception e) {
+                    System.out.println("error writing to file");
                 }
 
             }
-        } catch(Exception e) {
-            System.out.println("error");
-        }
 
+        }
     }
 
-    private void Restart(String Dir){
+
+    public void Restart(String Dir){
 
         String Storeloc = Dir + "/users";
 
@@ -267,36 +279,108 @@ public class ATM {
                     FileReader fr = new FileReader(child);
                     BufferedReader br = new BufferedReader(fr);
                     String line = br.readLine();
-                    while (line != null) {
-                        if (line.split(",")[0].equals("Username")) {
-                            String name = line.split(",")[1];
-                            line = br.readLine();
-                            String pass = line.split(",")[1];
-                            ArrayList<Account> usracts = new ArrayList<Account>();
-                            line = br.readLine();
-                            if (!line.split(",")[0].equals("Username")) {
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                                String acttype = line.split(",")[0];
-                                String actbal = line.split(",")[2];
-                                String actnum = line.split(",")[1];
-                                String Dat = line.split(",")[3];
-                                Calendar dat = Calendar.getInstance();
-                                dat.setTime(sdf.parse(Dat));
-                                line = br.readLine();
-                                
-                            }
+                    ArrayList<Account> usracts = new ArrayList<Account>();
+                    String name = null;
+                    String pass = null;
+
+                    if (line.split(",")[0].equals("Username")) {
+                        name = line.split(",")[1];
+                        line = br.readLine();
+                        if (line.split(",")[0].equals("Password")) {
+                            pass = line.split(",")[1];
                         }
                     }
 
+                    line = br.readLine();
+                    boolean format = false;
+                    if (name != null && pass != null){
+                        format = true;
+                    }
+                    while (line != null && format) {
+
+                        try{
+
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            String acttype = line.split(",")[0];
+                            int actbal = Integer.parseInt(line.split(",")[2]);
+                            int actnum = Integer.parseInt(line.split(",")[1]);
+                            String Dat = line.split(",")[3];
+                            Calendar dat = Calendar.getInstance();
+                            dat.setTime(sdf.parse(Dat));
+
+                            line = br.readLine();
+
+                            String Type = line.split(",")[0];
+                            Transaction t = null;
+                            String billname;
+
+                            if (Type.equals("Payblil")) {
+                                billname = line.split(",")[1];
+                                Double Amount = Double.parseDouble(line.split(",")[2]);
+                                t = new Transaction(billname, Amount);
+                            } else if (Type.equals("TransferIn") || Type.equals("TransferOut")) {
+                                int transfernum = Integer.parseInt(line.split(",")[1]);
+                                Double Amount = Double.parseDouble(line.split(",")[2]);
+                                t = new Transaction(transfernum, Amount, Type);
+
+                            } else if (Type.equals("Withdraw") || Type.equals("Deposit")) {
+                                Double Amount = Double.parseDouble(line.split(",")[1]);
+                                t = new Transaction(Amount, Type);
+                            }
+
+                            Account userAct;
+                            if (acttype.equals("Credit")) {
+                                userAct = new CreditCard(actnum);
+                                userAct.balance = actbal;
+                                userAct.dateCreated = dat;
+                                userAct.lastTransaction = t;
+                                usracts.add(userAct);
+                            } else if (acttype.equals("LOC")) {
+                                userAct = new LOC(actnum);
+                                userAct.balance = actbal;
+                                userAct.dateCreated = dat;
+                                userAct.lastTransaction = t;
+                                usracts.add(userAct);
+                            } else if (acttype.equals("Saving")) {
+                                userAct = new Savings(actnum);
+                                userAct.balance = actbal;
+                                userAct.dateCreated = dat;
+                                userAct.lastTransaction = t;
+                                usracts.add(userAct);
+                            } else if (acttype.equals("Chequing")) {
+                                userAct = new Chequing(actnum);
+                                userAct.balance = actbal;
+                                userAct.dateCreated = dat;
+                                userAct.lastTransaction = t;
+                                usracts.add(userAct);
+                            }
+
+                        } catch (Exception e){
+                            format = false;
+                        }
+                    }
+
+                    if (format){
+                        User usr = new User(name, pass, usracts);
+                        listOfUsers.add(usr);
+                    } else{
+                        System.out.println("Wrong format - file "+child.getName());
+                    }
+
                 } catch(Exception e){
-                    System.out.println("error");
+                    System.out.println("error reading file: " + child.getName());
                 }
             }
+
+
         } else {
             System.out.println("not a directory");
         }
 
     }
+
+
+
     public static ArrayList<User> getListOfUsers(){
         return listOfUsers;
     }

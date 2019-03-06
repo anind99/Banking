@@ -3,11 +3,11 @@ package atm;
 public class Transaction {
 
     String Type;
-    Account Account = null;
+    int Account = 0;
     Double Amount;
     String billname = null;
 
-    public Transaction(Account Acc, Double Amount, String Type) {
+    public Transaction(int Acc, Double Amount, String Type) {
         /**
          * Constructor for Transfer In/Out
          * Type: refers to transaction type
