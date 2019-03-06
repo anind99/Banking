@@ -5,21 +5,20 @@ import java.io.*;
 
 public class BankManager {
 
-    public static String users_txt;
     private String last, line;
     private int acct_counter;
-    private BufferedReader input;
-    private BufferedWriter output;
 
         public BankManager(){
-            this.users_txt = System.getProperty("user.dir") + "/Text Files/users.txt"; //NEED TO FIX!
+            last = "0";
             try {
-                input = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/Text Files/bankmanager.txt"));
-                output = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "/Text Files/bankmanager.txt"));
-                while ((line = input.readLine()) != null) {
-                    last = line;
-                }
-                input.close();
+                File file = new File(System.getProperty("user.dir") + "/Text Files/bankmanager.txt"); //FIX
+                FileInputStream is = new FileInputStream(file);
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader r = new BufferedReader(isr);
+                //line = r.readLine();
+                while ((line = r.readLine()) != null) {
+                    last = line; }
+                r.close();
             }catch (FileNotFoundException e){
                 System.out.println(
                         "Unable to open file '" +
@@ -86,7 +85,12 @@ public class BankManager {
 
             //update the account counter number in bankmanager.txt
             try{
-                output.write(this.acct_counter);
+                File file = new File(System.getProperty("user.dir") + "/Text Files/bankmanager.txt");
+                FileOutputStream is = new FileOutputStream(file);
+                OutputStreamWriter osw = new OutputStreamWriter(is);
+                Writer w = new BufferedWriter(osw);
+                w.write(this.acct_counter);
+                w.close();
             }catch(IOException e){e.printStackTrace();}
         }
 

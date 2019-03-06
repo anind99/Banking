@@ -17,7 +17,7 @@ public abstract class Account {
         this.accountNum = accountNum;
         this.balance = 0;
         this.lastTransaction = null;
-        this.dateCreated = ATM.getDate();
+        //this.dateCreated = ATM.getDate();
         this.depositNum = 0;
 
     }
@@ -57,7 +57,7 @@ public abstract class Account {
         Double amount;
         //System.out.println(System.getProperty("user.dir"));
         try {
-            File file = new File(System.getProperty("user.dir") + "/Text Files/deposits.txt"); //FIX
+            File file = new File(System.getProperty("user.dir") + "/Text Files/deposits.txt");
             FileInputStream is = new FileInputStream(file);
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader r = new BufferedReader(isr);
