@@ -24,6 +24,7 @@ public class BankManagerInterface {
                     String password = scanner.next();
                     ATM.getBM().create_user(username, password);
                     validselection = true;
+                    break;
                 }
                 case "2": {
                     User user = null;
@@ -40,6 +41,8 @@ public class BankManagerInterface {
                     }
 
                     UserInterface.CreateAccount(user);
+                    validselection = true;
+                    break;
                 }
                 case "3": {
                     try {System.out.println(System.getProperty("user.dir"));
@@ -51,31 +54,40 @@ public class BankManagerInterface {
                         System.out.println(line);
 
                         while ((line = r.readLine()) != null) {
-                            //line = r.readLine();
                             System.out.println(line);
                         }
                     } catch (IOException e) {
                         System.err.println("Problem reading the file alerts.txt");
                     }
                     validselection = true;
+                    break;
                 }
                 case "4": {
                     System.out.println("Set which dollar bill amount to 100?");
                     System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars 5. Quit menu");
                     String dollarType = scanner.next();
-                    if (dollarType.equals("1")) {
-                        BankManager.restock(1);
-                    } else if (dollarType.equals("2")) {
-                        BankManager.restock(2);
-                    } else if (dollarType.equals("3")) {
-                        BankManager.restock(3);
-                    } else if (dollarType.equals("4")) {
-                        BankManager.restock(4);
-                    } else if (dollarType.equals("5")) {
-                       displayManagerMenu();
-                    } else {
-                        System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 5.");
+                    switch (dollarType) {
+                        case "1":
+                            BankManager.restock(1);
+                            break;
+                        case "2":
+                            BankManager.restock(2);
+                            break;
+                        case "3":
+                            BankManager.restock(3);
+                            break;
+                        case "4":
+                            BankManager.restock(4);
+                            break;
+                        case "5":
+                            displayManagerMenu();
+                            break;
+                        default:
+                            System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 5.");
+                            break;
                     }
+                    validselection = true;
+                    break;
 
                 }
                 case "5": {
@@ -95,14 +107,17 @@ public class BankManagerInterface {
                     Account account = UserInterface.selectAccount(user, "undo its last transaction");
                     ATM.getBM().undo_transaction(account);
                     validselection = true;
+                    break;
                 }
                 case "6": {
                     validselection = true;
+                    break;
                 }
                 default: {
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
+                    break;
                 }
-            }
+            }displayManagerMenu();
         }
 
 
