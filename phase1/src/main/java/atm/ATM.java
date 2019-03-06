@@ -26,6 +26,7 @@ public class ATM {
 
     public static void main(String[] arg){
         boolean running = true;
+        debugSetup();
         setup();
         System.out.println(System.getProperty("user.dir"));
         addSavingsInterest();
@@ -45,6 +46,13 @@ public class ATM {
         dateIncrement();
     }
 
+    private static void debugSetup(){
+//        This function sets up our ATM environment for debugging purposes.
+//        Breaking it for merging is fine, but it shouldn't happen.
+        User user1 = new User("manager", "password", null);
+        addUserToList(user1);
+
+    }
 
     private static void addSavingsInterest(){
         if (date.get(Calendar.DAY_OF_MONTH) == 1){
