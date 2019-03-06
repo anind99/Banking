@@ -110,7 +110,9 @@ public abstract class Account {
 
     public void payBill(double amount, String receiver){
         boolean removed = removeMoney(amount);
-        if(removed){payBillWriting(amount, receiver);}
+        if(removed){payBillWriting(amount, receiver);
+            System.out.println("You paid " + amount + " to " + receiver);
+        }
         else{System.out.println("This transaction is not possible: insufficient funds");}
         this.lastTransaction = new Transaction(receiver, amount);
     }
