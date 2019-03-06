@@ -9,7 +9,7 @@ public abstract class Account {
     public final int accountNum;
     protected double balance;
     public Transaction lastTransaction;
-    public final Calendar dateCreated;
+    public Calendar dateCreated;
     private int depositNum;
 
 

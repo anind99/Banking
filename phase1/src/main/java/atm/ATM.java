@@ -297,9 +297,10 @@ public class ATM {
         }
 
     }
-    protected static ArrayList<User> getListOfUsers(){
+    public static ArrayList<User> getListOfUsers(){
         return listOfUsers;
     }
+
 
     protected static BankManager getBM(){
         return BM;
