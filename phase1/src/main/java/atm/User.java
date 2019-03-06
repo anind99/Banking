@@ -38,9 +38,8 @@ public class User {
         this.accounts.add(account);
     }
 
-    public String getUsername(){
-        return this.username;
-    }
+    public  String getUsername(){ return username; }
+
     public String getPassword(){
         return this.pass;
     }
