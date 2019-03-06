@@ -39,7 +39,7 @@ public class ATM {
                     }
                 }
 
-            } else if (username.equals("Manager")) {
+            } else if (username.equals("manager")) {
                 BankManagerInterface.displayManagerMenu();
             }
         }
