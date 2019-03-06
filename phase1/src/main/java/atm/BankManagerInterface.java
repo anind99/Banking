@@ -40,20 +40,18 @@ public class BankManagerInterface {
                     }
 
                     UserInterface.CreateAccount(user);
-                    validselection = true;
                 }
                 case "3": {
-                    try {
-                        File file = new File(System.getProperty("user.dir") + "phase1/src/main/Text Files/alerts.txt");
+                    try {System.out.println(System.getProperty("user.dir"));
+                        File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/alerts.txt");
                         FileInputStream is = new FileInputStream(file);
                         InputStreamReader isr = new InputStreamReader(is);
                         BufferedReader r = new BufferedReader(isr);
-
-                        String line = r.readLine();
+                        String line = "Alerts:";
                         System.out.println(line);
 
-                        while (line != null) {
-                            line = r.readLine();
+                        while ((line = r.readLine()) != null) {
+                            //line = r.readLine();
                             System.out.println(line);
                         }
                     } catch (IOException e) {
@@ -74,9 +72,9 @@ public class BankManagerInterface {
                     } else if (dollarType.equals("4")) {
                         BankManager.restock(4);
                     } else if (dollarType.equals("5")) {
-                        BankManager.restock(5);
+                       displayManagerMenu();
                     } else {
-                        System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 6.");
+                        System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 5.");
                     }
 
                 }

@@ -199,7 +199,7 @@ public class ATM {
 
         try {
             //System.out.println(System.getProperty("user.dir"));
-            File file = new File(System.getProperty("user.dir") + "phase1/src/main/Text Files/alerts.txt");
+            File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/alerts.txt");
             FileOutputStream is = new FileOutputStream(file);
             OutputStreamWriter osw = new OutputStreamWriter(is);
             Writer w = new BufferedWriter(osw);
