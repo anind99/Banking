@@ -9,6 +9,7 @@ public class BankManager {
     private int acct_counter;
 
         public BankManager(){
+            acct_counter =0;
             last = "0";
             try {
                 File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt"); //FIX
@@ -89,7 +90,7 @@ public class BankManager {
                 FileOutputStream is = new FileOutputStream(file);
                 OutputStreamWriter osw = new OutputStreamWriter(is);
                 Writer w = new BufferedWriter(osw);
-                w.write(this.acct_counter);
+                w.write(String.valueOf(this.acct_counter));
                 w.close();
             }catch(IOException e){e.printStackTrace();}
         }
