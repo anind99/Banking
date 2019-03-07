@@ -9,7 +9,7 @@ public class UserInterface {
         boolean validselection = false;
         boolean logout = false;
         while (!validselection && !logout){
-            System.out.println("Select an option:");
+            System.out.println("\nSelect an option:");
             System.out.println("1. Create Account");
             System.out.println("2. Deposit");
             System.out.println("3. Withdraw");
@@ -23,12 +23,14 @@ public class UserInterface {
             String option = scanner.next();
             if (option.equals("1")){
                 CreateAccount(user);
-                validselection = true;
+                //validselection = true;
             } else if (option.equals("2")){
-                user.Deposit();
+                for (Account acc : user.getAccounts()) {acc.deposit();
+                    break;
+                } /// NEEDS FIXING
             } else if (option.equals("3")) {
                 Withdraw(user);
-                validselection = true;
+                //validselection = true;
             } else if (option.equals("4")) {
                 printChoices(user, false);
                 Account accountTo = selectAccount(user, "transfer to");

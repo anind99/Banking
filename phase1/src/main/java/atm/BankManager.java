@@ -70,7 +70,13 @@ public class BankManager {
 
 
         public void create_account(User user, String acct_type){
-            if (acct_type.equalsIgnoreCase("CreditCard")) {
+            if (acct_type.equalsIgnoreCase("chequing")) {
+                Chequing newChequing = new Chequing(this.acct_counter);
+                user.accounts.add(newChequing);
+                this.acct_counter += 1;
+                System.out.println("New chequing account created");
+            }
+            else if (acct_type.equalsIgnoreCase("CreditCard")) {
                 CreditCard newCreditCard = new CreditCard(this.acct_counter);
                 user.accounts.add(newCreditCard);
                 this.acct_counter += 1;
@@ -82,12 +88,7 @@ public class BankManager {
                 this.acct_counter += 1;
                 System.out.println("New LOC account created");
             }
-            else if (acct_type.equalsIgnoreCase("chequing")){
-                Chequing newChequing = new Chequing(this.acct_counter);
-                user.accounts.add(newChequing);
-                this.acct_counter += 1;
-                System.out.println("New chequing account created");
-            }
+
             else if (acct_type.equalsIgnoreCase("saving")){
                 Savings newSaving = new Savings(this.acct_counter);
                 user.accounts.add(newSaving);
