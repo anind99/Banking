@@ -9,8 +9,7 @@ public class BankManager {
     private int acct_counter;
 
         public BankManager(){
-            acct_counter =0;
-            last = "0";
+            //last = null;
             try {
                 File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt"); //FIX
                 FileInputStream is = new FileInputStream(file);
