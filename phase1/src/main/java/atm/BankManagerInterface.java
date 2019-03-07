@@ -154,14 +154,15 @@ public class BankManagerInterface {
             System.out.println("Password: ");
             String passwordAttempt = scanner.next();
             if (usernameAttempt.equals("manager") && passwordAttempt.equals("password")) {
-                System.out.println("Login Successful. Logging in as bank manager");
+                System.out.println("Login successful. Logging in as bank manager");
                 return "manager";
             } else {
                 for (User usr : ATM.getListOfUsers()) {
                     if (usr.getUsername().equals(usernameAttempt) && usr.getPassword().equals(passwordAttempt)) {
                         loginUser = usr;
-                        System.out.println("Login Successful. Logging into " + loginUser.getUsername());
+                        System.out.println("Login successful. Logging into " + loginUser.getUsername());
                         return loginUser.getUsername();
+
                     }
                 }
             }

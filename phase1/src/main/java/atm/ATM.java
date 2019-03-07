@@ -33,10 +33,11 @@ public class ATM {
         addSavingsInterest();
         while (running){
             String username = BankManagerInterface.displayLoginMenu();
-            if (username.equals("user")){
+            if (!username.equals("manager")){
                 for (User usr : listOfUsers) {
                     if (usr.getUsername().equals(username)) {
                         UserInterface.displayUserMenu(usr);
+                        break;
                     }
                 }
 
