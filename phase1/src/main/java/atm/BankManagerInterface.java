@@ -31,6 +31,7 @@ public class BankManagerInterface {
                 }
                 case "2": {
                     User user = null;
+                    boolean created = false;
                     int count = 0;
                     int count2 = 0;
                     while (user == null) {
@@ -42,15 +43,16 @@ public class BankManagerInterface {
                         for (User parameter : ATM.getListOfUsers()) {
                             if (parameter.getUsername().equals(username)) {
                                 user = parameter;
+                                UserInterface.CreateAccount(user);
+                                created = true;
                                 break;
                             }
                         }
-                        if (count2 !=0){System.out.println("The username is not valid, please try again.");}
+                        if (count2 !=0 && !created){System.out.println("The username is not valid, please try again.");}
                         count += 1;
                         count2 += 1;
                     }
 
-                    UserInterface.CreateAccount(user);
                     validselection = true;
                     break;
                 }

@@ -50,15 +50,23 @@ public class BankManager {
         }
 
         public void create_user(String username, String password){
-            ArrayList<Account> accounts = new ArrayList<Account>();
+            ArrayList<Account> accounts = new ArrayList<>();
+            boolean contains = false;
+            for (User parameter : ATM.getListOfUsers()) {
+                if (parameter.getUsername().equals(username)) {
+                    contains = true;
+                }
+            }if(!contains){
             User newUser = new User(username, password, accounts);
             create_account(newUser, "CreditCard");
             create_account(newUser, "LOC");
             create_account(newUser, "Chequing");
             create_account(newUser, "Saving");
+            System.out.println("New user: " + username + " created");
             ATM.addUserToList(newUser);
-        }
+            }else{ System.out.println("User name already exists, please try a different name");}
 
+        }
 
 
         public void create_account(User user, String acct_type){
@@ -66,24 +74,28 @@ public class BankManager {
                 CreditCard newCreditCard = new CreditCard(this.acct_counter);
                 user.accounts.add(newCreditCard);
                 this.acct_counter += 1;
+                System.out.println("New creditcard account created");
             }
             else if (acct_type.equalsIgnoreCase("LOC")){
                 LOC newLoc = new LOC(this.acct_counter);
                 user.accounts.add(newLoc);
                 this.acct_counter += 1;
+                System.out.println("New LOC account created");
             }
             else if (acct_type.equalsIgnoreCase("chequing")){
                 Chequing newChequing = new Chequing(this.acct_counter);
                 user.accounts.add(newChequing);
                 this.acct_counter += 1;
+                System.out.println("New chequing account created");
             }
             else if (acct_type.equalsIgnoreCase("saving")){
                 Savings newSaving = new Savings(this.acct_counter);
                 user.accounts.add(newSaving);
                 this.acct_counter += 1;
+                System.out.println("New savings account created");
             }
 
-            //update the account counter number in bankmanager.txt
+
             try{
                 File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt");
                 FileOutputStream is = new FileOutputStream(file);

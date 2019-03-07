@@ -184,8 +184,7 @@ public class ATM {
     }
 
     public static void addUserToList(User u){
-        ATM.getListOfUsers().add(u);
-    }
+        ATM.getListOfUsers().add(u); }
 
     /**Alerts the manager when the amount of any denomination goes below 20.*/
     public static void alertManager() {
