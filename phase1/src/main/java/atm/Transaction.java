@@ -65,15 +65,15 @@ public class Transaction implements Serializable {
 
     public String toString() {
         if (this.Type.equalsIgnoreCase("transferin")) {
-            return "Account Number: " + this.Account + "\nType of Transaction: Transfer In";
+            return "Transferred in " + this.Amount +" from account " + this.Account;
         } else if (this.Type.equalsIgnoreCase("transferout")) {
-            return "Account Number: " + this.Account + "\nType of Transaction: Transfer Out";
+            return "Transferred out " + this.Amount + " from account: " + this.Account;
         } else if (this.Type.equalsIgnoreCase("withdraw")) {
-            return "Account Number: " + this.Account + "\nType of Transaction: Withdrawal";
+            return "Withdrew " + this.Amount;
         } else if (this.Type.equals("deposit")) {
-            return "Account Number: " + this.Account + "\nType of Transaction: Deposit";
+            return "Deposited " + this.Amount;
         } else {
-            return "Account Number: " + this.Account + "\nType of Transaction: Pay Bill";
+            return "Paid " + this.Amount + " to " + this.billname;
         }
     }
 
