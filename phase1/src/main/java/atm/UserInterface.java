@@ -68,6 +68,7 @@ public class UserInterface {
                 case "9":
                     //Doing nothing works fine here.
                     logout = true;
+                    BankManagerInterface.displayLoginMenu();
                     break;
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 9.");

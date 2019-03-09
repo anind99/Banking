@@ -96,6 +96,17 @@ public class BankManager implements Serializable{
                 System.out.println("New savings account created.");
             }
 
+            boolean primary = false;
+            for (Account a : user.accounts) {
+                if (a.getType().equals("chequing")) {
+                    if (((Chequing)a).isPrimary()){primary = true;}
+                }
+            }if(!primary){
+                for (Account a : user.accounts) {
+                if (a.getType().equals("chequing")){
+            ((Chequing)a).setPrimary();
+            System.out.println("primary set");
+                break;}}}
 
             try{
                 File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt");
