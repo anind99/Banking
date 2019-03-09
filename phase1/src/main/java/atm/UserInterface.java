@@ -14,67 +14,61 @@ public class UserInterface {
         while (!validselection && !logout) {
             System.out.println("\nWelcome ATM user, please press * at any point to return to this main menu \n");
             System.out.println("Select an option:");
-            System.out.println("1. Create Account");
-            System.out.println("2. Deposit");
-            System.out.println("3. Withdraw");
-            System.out.println("4. Transfer In");
-            System.out.println("5. Transfer Out");
-            System.out.println("6. Pay Bills");
-            System.out.println("7. Request Account Creation");
-            System.out.println("8. View Summary of Accounts");
-            System.out.println("9. Change Password");
-            System.out.println("10. Logout");
+            System.out.println("1. Deposit");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Transfer In");
+            System.out.println("4. Transfer Out");
+            System.out.println("5. Pay Bills");
+            System.out.println("6. Request Account Creation");
+            System.out.println("7. View Summary of Accounts");
+            System.out.println("8. Change Password");
+            System.out.println("9. Logout");
             String option = scanner.next();
             switch (option) {
                 case "1":
-                    CreateAccount(user);
-                    validselection = true;
-                    displayUserMenu(user);
-                    break;
-                case "2":
                     deposit(user);
                     break;
-                case "3":
+                case "2":
                     Withdraw(user);
                     validselection = true;
                     displayUserMenu(user);
                     break;
-                case "4":
+                case "3":
                     transferIn(user);
                     validselection = true;
                     displayUserMenu(user);
                     break;
-                case "5":
+                case "4":
                     transferOut(user);
                     validselection = true;
                     displayUserMenu(user);
                     break;
-                case "6":
+                case "5":
                     payBill(user);
                     validselection = true;
                     displayUserMenu(user);
                     break;
-                case "7":
+                case "6":
                     CreateAccount(user);
                     validselection = true;
                     displayUserMenu(user);
                     break;
-                case "8":
+                case "7":
                     summary(user);
                     validselection = true;
                     displayUserMenu(user);
                     break;
-                case "9":
+                case "8":
                     changePassword(user);
                     validselection = true;
                     displayUserMenu(user);
                     break;
-                case "10":
+                case "9":
                     //Doing nothing works fine here.
                     logout = true;
                     break;
                 default:
-                    System.out.println("There is no option " + option + ". Pick a number from 1 to 10.");
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 9.");
                     break;
             }
         }

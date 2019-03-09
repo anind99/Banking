@@ -25,13 +25,6 @@ public class User implements Serializable {
         }
         return sum;
     }
-    public void Deposit(){
-
-    }
-
-    public void updatePassword(String s){
-        this.pass = s;
-    }
 
     public ArrayList<Account> getAccounts(){
         return this.accounts;
@@ -54,13 +47,14 @@ public class User implements Serializable {
         this.pass = s;
     }
 
-    public String getDateCreated(Account account) {
-        return account.dateCreated.toString();
+    public Date getDateCreated(Account account) {
+        return account.dateCreated.getTime();
     }
 
     public Transaction getLastTransaction(Account account) {
         return account.lastTransaction;
     }
+
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
