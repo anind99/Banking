@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.io.*;
 
-public class BankManager {
+public class BankManager implements Serializable{
 
     private String last, line;
     private int acct_counter;

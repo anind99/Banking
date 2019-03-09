@@ -6,7 +6,8 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 public class UserInterface {
-    static void displayUserMenu(User user) {
+
+    public static void displayUserMenu(User user) {
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
         boolean logout = false;
