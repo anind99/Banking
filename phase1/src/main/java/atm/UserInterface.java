@@ -128,6 +128,10 @@ public class UserInterface {
         String type = selectTypeOfAccount(false, user);
         printChoices(user, false, type);
         Account accountTo = selectAccount(user, "transfer to");
+
+        System.out.println("Which account do you want to transfer from?");
+        String typeTwo = selectTypeOfAccount(true, user);
+        printChoices(user, false, typeTwo);
         Account accountFrom = selectAccount(user, "transfer from");
         double amount = selectAmount();
 
@@ -140,7 +144,12 @@ public class UserInterface {
         String type = selectTypeOfAccount(true, user);
         printChoices(user, false, type);
         Account accountFrom = selectAccount(user, "transfer out from");
+
+        System.out.println("Which account do you want to transfer to?");
+        String typeTwo = selectTypeOfAccount(false, user);
+        printChoices(user, false, typeTwo);
         Account accountTo = selectAccount(user, "transfer to");
+
         double amount = selectAmount();
 
         accountFrom.transferOut(amount, accountTo);
