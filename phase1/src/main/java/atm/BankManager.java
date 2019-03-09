@@ -58,10 +58,10 @@ public class BankManager {
                 }
             }if(!contains){
             User newUser = new User(username, password, accounts);
+            create_account(newUser, "Chequing");
+            create_account(newUser, "Savings");
             create_account(newUser, "CreditCard");
             create_account(newUser, "LOC");
-            create_account(newUser, "Chequing");
-            create_account(newUser, "Saving");
             System.out.println("New user: " + username + " created");
             ATM.addUserToList(newUser);
             }else{ System.out.println("User name already exists, please try a different name");}

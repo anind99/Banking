@@ -9,8 +9,10 @@ public class UserInterface {
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
         boolean logout = false;
-        while (!validselection && !logout){
-            System.out.println("\nSelect an option:");
+        label:
+        while (!validselection && !logout) {
+            System.out.println("\nWelcome ATM user, please press * at any point to return to this main menu \n");
+            System.out.println("Select an option:");
             System.out.println("1. Create Account");
             System.out.println("2. Deposit");
             System.out.println("3. Withdraw");
@@ -22,52 +24,72 @@ public class UserInterface {
             System.out.println("9. Change Password");
             System.out.println("10. Logout");
             String option = scanner.next();
-            if (option.equals("1")){
-                CreateAccount(user);
-                validselection = true;
-                displayUserMenu(user);
-            } else if (option.equals("2")){
-                for (Account acc : user.getAccounts()) {acc.deposit();
+            switch (option) {
+                case "1":
+                    CreateAccount(user);
+                    validselection = true;
+                    displayUserMenu(user);
                     break;
-                } /// NEEDS FIXING
-            } else if (option.equals("3")) {
-                Withdraw(user);
-                validselection = true;
-            } else if (option.equals("4")) {
-                transferIn(user);
-                validselection = true;
-            } else if (option.equals("5")) {
-                transferOut(user);
-                validselection = true;
-            } else if (option.equals("6")) {
-                payBill(user);
-                validselection = true;
-            } else if (option.equals("7")) {
-                CreateAccount(user);
-                validselection = true;
-            } else if (option.equals("8")) {
-                summary(user);
-                validselection = true;
-            } else if (option.equals("9")) {
-                changePassword(user);
-                validselection = true;
-            } else if (option.equals("10")) {
-                //Doing nothing works fine here.
-                logout = true;
-            } else {
-                System.out.println("There is no option " + option + ". Pick a number from 1 to 10.");
+                case "2":
+                    for (Account acc : user.getAccounts()) {
+                        acc.deposit();
+                        break;
+                    } /// NEEDS FIXING
+                    break;
+                case "3":
+                    Withdraw(user);
+                    validselection = true;
+                    displayUserMenu(user);
+                    break;
+                case "4":
+                    transferIn(user);
+                    validselection = true;
+                    displayUserMenu(user);
+                    break;
+                case "5":
+                    transferOut(user);
+                    validselection = true;
+                    displayUserMenu(user);
+                    break;
+                case "6":
+                    payBill(user);
+                    validselection = true;
+                    displayUserMenu(user);
+                    break;
+                case "7":
+                    CreateAccount(user);
+                    validselection = true;
+                    displayUserMenu(user);
+                    break;
+                case "8":
+                    summary(user);
+                    validselection = true;
+                    displayUserMenu(user);
+                    break;
+                case "9":
+                    changePassword(user);
+                    validselection = true;
+                    displayUserMenu(user);
+                    break;
+                case "10":
+                    //Doing nothing works fine here.
+                    logout = true;
+                    break;
+                default:
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 10.");
+                    break;
             }
         }
 
     }
 
     protected static void CreateAccount(User user){
-        String type = selectTypeOfAccount(false);
+        String type = selectTypeOfAccount(false, user);
         ATM.getBM().create_account(user, type);
     }
 
     protected static void Withdraw(User user){
-        String type = selectTypeOfAccount(false);
+        String type = selectTypeOfAccount(false, user);
         printChoices(user, false, type);
 
         Scanner scanner = new Scanner(System.in);
@@ -93,7 +115,7 @@ public class UserInterface {
     private static void transferIn(User user) {
         // Method for users to transfer in.
 
-        String type = selectTypeOfAccount(false);
+        String type = selectTypeOfAccount(false, user);
         printChoices(user, false, type);
         Account accountTo = selectAccount(user, "transfer to");
         Account accountFrom = selectAccount(user, "transfer from");
@@ -105,7 +127,7 @@ public class UserInterface {
     private static void transferOut(User user) {
         // Method for users to transfer out.
 
-        String type = selectTypeOfAccount(true);
+        String type = selectTypeOfAccount(true, user);
         printChoices(user, false, type);
         Account accountFrom = selectAccount(user, "transfer out from");
         Account accountTo = selectAccount(user, "transfer to");
@@ -118,7 +140,7 @@ public class UserInterface {
         // Method for users to pay bills.
 
         Scanner scanner = new Scanner(System.in);
-        String type = selectTypeOfAccount(true);
+        String type = selectTypeOfAccount(true, user);
         printChoices(user, false, type);
         Account accountFrom = selectAccount(user, "pay the bill from");
         System.out.println("Enter the name of the receiver of the bill: ");
@@ -135,7 +157,11 @@ public class UserInterface {
         System.out.println("Type in your new password:");
         Scanner scanner = new Scanner(System.in);
         String newPassword = scanner.nextLine();
+        if (!newPassword.equals("*")){
         user.setPassword(newPassword);
+        System.out.println("\nPassword change successful");}
+        else{System.out.println("\nPassword not changed");
+            displayUserMenu(user);}
     }
 
     private static void summary(User user) {
@@ -156,8 +182,9 @@ public class UserInterface {
         ArrayList<Account> accounts = new ArrayList<>();
 
         for (Account a : user.getAccounts()) {
-            if (a.type.equals(typeOfAccount)) {
+            if (a.getType().equals(typeOfAccount)) {
                 accounts.add(a);
+                break;
             }
         }
 
@@ -182,7 +209,7 @@ public class UserInterface {
         return choices;
     }
 
-    private static String selectTypeOfAccount(boolean transferOut) {
+    private static String selectTypeOfAccount(boolean transferOut, User user) {
         // Allows users to pick the type of account they want to access and returns their type as a string.
 
         StringBuilder toPrint = new StringBuilder("Select the type of account: \n 1. Chequing \n" +
@@ -203,6 +230,7 @@ public class UserInterface {
 
         while (!validselection) {
             type = scanner.nextLine();
+            if(type.equals("*")){displayUserMenu(user);}
 
             if (type.equals("1") || type.equals("2") || type.equals("3") || (!transferOut && type.equals("4"))) {
                 validselection = true;

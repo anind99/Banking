@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 public abstract class Account {
 
-    public String type = null;
+    public String type;
     public final int accountNum;
     protected double balance;
     public Transaction lastTransaction;
@@ -24,6 +24,10 @@ public abstract class Account {
 
     public double getBalance(){
         return this.balance;
+    }
+
+    public String getType(){
+        return this.type;
     }
 
     abstract void addMoney (double amount);
