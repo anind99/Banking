@@ -204,9 +204,9 @@ public class UserInterface {
 
             if (type.equals("1") || type.equals("2") || type.equals("3") || (!transferOut && type.equals("4"))) {
                 validselection = true;
+            } else {
+                System.out.println("That is not a valid selection. Please try again.");
             }
-
-            System.out.println("That is not a valid selection. Please try again.");
         }
 
         return returnTypeOfAccount(type, transferOut);
