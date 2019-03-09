@@ -6,6 +6,8 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.text.DateFormat;
+import java.util.Date;
 
 public class ATM  {
     
@@ -220,10 +222,9 @@ public class ATM  {
     }
 
 
-    public void Shutdown(String Dir){
-        String Storeloc = Dir + "users.dir";
-
-        for (User usr : listOfUsers) {
+    public static void shutdown(){
+        String Storeloc = "Text Files/users";
+        for (User usr : ATM.getListOfUsers()) {
             String filename = usr.getUsername() + ".txt";
             File userfile = new File(Storeloc + "/" + filename);
             boolean success = true;
@@ -232,153 +233,194 @@ public class ATM  {
                     success = userfile.createNewFile();
                 } catch (Exception e) {
                     System.out.println("error creating file");
+                    assert(false);
                 }
 
             if (success) {
                 try{
-
                     FileWriter Fw = new FileWriter(userfile, false);
                     BufferedWriter writer = new BufferedWriter(Fw);
                     writer.write("Username," + usr.getUsername());
+                    writer.newLine();
                     writer.write("Password," + usr.getPassword());
+                    writer.newLine();
+                    System.out.println(usr.getUsername());
                     String last = "None";
 
                     for (Account act : usr.accounts) {
-                        String header = act.type + "," + act.accountNum + "," + act.balance;
+
+                        Date date = act.dateCreated.getTime();
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        String formattedDate=dateFormat.format(date);
+
+                        String header = act.type + "," + act.accountNum + "," + act.balance + ","+formattedDate+",";
                         if (act.lastTransaction == null){
                             last = "None";
                         }
-                        else if (act.lastTransaction.Type.equals("withdraw") || act.lastTransaction.Type.equals("deposit")) {
-                            last = act.lastTransaction.Type + "," + act.lastTransaction.Amount;
-                        } else if (act.lastTransaction.Type.equals("TransferIn") || act.lastTransaction.Type.equals("TransferOut")) {
-                            last = act.lastTransaction.Type + "," + act.lastTransaction.Account + "," + act.lastTransaction.Amount;
-                        } else if (act.lastTransaction.Type.equals("Paybill")) {
-                            last = "Paybill," + act.lastTransaction.billname + "," + act.lastTransaction.Amount;
+                        else if (act.lastTransaction.Type.equalsIgnoreCase("withdraw") || act.lastTransaction.Type.equalsIgnoreCase("deposit")) {
+                            last = act.lastTransaction.Type + "," + act.lastTransaction.Amount + ",";
+                        } else if (act.lastTransaction.Type.equalsIgnoreCase("TransferIn") || act.lastTransaction.Type.equalsIgnoreCase("TransferOut")) {
+                            last = act.lastTransaction.Type + "," + act.lastTransaction.Account + "," + act.lastTransaction.Amount + ",";
+                        } else if (act.lastTransaction.Type.equalsIgnoreCase("Paybill")) {
+                            last = "Paybill," + act.lastTransaction.billname + "," + act.lastTransaction.Amount +",";
                         }
+
                         writer.write(header);
+                        writer.newLine();
                         writer.write(last);
+                        writer.newLine();
+
+
 
                     }
-
+                    writer.close();
+                    assert(true);
                 }
                 catch(Exception e) {
                     System.out.println("error writing to file");
+                    assert(false);
                 }
 
             }
 
         }
+
     }
 
 
-    public void Restart(String Dir){
 
-        String Storeloc = Dir + "/users";
+    public static void Restart(){
 
-        File dir = new File(Storeloc);
-        File[] directoryListing = dir.listFiles();
-        if (directoryListing != null) {
+
+        String dir = "Text Files/users";
+        File directory = new File(dir);
+        File[] directoryListing = directory.listFiles();
+        User n;
+        try {
             for (File child : directoryListing) {
-                try {
-                    FileReader fr = new FileReader(child);
-                    BufferedReader br = new BufferedReader(fr);
-                    String line = br.readLine();
-                    ArrayList<Account> usracts = new ArrayList<Account>();
-                    String name = null;
-                    String pass = null;
+                FileReader fr = new FileReader(child);
+                BufferedReader br = new BufferedReader(fr);
+                String line = br.readLine();
+                ArrayList<Account> usracts = new ArrayList<>();
+                String name = null;
+                String pass = null;
 
-                    if (line.split(",")[0].equals("Username")) {
-                        name = line.split(",")[1];
-                        line = br.readLine();
-                        if (line.split(",")[0].equals("Password")) {
-                            pass = line.split(",")[1];
-                        }
-                    }
-
+                if (line.split(",")[0].equals("Username")) {
+                    name = line.split(",")[1];
                     line = br.readLine();
-                    boolean format = false;
-                    if (name != null && pass != null){
-                        format = true;
+                    System.out.println("done: " +name);
+                    if (line.split(",")[0].equals("Password")) {
+                        pass = line.split(",")[1];
+                        System.out.println("done pass: "+pass);
                     }
-                    while (line != null && format) {
+                }
+                boolean format = false;
+                if (name != null && pass != null){
+                    format = true;
+                }
 
-                        try{
+                while(line != null && format){
+                    try{
+                        line = br.readLine();
+                        boolean infoaquired = false;
+                        boolean transaction = false;
+                        String acttype = null;
+                        Double actbal = null;
+                        int actnum = 0;
+                        Calendar dat = null;
+                        Transaction t = null;
+                        boolean primary = false;
 
+                        System.out.println(line.split(",").length);
+                        if (line.split(",").length == 4 || line.split(",").length == 5) {
+                            if (line.split(",").length == 5){
+                                primary = Boolean.getBoolean(line.split(",")[4]);
+                            }
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                            String acttype = line.split(",")[0];
-                            int actbal = Integer.parseInt(line.split(",")[2]);
-                            int actnum = Integer.parseInt(line.split(",")[1]);
+                            acttype = line.split(",")[0];
+                            actbal = Double.parseDouble(line.split(",")[2]);
+                            actnum = Integer.parseInt(line.split(",")[1]);
                             String Dat = line.split(",")[3];
-                            Calendar dat = Calendar.getInstance();
+                            dat = Calendar.getInstance();
                             dat.setTime(sdf.parse(Dat));
+                            System.out.println("done account creation: " + acttype + " Balance: " + actbal + " Num: " + actnum +" "+dat.getTime());
+                            infoaquired = true;
+                        }
+                        line = br.readLine();
 
-                            line = br.readLine();
-
+                        if (line.split(",").length == 3 || line.split(",").length == 2){
                             String Type = line.split(",")[0];
-                            Transaction t = null;
                             String billname;
 
-                            if (Type.equals("Payblil")) {
+                            if (Type.equalsIgnoreCase("Paybill")) {
                                 billname = line.split(",")[1];
                                 Double Amount = Double.parseDouble(line.split(",")[2]);
                                 t = new Transaction(billname, Amount);
-                            } else if (Type.equals("TransferIn") || Type.equals("TransferOut")) {
+                                t.billname = billname;
+                                t.Amount = Amount;
+                                transaction = true;
+
+                            } else if (Type.equalsIgnoreCase("TransferIn") || Type.equalsIgnoreCase("TransferOut")) {
                                 int transfernum = Integer.parseInt(line.split(",")[1]);
                                 Double Amount = Double.parseDouble(line.split(",")[2]);
                                 t = new Transaction(transfernum, Amount, Type);
+                                transaction = true;
 
-                            } else if (Type.equals("Withdraw") || Type.equals("Deposit")) {
+                            } else if (Type.equalsIgnoreCase("Withdraw") || Type.equalsIgnoreCase("Deposit")) {
                                 Double Amount = Double.parseDouble(line.split(",")[1]);
                                 t = new Transaction(Amount, Type);
+                                transaction = true;
                             }
+                            System.out.println("Transaction creation: " +transaction+" "+Type);
 
+                        }
+                        if (transaction && infoaquired){
                             Account userAct;
-                            if (acttype.equals("Credit")) {
+                            if (acttype.equalsIgnoreCase("CreditCard")) {
                                 userAct = new CreditCard(actnum);
                                 userAct.balance = actbal;
                                 userAct.dateCreated = dat;
                                 userAct.lastTransaction = t;
                                 usracts.add(userAct);
-                            } else if (acttype.equals("LOC")) {
+                            } else if (acttype.equalsIgnoreCase("LOC")) {
                                 userAct = new LOC(actnum);
+                                userAct.type = "LOC";
                                 userAct.balance = actbal;
                                 userAct.dateCreated = dat;
                                 userAct.lastTransaction = t;
                                 usracts.add(userAct);
-                            } else if (acttype.equals("Saving")) {
+                            } else if (acttype.equalsIgnoreCase("Savings")) {
                                 userAct = new Savings(actnum);
                                 userAct.balance = actbal;
                                 userAct.dateCreated = dat;
                                 userAct.lastTransaction = t;
                                 usracts.add(userAct);
-                            } else if (acttype.equals("Chequing")) {
-                                userAct = new Chequing(actnum);
+                            } else if (acttype.equalsIgnoreCase("Chequing")) {
+                                userAct = new Chequing(actnum, primary);
                                 userAct.balance = actbal;
                                 userAct.dateCreated = dat;
                                 userAct.lastTransaction = t;
                                 usracts.add(userAct);
                             }
+                            System.out.println("done adding account to user array: "+acttype);
 
-                        } catch (Exception e){
-                            format = false;
                         }
-                    }
 
-                    if (format){
-                        User usr = new User(name, pass, usracts);
-                        listOfUsers.add(usr);
-                    } else{
-                        System.out.println("Wrong format - file "+child.getName());
+                    }catch(Exception e){
+                        System.out.println("end of file reached");
+                        format = false;
                     }
-
-                } catch(Exception e){
-                    System.out.println("error reading file: " + child.getName());
+                }
+                br.close();
+                if (name != null && pass != null && usracts.size() != 0){
+                    n = new User(name, pass, usracts);
+                    System.out.println("user created: "+n.getUsername()+" number of accounts: "+n.getAccounts().size());
+                    ATM.listOfUsers.add(n);
                 }
             }
 
-
-        } else {
-            System.out.println("not a directory");
+        } catch(Exception e){
+            System.out.println("could not read");
         }
 
     }
