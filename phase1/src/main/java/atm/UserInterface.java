@@ -196,7 +196,6 @@ public class UserInterface {
         for (Account a : user.getAccounts()) {
             if (a.getType().equals(typeOfAccount)) {
                 accounts.add(a);
-                break;
             }
         }
 
