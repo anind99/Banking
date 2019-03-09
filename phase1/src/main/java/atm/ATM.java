@@ -36,7 +36,6 @@ public class ATM  {
         System.out.println("Booting on " + sdf.format(date.getTime()));
 
 
-
         addSavingsInterest();
         while (running){
             String username = BankManagerInterface.displayLoginMenu();
@@ -133,7 +132,7 @@ public class ATM  {
     }
 
     public static Calendar getDate() {
-        return date;
+        return (Calendar) date.clone();
     }
 
 
