@@ -171,6 +171,7 @@ public class UserInterface {
         // Method for users to pay bills.
 
         Scanner scanner = new Scanner(System.in);
+        System.out.println("From which account would you like to pay the bill?");
         String type = selectTypeOfAccount(true, user);
         printChoices(user, false, type);
         Account accountFrom = selectAccount(user, "pay the bill from");
@@ -201,7 +202,7 @@ public class UserInterface {
         // Method for users to see a summary of their accounts.
 
         printChoices(user, true, "chequing");
-        printChoices(user, true, "loc");
+        printChoices(user, true, "LOC");
         printChoices(user, true, "savings");
         printChoices(user, true, "creditcard");
         System.out.println("Your net total is: " + user.getNetTotal());
@@ -290,7 +291,7 @@ public class UserInterface {
         if (selection.equals("1")) {
             toReturn = "chequing";
         } else if (selection.equals("2")) {
-            toReturn = "loc";
+            toReturn = "LOC";
         } else if (selection.equals("3")) {
             toReturn = "savings";
         } else if (!transferOut && selection.equals("4")) {
@@ -352,7 +353,35 @@ public class UserInterface {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the desired amount you would like to transfer: ");
-        return scanner.nextDouble();
+        String amount = scanner.next();
+        StringBuilder amountB = new StringBuilder(amount);
 
-    }
+
+        boolean valid = true;
+        if (amountB.length() >= 3) {
+            for (int i = 0; i < amountB.length() - 3; i++) {
+                if (!Character.isDigit(amountB.charAt(i))) {
+                    valid = false;
+                }
+            }
+
+            for (int i = amountB.length() - 2; i < amountB.length(); i++) {
+                if (!Character.isDigit(amountB.charAt(i))) {
+                    valid = false;
+                }
+            }
+
+            if (!(amountB.charAt((amountB.length() - 3)) == '.' && !Character.isDigit(amountB.charAt(amountB.length() - 3)))) {
+                valid = false;}
+
+            if ((amountB.charAt((amountB.length() - 3)) == ',')){valid = false;}
+
+        }else{for (int i = 0; i < amountB.length(); i++) {
+            if (!Character.isDigit(amountB.charAt(i))) {
+                valid = false;}}}
+
+        if(valid){return Double.valueOf(amount);}
+
+        System.out.println("The amount you entered is not possible, please enter an amount rounded to a whole number or to 2 digits.");
+            return selectAmount();}
 }

@@ -36,15 +36,17 @@ public abstract class Account implements Serializable {
 
     public void transferIn(double amount, Account accountFrom) {
         boolean removed = accountFrom.removeMoney(amount);
-        if(removed){addMoney(amount);}
-        else{System.out.println("\nThis transaction is not possible: insufficient funds");}
+        if(removed){addMoney(amount);
+            System.out.println("\n" + amount + " has been transferred");}
+        else{System.out.println("\nThis transaction i;s not possible: insufficient funds");}
 
         this.lastTransaction = new Transaction(accountFrom.accountNum, amount, "TransferIn");
     }
 
     public void transferOut(double amount, Account accountTo) {
         boolean removed = removeMoney(amount);
-        if(removed){accountTo.addMoney(amount);}
+        if(removed){accountTo.addMoney(amount);
+            System.out.println("\n" + amount + " has been transferred");}
         else{System.out.println("\nThis transaction is not possible: insufficient funds");}
 
         this.lastTransaction = new Transaction(accountTo.accountNum, amount, "TransferOut");
