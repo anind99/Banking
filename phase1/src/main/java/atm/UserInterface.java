@@ -24,14 +24,14 @@ public class UserInterface {
             String option = scanner.next();
             if (option.equals("1")){
                 CreateAccount(user);
-                //validselection = true;
+                validselection = true;
             } else if (option.equals("2")){
                 for (Account acc : user.getAccounts()) {acc.deposit();
                     break;
                 } /// NEEDS FIXING
             } else if (option.equals("3")) {
                 Withdraw(user);
-                //validselection = true;
+                validselection = true;
             } else if (option.equals("4")) {
                 transferIn(user);
                 validselection = true;
