@@ -28,6 +28,7 @@ public class UserInterface {
             switch (option) {
                 case "1":
                     deposit(user);
+                    displayUserMenu(user);
                     break;
                 case "2":
                     Withdraw(user);
