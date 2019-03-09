@@ -185,13 +185,13 @@ public class UserInterface {
         // Allows users to pick the type of account they want to access and returns their type as a string.
 
         StringBuilder toPrint = new StringBuilder("Select the type of account: \n 1. Chequing \n" +
-                "2. Line of Credit \n 3. Savings");
+                " 2. Line of Credit \n 3. Savings");
 
 
         if (transferOut) {
             System.out.println(toPrint);
         } else {
-            toPrint.append("\n + 4. Credit Card");
+            toPrint.append("\n 4. Credit Card");
             System.out.println(toPrint);
         }
 
