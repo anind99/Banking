@@ -173,7 +173,7 @@ public class UserInterface {
         for (Account i : listOfAccounts) {
             choices.append(i.accountNum).append(", Balance: ").append(i.balance);
             if (summary) {
-                choices.append(", Last Transaction: ").append(i.lastTransaction);
+                choices.append(", Last Transaction: ").append(i.lastTransaction.toString());
                 choices.append(", Date Created: ").append(i.dateCreated);
             }
             choices.append("\n");
