@@ -115,7 +115,7 @@ public class BankManager {
             acct.balance -= acct.lastTransaction.Amount;
             acct.lastTransaction = null;
         }
-        else if (acct.lastTransaction.Type.equalsIgnoreCase("withdrawal")){
+        else if (acct.lastTransaction.Type.equalsIgnoreCase("withdraw")){
             acct.balance += acct.lastTransaction.Amount;
             acct.lastTransaction = null;
         }
