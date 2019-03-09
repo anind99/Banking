@@ -1,5 +1,6 @@
 package atm;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,36 +33,23 @@ public class UserInterface {
                 Withdraw(user);
                 //validselection = true;
             } else if (option.equals("4")) {
-                printChoices(user, false);
-                Account accountTo = selectAccount(user, "transfer to");
-                Account accountFrom = selectAccount(user, "transfer from");
-                double amount = selectAmount();
-
-                accountTo.transferIn(amount, accountFrom);
+                transferIn(user);
+                validselection = true;
             } else if (option.equals("5")) {
-                printChoices(user, false);
-                System.out.println("Note that you cannot transfer out of a credit card account.");
-                Account accountFrom = selectAccount(user, "transfer out from");
-                Account accountTo = selectAccount(user, "transfer to");
-                double amount = selectAmount();
-
-                accountFrom.transferOut(amount, accountTo);
+                transferOut(user);
+                validselection = true;
             } else if (option.equals("6")) {
-                printChoices(user, false);
-                Account accountFrom = selectAccount(user, "pay the bill from");
-                System.out.println("Enter the name of the receiver of the bill: ");
-                String receiver = scanner.nextLine();
-
-                double amount = selectAmount();
-
-                accountFrom.payBill(amount, receiver.trim());
-
+                payBill(user);
+                validselection = true;
             } else if (option.equals("7")) {
                 CreateAccount(user);
+                validselection = true;
             } else if (option.equals("8")) {
                 summary(user);
+                validselection = true;
             } else if (option.equals("9")) {
                 changePassword(user);
+                validselection = true;
             } else if (option.equals("10")) {
                 //Doing nothing works fine here.
                 logout = true;
@@ -72,7 +60,48 @@ public class UserInterface {
 
     }
 
-    protected static void changePassword(User user) {
+    private static void transferIn(User user) {
+        // Method for users to transfer in.
+
+        String type = selectTypeOfAccount(false);
+        printChoices(user, false, type);
+        Account accountTo = selectAccount(user, "transfer to");
+        Account accountFrom = selectAccount(user, "transfer from");
+        double amount = selectAmount();
+
+        accountTo.transferIn(amount, accountFrom);
+    }
+
+    private static void transferOut(User user) {
+        // Method for users to transfer out.
+
+        String type = selectTypeOfAccount(true);
+        printChoices(user, false, type);
+        Account accountFrom = selectAccount(user, "transfer out from");
+        Account accountTo = selectAccount(user, "transfer to");
+        double amount = selectAmount();
+
+        accountFrom.transferOut(amount, accountTo);
+    }
+
+    private static void payBill(User user) {
+        // Method for users to pay bills.
+
+        Scanner scanner = new Scanner(System.in);
+        String type = selectTypeOfAccount(true);
+        printChoices(user, false, type);
+        Account accountFrom = selectAccount(user, "pay the bill from");
+        System.out.println("Enter the name of the receiver of the bill: ");
+        String receiver = scanner.nextLine();
+
+        double amount = selectAmount();
+
+        accountFrom.payBill(amount, receiver.trim());
+    }
+
+    private static void changePassword(User user) {
+        // Method for users to change their password.
+
         System.out.println("Type in your new password:");
         Scanner scanner = new Scanner(System.in);
         String newPassword = scanner.nextLine();
@@ -80,97 +109,118 @@ public class UserInterface {
     }
 
     private static void summary(User user) {
-        printChoices(user, true);
+        // Method for users to see a summary of their accounts.
+
+        printChoices(user, true, "chequing");
+        printChoices(user, true, "loc");
+        printChoices(user, true, "savings");
+        printChoices(user, true, "creditcard");
         System.out.println("Your net total is: " + user.getNetTotal());
 
     }
 
-    private static void printChoices(User user, boolean summary) {
-        // Prints list of account numbers a user has.
+    private static ArrayList<Account> listOfAccounts(User user, String typeOfAccount) {
+        // Helper function for printListOfAccounts. This method returns an array list of a certain type of account
+        // (taken as a parameter) that a user has.
 
-        ArrayList<Account> creditCardAccounts = new ArrayList<>();
-        ArrayList<Account> locAccounts = new ArrayList<>();
-        ArrayList<Account> chequingAccounts = new ArrayList<>();
-        ArrayList<Account> savingsAccounts = new ArrayList<>();
+        ArrayList<Account> accounts = new ArrayList<>();
 
         for (Account a : user.getAccounts()) {
-            if (a instanceof CreditCard) {
-                creditCardAccounts.add(a);
-            } else if (a instanceof LOC) {
-                locAccounts.add(a);
-            } else if (a instanceof Chequing) {
-                chequingAccounts.add(a);
-            } else if (a instanceof Savings) {
-                savingsAccounts.add(a);
+            if (a.type.equals(typeOfAccount)) {
+                accounts.add(a);
             }
         }
 
-        StringBuilder choices = new StringBuilder("Here are your list of accounts: \n");
+        return accounts;
+    }
 
-        // Add Credit Card accounts to String.
-        for (Account i : creditCardAccounts) {
-            choices.append("1. Credit Card Accounts: \n");
-            choices.append(i.accountNum);
-            choices.append(", Balance: ");
-            choices.append(i.balance);
+    private static StringBuilder printListOfAccounts(ArrayList<Account> listOfAccounts, boolean summary) {
+        // Will return a StringBuilder with the account number, balance, last transaction and date
+        // created of the accounts a user has.
+
+        StringBuilder choices = new StringBuilder();
+
+        for (Account i : listOfAccounts) {
+            choices.append(i.accountNum).append(", Balance: ").append(i.balance);
             if (summary) {
-                choices.append(", Last Transaction: ");
-                choices.append(i.lastTransaction);
-                choices.append(", Date Created");
-                choices.append(i.dateCreated);
+                choices.append(", Last Transaction: ").append(i.lastTransaction);
+                choices.append(", Date Created: ").append(i.dateCreated);
             }
             choices.append("\n");
         }
 
-        // Add LOC accounts to String.
-        for (Account i: locAccounts) {
-            choices.append("2. Line of Credit Accounts: \n");
-            choices.append(i.accountNum);
-            choices.append(", Balance: ");
-            choices.append(i.balance);
-            if (summary) {
-                choices.append(", Last Transaction: ");
-                choices.append(i.lastTransaction);
-                choices.append(", Date Created");
-                choices.append(i.dateCreated);
-            }
-            choices.append("\n");
+        return choices;
+    }
+
+    private static String selectTypeOfAccount(boolean transferOut) {
+        // Allows users to pick the type of account they want to access and returns their type as a string.
+
+        StringBuilder toPrint = new StringBuilder("What type of account do you want to access? \n 1. Chequing \n" +
+                "2. Line of Credit \n 3. Savings");
+
+
+        if (transferOut) {
+            System.out.println(toPrint);
+        } else {
+            toPrint.append("\n + 4. Credit Card");
+            System.out.println(toPrint);
         }
 
-        // Add Chequing Accounts to String.
+        Scanner scanner = new Scanner(System.in);
+        String type = null;
+        boolean validselection = false;
 
-        for (Account i: chequingAccounts) {
-            choices.append("3. Chequing Accounts: \n");
-            choices.append(i.accountNum);
-            choices.append(", Balance: ");
-            choices.append(i.balance);
-            if (summary) {
-                choices.append(", Last Transaction: ");
-                choices.append(i.lastTransaction);
-                choices.append(", Date Created");
-                choices.append(i.dateCreated);
+        while (!validselection) {
+            type = scanner.nextLine();
+
+            if (type.equals("1") || type.equals("2") || type.equals("3") || (!transferOut && type.equals("4"))) {
+                validselection = true;
             }
-            choices.append("\n");
+
+            System.out.println("That is not a valid selection. Please try again.");
         }
 
-        for (Account i : savingsAccounts) {
-            choices.append("4. Savings Accounts: ");
-            choices.append(i.accountNum);
-            choices.append(", Balance: ");
-            choices.append(i.balance);
-            if (summary) {
-                choices.append(", Last Transaction: ");
-                choices.append(i.lastTransaction);
-                choices.append(", Date Created");
-                choices.append(i.dateCreated);
-            }
-            choices.append("\n");
+        return returnTypeOfAccount(type, transferOut);
+    }
+
+    private static String returnTypeOfAccount(String selection, boolean transferOut) {
+        // Helper function for selectTypeOfAccount. The function recognizes the selection the user makes and returns
+        // the corresponding account type as a string.
+
+        String toReturn = null;
+
+        if (selection.equals("1")) {
+            toReturn = "chequing";
+        } else if (selection.equals("2")) {
+            toReturn = "loc";
+        } else if (selection.equals("3")) {
+            toReturn = "savings";
+        } else if (!transferOut && selection.equals("4")) {
+            toReturn = "creditcard";
         }
+
+        return toReturn;
+    }
+
+    private static void printChoices(User user, boolean summary, String typeOfAccount) {
+        // Prints out the accounts a user has.
+
+        ArrayList<Account> accounts = listOfAccounts(user, typeOfAccount);
+
+        if (typeOfAccount.equals("creditcard")) {
+            typeOfAccount = "credit card";
+        }
+
+        StringBuilder choices = new StringBuilder("Your " + typeOfAccount + " accounts: \n");
+        choices.append(printListOfAccounts(accounts, summary));
+
 
         System.out.println(choices);
     }
 
     protected static Account selectAccount(User user, String action) {
+        // Allows users to select an account by entering their account number. Returns that account.
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the account number you want to " + action + ": ");
         int accountNumTo = scanner.nextInt();
@@ -191,10 +241,11 @@ public class UserInterface {
     }
 
     protected static double selectAmount() {
+        // Returns the amount a user would like to deposit/transfer.
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the desired amount you would like to transfer: ");
-        Double num = scanner.nextDouble();
-        return num;
+        return scanner.nextDouble();
 
     }
 
