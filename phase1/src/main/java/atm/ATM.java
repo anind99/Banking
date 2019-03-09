@@ -138,7 +138,7 @@ public class ATM  {
 
     /** set the number of bills at array index "bill" */
     public static void set_bills(int bill, int number){
-        bills[bill] = number;
+        bills[bill - 1] = number;
     }
 
     public static double get_amount(){
