@@ -27,7 +27,7 @@ public class Transaction {
         this.Amount = Amount;
     }
 
-    public Transaction(String Billname, Double Amount){
+    public Transaction(String billname, Double Amount){
         /**
          * Constructor for pay bill
          * Billname: Billname
@@ -36,6 +36,20 @@ public class Transaction {
         this.Type = "paybill";
         this.Amount = Amount;
 
+    }
+
+    public String toString() {
+        if (this.Type.equalsIgnoreCase("transferin")) {
+            return "Account Number: " + this.Account + "\nType of Transaction: Transfer In";
+        } else if (this.Type.equalsIgnoreCase("transferout")) {
+            return "Account Number: " + this.Account + "\nType of Transaction: Transfer Out";
+        } else if (this.Type.equalsIgnoreCase("withdraw")) {
+            return "Account Number: " + this.Account + "\nType of Transaction: Withdrawal";
+        } else if (this.Type.equals("deposit")) {
+            return "Account Number: " + this.Account + "\nType of Transaction: Deposit";
+        } else {
+            return "Account Number: " + this.Account + "\nType of Transaction: Pay Bill";
+        }
     }
 
 }
