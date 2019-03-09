@@ -74,26 +74,26 @@ public class BankManager {
                 Chequing newChequing = new Chequing(this.acct_counter);
                 user.accounts.add(newChequing);
                 this.acct_counter += 1;
-                System.out.println("New chequing account created");
+                System.out.println("New chequing account created.");
             }
             else if (acct_type.equalsIgnoreCase("CreditCard")) {
                 CreditCard newCreditCard = new CreditCard(this.acct_counter);
                 user.accounts.add(newCreditCard);
                 this.acct_counter += 1;
-                System.out.println("New creditcard account created");
+                System.out.println("New credit card account created.");
             }
             else if (acct_type.equalsIgnoreCase("LOC")){
                 LOC newLoc = new LOC(this.acct_counter);
                 user.accounts.add(newLoc);
                 this.acct_counter += 1;
-                System.out.println("New LOC account created");
+                System.out.println("New line of credit account created.");
             }
 
             else if (acct_type.equalsIgnoreCase("savings")){
                 Savings newSaving = new Savings(this.acct_counter);
                 user.accounts.add(newSaving);
                 this.acct_counter += 1;
-                System.out.println("New savings account created");
+                System.out.println("New savings account created.");
             }
 
 
