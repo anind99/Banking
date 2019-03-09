@@ -308,10 +308,10 @@ public class ATM  {
                 if (line.split(",")[0].equals("Username")) {
                     name = line.split(",")[1];
                     line = br.readLine();
-                    System.out.println("done: " +name);
+                    //System.out.println("done: " +name);
                     if (line.split(",")[0].equals("Password")) {
                         pass = line.split(",")[1];
-                        System.out.println("done pass: "+pass);
+                        //System.out.println("done pass: "+pass);
                     }
                 }
                 boolean format = false;
@@ -323,7 +323,6 @@ public class ATM  {
                     try{
                         line = br.readLine();
                         boolean infoaquired = false;
-                        boolean transaction = false;
                         String acttype = null;
                         Double actbal = null;
                         int actnum = 0;
@@ -331,7 +330,7 @@ public class ATM  {
                         Transaction t = null;
                         boolean primary = false;
 
-                        System.out.println(line.split(",").length);
+                        //System.out.println(line.split(",").length);
                         if (line.split(",").length == 4 || line.split(",").length == 5) {
                             if (line.split(",").length == 5){
                                 primary = Boolean.getBoolean(line.split(",")[4]);
@@ -343,7 +342,6 @@ public class ATM  {
                             String Dat = line.split(",")[3];
                             dat = Calendar.getInstance();
                             dat.setTime(sdf.parse(Dat));
-                            System.out.println("done account creation: " + acttype + " Balance: " + actbal + " Num: " + actnum +" "+dat.getTime());
                             infoaquired = true;
                         }
                         line = br.readLine();
@@ -358,23 +356,21 @@ public class ATM  {
                                 t = new Transaction(billname, Amount);
                                 t.billname = billname;
                                 t.Amount = Amount;
-                                transaction = true;
 
                             } else if (Type.equalsIgnoreCase("TransferIn") || Type.equalsIgnoreCase("TransferOut")) {
                                 int transfernum = Integer.parseInt(line.split(",")[1]);
                                 Double Amount = Double.parseDouble(line.split(",")[2]);
                                 t = new Transaction(transfernum, Amount, Type);
-                                transaction = true;
 
                             } else if (Type.equalsIgnoreCase("Withdraw") || Type.equalsIgnoreCase("Deposit")) {
                                 Double Amount = Double.parseDouble(line.split(",")[1]);
                                 t = new Transaction(Amount, Type);
-                                transaction = true;
+
                             }
-                            System.out.println("Transaction creation: " +transaction+" "+Type);
+                            //System.out.println("Transaction creation: " +transaction+" "+Type);
 
                         }
-                        if (transaction && infoaquired){
+                        if (infoaquired){
                             Account userAct;
                             if (acttype.equalsIgnoreCase("CreditCard")) {
                                 userAct = new CreditCard(actnum);
@@ -402,12 +398,12 @@ public class ATM  {
                                 userAct.lastTransaction = t;
                                 usracts.add(userAct);
                             }
-                            System.out.println("done adding account to user array: "+acttype);
+                            //System.out.println("done adding account to user array: "+acttype);
 
                         }
 
                     }catch(Exception e){
-                        System.out.println("end of file reached");
+                        //System.out.println("end of file reached");
                         format = false;
                     }
                 }
@@ -424,6 +420,7 @@ public class ATM  {
         }
 
     }
+
 
 
 
