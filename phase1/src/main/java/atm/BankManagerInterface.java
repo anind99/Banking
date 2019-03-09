@@ -9,7 +9,6 @@ public class BankManagerInterface {
         boolean loggedOut = false;
         boolean validselection = false;
         while (!validselection){
-            System.out.println("\nWelcome bank manager, please press * at any point to return to this main menu \n");
             System.out.println("Select an option:");
             System.out.println("1. Create User");
             System.out.println("2. Create Account");
@@ -23,7 +22,6 @@ public class BankManagerInterface {
                 case "1": {
                     System.out.println("Type the username for the new user");
                     String username = scanner.next();
-                    if(username.equals("*")){displayManagerMenu();}
                     System.out.println("Type the password for the new user");
                     String password = scanner.next();
                     ATM.getBM().create_user(username, password);
@@ -40,7 +38,6 @@ public class BankManagerInterface {
                             System.out.println("Type in the username of the user that would like to create an account: ");
                         }
                         String username = scanner.nextLine();
-                        if(username.equals("*")){displayManagerMenu();}
                         for (User parameter : ATM.getListOfUsers()) {
                             if (parameter.getUsername().equals(username)) {
                                 user = parameter;
@@ -77,7 +74,7 @@ public class BankManagerInterface {
                 }
                 case "4": {
                     System.out.println("Set which dollar bill amount to 100?");
-                    System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars *. Quit menu");
+                    System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars");
                     String dollarType = scanner.next();
                     switch (dollarType) {
                         case "1":
@@ -91,9 +88,6 @@ public class BankManagerInterface {
                             break;
                         case "4":
                             BankManager.restock(4);
-                            break;
-                        case "*":
-                            displayManagerMenu();
                             break;
                         default:
                             System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 4 or quit.");
@@ -112,7 +106,6 @@ public class BankManagerInterface {
                             System.out.println("Type in the username of the user that would like to undo their last transaction: ");
                         }
                         String username = scanner.nextLine();
-                        if(username.equals("*")){displayManagerMenu();}
                         System.out.println(username);
                         for (User parameter : ATM.getListOfUsers()) {
                             if (parameter.getUsername().equals(username)) {

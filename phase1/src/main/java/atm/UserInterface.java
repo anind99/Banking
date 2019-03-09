@@ -13,7 +13,6 @@ public class UserInterface {
         boolean logout = false;
         label:
         while (!validselection && !logout) {
-            System.out.println("\nWelcome ATM user, please press * at any point to return to this main menu \n");
             System.out.println("Select an option:");
             System.out.println("1. Deposit");
             System.out.println("2. Withdraw");
@@ -92,8 +91,6 @@ public class UserInterface {
             String amount = scanner.nextLine();
             StringBuilder amountB = new StringBuilder(amount);
 
-            if (amount.equals("*")) {displayUserMenu(user);}
-
             boolean valid = true;
             for(int i = 0; i < amountB.length();i++){
                 if(!Character.isDigit(amountB.charAt(i))){valid = false;}}
@@ -170,13 +167,8 @@ public class UserInterface {
         System.out.println("Type in your new password:");
         Scanner scanner = new Scanner(System.in);
         String newPassword = scanner.nextLine();
-        if (!newPassword.equals("*")) {
-            user.setPassword(newPassword);
-            System.out.println("\nPassword change successful");
-        } else {
-            System.out.println("\nPassword not changed");
-            displayUserMenu(user);
-        }
+        user.setPassword(newPassword);
+        System.out.println("\nPassword change successful");
     }
 
     private static void summary(User user) {
@@ -249,9 +241,6 @@ public class UserInterface {
 
         while (!validselection) {
             type = scanner.nextLine();
-            if (type.equals("*")) {
-                displayUserMenu(user);
-            }
 
             if (type.equals("1") || type.equals("2") || type.equals("3") || (!transferOut && type.equals("4"))) {
                 validselection = true;
