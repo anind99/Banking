@@ -37,7 +37,7 @@ public abstract class Account {
     public void transferIn(double amount, Account accountFrom) {
         boolean removed = accountFrom.removeMoney(amount);
         if(removed){addMoney(amount);}
-        else{System.out.println("This transaction is not possible: insufficient funds");}
+        else{System.out.println("\nThis transaction is not possible: insufficient funds");}
 
         this.lastTransaction = new Transaction(accountFrom.accountNum, amount, "TransferIn");
     }
@@ -45,7 +45,7 @@ public abstract class Account {
     public void transferOut(double amount, Account accountTo) {
         boolean removed = removeMoney(amount);
         if(removed){accountTo.addMoney(amount);}
-        else{System.out.println("This transaction is not possible: insufficient funds");}
+        else{System.out.println("\nThis transaction is not possible: insufficient funds");}
 
         this.lastTransaction = new Transaction(accountTo.accountNum, amount, "TransferOut");
     }
@@ -88,7 +88,7 @@ public abstract class Account {
 
         if (line.contains(".")){
             amount = Double.parseDouble(line);
-            System.out.println("You have deposited a cheque for $" + amount);
+            System.out.println("\nYou have deposited a cheque for $" + amount);
         }else{ amount = (double) ((Character.getNumericValue(line.charAt(0))) * 5 +
                 Character.getNumericValue(line.charAt(1)) * 10 +
                 Character.getNumericValue(line.charAt(2)) * 20 +
@@ -98,7 +98,7 @@ public abstract class Account {
             ATM.add_bills(1, Character.getNumericValue(line.charAt(1)));
             ATM.add_bills(2, Character.getNumericValue(line.charAt(2)));
             ATM.add_bills(3, Character.getNumericValue(line.charAt(3)));
-            System.out.println("You have deposited $" + amount + " in cash");
+            System.out.println("\nYou have deposited $" + amount + " in cash");
         }return amount;
     }
 
@@ -108,7 +108,7 @@ public abstract class Account {
             ATM.alertManager();
             removeMoney(amount);
             this.lastTransaction = new Transaction(amount, "withdraw");
-        }else{System.out.println("transaction not possible: not enough funds in ATM");}
+        }else{System.out.println("\nTransaction not possible: not enough funds in ATM");}
 
     }
 
@@ -117,7 +117,7 @@ public abstract class Account {
         if(removed){payBillWriting(amount, receiver);
             System.out.println("You paid " + amount + " to " + receiver);
         }
-        else{System.out.println("This transaction is not possible: insufficient funds");}
+        else{System.out.println("\nThis transaction is not possible: insufficient funds");}
         this.lastTransaction = new Transaction(receiver, amount);
     }
 

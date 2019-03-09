@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
-    static void displayUserMenu(User user){
+    static void displayUserMenu(User user) {
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
         boolean logout = false;
@@ -83,12 +83,12 @@ public class UserInterface {
 
     }
 
-    protected static void CreateAccount(User user){
+    protected static void CreateAccount(User user) {
         String type = selectTypeOfAccount(false, user);
         ATM.getBM().create_account(user, type);
     }
 
-    protected static void Withdraw(User user){
+    protected static void Withdraw(User user) {
         String type = selectTypeOfAccount(false, user);
         printChoices(user, false, type);
 
@@ -98,12 +98,22 @@ public class UserInterface {
 
         while (running) {
             System.out.println("Input amount (The amount has to be a multiple of five, no cents allowed): ");
-            int amount = scanner.nextInt();
-            if (divisibleByFive(amount)) {
-                account.withdraw(amount);
+            String amount = scanner.nextLine();
+            StringBuilder amountB = new StringBuilder(amount);
+
+            if (amount.equals("*")) {displayUserMenu(user);}
+
+            boolean valid = true;
+            for(int i = 0; i < amountB.length();i++){
+                if(!Character.isDigit(amountB.charAt(i))){valid = false;}}
+
+            if(valid){
+
+            if (divisibleByFive(Integer.valueOf(amount))) {
+                account.withdraw(Integer.valueOf(amount));
                 running = false;
-            } else {
-                System.out.println("the amount you entered is not possible, please try again.");
+            }} else {
+                System.out.println("The amount you entered is not possible, please try again.");
             }
         }
     }
@@ -157,11 +167,13 @@ public class UserInterface {
         System.out.println("Type in your new password:");
         Scanner scanner = new Scanner(System.in);
         String newPassword = scanner.nextLine();
-        if (!newPassword.equals("*")){
-        user.setPassword(newPassword);
-        System.out.println("\nPassword change successful");}
-        else{System.out.println("\nPassword not changed");
-            displayUserMenu(user);}
+        if (!newPassword.equals("*")) {
+            user.setPassword(newPassword);
+            System.out.println("\nPassword change successful");
+        } else {
+            System.out.println("\nPassword not changed");
+            displayUserMenu(user);
+        }
     }
 
     private static void summary(User user) {
@@ -230,11 +242,15 @@ public class UserInterface {
 
         while (!validselection) {
             type = scanner.nextLine();
-            if(type.equals("*")){displayUserMenu(user);}
+            if (type.equals("*")) {
+                displayUserMenu(user);
+            }
 
             if (type.equals("1") || type.equals("2") || type.equals("3") || (!transferOut && type.equals("4"))) {
                 validselection = true;
-            }else{System.out.println("That is not a valid selection. Please try again.");}
+            } else {
+                System.out.println("That is not a valid selection. Please try again.");
+            }
         }
 
         return returnTypeOfAccount(type, transferOut);
@@ -280,22 +296,33 @@ public class UserInterface {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the account number you want to " + action + ": ");
-        int accountNumTo = scanner.nextInt();
-        Account account = null;
+        String accountNumTo = scanner.nextLine();
+        StringBuilder accountNumToB = new StringBuilder(accountNumTo);
 
+        if (accountNumTo.equals("*")) { displayUserMenu(user); }
+
+        boolean valid = true;
+        for(int i = 0; i < accountNumToB.length();i++){
+            if(!Character.isDigit(accountNumToB.charAt(i))){valid = false;}}
+
+
+        if(valid) {
+        Account account = null;
         for (Account a : user.getAccounts()) {
-            if (a.accountNum == accountNumTo) {
+            if (a.accountNum == Integer.valueOf(accountNumTo)){
                 account = a;
             }
         }
 
         if (account != null) {
             return account;
-        } else {
+        }} else {
             System.out.println("The account number you entered is not valid. Please try again.");
             return selectAccount(user, action);
-        }
-    }
+        }return selectAccount(user, action);}
+
+
+
 
     protected static double selectAmount() {
         // Returns the amount a user would like to deposit/transfer.
