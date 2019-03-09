@@ -1,6 +1,8 @@
 package atm;
 
-public class Transaction {
+import java.io.*;
+
+public class Transaction implements Serializable {
 
     String Type;
     int Account = 0;
@@ -36,6 +38,29 @@ public class Transaction {
         this.Type = "paybill";
         this.Amount = Amount;
 
+    }
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("Transaction writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("Transaction readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("Transaction readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 
     public String toString() {

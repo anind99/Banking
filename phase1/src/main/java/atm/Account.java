@@ -3,7 +3,7 @@ package atm;
 import java.io.*;
 import java.util.Calendar;
 
-public abstract class Account {
+public abstract class Account implements Serializable {
 
     public String type;
     public final int accountNum;
@@ -136,5 +136,27 @@ public abstract class Account {
             return false;
         }
     }
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("Account writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("Account readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
 
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("Account readObjectNoData, this should never happen!");
+        System.exit(-1);
+    }
 }

@@ -3,60 +3,60 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.io.*;
 
-public class BankManager {
+public class BankManager implements Serializable{
 
     private String last, line;
     private int acct_counter;
 
-        public BankManager(){
-            //last = null;
-            try {
-                File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt"); //FIX
-                FileInputStream is = new FileInputStream(file);
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader r = new BufferedReader(isr);
-                //line = r.readLine();
-                while ((line = r.readLine()) != null) {
-                    last = line; }
-                r.close();
-            }catch (FileNotFoundException e){
-                System.out.println(
-                        "Unable to open file '" +
-                                "bankmanager.txt" + "'");
-            }
-            catch(IOException ex) {
-                System.out.println(
-                        "Error reading file '"
-                                + "bankmanager.txt" + "'");
-                ex.printStackTrace();
-            }
-            this.acct_counter = Integer.parseInt(last);
+    public BankManager(){
+        //last = null;
+        try {
+            File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt"); //FIX
+            FileInputStream is = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader r = new BufferedReader(isr);
+            //line = r.readLine();
+            while ((line = r.readLine()) != null) {
+                last = line; }
+            r.close();
+        }catch (FileNotFoundException e){
+            System.out.println(
+                    "Unable to open file '" +
+                            "bankmanager.txt" + "'");
         }
-
-        //Bank manager will always add 100 new bills when restocking
-        public static void restock(int index){
-            ATM.set_bills(index, 100);
-            try {
-                //System.out.println(System.getProperty("user.dir"));
-                File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/alerts.txt");
-                FileOutputStream is = new FileOutputStream(file);
-                OutputStreamWriter osw = new OutputStreamWriter(is);
-                Writer w = new BufferedWriter(osw);
-                w.write("Alerts addressed");
-                w.close();
-            } catch (IOException e) {
-                System.err.println("Problem writing to the file alerts.txt");
-            }
+        catch(IOException ex) {
+            System.out.println(
+                    "Error reading file '"
+                            + "bankmanager.txt" + "'");
+            ex.printStackTrace();
         }
+        this.acct_counter = Integer.parseInt(last);
+    }
 
-        public void create_user(String username, String password){
-            ArrayList<Account> accounts = new ArrayList<>();
-            boolean contains = false;
-            for (User parameter : ATM.getListOfUsers()) {
-                if (parameter.getUsername().equals(username)) {
-                    contains = true;
-                }
-            }if(!contains){
+    //Bank manager will always add 100 new bills when restocking
+    public static void restock(int index){
+        ATM.set_bills(index, 100);
+        try {
+            //System.out.println(System.getProperty("user.dir"));
+            File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/alerts.txt");
+            FileOutputStream is = new FileOutputStream(file);
+            OutputStreamWriter osw = new OutputStreamWriter(is);
+            Writer w = new BufferedWriter(osw);
+            w.write("Alerts addressed");
+            w.close();
+        } catch (IOException e) {
+            System.err.println("Problem writing to the file alerts.txt");
+        }
+    }
+
+    public void create_user(String username, String password){
+        ArrayList<Account> accounts = new ArrayList<>();
+        boolean contains = false;
+        for (User parameter : ATM.getListOfUsers()) {
+            if (parameter.getUsername().equals(username)) {
+                contains = true;
+            }
+        }if(!contains){
             User newUser = new User(username, password, accounts);
             create_account(newUser, "Chequing");
             create_account(newUser, "Savings");
@@ -64,9 +64,9 @@ public class BankManager {
             create_account(newUser, "LOC");
             System.out.println("New user: " + username + " created");
             ATM.addUserToList(newUser);
-            }else{ System.out.println("User name already exists, please try a different name");}
+        }else{ System.out.println("User name already exists, please try a different name");}
 
-        }
+    }
 
 
         public void create_account(User user, String acct_type){
@@ -97,15 +97,15 @@ public class BankManager {
             }
 
 
-            try{
-                File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt");
-                FileOutputStream is = new FileOutputStream(file);
-                OutputStreamWriter osw = new OutputStreamWriter(is);
-                Writer w = new BufferedWriter(osw);
-                w.write(String.valueOf(this.acct_counter));
-                w.close();
-            }catch(IOException e){e.printStackTrace();}
-        }
+        try{
+            File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt");
+            FileOutputStream is = new FileOutputStream(file);
+            OutputStreamWriter osw = new OutputStreamWriter(is);
+            Writer w = new BufferedWriter(osw);
+            w.write(String.valueOf(this.acct_counter));
+            w.close();
+        }catch(IOException e){e.printStackTrace();}
+    }
 
     public void undo_transaction(User usr, Account acct){
         if (acct.lastTransaction == null){
@@ -178,5 +178,30 @@ public class BankManager {
 //            Date today;
 //            return today;
 //        }
+
+
+    private void writeObject(ObjectOutputStream oos) throws IOException{
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("BM writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("BM readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException{
+        System.out.println("BM readObjectNoData, this should never happen!");
+        System.exit(-1);
+    }
 
 }

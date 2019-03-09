@@ -17,6 +17,7 @@ public class BankManagerInterface {
             System.out.println("4. Restock Machine");
             System.out.println("5. Undo transaction");
             System.out.println("6. Logout");
+            System.out.println("7. Turn Off System");
             String option = scanner.next();
             switch (option) {
                 case "1": {
@@ -134,8 +135,14 @@ public class BankManagerInterface {
                     loggedOut = true;
                     break;
                 }
+                case "7":{
+                    ATM.testShutDown();
+                    System.out.println("System now shutting down");
+                    System.exit(0);
+
+                }
                 default: {
-                    System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 7.");
                     break;
                 }
             }if (!loggedOut) displayManagerMenu();

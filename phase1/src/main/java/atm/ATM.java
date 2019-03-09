@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ATM {
+public class ATM  {
     
 
     /** Stores the total amount of the bills in the ATM in an array with the following order:
@@ -16,8 +16,7 @@ public class ATM {
     private static int[] bills = new int[4];
     private static ArrayList<User> listOfUsers = new ArrayList<User>();
     private static BankManager BM = new BankManager();
-
-    private static Calendar date;
+    private static Calendar date = Calendar.getInstance();
 
     public ATM() {
         bills[0] = 100;
@@ -29,7 +28,13 @@ public class ATM {
     public static void main(String[] arg){
         boolean running = true;
         debugSetup();
-        setup();
+        testBoot();
+//        setup();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("Booting on " + sdf.format(date.getTime()));
+
+
+
         addSavingsInterest();
         while (running){
             String username = BankManagerInterface.displayLoginMenu();
@@ -45,7 +50,6 @@ public class ATM {
                 BankManagerInterface.displayManagerMenu();
             }
         }
-        dateIncrement();
     }
 
     private static void debugSetup(){
@@ -71,13 +75,13 @@ public class ATM {
     }
 
 
-    private static void dateIncrement(){
+    protected static void dateIncrement(){
         boolean done;
         try {
             File file = new File("date.txt");
             done = file.delete();
             done = file.createNewFile();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("date.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             date.add(Calendar.DATE, 1);
             writer.write(sdf.format(date.getTime()));
@@ -389,6 +393,59 @@ public class ATM {
     protected static BankManager getBM(){
         return BM;
     }
+
+    protected static void testShutDown(){
+        dateIncrement();
+        try {
+            File file = new File("serialized.blob");
+            file.delete();
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(bills);
+            oos.writeObject(listOfUsers);
+            oos.writeObject(BM);
+            oos.writeObject(date);
+            oos.close();
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    protected static void testBoot(){
+        boolean bool = false;
+
+        try {
+            File file = new File("serialized.blob");
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            bills = (int[]) ois.readObject();
+            listOfUsers = (ArrayList<User>) ois.readObject();
+            BM = (BankManager) ois.readObject();
+            date = (Calendar) ois.readObject();
+            bool = true;
+            ois.close();
+        }
+
+        catch (FileNotFoundException e){
+            System.out.println("System booting up for the first time!");
+            if (bool) {
+                System.out.println("....exiting here because this should never happen");
+                System.exit(-1);
+            }
+
+        }
+
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+
+
 
 }
 

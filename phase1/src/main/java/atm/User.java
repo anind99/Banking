@@ -1,9 +1,10 @@
 package atm;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
 
     private String username;
     private String pass;
@@ -58,5 +59,27 @@ public class User {
     public Transaction getLastTransaction(Account account) {
         return account.lastTransaction;
     }
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("User writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("User readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
 
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("User readObjectNoData, this should never happen!");
+        System.exit(-1);
+    }
 }
