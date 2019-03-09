@@ -131,7 +131,7 @@ public class ATM  {
         }
     }
 
-    public static Calendar getDate() {
+    public static Calendar getDate(){
         return (Calendar) date.clone();
     }
 
