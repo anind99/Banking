@@ -32,10 +32,7 @@ public class UserInterface {
                     displayUserMenu(user);
                     break;
                 case "2":
-                    for (Account acc : user.getAccounts()) {
-                        acc.deposit();
-                        break;
-                    } /// NEEDS FIXING
+                    deposit(user);
                     break;
                 case "3":
                     Withdraw(user);
@@ -84,6 +81,18 @@ public class UserInterface {
 
     }
 
+    private static void deposit(User user) {
+        ArrayList<Account> chequingAccounts = listOfAccounts(user, "chequing");
+
+        for (Account a : chequingAccounts) {
+            Chequing account = (Chequing)a;
+            if (account.primary) {
+                account.deposit();
+                break;
+            }
+        }
+    }
+
     protected static void CreateAccount(User user) {
         String type = selectTypeOfAccount(false, user);
         ATM.getBM().create_account(user, type);
@@ -126,11 +135,12 @@ public class UserInterface {
     private static void transferIn(User user) {
         // Method for users to transfer in.
 
+        System.out.println("Which account do you want to transfer to?");
         String type = selectTypeOfAccount(false, user);
         printChoices(user, false, type);
         Account accountTo = selectAccount(user, "transfer to");
 
-        System.out.println("Which account do you want to transfer from?");
+        System.out.println("Which account do you want to transfer out from?");
         String typeTwo = selectTypeOfAccount(true, user);
         printChoices(user, false, typeTwo);
         Account accountFrom = selectAccount(user, "transfer from");
@@ -142,6 +152,7 @@ public class UserInterface {
     private static void transferOut(User user) {
         // Method for users to transfer out.
 
+        System.out.println("Which account do you want to transfer out from?");
         String type = selectTypeOfAccount(true, user);
         printChoices(user, false, type);
         Account accountFrom = selectAccount(user, "transfer out from");
