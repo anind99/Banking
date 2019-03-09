@@ -28,47 +28,31 @@ public class UserInterface {
             switch (option) {
                 case "1":
                     deposit(user);
-                    displayUserMenu(user);
                     break;
                 case "2":
                     Withdraw(user);
-                    validselection = true;
-                    displayUserMenu(user);
                     break;
                 case "3":
                     transferIn(user);
-                    validselection = true;
-                    displayUserMenu(user);
                     break;
                 case "4":
                     transferOut(user);
-                    validselection = true;
-                    displayUserMenu(user);
                     break;
                 case "5":
                     payBill(user);
-                    validselection = true;
-                    displayUserMenu(user);
                     break;
                 case "6":
                     CreateAccount(user);
-                    validselection = true;
-                    displayUserMenu(user);
                     break;
                 case "7":
                     summary(user);
-                    validselection = true;
-                    displayUserMenu(user);
                     break;
                 case "8":
                     changePassword(user);
-                    validselection = true;
-                    displayUserMenu(user);
                     break;
                 case "9":
                     //Doing nothing works fine here.
                     logout = true;
-                    BankManagerInterface.displayLoginMenu();
                     break;
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 9.");

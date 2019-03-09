@@ -105,7 +105,6 @@ public class BankManager implements Serializable{
                 for (Account a : user.accounts) {
                 if (a.getType().equals("chequing")){
             ((Chequing)a).setPrimary();
-            System.out.println("primary set");
                 break;}}}
 
             try{
