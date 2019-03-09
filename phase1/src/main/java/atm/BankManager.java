@@ -184,12 +184,6 @@ public class BankManager implements Serializable{
                 && (otheract.lastTransaction.Amount.equals(acct.lastTransaction.Amount)));
     }
 
-//        public Date setDate(){
-//            Date today;
-//            return today;
-//        }
-
-
     private void writeObject(ObjectOutputStream oos) throws IOException{
         try {
             oos.defaultWriteObject();
