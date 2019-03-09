@@ -60,6 +60,30 @@ public class UserInterface {
 
     }
 
+    protected static void Withdraw(User user){
+        String type = selectTypeOfAccount(false);
+        printChoices(user, false, type);
+
+        Scanner scanner = new Scanner(System.in);
+        Account account = selectAccount(user, "withdraw from");
+        boolean running = true;
+
+        while (running) {
+            System.out.println("Input amount (The amount has to be a multiple of five, no cents allowed): ");
+            int amount = scanner.nextInt();
+            if (divisibleByFive(amount)) {
+                account.withdraw(amount);
+                running = false;
+            } else {
+                System.out.println("the amount you entered is not possible, please try again.");
+            }
+        }
+    }
+
+    private static boolean divisibleByFive(int amount) {
+        return (amount % 5 == 0);
+    }
+
     private static void transferIn(User user) {
         // Method for users to transfer in.
 
@@ -247,40 +271,6 @@ public class UserInterface {
         System.out.println("Enter the desired amount you would like to transfer: ");
         return scanner.nextDouble();
 
-    }
-
-    protected static void Withdraw(User user){
-        System.out.println("Choose Accounts by account number: ");
-        for (Account acc : user.accounts){
-         System.out.println(acc.type +" " + acc.accountNum + " Balance: " + " ");
-        }
-        Scanner scanner = new Scanner(System.in);
-        int account_num = scanner.nextInt();
-        for (Account acc: user.accounts){
-            if (account_num == acc.accountNum){
-                boolean running = true;
-                while (running) {
-                    System.out.println("Input amount (The amount has to be a multiple of five, no cents allowed): ");
-                    int amount = scanner.nextInt();
-                    if (divisibleByFive(amount)) {
-                        acc.withdraw(amount);
-                        running = false;
-                    }
-                    else {
-                        System.out.println("The amount you entered is not possible, please try again.");
-                    }
-                }
-                break;
-            }
-        }
-    }
-
-    private static boolean divisibleByFive(int amount) {
-        if (amount % 5 == 0) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     protected static void CreateAccount(User usr){
