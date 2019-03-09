@@ -2,6 +2,7 @@ package atm;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -220,8 +221,13 @@ public class UserInterface {
         for (Account i : listOfAccounts) {
             choices.append(i.accountNum).append(", Balance: ").append(i.balance);
             if (summary) {
-                choices.append(", Last Transaction: ").append(i.lastTransaction.toString());
-                choices.append(", Date Created: ").append(i.dateCreated);
+                choices.append(", Last Transaction: ");
+                if (i.lastTransaction != null) {
+                    choices.append(i.lastTransaction.toString());
+                } else {
+                    choices.append("No previous transaction.");
+                }
+                choices.append(", Date Created: ").append(i.dateCreated.getTime());
             }
             choices.append("\n");
         }
