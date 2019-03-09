@@ -25,6 +25,7 @@ public class UserInterface {
             if (option.equals("1")){
                 CreateAccount(user);
                 validselection = true;
+                displayUserMenu(user);
             } else if (option.equals("2")){
                 for (Account acc : user.getAccounts()) {acc.deposit();
                     break;
@@ -199,14 +200,13 @@ public class UserInterface {
         String type = null;
         boolean validselection = false;
 
+
         while (!validselection) {
             type = scanner.nextLine();
 
             if (type.equals("1") || type.equals("2") || type.equals("3") || (!transferOut && type.equals("4"))) {
                 validselection = true;
-            } else {
-                System.out.println("That is not a valid selection. Please try again.");
-            }
+            }else{System.out.println("That is not a valid selection. Please try again.");}
         }
 
         return returnTypeOfAccount(type, transferOut);

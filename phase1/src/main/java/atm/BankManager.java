@@ -89,7 +89,7 @@ public class BankManager {
                 System.out.println("New LOC account created");
             }
 
-            else if (acct_type.equalsIgnoreCase("saving")){
+            else if (acct_type.equalsIgnoreCase("savings")){
                 Savings newSaving = new Savings(this.acct_counter);
                 user.accounts.add(newSaving);
                 this.acct_counter += 1;
