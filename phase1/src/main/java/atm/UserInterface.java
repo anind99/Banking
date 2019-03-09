@@ -340,7 +340,6 @@ public class UserInterface {
             }
 
             if ((!(amountB.charAt((amountB.length() - 3)) == '.') && (!Character.isDigit(amountB.charAt(amountB.length() - 3))))) {
-                System.out.println("poop");
                 valid = false;}
 
             if ((amountB.charAt((amountB.length() - 3)) == ',')){valid = false;}
