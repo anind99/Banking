@@ -60,6 +60,11 @@ public class UserInterface {
 
     }
 
+    protected static void CreateAccount(User user){
+        String type = selectTypeOfAccount(false);
+        ATM.getBM().create_account(user, type);
+    }
+
     protected static void Withdraw(User user){
         String type = selectTypeOfAccount(false);
         printChoices(user, false, type);
@@ -179,7 +184,7 @@ public class UserInterface {
     private static String selectTypeOfAccount(boolean transferOut) {
         // Allows users to pick the type of account they want to access and returns their type as a string.
 
-        StringBuilder toPrint = new StringBuilder("What type of account do you want to access? \n 1. Chequing \n" +
+        StringBuilder toPrint = new StringBuilder("Select the type of account: \n 1. Chequing \n" +
                 "2. Line of Credit \n 3. Savings");
 
 
@@ -271,28 +276,5 @@ public class UserInterface {
         System.out.println("Enter the desired amount you would like to transfer: ");
         return scanner.nextDouble();
 
-    }
-
-    protected static void CreateAccount(User usr){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type the type of Account: 1 : Saving, 2: Chequing, 3: Credit 4: Line of Credit");
-        int t = scanner.nextInt();
-        String type = null;
-        while (type == null) {
-            if (t == 1) {
-                type = "Saving";
-            } else if (t == 2) {
-                type = "Chequing";
-            } else if (t == 3) {
-                type = "Credit Card";
-            } else if (t == 4) {
-                type = "LOC";
-            }
-            else{
-                System.out.println("Type the type of Account: 1 : Saving, 2: Chequing, 3: Credit 4: Line of Credit");
-                t = scanner.nextInt();
-            }
-        }
-        ATM.getBM().create_account(usr, type);
     }
 }
