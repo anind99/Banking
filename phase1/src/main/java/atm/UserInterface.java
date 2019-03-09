@@ -315,10 +315,8 @@ public class UserInterface {
 
         if (account != null) {
             return account;
-        }} else {
-            System.out.println("The account number you entered is not valid. Please try again.");
-            return selectAccount(user, action);
-        }return selectAccount(user, action);}
+        } }System.out.println("The account number you entered is not valid. Please try again.");
+        return selectAccount(user, action);}
 
 
 
