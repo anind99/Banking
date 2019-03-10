@@ -50,7 +50,7 @@ public class ATM  {
     }
 
     private static void addSavingsInterest(){
-        if (date.get(Calendar.DAY_OF_MONTH) == 10){
+        if (date.get(Calendar.DAY_OF_MONTH) == 1){
             for (User user : listOfUsers){
                 ArrayList<Account> listOfAccounts = user.getAccounts();
                 System.out.println(user.getUsername());
