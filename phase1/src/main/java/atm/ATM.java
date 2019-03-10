@@ -29,13 +29,9 @@ public class ATM  {
 
     public static void main(String[] arg){
         boolean running = true;
-        debugSetup();
         testBoot();
-//        setup();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Booting on " + sdf.format(date.getTime()));
-
-
         addSavingsInterest();
         while (running){
             String username = BankManagerInterface.displayLoginMenu();
@@ -53,18 +49,11 @@ public class ATM  {
         }
     }
 
-    private static void debugSetup(){
-//        This function sets up our ATM environment for debugging purposes.
-//        Breaking it for merging is fine, but it shouldn't happen.
-        User user1 = new User("manager", "password", null);
-        addUserToList(user1);
-
-    }
-
     private static void addSavingsInterest(){
-        if (date.get(Calendar.DAY_OF_MONTH) == 1){
+        if (date.get(Calendar.DAY_OF_MONTH) == 10){
             for (User user : listOfUsers){
                 ArrayList<Account> listOfAccounts = user.getAccounts();
+                System.out.println(user.getUsername());
                 for (Account account: listOfAccounts){
                     if (account instanceof Savings){
                         ((Savings)account).addInterest();

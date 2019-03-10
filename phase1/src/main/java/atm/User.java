@@ -27,7 +27,7 @@ public class User implements Serializable {
     }
 
     public ArrayList<Account> getAccounts(){
-        return this.accounts;
+        return accounts;
     }
 
     public void addAccount(Account account){

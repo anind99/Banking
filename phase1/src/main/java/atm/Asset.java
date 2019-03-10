@@ -3,6 +3,7 @@ package atm;
 public abstract class Asset extends Account{
 
     public Asset(int accountNum) {
+
         super(accountNum);
     }
 
