@@ -73,7 +73,7 @@ public class BankManagerInterface {
                     break;
                 }
                 case "4": {
-                    System.out.println("Set which dollar bill amount to 100?");
+                    System.out.println("Select what type of bill to restock.");
                     System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars");
                     String dollarType = scanner.next();
                     switch (dollarType) {
