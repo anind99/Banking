@@ -83,7 +83,7 @@ public class UserInterface {
         printChoices(user, false, type);
 
         Scanner scanner = new Scanner(System.in);
-        Account account = selectAccount(user, "withdraw from");
+        Account account = selectAccount(user, "withdraw from", listOfAccounts(user, type));
         boolean running = true;
 
         while (running) {
@@ -116,12 +116,12 @@ public class UserInterface {
         System.out.println("Which account do you want to transfer to?");
         String type = selectTypeOfAccount(false, user);
         printChoices(user, false, type);
-        Account accountTo = selectAccount(user, "transfer to");
+        Account accountTo = selectAccount(user, "transfer to", listOfAccounts(user, type));
 
         System.out.println("Which account do you want to transfer out from?");
         String typeTwo = selectTypeOfAccount(true, user);
         printChoices(user, false, typeTwo);
-        Account accountFrom = selectAccount(user, "transfer from");
+        Account accountFrom = selectAccount(user, "transfer from", listOfAccounts(user, typeTwo));
         double amount = selectAmount(user);
 
         accountTo.transferIn(amount, accountFrom);
@@ -133,12 +133,12 @@ public class UserInterface {
         System.out.println("Which account do you want to transfer out from?");
         String type = selectTypeOfAccount(true, user);
         printChoices(user, false, type);
-        Account accountFrom = selectAccount(user, "transfer out from");
+        Account accountFrom = selectAccount(user, "transfer out from", listOfAccounts(user, type));
 
         System.out.println("Which account do you want to transfer to?");
         String typeTwo = selectTypeOfAccount(false, user);
         printChoices(user, false, typeTwo);
-        Account accountTo = selectAccount(user, "transfer to");
+        Account accountTo = selectAccount(user, "transfer to", listOfAccounts(user, typeTwo));
 
         double amount = selectAmount(user);
 
@@ -152,7 +152,7 @@ public class UserInterface {
         System.out.println("From which account would you like to pay the bill?");
         String type = selectTypeOfAccount(true, user);
         printChoices(user, false, type);
-        Account accountFrom = selectAccount(user, "pay the bill from");
+        Account accountFrom = selectAccount(user, "pay the bill from", listOfAccounts(user, type));
         System.out.println("Enter the name of the receiver of the bill: ");
         String receiver = scanner.nextLine();
 
@@ -287,7 +287,7 @@ public class UserInterface {
         System.out.println(choices);
     }
 
-    protected static Account selectAccount(User user, String action) {
+    protected static Account selectAccount(User user, String action, ArrayList<Account> listOfAccounts) {
         // Allows users to select an account by entering their account number. Returns that account.
 
         Scanner scanner = new Scanner(System.in);
@@ -303,16 +303,19 @@ public class UserInterface {
 
         if(valid) {
         Account account = null;
-        for (Account a : user.getAccounts()) {
+        for (Account a : listOfAccounts) {
             if (a.accountNum == Integer.valueOf(accountNumTo)){
                 account = a;
             }
         }
 
-        if (account != null) {
-            return account;
-        } }System.out.println("The account number you entered is not valid. Please try again.");
-        return selectAccount(user, action);}
+            if (account != null) {
+                return account;
+            }
+        }
+
+        System.out.println("The account number you entered is not valid. Please try again.");
+        return selectAccount(user, action, listOfAccounts);}
 
 
 

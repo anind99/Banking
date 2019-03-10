@@ -118,7 +118,7 @@ public class BankManagerInterface {
                         //System.out.println("The username is not valid, please try again.");
                     }
 
-                    Account account = UserInterface.selectAccount(user, "undo its last transaction");
+                    Account account = UserInterface.selectAccount(user, "undo its last transaction", user.getAccounts());
                     ATM.getBM().undo_transaction(user, account);
                     validselection = true;
                     break;
