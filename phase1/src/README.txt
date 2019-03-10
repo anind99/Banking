@@ -104,3 +104,14 @@ Explanation of Text Files
 
 bankmanager.txt
 When the system first starts up, BankManager constructor reads from this file to initialise acct_counter which gives accounts unique account numbers.
+
+deposits.txt
+Stores the deposits made to the accounts, each line being of the format: “AccountNumber,DepositAmount”
+
+alerts.txt
+Writes to this file when the ATM is low on a certain bill. Each line is of the format:
+“Alert {Bill number}$ bills are low”
+
+outgoing.txt
+Stores Bills paid to outgoing accounts/places. Each line is of the format:
+“{Amount} paid to {Name}”
