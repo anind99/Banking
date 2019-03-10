@@ -209,6 +209,7 @@ public class ATM  {
         }
     }
 
+    // Alternate Implementation to shutdown (file storage).
 
     public static void shutdown(){
         
@@ -217,7 +218,7 @@ public class ATM  {
          * When the function is called ATM stores the user objects as files in the "users" directory.
          */
 
-        String Storeloc = "Text Files/users";
+        String Storeloc = System.getProperty("user.dir") + "/phase1/src/main/Text Files/users";
         for (User usr : ATM.getListOfUsers()) {
             String filename = usr.getUsername() + ".txt";
             File userfile = new File(Storeloc + "/" + filename);
@@ -282,15 +283,15 @@ public class ATM  {
     }
 
 
-    // Alternate Implementation for Shutdown and Restart (as opposed to Serialization)
+    // Alternate Implementation for Restart (as opposed to Serialization)
 
     public static void Restart(){
         /**
          * Must have a directory "users" in text files.
-         * When the function is called ATM updates the user objects through the files
+         * When the function is called, ATM updates the user objects through the files
          */
 
-        String dir = "Text Files/users";
+        String dir = System.getProperty("user.dir") + "/phase1/src/main/Text Files/users";
         File directory = new File(dir);
         File[] directoryListing = directory.listFiles();
         User n;
