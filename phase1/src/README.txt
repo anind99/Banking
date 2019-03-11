@@ -115,3 +115,5 @@ Writes to this file when the ATM is low on a certain bill. Each line is of the f
 outgoing.txt
 Stores Bills paid to outgoing accounts/places. Each line is of the format:
 “{Amount} paid to {Name}”
+
+serialized.blob is responsible for handling the save functionality of the ATM. If for some reason you want to restart the save file, or if the program exits with code 255 (-1), try deleting the file nad reboot.
