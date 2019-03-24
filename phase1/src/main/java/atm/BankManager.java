@@ -48,10 +48,10 @@ public class BankManager implements Serializable{
             }
         }
 
-        public void create_user(String username, String password){
+        public void create_user(String username, String password, ATM atm){
             ArrayList<Account> accounts = new ArrayList<>();
             boolean contains = false;
-            for (User parameter : ATM.getListOfUsers()) {
+            for (User parameter : atm.getListOfUsers()) {
                 if (parameter.getUsername().equals(username)) {
                     contains = true;
                 }
@@ -62,7 +62,7 @@ public class BankManager implements Serializable{
             create_account(newUser, "CreditCard");
             create_account(newUser, "LOC");
             System.out.println("New user: " + username + " created");
-            ATM.addUserToList(newUser);
+            atm.addUserToList(newUser);
             }else{ System.out.println("User name already exists, please try a different name");}
 
         }
