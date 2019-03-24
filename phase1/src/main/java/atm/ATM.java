@@ -16,9 +16,9 @@ public class ATM  {
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
 
     private Bills bills;
-    private static ArrayList<User> listOfUsers = new ArrayList<User>();
-    private static BankManager BM = new BankManager();
-    private static Calendar date = Calendar.getInstance();
+    private ArrayList<User> listOfUsers = new ArrayList<User>();
+    private BankManager BM = new BankManager();
+    private Calendar date = Calendar.getInstance();
 
     public ATM() {
         bills = new Bills(100, 100, 100, 100);
@@ -54,7 +54,7 @@ public class ATM  {
         }
     }
 
-    private static void addSavingsInterest(){
+    private void addSavingsInterest(){
         if (date.get(Calendar.DAY_OF_MONTH) == 1){
             for (User user : listOfUsers){
                 ArrayList<Account> listOfAccounts = user.getAccounts();
