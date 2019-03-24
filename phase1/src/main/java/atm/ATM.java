@@ -10,24 +10,21 @@ import java.text.DateFormat;
 import java.util.Date;
 
 public class ATM  {
-    
+
 
     /** Stores the total amount of the bills in the ATM in an array with the following order:
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
 
-    private static int[] bills = new int[4];
+    static Bills bills;
     private static ArrayList<User> listOfUsers = new ArrayList<User>();
     private static BankManager BM = new BankManager();
     private static Calendar date = Calendar.getInstance();
 
     public ATM() {
-        bills[0] = 100;
-        bills[1] = 100;
-        bills[2] = 100;
-        bills[3] = 100;
+        bills = new Bills(100, 100, 100, 100);
     }
 
-    public static void main(String[] arg){
+    public void run(){
         boolean running = true;
         testBoot();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -88,60 +85,6 @@ public class ATM  {
         return (Calendar) date.clone();
     }
 
-
-    /** set the number of bills at array index "bill" */
-    public static void set_bills(int bill, int number){
-        bills[bill - 1] = number;
-    }
-
-    public static double get_amount(){
-       return (bills[0]*5.0 + bills[1]*10.0 + bills[2]*20.0 + bills[3]* 50.0);
-    }
-
-    public static void add_bills(int bill, int number){
-        bills[bill] += number;
-    }
-
-    public static void remove_bills(int bill, int number){
-        bills[bill] -= number;
-    }
-
-    public static void withdrawBills(double amount){
-        int rounded = (int) amount;
-
-
-        if(rounded / 50 > bills[3]) {
-            rounded -= bills[3]*50;
-            System.out.println("You have received " + bills[3] + " 50$ bills");
-            set_bills(3, 0);
-        }else{int prevRounded = (rounded / 50);
-            rounded -= ((rounded / 50)*50);
-            remove_bills(3, (rounded / 50));
-            System.out.println("You have received " + (prevRounded) + " 50$ bills");}
-
-        if(rounded / 20 > bills[2]) {
-            rounded -= bills[2]*20;
-            System.out.println("You have received " + bills[2] + " 20$ bills");
-            set_bills(2, 0);
-        }else{int prevRounded = (rounded / 20);
-            rounded -= ((rounded / 20)*20);
-            remove_bills(2, (rounded / 20));
-            System.out.println("You have received " + (prevRounded) + " 20$ bills");
-        }
-
-        if(rounded / 10 > bills[1]) {
-            rounded -= bills[1]*10;
-            System.out.println("You have received " + bills[1] + " 10$ bills");
-            set_bills(1, 0);
-        }else{int prevRounded = (rounded / 10);
-            rounded -= ((rounded / 10)*10);
-            remove_bills(1, (rounded / 10));
-            System.out.println("You have received " + (prevRounded) + " 10$ bills");}
-
-        remove_bills(0, (rounded / 5));
-        System.out.println("You have received " + (rounded / 5) + " 5$ bills");
-    }
-
     public static void addUserToList(User u){
         ATM.getListOfUsers().add(u); }
 
@@ -152,10 +95,10 @@ public class ATM  {
         boolean twentyBills = true;
         boolean fiftyBills = true;
 
-        if(bills[0]*5 < 20){fiveBills = false;}
-        if(bills[1]*10 < 20){tenBills = false;}
-        if(bills[2]*20 < 20){twentyBills = false;}
-        if(bills[3]*50 < 20){fiftyBills = false;}
+        if(bills.getNumBills(0)*5 < 20){fiveBills = false;}
+        if(bills.getNumBills(1)*10 < 20){tenBills = false;}
+        if(bills.getNumBills(2)*20 < 20){twentyBills = false;}
+        if(bills.getNumBills(3)*50 < 20){fiftyBills = false;}
 
         try {
             //System.out.println(System.getProperty("user.dir"));
@@ -172,9 +115,6 @@ public class ATM  {
             System.err.println("Problem writing to the file alert.txt");
         }
     }
-
-
-
 
     public static ArrayList<User> getListOfUsers(){
         return listOfUsers;
@@ -212,7 +152,7 @@ public class ATM  {
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            bills = (int[]) ois.readObject();
+            bills = (Bills) ois.readObject();
             listOfUsers = (ArrayList<User>) ois.readObject();
             BM = (BankManager) ois.readObject();
             date = (Calendar) ois.readObject();
@@ -234,11 +174,4 @@ public class ATM  {
             System.exit(-1);
         }
     }
-
-
-
-
 }
-
-
-
