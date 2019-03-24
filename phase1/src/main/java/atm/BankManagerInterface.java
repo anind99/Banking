@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class BankManagerInterface {
-    static void displayManagerMenu(){
+    static void displayManagerMenu(BankManager bm, ATM atm){
         Scanner scanner = new Scanner(System.in);
         boolean loggedOut = false;
         boolean validselection = false;
@@ -78,16 +78,16 @@ public class BankManagerInterface {
                     String dollarType = scanner.next();
                     switch (dollarType) {
                         case "1":
-                            BankManager.restock(1);
+                            bm.restock(atm,1);
                             break;
                         case "2":
-                            BankManager.restock(2);
+                            bm.restock(atm,2);
                             break;
                         case "3":
-                            BankManager.restock(3);
+                            bm.restock(atm,3);
                             break;
                         case "4":
-                            BankManager.restock(4);
+                            bm.restock(atm,4);
                             break;
                         default:
                             System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 4 or quit.");
@@ -129,7 +129,7 @@ public class BankManagerInterface {
                     break;
                 }
                 case "7":{
-                    ATM.testShutDown();
+                    atm.testShutDown();
                     System.out.println("System now shutting down");
                     System.exit(0);
 
@@ -138,7 +138,7 @@ public class BankManagerInterface {
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 7.");
                     break;
                 }
-            }if (!loggedOut) displayManagerMenu();
+            }if (!loggedOut) displayManagerMenu(bm, atm);
         }
 
 

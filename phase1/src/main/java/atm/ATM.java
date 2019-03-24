@@ -39,13 +39,13 @@ public class ATM  {
             if (!username.equals("manager")){
                 for (User usr : listOfUsers) {
                     if (usr.getUsername().equals(username)) {
-                        UserInterface.displayUserMenu(usr);
+                        UserInterface.displayUserMenu(usr, this);
                         break;
                     }
                 }
 
             } else if (username.equals("manager")) {
-                BankManagerInterface.displayManagerMenu();
+                BankManagerInterface.displayManagerMenu(BM,this);
             }
         }
     }
