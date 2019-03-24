@@ -24,7 +24,7 @@ public class BankManagerInterface {
                     String username = scanner.next();
                     System.out.println("Type the password for the new user");
                     String password = scanner.next();
-                    atm.getBM().create_user(username, password);
+                    atm.getBM().create_user(username, password, atm);
                     validselection = true;
                     break;
                 }

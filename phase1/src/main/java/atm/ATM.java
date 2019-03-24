@@ -70,7 +70,7 @@ public class ATM  {
     }
 
 
-    protected static void dateIncrement(){
+    private void dateIncrement(){
         boolean done;
         try {
             File file = new File("date.txt");
@@ -89,7 +89,7 @@ public class ATM  {
 
     }
 
-    public static Calendar getDate(){
+    Calendar getDate(){
         return (Calendar) date.clone();
     }
 
