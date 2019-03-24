@@ -107,7 +107,7 @@ public abstract class Account implements Serializable {
     public void withdraw(double amount, ATM atm) {
         if(atm.getBills().get_amount() >= amount) {
             atm.getBills().withdrawBills(amount);
-            ATM.alertManager();
+            atm.alertManager();
             removeMoney(amount);
             this.lastTransaction = new Transaction(amount, "withdraw");
         }else{System.out.println("\nTransaction not possible: not enough funds in ATM");}
