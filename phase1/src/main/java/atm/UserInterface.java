@@ -41,7 +41,7 @@ public class UserInterface {
                     payBill(user);
                     break;
                 case "6":
-                    CreateAccount(user);
+                    CreateAccount(user, atm);
                     break;
                 case "7":
                     summary(user);
@@ -73,9 +73,9 @@ public class UserInterface {
         }
     }
 
-    protected static void CreateAccount(User user) {
+    protected static void CreateAccount(User user, ATM atm) {
         String type = selectTypeOfAccount(false, user);
-        ATM.getBM().create_account(user, type);
+        atm.getBM().create_account(user, type);
     }
 
     protected static void Withdraw(User user, ATM atm) {
