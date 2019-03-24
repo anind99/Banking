@@ -39,7 +39,7 @@ public class ATM  {
         System.out.println("Booting on " + sdf.format(date.getTime()));
         addSavingsInterest();
         while (running){
-            String username = BankManagerInterface.displayLoginMenu();
+            String username = BankManagerInterface.displayLoginMenu(this);
             if (!username.equals("manager")){
                 for (User usr : listOfUsers) {
                     if (usr.getUsername().equals(username)) {
