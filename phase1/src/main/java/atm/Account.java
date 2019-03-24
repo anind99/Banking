@@ -13,11 +13,11 @@ public abstract class Account implements Serializable {
     private int depositNum;
 
 
-    public Account(int accountNum) {
+    public Account(int accountNum, ATM atm) {
         this.accountNum = accountNum;
         this.balance = 0;
         this.lastTransaction = null;
-        this.dateCreated = ATM.getDate();
+        this.dateCreated = atm.getDate();
         this.depositNum = 0;
 
     }

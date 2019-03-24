@@ -16,9 +16,9 @@ public class ATM  {
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
 
     private Bills bills;
-    private static ArrayList<User> listOfUsers = new ArrayList<User>();
-    private static BankManager BM = new BankManager();
-    private static Calendar date = Calendar.getInstance();
+    private ArrayList<User> listOfUsers = new ArrayList<User>();
+    private BankManager BM = new BankManager();
+    private Calendar date = Calendar.getInstance();
 
     public ATM() {
         bills = new Bills(100, 100, 100, 100);
@@ -32,7 +32,7 @@ public class ATM  {
         return BM;
     }
 
-    void run(){
+    public void run(){
         boolean running = true;
         testBoot();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -54,7 +54,7 @@ public class ATM  {
         }
     }
 
-    private static void addSavingsInterest(){
+    private void addSavingsInterest(){
         if (date.get(Calendar.DAY_OF_MONTH) == 1){
             for (User user : listOfUsers){
                 ArrayList<Account> listOfAccounts = user.getAccounts();
@@ -70,7 +70,7 @@ public class ATM  {
     }
 
 
-    protected static void dateIncrement(){
+    private void dateIncrement(){
         boolean done;
         try {
             File file = new File("date.txt");
@@ -89,11 +89,13 @@ public class ATM  {
 
     }
 
-    public static Calendar getDate(){
+    Calendar getDate(){
+        // Has to be package-private.
         return (Calendar) date.clone();
     }
 
     void addUserToList(User u){
+        // Has to be package-private.
         getListOfUsers().add(u); }
 
     /**Alerts the manager when the amount of any denomination goes below 20.*/
@@ -125,6 +127,7 @@ public class ATM  {
     }
 
     ArrayList<User> getListOfUsers(){
+        // Has to be package-private.
         return listOfUsers;
     }
 
@@ -147,7 +150,7 @@ public class ATM  {
         }
     }
 
-    void testBoot(){
+    private void testBoot(){
         boolean bool = false;
 
         try {
