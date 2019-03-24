@@ -32,7 +32,7 @@ public class ATM  {
         return BM;
     }
 
-    void run(){
+    public void run(){
         boolean running = true;
         testBoot();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -90,10 +90,12 @@ public class ATM  {
     }
 
     Calendar getDate(){
+        // Has to be package-private.
         return (Calendar) date.clone();
     }
 
     void addUserToList(User u){
+        // Has to be package-private.
         getListOfUsers().add(u); }
 
     /**Alerts the manager when the amount of any denomination goes below 20.*/
@@ -125,6 +127,7 @@ public class ATM  {
     }
 
     ArrayList<User> getListOfUsers(){
+        // Has to be package-private.
         return listOfUsers;
     }
 
@@ -147,7 +150,7 @@ public class ATM  {
         }
     }
 
-    void testBoot(){
+    private void testBoot(){
         boolean bool = false;
 
         try {
