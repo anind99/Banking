@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class UserInterface {
 
-    public static void displayUserMenu(User user) {
+    public static void displayUserMenu(User user, ATM atm) {
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
         boolean logout = false;
@@ -26,10 +26,10 @@ public class UserInterface {
             String option = scanner.next();
             switch (option) {
                 case "1":
-                    deposit(user);
+                    deposit(user, atm);
                     break;
                 case "2":
-                    Withdraw(user);
+                    Withdraw(user, atm);
                     break;
                 case "3":
                     transferIn(user);
@@ -61,13 +61,13 @@ public class UserInterface {
 
     }
 
-    private static void deposit(User user) {
+    private static void deposit(User user, ATM atm) {
         ArrayList<Account> chequingAccounts = listOfAccounts(user, "chequing");
 
         for (Account a : chequingAccounts) {
             Chequing account = (Chequing)a;
             if (account.primary) {
-                account.deposit();
+                account.deposit(atm);
                 break;
             }
         }
@@ -78,7 +78,7 @@ public class UserInterface {
         ATM.getBM().create_account(user, type);
     }
 
-    protected static void Withdraw(User user) {
+    protected static void Withdraw(User user, ATM atm) {
         String type = selectTypeOfAccount(false, user);
         printChoices(user, false, type);
 
@@ -98,7 +98,7 @@ public class UserInterface {
             if(valid){
 
             if (divisibleByFive(Integer.valueOf(amount))) {
-                account.withdraw(Integer.valueOf(amount));
+                account.withdraw(Integer.valueOf(amount), atm);
                 running = false;
             }} else {
                 System.out.println("The amount you entered is not possible, please try again.");
