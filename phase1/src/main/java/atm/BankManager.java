@@ -33,7 +33,7 @@ public class BankManager implements Serializable{
         }
 
         //Bank manager will always add 100 new bills when restocking
-        public boolean restock(ATM atm, int index){
+        public void restock(ATM atm, int index){
             atm.getBills().set_bills(index, 100);
             try {
                 //System.out.println(System.getProperty("user.dir"));
