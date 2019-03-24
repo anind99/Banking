@@ -15,13 +15,17 @@ public class ATM  {
     /** Stores the total amount of the bills in the ATM in an array with the following order:
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
 
-    static Bills bills;
+    private Bills bills;
     private static ArrayList<User> listOfUsers = new ArrayList<User>();
     private static BankManager BM = new BankManager();
     private static Calendar date = Calendar.getInstance();
 
     public ATM() {
         bills = new Bills(100, 100, 100, 100);
+    }
+
+    public Bills getBills() {
+        return bills;
     }
 
     public void run(){
