@@ -24,7 +24,7 @@ public class BankManagerInterface {
                     String username = scanner.next();
                     System.out.println("Type the password for the new user");
                     String password = scanner.next();
-                    ATM.getBM().create_user(username, password);
+                    atm.getBM().create_user(username, password);
                     validselection = true;
                     break;
                 }
@@ -38,10 +38,10 @@ public class BankManagerInterface {
                             System.out.println("Type in the username of the user that would like to create an account: ");
                         }
                         String username = scanner.nextLine();
-                        for (User parameter : ATM.getListOfUsers()) {
+                        for (User parameter : atm.getListOfUsers()) {
                             if (parameter.getUsername().equals(username)) {
                                 user = parameter;
-                                UserInterface.CreateAccount(user);
+                                UserInterface.CreateAccount(user, atm);
                                 created = true;
                                 break;
                             }
@@ -107,7 +107,7 @@ public class BankManagerInterface {
                         }
                         String username = scanner.nextLine();
                         System.out.println(username);
-                        for (User parameter : ATM.getListOfUsers()) {
+                        for (User parameter : atm.getListOfUsers()) {
                             if (parameter.getUsername().equals(username)) {
                                 user = parameter;
                                 break;
@@ -119,7 +119,7 @@ public class BankManagerInterface {
                     }
 
                     Account account = UserInterface.selectAccount(user, "undo its last transaction", user.getAccounts());
-                    ATM.getBM().undo_transaction(user, account);
+                    atm.getBM().undo_transaction(user, account);
                     validselection = true;
                     break;
                 }
@@ -145,7 +145,7 @@ public class BankManagerInterface {
 
     }
 
-    static String displayLoginMenu(){
+    static String displayLoginMenu(ATM atm){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome. Please login.");
             User loginUser;
@@ -157,7 +157,7 @@ public class BankManagerInterface {
                 System.out.println("Login successful. Logging in as bank manager");
                 return "manager";
             } else {
-                for (User usr : ATM.getListOfUsers()) {
+                for (User usr : atm.getListOfUsers()) {
                     if (usr.getUsername().equals(usernameAttempt) && usr.getPassword().equals(passwordAttempt)) {
                         loginUser = usr;
                         System.out.println("Login successful. Logging into " + loginUser.getUsername());

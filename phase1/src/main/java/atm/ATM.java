@@ -28,6 +28,10 @@ public class ATM  {
         return bills;
     }
 
+    BankManager getBM(){
+        return BM;
+    }
+
     void run(){
         boolean running = true;
         testBoot();
@@ -89,11 +93,11 @@ public class ATM  {
         return (Calendar) date.clone();
     }
 
-    public static void addUserToList(User u){
-        ATM.getListOfUsers().add(u); }
+    void addUserToList(User u){
+        getListOfUsers().add(u); }
 
     /**Alerts the manager when the amount of any denomination goes below 20.*/
-    public void alertManager() {
+    void alertManager() {
         boolean fiveBills = true;
         boolean tenBills = true;
         boolean twentyBills = true;
@@ -120,16 +124,11 @@ public class ATM  {
         }
     }
 
-    public static ArrayList<User> getListOfUsers(){
+    ArrayList<User> getListOfUsers(){
         return listOfUsers;
     }
 
-
-    protected static BankManager getBM(){
-        return BM;
-    }
-
-    protected void testShutDown(){
+    void testShutDown(){
         dateIncrement();
         try {
             File file = new File("serialized.blob");
@@ -148,7 +147,7 @@ public class ATM  {
         }
     }
 
-    protected void testBoot(){
+    void testBoot(){
         boolean bool = false;
 
         try {
