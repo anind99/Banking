@@ -15,7 +15,6 @@ public class BankManager implements Serializable{
                 FileInputStream is = new FileInputStream(file);
                 InputStreamReader isr = new InputStreamReader(is);
                 BufferedReader r = new BufferedReader(isr);
-                //line = r.readLine();
                 while ((line = r.readLine()) != null) {
                     last = line; }
                 r.close();
