@@ -52,14 +52,14 @@ public abstract class Account implements Serializable {
         this.lastTransaction = new Transaction(accountTo.accountNum, amount, "TransferOut");
     }
 
-    public void deposit() {
-        Double amount = depositReader();
+    public void deposit(ATM atm) {
+        Double amount = depositReader(atm);
         addMoney(amount);
 
         this.lastTransaction = new Transaction(amount, "deposit");
     }
 
-    private Double depositReader() {
+    private Double depositReader(ATM atm) {
         Double amount;
         try {
             File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/deposits.txt");
@@ -73,7 +73,7 @@ public abstract class Account implements Serializable {
             while (line != null && count < depositNum) {
                 count += 1;
                 line = r.readLine();
-            } amount = depositReaderHelper(line, count, firstLine);
+            } amount = depositReaderHelper(line, count, firstLine, atm);
             r.close();
             return amount;
         } catch (IOException e) {
@@ -82,7 +82,7 @@ public abstract class Account implements Serializable {
         }
     }
 
-    private double depositReaderHelper(String line, int count, String firstLine){
+    private double depositReaderHelper(String line, int count, String firstLine, ATM atm){
         double amount;
         if (line != null && count >= depositNum){depositNum += 1;
         }else{line = firstLine;
@@ -96,17 +96,17 @@ public abstract class Account implements Serializable {
                 Character.getNumericValue(line.charAt(2)) * 20 +
                 Character.getNumericValue(line.charAt(3)) * 50);
 
-            ATM.bills.add_bills(0, Character.getNumericValue(line.charAt(0)));
-            ATM.bills.add_bills(1, Character.getNumericValue(line.charAt(1)));
-            ATM.bills.add_bills(2, Character.getNumericValue(line.charAt(2)));
-            ATM.bills.add_bills(3, Character.getNumericValue(line.charAt(3)));
+            atm.getBills().add_bills(0, Character.getNumericValue(line.charAt(0)));
+            atm.getBills().add_bills(1, Character.getNumericValue(line.charAt(1)));
+            atm.getBills().add_bills(2, Character.getNumericValue(line.charAt(2)));
+            atm.getBills().add_bills(3, Character.getNumericValue(line.charAt(3)));
             System.out.println("\nYou have deposited $" + amount + " in cash");
         }return amount;
     }
 
-    public void withdraw(double amount) {
-        if(ATM.bills.get_amount() >= amount) {
-            ATM.bills.withdrawBills(amount);
+    public void withdraw(double amount, ATM atm) {
+        if(atm.getBills().get_amount() >= amount) {
+            atm.getBills().withdrawBills(amount);
             ATM.alertManager();
             removeMoney(amount);
             this.lastTransaction = new Transaction(amount, "withdraw");

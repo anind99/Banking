@@ -12,7 +12,7 @@ public class Bills {
     }
 
     /** Set the number of bills at array index "bill" */
-    private void set_bills(int bill, int number){
+    void set_bills(int bill, int number){
         bills[bill - 1] = number;
     }
 

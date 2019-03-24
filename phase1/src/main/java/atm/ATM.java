@@ -24,11 +24,11 @@ public class ATM  {
         bills = new Bills(100, 100, 100, 100);
     }
 
-    public Bills getBills() {
+    Bills getBills() {
         return bills;
     }
 
-    public void run(){
+    void run(){
         boolean running = true;
         testBoot();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -93,7 +93,7 @@ public class ATM  {
         ATM.getListOfUsers().add(u); }
 
     /**Alerts the manager when the amount of any denomination goes below 20.*/
-    public static void alertManager() {
+    public void alertManager() {
         boolean fiveBills = true;
         boolean tenBills = true;
         boolean twentyBills = true;
@@ -129,7 +129,7 @@ public class ATM  {
         return BM;
     }
 
-    protected static void testShutDown(){
+    protected void testShutDown(){
         dateIncrement();
         try {
             File file = new File("serialized.blob");
@@ -148,7 +148,7 @@ public class ATM  {
         }
     }
 
-    protected static void testBoot(){
+    protected void testBoot(){
         boolean bool = false;
 
         try {
