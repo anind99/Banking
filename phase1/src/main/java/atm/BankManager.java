@@ -130,12 +130,14 @@ public class BankManager implements Serializable{
 
     private void undoDeposit(Account acct) {
             acct.balance -= acct.lastTransaction.Amount;
-            acct.lastTransaction = null;
+            acct.listOfTransactions.remove(acct.listOfTransactions.size() - 1);
+            acct.lastTransaction = acct.listOfTransactions.get(acct.listOfTransactions.size() - 1);
     }
 
     private void undoWithdraw(Account acct) {
             acct.balance += acct.lastTransaction.Amount;
-            acct.lastTransaction = null;
+            acct.listOfTransactions.remove(acct.listOfTransactions.size() - 1);
+            acct.lastTransaction = acct.listOfTransactions.get(acct.listOfTransactions.size() - 1);
     }
 
     private void undoTransferIn(User usr, Account acct) {
@@ -148,9 +150,12 @@ public class BankManager implements Serializable{
         if (TransferAct != null) {
             acct.balance -= acct.lastTransaction.Amount;
             TransferAct.balance += acct.lastTransaction.Amount;
-            if (check_other_acct(usr, acct))
-                TransferAct.lastTransaction = null;
-            acct.lastTransaction = null;
+            if (check_other_acct(usr, acct)) {
+                TransferAct.listOfTransactions.remove(TransferAct.listOfTransactions.size() - 1);
+                TransferAct.lastTransaction = TransferAct.listOfTransactions.get(TransferAct.listOfTransactions.size() - 1);
+            }
+            acct.listOfTransactions.remove(acct.listOfTransactions.size() - 1);
+            acct.lastTransaction = acct.listOfTransactions.get(acct.listOfTransactions.size() - 1);
         }
     }
 
@@ -165,15 +170,18 @@ public class BankManager implements Serializable{
             acct.balance += acct.lastTransaction.Amount;
             TransferAct.balance -= acct.lastTransaction.Amount;
             if (check_other_acct(usr, acct)) {
-                TransferAct.lastTransaction = null;
+                TransferAct.listOfTransactions.remove(TransferAct.listOfTransactions.size() - 1);
+                TransferAct.lastTransaction = TransferAct.listOfTransactions.get(TransferAct.listOfTransactions.size() - 1);
             }
-            acct.lastTransaction = null;
+            acct.listOfTransactions.remove(acct.listOfTransactions.size() - 1);
+            acct.lastTransaction = acct.listOfTransactions.get(acct.listOfTransactions.size() - 1);
         }
     }
 
     private void undoPayBill(Account acct) {
         acct.balance += acct.lastTransaction.Amount;
-        acct.lastTransaction = null;
+        acct.listOfTransactions.remove(acct.listOfTransactions.size() - 1);
+        acct.lastTransaction = acct.listOfTransactions.get(acct.listOfTransactions.size() - 1);
     }
 
 

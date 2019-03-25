@@ -1,6 +1,7 @@
 package atm;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public abstract class Account implements Serializable {
@@ -9,6 +10,7 @@ public abstract class Account implements Serializable {
     public final int accountNum;
     protected double balance;
     public Transaction lastTransaction;
+    public ArrayList<Transaction> listOfTransactions;
     public Calendar dateCreated;
     private int depositNum;
     private final ATM atm;
@@ -36,29 +38,39 @@ public abstract class Account implements Serializable {
 
     abstract boolean removeMoney (double amount);
 
+    void appendTransactionToList(Transaction transaction){
+        listOfTransactions.add(transaction);
+    }
+
     public void transferIn(double amount, Account accountFrom) {
         boolean removed = accountFrom.removeMoney(amount);
         if(removed){addMoney(amount);
+            Transaction transaction = new Transaction(accountFrom.accountNum, amount, "TransferIn");
+            this.lastTransaction = transaction;
+            this.listOfTransactions.add(transaction);
             System.out.println("\n" + amount + " has been transferred");}
         else{System.out.println("\nThis transaction i;s not possible: insufficient funds");}
 
-        this.lastTransaction = new Transaction(accountFrom.accountNum, amount, "TransferIn");
     }
 
     public void transferOut(double amount, Account accountTo) {
         boolean removed = removeMoney(amount);
         if(removed){accountTo.addMoney(amount);
+            Transaction transaction =  new Transaction(accountTo.accountNum, amount, "TransferOut");
+            this.lastTransaction = transaction;
+            this.listOfTransactions.add(transaction);
             System.out.println("\n" + amount + " has been transferred");}
         else{System.out.println("\nThis transaction is not possible: insufficient funds");}
 
-        this.lastTransaction = new Transaction(accountTo.accountNum, amount, "TransferOut");
+
     }
 
     public void deposit() {
         Double amount = depositReader();
         addMoney(amount);
-
-        this.lastTransaction = new Transaction(amount, "deposit");
+        Transaction transaction = new Transaction(amount, "deposit");
+        this.lastTransaction = transaction;
+        this.listOfTransactions.add(transaction);
     }
 
     private Double depositReader() {
@@ -111,7 +123,9 @@ public abstract class Account implements Serializable {
             atm.getBills().withdrawBills(amount);
             atm.alertManager();
             removeMoney(amount);
-            this.lastTransaction = new Transaction(amount, "withdraw");
+            Transaction transaction = new Transaction(amount, "withdraw");
+            this.lastTransaction = transaction;
+            this.listOfTransactions.add(transaction);
         }else{System.out.println("\nTransaction not possible: not enough funds in ATM");}
 
     }
