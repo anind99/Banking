@@ -6,8 +6,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.text.DateFormat;
-import java.util.Date;
 
 public class ATM  {
 
@@ -17,7 +15,7 @@ public class ATM  {
 
     private Bills bills;
     private ArrayList<User> listOfUsers = new ArrayList<User>();
-    private BankManager BM = new BankManager();
+    private BankManager BM = new BankManager(this);
     private Calendar date = Calendar.getInstance();
 
     public ATM() {

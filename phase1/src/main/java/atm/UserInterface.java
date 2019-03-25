@@ -1,13 +1,17 @@
 package atm;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Scanner;
 
 public class UserInterface {
 
-    public static void displayUserMenu(User user, ATM atm) {
+    private final ATM atm;
+
+    public UserInterface(ATM atm) {
+        this.atm = atm;
+    }
+
+    public void displayUserMenu(User user) {
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
         boolean logout = false;
@@ -26,10 +30,10 @@ public class UserInterface {
             String option = scanner.next();
             switch (option) {
                 case "1":
-                    deposit(user, atm);
+                    deposit(user);
                     break;
                 case "2":
-                    Withdraw(user, atm);
+                    Withdraw(user);
                     break;
                 case "3":
                     transferIn(user);
@@ -41,7 +45,7 @@ public class UserInterface {
                     payBill(user);
                     break;
                 case "6":
-                    CreateAccount(user, atm);
+                    CreateAccount(user);
                     break;
                 case "7":
                     summary(user);
@@ -61,24 +65,24 @@ public class UserInterface {
 
     }
 
-    private static void deposit(User user, ATM atm) {
+    private void deposit(User user) {
         ArrayList<Account> chequingAccounts = listOfAccounts(user, "chequing");
 
         for (Account a : chequingAccounts) {
             Chequing account = (Chequing)a;
             if (account.primary) {
-                account.deposit(atm);
+                account.deposit();
                 break;
             }
         }
     }
 
-    protected static void CreateAccount(User user, ATM atm) {
+    private void CreateAccount(User user) {
         String type = selectTypeOfAccount(false, user);
         atm.getBM().create_account(user, type);
     }
 
-    protected static void Withdraw(User user, ATM atm) {
+    private void Withdraw(User user) {
         String type = selectTypeOfAccount(false, user);
         printChoices(user, false, type);
 
@@ -98,7 +102,7 @@ public class UserInterface {
             if(valid){
 
             if (divisibleByFive(Integer.valueOf(amount))) {
-                account.withdraw(Integer.valueOf(amount), atm);
+                account.withdraw(Integer.valueOf(amount));
                 running = false;
             }} else {
                 System.out.println("The amount you entered is not possible, please try again.");
@@ -106,11 +110,11 @@ public class UserInterface {
         }
     }
 
-    private static boolean divisibleByFive(int amount) {
+    private boolean divisibleByFive(int amount) {
         return (amount % 5 == 0);
     }
 
-    private static void transferIn(User user) {
+    private void transferIn(User user) {
         // Method for users to transfer in.
 
         System.out.println("Which account do you want to transfer to?");
@@ -122,12 +126,12 @@ public class UserInterface {
         String typeTwo = selectTypeOfAccount(true, user);
         printChoices(user, false, typeTwo);
         Account accountFrom = selectAccount(user, "transfer from", listOfAccounts(user, typeTwo));
-        double amount = selectAmount(user);
+        double amount = selectAmount();
 
         accountTo.transferIn(amount, accountFrom);
     }
 
-    private static void transferOut(User user) {
+    private void transferOut(User user) {
         // Method for users to transfer out.
 
         System.out.println("Which account do you want to transfer out from?");
@@ -140,12 +144,12 @@ public class UserInterface {
         printChoices(user, false, typeTwo);
         Account accountTo = selectAccount(user, "transfer to", listOfAccounts(user, typeTwo));
 
-        double amount = selectAmount(user);
+        double amount = selectAmount();
 
         accountFrom.transferOut(amount, accountTo);
     }
 
-    private static void payBill(User user) {
+    private void payBill(User user) {
         // Method for users to pay bills.
 
         Scanner scanner = new Scanner(System.in);
@@ -156,12 +160,12 @@ public class UserInterface {
         System.out.println("Enter the name of the receiver of the bill: ");
         String receiver = scanner.nextLine();
 
-        double amount = selectAmount(user);
+        double amount = selectAmount();
 
         accountFrom.payBill(amount, receiver.trim());
     }
 
-    private static void changePassword(User user) {
+    private void changePassword(User user) {
         // Method for users to change their password.
 
         System.out.println("Type in your new password:");
@@ -171,7 +175,7 @@ public class UserInterface {
         System.out.println("\nPassword change successful");
     }
 
-    private static void summary(User user) {
+    private void summary(User user) {
         // Method for users to see a summary of their accounts.
 
         printChoices(user, true, "chequing");
@@ -182,7 +186,7 @@ public class UserInterface {
 
     }
 
-    private static ArrayList<Account> listOfAccounts(User user, String typeOfAccount) {
+    private ArrayList<Account> listOfAccounts(User user, String typeOfAccount) {
         // Helper function for printListOfAccounts. This method returns an array list of a certain type of account
         // (taken as a parameter) that a user has.
 
@@ -197,7 +201,7 @@ public class UserInterface {
         return accounts;
     }
 
-    private static StringBuilder printListOfAccounts(ArrayList<Account> listOfAccounts, boolean summary) {
+    private StringBuilder printListOfAccounts(ArrayList<Account> listOfAccounts, boolean summary) {
         // Will return a StringBuilder with the account number, balance, last transaction and date
         // created of the accounts a user has.
 
@@ -220,7 +224,7 @@ public class UserInterface {
         return choices;
     }
 
-    private static String selectTypeOfAccount(boolean transferOut, User user) {
+    private String selectTypeOfAccount(boolean transferOut, User user) {
         // Allows users to pick the type of account they want to access and returns their type as a string.
 
         StringBuilder toPrint = new StringBuilder("Select the type of account: \n 1. Chequing \n" +
@@ -252,7 +256,7 @@ public class UserInterface {
         return returnTypeOfAccount(type, transferOut);
     }
 
-    private static String returnTypeOfAccount(String selection, boolean transferOut) {
+    private String returnTypeOfAccount(String selection, boolean transferOut) {
         // Helper function for selectTypeOfAccount. The function recognizes the selection the user makes and returns
         // the corresponding account type as a string.
 
@@ -271,7 +275,7 @@ public class UserInterface {
         return toReturn;
     }
 
-    private static void printChoices(User user, boolean summary, String typeOfAccount) {
+    private void printChoices(User user, boolean summary, String typeOfAccount) {
         // Prints out the accounts a user has.
 
         ArrayList<Account> accounts = listOfAccounts(user, typeOfAccount);
@@ -287,7 +291,7 @@ public class UserInterface {
         System.out.println(choices);
     }
 
-    protected static Account selectAccount(User user, String action, ArrayList<Account> listOfAccounts) {
+    protected Account selectAccount(User user, String action, ArrayList<Account> listOfAccounts) {
         // Allows users to select an account by entering their account number. Returns that account.
 
         Scanner scanner = new Scanner(System.in);
@@ -320,7 +324,7 @@ public class UserInterface {
 
 
 
-    protected static double selectAmount(User user) {
+    protected double selectAmount() {
         // Returns the amount a user would like to deposit/transfer.
 
         Scanner scanner = new Scanner(System.in);
@@ -354,5 +358,5 @@ public class UserInterface {
         if(valid){return Double.valueOf(amount);}
 
         System.out.println("The amount you entered is not possible, please enter an amount rounded to a whole number or to 2 digits.");
-            return selectAmount(user);}
+            return selectAmount();}
 }

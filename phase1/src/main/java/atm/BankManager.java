@@ -1,14 +1,15 @@
 package atm;
 import java.util.ArrayList;
-import java.util.Date;
 import java.io.*;
 
 public class BankManager implements Serializable{
 
     private String last, line;
     private int acct_counter;
+    private final ATM atm;
 
-        public BankManager(){
+        public BankManager(ATM atm){
+            this.atm = atm;
             //last = null;
             try {
                 File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt"); //FIX
@@ -33,7 +34,7 @@ public class BankManager implements Serializable{
         }
 
         //Bank manager will always add 100 new bills when restocking
-        public void restock(ATM atm, int index){
+        public void restock(int index){
             atm.getBills().set_bills(index, 100);
             try {
                 //System.out.println(System.getProperty("user.dir"));
@@ -48,7 +49,7 @@ public class BankManager implements Serializable{
             }
         }
 
-        public void create_user(String username, String password, ATM atm){
+        public void create_user(String username, String password){
             ArrayList<Account> accounts = new ArrayList<>();
             boolean contains = false;
             for (User parameter : atm.getListOfUsers()) {
@@ -70,26 +71,26 @@ public class BankManager implements Serializable{
 
         public void create_account(User user, String acct_type){
             if (acct_type.equalsIgnoreCase("chequing")) {
-                Chequing newChequing = new Chequing(this.acct_counter);
+                Chequing newChequing = new Chequing(this.acct_counter, atm);
                 user.accounts.add(newChequing);
                 this.acct_counter += 1;
                 System.out.println("New chequing account created.");
             }
             else if (acct_type.equalsIgnoreCase("CreditCard")) {
-                CreditCard newCreditCard = new CreditCard(this.acct_counter);
+                CreditCard newCreditCard = new CreditCard(this.acct_counter, atm);
                 user.accounts.add(newCreditCard);
                 this.acct_counter += 1;
                 System.out.println("New credit card account created.");
             }
             else if (acct_type.equalsIgnoreCase("LOC")){
-                LOC newLoc = new LOC(this.acct_counter);
+                LOC newLoc = new LOC(this.acct_counter, atm);
                 user.accounts.add(newLoc);
                 this.acct_counter += 1;
                 System.out.println("New line of credit account created.");
             }
 
             else if (acct_type.equalsIgnoreCase("savings")){
-                Savings newSaving = new Savings(this.acct_counter);
+                Savings newSaving = new Savings(this.acct_counter, atm);
                 user.accounts.add(newSaving);
                 this.acct_counter += 1;
                 System.out.println("New savings account created.");

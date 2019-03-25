@@ -4,7 +4,13 @@ import java.io.*;
 import java.util.Scanner;
 
 public class BankManagerInterface {
-    static void displayManagerMenu(BankManager bm, ATM atm){
+    private final ATM atm;
+
+    public BankManagerInterface(ATM atm) {
+        this.atm = atm;
+    }
+
+    void displayManagerMenu(BankManager bm, ATM atm){
         Scanner scanner = new Scanner(System.in);
         boolean loggedOut = false;
         boolean validselection = false;
@@ -24,7 +30,7 @@ public class BankManagerInterface {
                     String username = scanner.next();
                     System.out.println("Type the password for the new user");
                     String password = scanner.next();
-                    atm.getBM().create_user(username, password, atm);
+                    atm.getBM().create_user(username, password);
                     validselection = true;
                     break;
                 }
@@ -78,16 +84,16 @@ public class BankManagerInterface {
                     String dollarType = scanner.next();
                     switch (dollarType) {
                         case "1":
-                            bm.restock(atm,1);
+                            bm.restock(1);
                             break;
                         case "2":
-                            bm.restock(atm,2);
+                            bm.restock(2);
                             break;
                         case "3":
-                            bm.restock(atm,3);
+                            bm.restock(3);
                             break;
                         case "4":
-                            bm.restock(atm,4);
+                            bm.restock(4);
                             break;
                         default:
                             System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 4 or quit.");
@@ -145,7 +151,7 @@ public class BankManagerInterface {
 
     }
 
-    static String displayLoginMenu(ATM atm){
+    String displayLoginMenu(ATM atm){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome. Please login.");
             User loginUser;
