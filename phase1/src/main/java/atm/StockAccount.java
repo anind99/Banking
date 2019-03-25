@@ -1,9 +1,9 @@
 package atm;
 
 public class StockAccount extends Asset {
-    public StockAccount(int accountNum) {
+    public StockAccount(int accountNum, ATM atm) {
 
-        super(accountNum);
+        super(accountNum, atm);
     }
 
     public boolean removeMoney(double amount){

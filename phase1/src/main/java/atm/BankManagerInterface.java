@@ -3,8 +3,13 @@ package atm;
 import java.io.*;
 import java.util.Scanner;
 
-public class BankManagerInterface {
-    static void displayManagerMenu(BankManager bm, ATM atm){
+public class BankManagerInterface extends Interface {
+
+    public BankManagerInterface(ATM atm) {
+        super(atm);
+    }
+
+    void displayManagerMenu(BankManager bm, ATM atm){
         Scanner scanner = new Scanner(System.in);
         boolean loggedOut = false;
         boolean validselection = false;
@@ -24,7 +29,7 @@ public class BankManagerInterface {
                     String username = scanner.next();
                     System.out.println("Type the password for the new user");
                     String password = scanner.next();
-                    atm.getBM().create_user(username, password, atm);
+                    atm.getBM().create_user(username, password);
                     validselection = true;
                     break;
                 }
@@ -41,7 +46,7 @@ public class BankManagerInterface {
                         for (User parameter : atm.getListOfUsers()) {
                             if (parameter.getUsername().equals(username)) {
                                 user = parameter;
-                                UserInterface.CreateAccount(user, atm);
+                                CreateAccount(user);
                                 created = true;
                                 break;
                             }
@@ -78,16 +83,16 @@ public class BankManagerInterface {
                     String dollarType = scanner.next();
                     switch (dollarType) {
                         case "1":
-                            bm.restock(atm,1);
+                            bm.restock(1);
                             break;
                         case "2":
-                            bm.restock(atm,2);
+                            bm.restock(2);
                             break;
                         case "3":
-                            bm.restock(atm,3);
+                            bm.restock(3);
                             break;
                         case "4":
-                            bm.restock(atm,4);
+                            bm.restock(4);
                             break;
                         default:
                             System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 4 or quit.");
@@ -118,7 +123,7 @@ public class BankManagerInterface {
                         //System.out.println("The username is not valid, please try again.");
                     }
 
-                    Account account = UserInterface.selectAccount(user, "undo its last transaction", user.getAccounts());
+                    Account account = selectAccount(user, "undo its last transaction", user.getAccounts());
                     atm.getBM().undo_transaction(user, account);
                     validselection = true;
                     break;
@@ -145,7 +150,7 @@ public class BankManagerInterface {
 
     }
 
-    static String displayLoginMenu(ATM atm){
+    String displayLoginMenu(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome. Please login.");
             User loginUser;

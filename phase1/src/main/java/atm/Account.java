@@ -11,13 +11,15 @@ public abstract class Account implements Serializable {
     public Transaction lastTransaction;
     public Calendar dateCreated;
     private int depositNum;
+    private final ATM atm;
 
 
     public Account(int accountNum, ATM atm) {
         this.accountNum = accountNum;
+        this.atm = atm;
         this.balance = 0;
         this.lastTransaction = null;
-        this.dateCreated = atm.getDate();
+        this.dateCreated = this.atm.getDate();
         this.depositNum = 0;
 
     }
@@ -52,14 +54,14 @@ public abstract class Account implements Serializable {
         this.lastTransaction = new Transaction(accountTo.accountNum, amount, "TransferOut");
     }
 
-    public void deposit(ATM atm) {
-        Double amount = depositReader(atm);
+    public void deposit() {
+        Double amount = depositReader();
         addMoney(amount);
 
         this.lastTransaction = new Transaction(amount, "deposit");
     }
 
-    private Double depositReader(ATM atm) {
+    private Double depositReader() {
         Double amount;
         try {
             File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/deposits.txt");
@@ -73,7 +75,7 @@ public abstract class Account implements Serializable {
             while (line != null && count < depositNum) {
                 count += 1;
                 line = r.readLine();
-            } amount = depositReaderHelper(line, count, firstLine, atm);
+            } amount = depositReaderHelper(line, count, firstLine);
             r.close();
             return amount;
         } catch (IOException e) {
@@ -82,7 +84,7 @@ public abstract class Account implements Serializable {
         }
     }
 
-    private double depositReaderHelper(String line, int count, String firstLine, ATM atm){
+    private double depositReaderHelper(String line, int count, String firstLine){
         double amount;
         if (line != null && count >= depositNum){depositNum += 1;
         }else{line = firstLine;
@@ -104,7 +106,7 @@ public abstract class Account implements Serializable {
         }return amount;
     }
 
-    public void withdraw(double amount, ATM atm) {
+    public void withdraw(double amount) {
         if(atm.getBills().get_amount() >= amount) {
             atm.getBills().withdrawBills(amount);
             atm.alertManager();

@@ -2,8 +2,8 @@ package atm;
 
 public class Debt extends Account{
 
-    public Debt(int accountNum) {
-        super(accountNum);
+    public Debt(int accountNum, ATM atm) {
+        super(accountNum, atm);
     }
 
     //Adding money to a debt account will decrease its balance

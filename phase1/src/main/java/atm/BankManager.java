@@ -1,39 +1,21 @@
 package atm;
 import java.util.ArrayList;
-import java.util.Date;
 import java.io.*;
 
 public class BankManager implements Serializable{
 
-    private String last, line;
     private int acct_counter;
+    private final ATM atm;
 
-        public BankManager(){
-            //last = null;
-            try {
-                File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt"); //FIX
-                FileInputStream is = new FileInputStream(file);
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader r = new BufferedReader(isr);
-                while ((line = r.readLine()) != null) {
-                    last = line; }
-                r.close();
-            }catch (FileNotFoundException e){
-                System.out.println(
-                        "Unable to open file '" +
-                                "bankmanager.txt" + "'");
-            }
-            catch(IOException ex) {
-                System.out.println(
-                        "Error reading file '"
-                                + "bankmanager.txt" + "'");
-                ex.printStackTrace();
-            }
-            this.acct_counter = Integer.parseInt(last);
+        public BankManager(ATM atm){
+            this.atm = atm;
+            this.acct_counter = 1000;
+            // acct_counter is the variable that provides users with unique account numbers, it will increment by 1
+            // each time a new account is created.
         }
 
         //Bank manager will always add 100 new bills when restocking
-        public void restock(ATM atm, int index){
+        public void restock(int index){
             atm.getBills().set_bills(index, 100);
             try {
                 //System.out.println(System.getProperty("user.dir"));
@@ -48,7 +30,8 @@ public class BankManager implements Serializable{
             }
         }
 
-        public void create_user(String username, String password, ATM atm){
+        public void create_user(String username, String password){
+            // Creates a new user. This user will have all the account types open.
             ArrayList<Account> accounts = new ArrayList<>();
             boolean contains = false;
             for (User parameter : atm.getListOfUsers()) {
@@ -70,31 +53,29 @@ public class BankManager implements Serializable{
 
         public void create_account(User user, String acct_type){
             if (acct_type.equalsIgnoreCase("chequing")) {
-                Chequing newChequing = new Chequing(this.acct_counter);
-                user.accounts.add(newChequing);
-                this.acct_counter += 1;
-                System.out.println("New chequing account created.");
+                createAccountHelper(user, createNewChequing(), "chequing");
             }
             else if (acct_type.equalsIgnoreCase("CreditCard")) {
-                CreditCard newCreditCard = new CreditCard(this.acct_counter);
-                user.accounts.add(newCreditCard);
-                this.acct_counter += 1;
-                System.out.println("New credit card account created.");
+                createAccountHelper(user, createNewCreditCard(), "credit card");
             }
             else if (acct_type.equalsIgnoreCase("LOC")){
-                LOC newLoc = new LOC(this.acct_counter);
-                user.accounts.add(newLoc);
-                this.acct_counter += 1;
-                System.out.println("New line of credit account created.");
+                createAccountHelper(user, createNewLOC(), "line of credit");
             }
 
             else if (acct_type.equalsIgnoreCase("savings")){
-                Savings newSaving = new Savings(this.acct_counter);
-                user.accounts.add(newSaving);
-                this.acct_counter += 1;
-                System.out.println("New savings account created.");
+                createAccountHelper(user, createNewSavings(), "savings");
             }
 
+            checkForPrimary(user);
+
+        }
+
+        private Chequing createNewChequing() {
+            return new Chequing(this.acct_counter, atm);
+        }
+
+        private void checkForPrimary(User user) {
+            // Checks for primary account. The first chequing account the user makes is always the primary account.
             boolean primary = false;
             for (Account a : user.accounts) {
                 if (a.getType().equals("chequing")) {
@@ -102,18 +83,27 @@ public class BankManager implements Serializable{
                 }
             }if(!primary){
                 for (Account a : user.accounts) {
-                if (a.getType().equals("chequing")){
-            ((Chequing)a).setPrimary();
-                break;}}}
+                    if (a.getType().equals("chequing")){
+                        ((Chequing)a).setPrimary();
+                        break;}}}
+        }
 
-            try{
-                File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt");
-                FileOutputStream is = new FileOutputStream(file);
-                OutputStreamWriter osw = new OutputStreamWriter(is);
-                Writer w = new BufferedWriter(osw);
-                w.write(String.valueOf(this.acct_counter));
-                w.close();
-            }catch(IOException e){e.printStackTrace();}
+        private CreditCard createNewCreditCard() {
+            return new CreditCard(this.acct_counter, atm);
+        }
+
+        private Savings createNewSavings() {
+            return new Savings(this.acct_counter, atm);
+        }
+
+        private LOC createNewLOC() {
+            return new LOC(this.acct_counter, atm);
+        }
+
+        private void createAccountHelper(User user, Account account, String type){
+            user.accounts.add(account);
+            this.acct_counter += 1;
+            System.out.println("New " + type + " account created.");
         }
 
     public void undo_transaction(User usr, Account acct){
@@ -121,49 +111,69 @@ public class BankManager implements Serializable{
             System.out.println("No previous transactions");
         }
         else if (acct.lastTransaction.Type.equalsIgnoreCase("deposit")){
-            acct.balance -= acct.lastTransaction.Amount;
-            acct.lastTransaction = null;
+            undoDeposit(acct);
         }
         else if (acct.lastTransaction.Type.equalsIgnoreCase("withdraw")){
-            acct.balance += acct.lastTransaction.Amount;
-            acct.lastTransaction = null;
+            undoWithdraw(acct);
         }
         else if (acct.lastTransaction.Type.equalsIgnoreCase("transferin")){
-            Account TransferAct = null;
-            for (Account ac2:usr.accounts){
-                if (ac2.accountNum == acct.lastTransaction.Account){
-                    TransferAct = ac2;
-                }
-            }
-            if (TransferAct != null) {
-                acct.balance -= acct.lastTransaction.Amount;
-                TransferAct.balance += acct.lastTransaction.Amount;
-                if (check_other_acct(usr, acct))
-                    TransferAct.lastTransaction = null;
-                acct.lastTransaction = null;
-            }
+            undoTransferIn(usr, acct);
         }
 
         else if (acct.lastTransaction.Type.equalsIgnoreCase("transferout")) {
-            Account TransferAct = null;
-            for (Account ac2 : usr.accounts) {
-                if (ac2.accountNum == acct.lastTransaction.Account) {
-                    TransferAct = ac2;
-                }
-            }
-            if (TransferAct != null) {
-                acct.balance += acct.lastTransaction.Amount;
-                TransferAct.balance -= acct.lastTransaction.Amount;
-                if (check_other_acct(usr, acct)) {
-                    TransferAct.lastTransaction = null;
-                }
-                acct.lastTransaction = null;
-            }
+            undoTransferOut(usr, acct);
         }
         else if (acct.lastTransaction.Type.equalsIgnoreCase("paybill")){
+            undoPayBill(acct);
+        }
+    }
+
+    private void undoDeposit(Account acct) {
+            acct.balance -= acct.lastTransaction.Amount;
+            acct.lastTransaction = null;
+    }
+
+    private void undoWithdraw(Account acct) {
             acct.balance += acct.lastTransaction.Amount;
             acct.lastTransaction = null;
+    }
+
+    private void undoTransferIn(User usr, Account acct) {
+        Account TransferAct = null;
+        for (Account ac2:usr.accounts){
+            if (ac2.accountNum == acct.lastTransaction.Account){
+                TransferAct = ac2;
+            }
         }
+        if (TransferAct != null) {
+            acct.balance -= acct.lastTransaction.Amount;
+            TransferAct.balance += acct.lastTransaction.Amount;
+            if (check_other_acct(usr, acct))
+                TransferAct.lastTransaction = null;
+            acct.lastTransaction = null;
+        }
+    }
+
+    private void undoTransferOut(User usr, Account acct) {
+        Account TransferAct = null;
+        for (Account ac2 : usr.accounts) {
+            if (ac2.accountNum == acct.lastTransaction.Account) {
+                TransferAct = ac2;
+            }
+        }
+        if (TransferAct != null) {
+            acct.balance += acct.lastTransaction.Amount;
+            TransferAct.balance -= acct.lastTransaction.Amount;
+            if (check_other_acct(usr, acct)) {
+                TransferAct.lastTransaction = null;
+            }
+            acct.lastTransaction = null;
+        }
+    }
+
+    private void undoPayBill(Account acct) {
+        acct.balance += acct.lastTransaction.Amount;
+        acct.lastTransaction = null;
     }
 
 
