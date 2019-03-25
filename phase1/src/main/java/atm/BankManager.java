@@ -111,49 +111,69 @@ public class BankManager implements Serializable{
             System.out.println("No previous transactions");
         }
         else if (acct.lastTransaction.Type.equalsIgnoreCase("deposit")){
-            acct.balance -= acct.lastTransaction.Amount;
-            acct.lastTransaction = null;
+            undoDeposit(acct);
         }
         else if (acct.lastTransaction.Type.equalsIgnoreCase("withdraw")){
-            acct.balance += acct.lastTransaction.Amount;
-            acct.lastTransaction = null;
+            undoWithdraw(acct);
         }
         else if (acct.lastTransaction.Type.equalsIgnoreCase("transferin")){
-            Account TransferAct = null;
-            for (Account ac2:usr.accounts){
-                if (ac2.accountNum == acct.lastTransaction.Account){
-                    TransferAct = ac2;
-                }
-            }
-            if (TransferAct != null) {
-                acct.balance -= acct.lastTransaction.Amount;
-                TransferAct.balance += acct.lastTransaction.Amount;
-                if (check_other_acct(usr, acct))
-                    TransferAct.lastTransaction = null;
-                acct.lastTransaction = null;
-            }
+            undoTransferIn(usr, acct);
         }
 
         else if (acct.lastTransaction.Type.equalsIgnoreCase("transferout")) {
-            Account TransferAct = null;
-            for (Account ac2 : usr.accounts) {
-                if (ac2.accountNum == acct.lastTransaction.Account) {
-                    TransferAct = ac2;
-                }
-            }
-            if (TransferAct != null) {
-                acct.balance += acct.lastTransaction.Amount;
-                TransferAct.balance -= acct.lastTransaction.Amount;
-                if (check_other_acct(usr, acct)) {
-                    TransferAct.lastTransaction = null;
-                }
-                acct.lastTransaction = null;
-            }
+            undoTransferOut(usr, acct);
         }
         else if (acct.lastTransaction.Type.equalsIgnoreCase("paybill")){
+            undoPayBill(acct);
+        }
+    }
+
+    private void undoDeposit(Account acct) {
+            acct.balance -= acct.lastTransaction.Amount;
+            acct.lastTransaction = null;
+    }
+
+    private void undoWithdraw(Account acct) {
             acct.balance += acct.lastTransaction.Amount;
             acct.lastTransaction = null;
+    }
+
+    private void undoTransferIn(User usr, Account acct) {
+        Account TransferAct = null;
+        for (Account ac2:usr.accounts){
+            if (ac2.accountNum == acct.lastTransaction.Account){
+                TransferAct = ac2;
+            }
         }
+        if (TransferAct != null) {
+            acct.balance -= acct.lastTransaction.Amount;
+            TransferAct.balance += acct.lastTransaction.Amount;
+            if (check_other_acct(usr, acct))
+                TransferAct.lastTransaction = null;
+            acct.lastTransaction = null;
+        }
+    }
+
+    private void undoTransferOut(User usr, Account acct) {
+        Account TransferAct = null;
+        for (Account ac2 : usr.accounts) {
+            if (ac2.accountNum == acct.lastTransaction.Account) {
+                TransferAct = ac2;
+            }
+        }
+        if (TransferAct != null) {
+            acct.balance += acct.lastTransaction.Amount;
+            TransferAct.balance -= acct.lastTransaction.Amount;
+            if (check_other_acct(usr, acct)) {
+                TransferAct.lastTransaction = null;
+            }
+            acct.lastTransaction = null;
+        }
+    }
+
+    private void undoPayBill(Account acct) {
+        acct.balance += acct.lastTransaction.Amount;
+        acct.lastTransaction = null;
     }
 
 
