@@ -3,10 +3,11 @@ package atm;
 import java.io.*;
 import java.util.Scanner;
 
-public class BankManagerInterface {
+public class BankManagerInterface extends Interface {
     private final ATM atm;
 
     public BankManagerInterface(ATM atm) {
+        super(atm);
         this.atm = atm;
     }
 
@@ -47,7 +48,7 @@ public class BankManagerInterface {
                         for (User parameter : atm.getListOfUsers()) {
                             if (parameter.getUsername().equals(username)) {
                                 user = parameter;
-                                UserInterface.CreateAccount(user, atm);
+                                CreateAccount(user);
                                 created = true;
                                 break;
                             }
@@ -124,7 +125,7 @@ public class BankManagerInterface {
                         //System.out.println("The username is not valid, please try again.");
                     }
 
-                    Account account = UserInterface.selectAccount(user, "undo its last transaction", user.getAccounts());
+                    Account account = selectAccount(user, "undo its last transaction", user.getAccounts());
                     atm.getBM().undo_transaction(user, account);
                     validselection = true;
                     break;
