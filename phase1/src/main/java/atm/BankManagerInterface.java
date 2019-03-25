@@ -4,11 +4,9 @@ import java.io.*;
 import java.util.Scanner;
 
 public class BankManagerInterface extends Interface {
-    private final ATM atm;
 
     public BankManagerInterface(ATM atm) {
         super(atm);
-        this.atm = atm;
     }
 
     void displayManagerMenu(BankManager bm, ATM atm){
@@ -152,7 +150,7 @@ public class BankManagerInterface extends Interface {
 
     }
 
-    String displayLoginMenu(ATM atm){
+    String displayLoginMenu(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome. Please login.");
             User loginUser;

@@ -17,8 +17,12 @@ public class ATM  {
     private ArrayList<User> listOfUsers = new ArrayList<User>();
     private BankManager BM = new BankManager(this);
     private Calendar date = Calendar.getInstance();
+    private final UserInterface UserInterface;
+    private final BankManagerInterface BankManagerInterface;
 
     public ATM() {
+        this.UserInterface = new UserInterface(this);
+        this.BankManagerInterface = new BankManagerInterface(this);
         bills = new Bills(100, 100, 100, 100);
     }
 
@@ -37,11 +41,11 @@ public class ATM  {
         System.out.println("Booting on " + sdf.format(date.getTime()));
         addSavingsInterest();
         while (running){
-            String username = BankManagerInterface.displayLoginMenu(this);
+            String username = BankManagerInterface.displayLoginMenu();
             if (!username.equals("manager")){
                 for (User usr : listOfUsers) {
                     if (usr.getUsername().equals(username)) {
-                        UserInterface.displayUserMenu(usr, this);
+                        UserInterface.displayUserMenu(usr);
                         break;
                     }
                 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class Interface {
-    private final ATM atm;
+    protected final ATM atm;
 
     protected Interface(ATM atm) {
         this.atm = atm;
@@ -153,9 +153,6 @@ public abstract class Interface {
 
         System.out.println("The account number you entered is not valid. Please try again.");
         return selectAccount(user, action, listOfAccounts);}
-
-
-
 
     double selectAmount() {
         // Returns the amount a user would like to deposit/transfer.

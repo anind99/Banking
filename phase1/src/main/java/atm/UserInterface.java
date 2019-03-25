@@ -5,11 +5,8 @@ import java.util.Scanner;
 
 public class UserInterface extends Interface{
 
-    private final ATM atm;
-
     public UserInterface(ATM atm) {
         super(atm);
-        this.atm = atm;
     }
 
     public void displayUserMenu(User user) {
