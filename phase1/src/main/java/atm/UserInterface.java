@@ -13,8 +13,7 @@ public class UserInterface extends Interface{
         Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
         boolean logout = false;
-        label:
-        while (!validselection && !logout) {
+        while (!logout) {
             System.out.println("Select an option:");
             System.out.println("1. Deposit");
             System.out.println("2. Withdraw");
