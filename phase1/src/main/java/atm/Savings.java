@@ -4,8 +4,8 @@ public class Savings extends Asset {
 
     public final double interestRate;
 
-    public Savings(int accountNum){
-        super(accountNum);
+    public Savings(int accountNum, ATM atm){
+        super(accountNum, atm);
         interestRate = 1.001;
         this.type = "savings";
     }

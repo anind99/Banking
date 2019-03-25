@@ -4,14 +4,14 @@ public class Chequing extends Asset {
 
     public boolean primary;
 
-    public Chequing(int accountNum){
-        super(accountNum);
+    public Chequing(int accountNum, ATM atm){
+        super(accountNum, atm);
         primary = false;
         this.type = "chequing";
     }
 
-    public Chequing(int accountNum, boolean number){
-        super(accountNum);
+    public Chequing(int accountNum, ATM atm, boolean number){
+        super(accountNum, atm);
         primary = number;
         this.type = "chequing";
     }

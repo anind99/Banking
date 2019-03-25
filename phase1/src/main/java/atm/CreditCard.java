@@ -2,8 +2,8 @@ package atm;
 
 public class CreditCard extends Debt {
 
-    public CreditCard(int accountNum) {
-        super(accountNum);
+    public CreditCard(int accountNum, ATM atm) {
+        super(accountNum, atm);
         this.type = "creditcard";
     }
 

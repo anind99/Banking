@@ -2,9 +2,9 @@ package atm;
 
 public abstract class Asset extends Account{
 
-    public Asset(int accountNum) {
+    public Asset(int accountNum, ATM atm) {
 
-        super(accountNum);
+        super(accountNum, atm);
     }
 
         //Adding money to an asset account will increase its balance
