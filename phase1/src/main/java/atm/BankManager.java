@@ -4,33 +4,14 @@ import java.io.*;
 
 public class BankManager implements Serializable{
 
-    private String last, line;
     private int acct_counter;
     private final ATM atm;
 
         public BankManager(ATM atm){
             this.atm = atm;
-            //last = null;
-            try {
-                File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt"); //FIX
-                FileInputStream is = new FileInputStream(file);
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader r = new BufferedReader(isr);
-                while ((line = r.readLine()) != null) {
-                    last = line; }
-                r.close();
-            }catch (FileNotFoundException e){
-                System.out.println(
-                        "Unable to open file '" +
-                                "bankmanager.txt" + "'");
-            }
-            catch(IOException ex) {
-                System.out.println(
-                        "Error reading file '"
-                                + "bankmanager.txt" + "'");
-                ex.printStackTrace();
-            }
-            this.acct_counter = Integer.parseInt(last);
+            this.acct_counter = 1000;
+            // acct_counter is the variable that provides users with unique account numbers, it will increment by 1
+            // each time a new account is created.
         }
 
         //Bank manager will always add 100 new bills when restocking
@@ -50,6 +31,7 @@ public class BankManager implements Serializable{
         }
 
         public void create_user(String username, String password){
+            // Creates a new user. This user will have all the account types open.
             ArrayList<Account> accounts = new ArrayList<>();
             boolean contains = false;
             for (User parameter : atm.getListOfUsers()) {
@@ -71,31 +53,29 @@ public class BankManager implements Serializable{
 
         public void create_account(User user, String acct_type){
             if (acct_type.equalsIgnoreCase("chequing")) {
-                Chequing newChequing = new Chequing(this.acct_counter, atm);
-                user.accounts.add(newChequing);
-                this.acct_counter += 1;
-                System.out.println("New chequing account created.");
+                createAccountHelper(user, createNewChequing(), "chequing");
             }
             else if (acct_type.equalsIgnoreCase("CreditCard")) {
-                CreditCard newCreditCard = new CreditCard(this.acct_counter, atm);
-                user.accounts.add(newCreditCard);
-                this.acct_counter += 1;
-                System.out.println("New credit card account created.");
+                createAccountHelper(user, createNewCreditCard(), "credit card");
             }
             else if (acct_type.equalsIgnoreCase("LOC")){
-                LOC newLoc = new LOC(this.acct_counter, atm);
-                user.accounts.add(newLoc);
-                this.acct_counter += 1;
-                System.out.println("New line of credit account created.");
+                createAccountHelper(user, createNewLOC(), "line of credit");
             }
 
             else if (acct_type.equalsIgnoreCase("savings")){
-                Savings newSaving = new Savings(this.acct_counter, atm);
-                user.accounts.add(newSaving);
-                this.acct_counter += 1;
-                System.out.println("New savings account created.");
+                createAccountHelper(user, createNewSavings(), "savings");
             }
 
+            checkForPrimary(user);
+
+        }
+
+        private Chequing createNewChequing() {
+            return new Chequing(this.acct_counter, atm);
+        }
+
+        private void checkForPrimary(User user) {
+            // Checks for primary account. The first chequing account the user makes is always the primary account.
             boolean primary = false;
             for (Account a : user.accounts) {
                 if (a.getType().equals("chequing")) {
@@ -103,18 +83,27 @@ public class BankManager implements Serializable{
                 }
             }if(!primary){
                 for (Account a : user.accounts) {
-                if (a.getType().equals("chequing")){
-            ((Chequing)a).setPrimary();
-                break;}}}
+                    if (a.getType().equals("chequing")){
+                        ((Chequing)a).setPrimary();
+                        break;}}}
+        }
 
-            try{
-                File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/bankmanager.txt");
-                FileOutputStream is = new FileOutputStream(file);
-                OutputStreamWriter osw = new OutputStreamWriter(is);
-                Writer w = new BufferedWriter(osw);
-                w.write(String.valueOf(this.acct_counter));
-                w.close();
-            }catch(IOException e){e.printStackTrace();}
+        private CreditCard createNewCreditCard() {
+            return new CreditCard(this.acct_counter, atm);
+        }
+
+        private Savings createNewSavings() {
+            return new Savings(this.acct_counter, atm);
+        }
+
+        private LOC createNewLOC() {
+            return new LOC(this.acct_counter, atm);
+        }
+
+        private void createAccountHelper(User user, Account account, String type){
+            user.accounts.add(account);
+            this.acct_counter += 1;
+            System.out.println("New " + type + " account created.");
         }
 
     public void undo_transaction(User usr, Account acct){
