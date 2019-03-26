@@ -3,8 +3,7 @@ import java.util.ArrayList;
 import java.io.*;
 
 public class BankManager implements Serializable{
-
-    private int acct_counter;
+    protected int acct_counter;
     private final ATM atm;
 
         public BankManager(ATM atm){

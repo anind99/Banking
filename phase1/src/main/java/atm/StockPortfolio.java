@@ -1,7 +1,8 @@
 package atm;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StockPortfolio {
-    HashMap<String, Double[]> stocks = new HashMap<>();
+    ArrayList <Stock> port = new ArrayList<>();
 }

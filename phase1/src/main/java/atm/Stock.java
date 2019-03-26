@@ -8,6 +8,7 @@ public class Stock {
     String symbol;
     double buyPrice;
     double currentPrice;
+    boolean updated;
 
     // risk might also be obsolete but im leaving it here for now for legacy reasons.
     //Risk is an int from 1 to 5 that indicates the volatility of a stock.
@@ -24,6 +25,7 @@ public class Stock {
         this.symbol = s;
         this.currentPrice = p;
         this.risk = r;
+        this.updated = false;
     }
 
 

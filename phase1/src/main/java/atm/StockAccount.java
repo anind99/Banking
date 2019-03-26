@@ -1,9 +1,12 @@
 package atm;
 
 public class StockAccount extends Asset {
+    protected double profitmade;
     public StockAccount(int accountNum, ATM atm) {
 
         super(accountNum, atm);
+        this.type = "stock";
+        this.profitmade = 0;
     }
 
     public boolean removeMoney(double amount){
