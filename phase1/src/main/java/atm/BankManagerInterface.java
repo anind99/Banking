@@ -175,10 +175,6 @@ public class BankManagerInterface extends Interface {
                 }
             }if (!loggedOut) displayManagerMenu(bm, atm);
         }
-        scanner.close();
-
-
-
     }
 
     String displayLoginMenu(){
