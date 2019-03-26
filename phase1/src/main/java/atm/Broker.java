@@ -17,25 +17,82 @@ public class Broker {
 
 
     private void loadstocks() {
-        File file1 = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/stocks1.txt");
+        File dir = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/stocks");
+        File[] directoryListing = dir.listFiles();
 
-        try {
-            FileReader fr = new FileReader(file1);
-            BufferedReader br = new BufferedReader(fr);
-            String line = br.readLine();
-            String name = line.split(",")[0];
-            Float price = Float.parseFloat(line.split(",")[1]);
-            int rating = Integer.parseInt(line.split(",")[2]);
+        for (File child: directoryListing) {
+            try {
+                FileReader fr = new FileReader(child);
+                BufferedReader br = new BufferedReader(fr);
+                String line = br.readLine();
+                int type = Integer.parseInt(line);
+                while (line != null) {
+                    line = br.readLine();
+                    ldstock(line, type);
+                }
 
-        } catch (Exception e){
-            System.out.println("error");
+            } catch (Exception e) {
+                System.out.println("done reading");
+            }
         }
     }
-    private void ldhelper(String line){
+
+
+    private void  ldstock(String line, int type){
+        String name = line.split(",")[0];
+        String symbol = line.split(",")[1];
+        Float price = Float.parseFloat(line.split(",")[2]);
+        int risk = Integer.parseInt(line.split(",")[3]);
+        Stock n =  new Stock(name, symbol, price, risk);
+        if (type == 1){
+            listofstocks1.add(n);
+        } else if (type == 2){
+            listofstocks2.add(n);
+        } else if (type == 3){
+            listofstocks3.add(n);
+        } else if (type == 4){
+            listofstocks4.add(n);
+        } else if (type == 5){
+            listofstocks5.add(n);
+        } else {System.out.println("invalid type");}
     }
 
-    protected void buystock(User user, int portfolio, int amount) {
+    protected void buystock(StockPortfolio port, double amount, int risk, int type){
 
+        if (type == 1){
+            stockbuyhelper(listofstocks1,port, amount, risk);
+        } else if (type == 2){
+            stockbuyhelper(listofstocks2,port, amount, risk);
+        } else if (type == 3){
+            stockbuyhelper(listofstocks3,port, amount, risk);
+        } else if (type == 4){
+            stockbuyhelper(listofstocks4,port, amount, risk);
+        } else if (type == 5){
+            stockbuyhelper(listofstocks5,port, amount, risk);
+        }
+
+
+    }
+
+    private void stockbuyhelper(ArrayList<Stock> list, StockPortfolio port, double amount, int risk){
+        for (Stock s:list){
+            int shares = 0;
+            while  (s.price <= amount && s.risk <= risk && shares <= 3){
+                if ( port.stocks.containsKey(s.name)){
+                    port.stocks.get(s.name)[0] += 1;
+                    port.stocks.get(s.name)[1] += s.price;
+                    amount -= s.price;
+                    shares += 1;
+                }
+                else{
+                    Double[] arr = new Double[2];
+                    arr [0] = 1.0;
+                    arr[1] = s.price;
+                    port.stocks.put(s.name,arr);
+                }
+
+            }
+        }
     }
 
     protected void sellstock(User user, int portfolio, int amount) {

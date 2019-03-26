@@ -19,6 +19,13 @@ public class Stock {
 
     int risk;
 
+    public Stock(String n, String s, double p, int r){
+        this.name = n;
+        this.symbol = s;
+        this.price = p;
+        this.risk = r;
+    }
+
 
 
     void updatePrice(){

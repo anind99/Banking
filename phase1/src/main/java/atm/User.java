@@ -9,6 +9,7 @@ public class User implements Serializable {
     private String username;
     private String pass;
     protected ArrayList<Account> accounts;
+    protected StockPortfolio Stockp;
 
     public User(String username, String password, ArrayList accounts){
         this.username = username;
