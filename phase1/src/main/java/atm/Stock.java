@@ -22,7 +22,7 @@ public class Stock {
     public Stock(String n, String s, double p, int r){
         this.name = n;
         this.symbol = s;
-        this.price = p;
+        this.currentPrice = p;
         this.risk = r;
     }
 

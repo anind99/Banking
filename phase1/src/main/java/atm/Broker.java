@@ -77,17 +77,17 @@ public class Broker {
     private void stockbuyhelper(ArrayList<Stock> list, StockPortfolio port, double amount, int risk){
         for (Stock s:list){
             int shares = 0;
-            while  (s.price <= amount && s.risk <= risk && shares <= 3){
+            while  (s.currentPrice <= amount && s.risk <= risk && shares <= 3){
                 if ( port.stocks.containsKey(s.name)){
                     port.stocks.get(s.name)[0] += 1;
-                    port.stocks.get(s.name)[1] += s.price;
-                    amount -= s.price;
+                    port.stocks.get(s.name)[1] += s.currentPrice;
+                    amount -= s.currentPrice;
                     shares += 1;
                 }
                 else{
                     Double[] arr = new Double[2];
                     arr [0] = 1.0;
-                    arr[1] = s.price;
+                    arr[1] = s.currentPrice;
                     port.stocks.put(s.name,arr);
                 }
 
