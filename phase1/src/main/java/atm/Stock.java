@@ -8,10 +8,12 @@ public class Stock {
     String symbol;
     double buyPrice;
     double currentPrice;
+    double yesterdayPrice;
+    int numshares;
     boolean updated;
 
     // risk might also be obsolete but im leaving it here for now for legacy reasons.
-    //Risk is an int from 1 to 5 that indicates the volatility of a stock.
+    // Risk is an int from 1 to 5 that indicates the volatility of a stock.
     // 1: +/- 0.2% daily change
     // 2: +/- 0.5% daily change.
     // 3: +/- 1% daily change.
