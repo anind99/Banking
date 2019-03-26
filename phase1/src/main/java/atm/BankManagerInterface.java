@@ -17,7 +17,7 @@ public class BankManagerInterface extends Interface {
         boolean validselection = false;
         while (!validselection){
             System.out.println("Select an option:");
-            System.out.println("0: Set Date");
+            System.out.println("0. Set Date");
             System.out.println("1. Create User");
             System.out.println("2. Create Account");
             System.out.println("3. Check Alerts");
