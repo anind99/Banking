@@ -1,6 +1,8 @@
 package atm;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class BankManagerInterface extends Interface {
@@ -15,6 +17,7 @@ public class BankManagerInterface extends Interface {
         boolean validselection = false;
         while (!validselection){
             System.out.println("Select an option:");
+            System.out.println("0: Set Date");
             System.out.println("1. Create User");
             System.out.println("2. Create Account");
             System.out.println("3. Check Alerts");
@@ -24,6 +27,32 @@ public class BankManagerInterface extends Interface {
             System.out.println("7. Turn Off System");
             String option = scanner.next();
             switch (option) {
+                case "0": {
+                    boolean condition = false;
+                    String year = null, month = null, day = null;
+                    while(!condition){
+                        condition = true;
+                        System.out.println("Setting date:");
+                        System.out.println("Year:");
+                        year = scanner.next();
+                        System.out.println("Month:");
+                        month = scanner.next();
+                        System.out.println("Day:");
+                        day = scanner.next();
+                        try {
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            sdf.parse(year + "-" + month + "-" + day);
+                        } catch (ParseException e){
+                            System.out.println("Parse failed. Is the date provided well formed?");
+                            System.out.println("Try again.");
+                            condition = false;
+                        }
+                    }
+                    atm.setDate(year + "-" + month + "-" + day);
+                    System.out.println("Date set, but note that time sensitive operations might not execute immediately " +
+                            "(such as addSavingsInterest, which happens after the system boots). Also note that the " +
+                            "date will still increment another day if you restart the system via the manager");
+                }
                 case "1": {
                     System.out.println("Type the username for the new user");
                     String username = scanner.next();
@@ -145,6 +174,7 @@ public class BankManagerInterface extends Interface {
                 }
             }if (!loggedOut) displayManagerMenu(bm, atm);
         }
+        scanner.close();
 
 
 

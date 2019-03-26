@@ -3,6 +3,7 @@ package atm;
 import java.io.*;
 import java.io.File;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,28 +73,20 @@ public class ATM  {
     }
 
 
-    private void dateIncrement(){
-        boolean done;
-        try {
-            File file = new File("date.txt");
-            done = file.delete();
-            done = file.createNewFile();
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            date.add(Calendar.DATE, 1);
-            writer.write(sdf.format(date.getTime()));
-            writer.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("error, quitting system!");
-            System.exit(-1);
-        }
-
-    }
 
     Calendar getDate(){
         // Has to be package-private.
         return (Calendar) date.clone();
+    }
+
+    void setDate(String sdfFormattedDate){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try{
+            date.setTime(sdf.parse(sdfFormattedDate));
+        } catch (ParseException e){
+            System.out.println("Setdate Parse Exception at ATM, this should never happen!");
+            System.exit(-1);
+        }
     }
 
     void addUserToList(User u){
@@ -134,7 +127,7 @@ public class ATM  {
     }
 
     void testShutDown(){
-        dateIncrement();
+        date.add(Calendar.DATE, 1);
         try {
             File file = new File("serialized.blob");
             file.delete();
