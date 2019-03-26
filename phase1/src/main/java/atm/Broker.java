@@ -206,11 +206,13 @@ public class Broker {
         req[1] = amount;
         Sellrequests.add(req);
     }
+    /** MOVED TO BANKMANAGER
     protected void addstockaccount(User user){
         boolean added = false;
         for (Account a: user.getAccounts()){
             if (a.type.equalsIgnoreCase("Stock"))
                 added = true;
+
         }
         if (!added){
             int accNum = atm.getBM().acct_counter;
@@ -218,12 +220,9 @@ public class Broker {
             StockAccount Stocks =  new StockAccount(accNum, atm);
             user.accounts.add(Stocks);
         }
-    }
+    }*/
 
     protected void completeallrequests(){
 
-    }
-
-
-}
+}}
 
