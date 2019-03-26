@@ -13,7 +13,7 @@ public class BrokerInterface {
         String option = scanner.next();
         switch (option){
             case "1": {
-                brokerViewUser();
+                brokerViewUser(broker);
             }
             case "2": {
                 brokerViewStock(broker);
@@ -32,5 +32,9 @@ public class BrokerInterface {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type the symbol of the stock. For list of all symbols type \"*\", To go back press \"/\"");
         String symbol = scanner.next();
+    }
+
+    void brokerViewUser(Broker broker){
+
     }
 }

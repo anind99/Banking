@@ -6,8 +6,10 @@ import java.util.Random;
 public class Stock {
     String name;
     String symbol;
-    double price;
+    double buyPrice;
+    double currentPrice;
 
+    // risk might also be obsolete but im leaving it here for now for legacy reasons.
     //Risk is an int from 1 to 5 that indicates the volatility of a stock.
     // 1: +/- 0.2% daily change
     // 2: +/- 0.5% daily change.
@@ -18,7 +20,10 @@ public class Stock {
     int risk;
 
 
+
     void updatePrice(){
+        // This code should be obsolete by the time I'm done coding the stock market.
+        // Make sure to delete by the time we submit!
         Random rand = new Random();
         double seed = 1 - (rand.nextDouble() * 2);
         double base;
@@ -30,7 +35,7 @@ public class Stock {
             case 5: base = 0.05;
             default: base = 0;
         }
-        price += price * base * seed;
+        currentPrice += currentPrice * base * seed;
     }
 
 }
