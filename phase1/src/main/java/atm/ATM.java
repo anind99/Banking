@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ATM  {
+public class ATM implements Serializable {
 
 
     /** Stores the total amount of the bills in the ATM in an array with the following order:
@@ -175,4 +175,33 @@ public class ATM  {
             System.exit(-1);
         }
     }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("ATM writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("ATM readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("ATM readObjectNoData, this should never happen!");
+        System.exit(-1);
+    }
+
+    private void test(){
+        //will this push?
+    }
+
 }
