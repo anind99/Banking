@@ -52,6 +52,7 @@ public class BankManagerInterface extends Interface {
                     System.out.println("Date set, but note that time sensitive operations might not execute immediately " +
                             "(such as addSavingsInterest, which happens after the system boots). Also note that the " +
                             "date will still increment another day if you restart the system via the manager");
+                    break;
                 }
                 case "1": {
                     System.out.println("Type the username for the new user");

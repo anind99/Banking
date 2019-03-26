@@ -1,6 +1,8 @@
 package atm;
 
-public class Bills {
+import java.io.*;
+
+public class Bills implements Serializable {
 
     private int[] bills = new int[4];
 
@@ -61,6 +63,30 @@ public class Bills {
         }
 
         return amountToWithdraw;
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("Bills writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("Bills readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("Bills readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }
 

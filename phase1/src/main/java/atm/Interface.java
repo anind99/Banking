@@ -1,9 +1,10 @@
 package atm;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public abstract class Interface {
+public abstract class Interface implements Serializable {
     protected final ATM atm;
 
     protected Interface(ATM atm) {
@@ -189,5 +190,29 @@ public abstract class Interface {
 
         System.out.println("The amount you entered is not possible, please enter an amount rounded to a whole number or to 2 digits.");
         return selectAmount();}
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("Interface writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("Interface readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("Interface readObjectNoData, this should never happen!");
+        System.exit(-1);
+    }
 
 }
