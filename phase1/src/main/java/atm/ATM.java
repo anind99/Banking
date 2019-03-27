@@ -176,6 +176,10 @@ public class ATM implements Serializable {
         }
     }
 
+//    ArrayList<Stock> getQueriedStocks() {
+//
+//    }
+
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
