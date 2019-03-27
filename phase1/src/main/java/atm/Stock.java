@@ -10,6 +10,7 @@ public class Stock {
     double yesterdayPrice;
     int numShares;
     boolean updated;
+    double totalSpent;
 
     // risk might also be obsolete but im leaving it here for now for legacy reasons.
     // Risk is an int from 1 to 5 that indicates the volatility of a stock.
