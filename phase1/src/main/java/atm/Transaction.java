@@ -6,7 +6,7 @@ public class Transaction implements Serializable {
 
     String Type;
     int Account = 0;
-    Double Amount;
+    double Amount;
     String billname = null;
 
     public Transaction(int Acc, Double Amount, String Type) {
@@ -37,8 +37,20 @@ public class Transaction implements Serializable {
         this.billname = billname;
         this.Type = "paybill";
         this.Amount = Amount;
-
     }
+
+    public double getTransactionAmount() {
+        return this.Amount;
+    }
+
+    public String getTransactionType() {
+        return this.Type;
+    }
+
+    public int getTransactionAccount() {
+        return this.Account;
+    }
+
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();

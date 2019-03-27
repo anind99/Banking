@@ -30,16 +30,49 @@ public abstract class Account implements Serializable {
         return this.balance;
     }
 
+    public void addBalance(double balance) {this.balance += balance;}
+
+    public void subtractBalance(double balance) {this.balance -= balance;}
+
+    public ArrayList<Transaction> getListOfTransactions() {
+        return this.listOfTransactions;
+    }
+
+
     public String getType(){
         return this.type;
+    }
+
+    public int getAccountNum() {
+        return this.accountNum;
     }
 
     abstract void addMoney (double amount);
 
     abstract boolean removeMoney (double amount);
 
-    void appendTransactionToList(Transaction transaction){
-        listOfTransactions.add(transaction);
+    void appendTransactionFromList(Transaction transaction){
+        getListOfTransactions().add(transaction);
+    }
+
+    void removeLastTransactionFromList() {
+        // Remove the last transaction from listOfTransactions and re-initialize lastTransaction to the new last
+        // transaction or null otherwise.
+        ArrayList<Transaction> lst = getListOfTransactions();
+        lst.remove(lst.size() - 1);
+        if (lst.size() > 0) {
+            setLastTransaction(lst.get(lst.size() - 1));
+        } else {
+            setLastTransaction(null);
+        }
+    }
+
+    Transaction getLastTransaction() {
+        return this.lastTransaction;
+    }
+
+    private void setLastTransaction(Transaction transaction) {
+        this.lastTransaction = transaction;
     }
 
     public void transferIn(double amount, Account accountFrom) {

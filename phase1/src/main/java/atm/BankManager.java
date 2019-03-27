@@ -76,12 +76,12 @@ public class BankManager implements Serializable{
         private void checkForPrimary(User user) {
             // Checks for primary account. The first chequing account the user makes is always the primary account.
             boolean primary = false;
-            for (Account a : user.accounts) {
+            for (Account a : user.getAccounts()) {
                 if (a.getType().equals("chequing")) {
                     if (((Chequing)a).isPrimary()){primary = true;}
                 }
             }if(!primary){
-                for (Account a : user.accounts) {
+                for (Account a : user.getAccounts()) {
                     if (a.getType().equals("chequing")){
                         ((Chequing)a).setPrimary();
                         break;}}}
@@ -100,104 +100,101 @@ public class BankManager implements Serializable{
         }
 
         private void createAccountHelper(User user, Account account, String type){
-            user.accounts.add(account);
+            user.getAccounts().add(account);
             this.acct_counter += 1;
             System.out.println("New " + type + " account created.");
         }
 
     public void undo_transaction(User usr, Account acct){
-        if (acct.lastTransaction == null){
+        if (acct.getLastTransaction() == null){
             System.out.println("No previous transactions");
-        }
-        else if (acct.lastTransaction.Type.equalsIgnoreCase("deposit")){
-            undoDeposit(acct);
-        }
-        else if (acct.lastTransaction.Type.equalsIgnoreCase("withdraw")){
-            undoWithdraw(acct);
-        }
-        else if (acct.lastTransaction.Type.equalsIgnoreCase("transferin")){
-            undoTransferIn(usr, acct);
-        }
+        } else {
+            String transactionType = acct.getLastTransaction().getTransactionType();
 
-        else if (acct.lastTransaction.Type.equalsIgnoreCase("transferout")) {
-            undoTransferOut(usr, acct);
-        }
-        else if (acct.lastTransaction.Type.equalsIgnoreCase("paybill")){
-            undoPayBill(acct);
+            if (transactionType.equalsIgnoreCase("deposit")) {
+                undoDeposit(acct);
+            } else if (transactionType.equals("withdraw")) {
+                undoWithdraw(acct);
+            } else if (transactionType.equalsIgnoreCase("transferin")){
+                undoTransferIn(usr, acct);
+            } else if (transactionType.equalsIgnoreCase("transferout")) {
+                undoTransferOut(usr, acct);
+            } else if (transactionType.equalsIgnoreCase("paybill")){
+                undoPayBill(acct);
+            }
         }
     }
 
     private void undoDeposit(Account acct) {
-            acct.balance -= acct.lastTransaction.Amount;
-            acct.listOfTransactions.remove(acct.listOfTransactions.size() - 1);
-            acct.lastTransaction = acct.listOfTransactions.get(acct.listOfTransactions.size() - 1);
+            acct.subtractBalance(acct.getLastTransaction().getTransactionAmount());
+            acct.removeLastTransactionFromList();
     }
 
     private void undoWithdraw(Account acct) {
-            acct.balance += acct.lastTransaction.Amount;
-            acct.listOfTransactions.remove(acct.listOfTransactions.size() - 1);
-            acct.lastTransaction = acct.listOfTransactions.get(acct.listOfTransactions.size() - 1);
+            acct.addBalance(acct.getLastTransaction().getTransactionAmount());
+            acct.removeLastTransactionFromList();
     }
 
     private void undoTransferIn(User usr, Account acct) {
         Account TransferAct = null;
-        for (Account ac2:usr.accounts){
-            if (ac2.accountNum == acct.lastTransaction.Account){
+        for (Account ac2:usr.getAccounts()){
+            if (ac2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()){
                 TransferAct = ac2;
             }
         }
         if (TransferAct != null) {
-            acct.balance -= acct.lastTransaction.Amount;
-            TransferAct.balance += acct.lastTransaction.Amount;
+            double amount = acct.getLastTransaction().getTransactionAmount();
+            acct.subtractBalance(amount);
+            TransferAct.addBalance(amount);
             if (check_other_acct(usr, acct)) {
-                TransferAct.listOfTransactions.remove(TransferAct.listOfTransactions.size() - 1);
-                TransferAct.lastTransaction = TransferAct.listOfTransactions.get(TransferAct.listOfTransactions.size() - 1);
+                TransferAct.removeLastTransactionFromList();
             }
-            acct.listOfTransactions.remove(acct.listOfTransactions.size() - 1);
-            acct.lastTransaction = acct.listOfTransactions.get(acct.listOfTransactions.size() - 1);
+            acct.removeLastTransactionFromList();
         }
     }
 
     private void undoTransferOut(User usr, Account acct) {
         Account TransferAct = null;
-        for (Account ac2 : usr.accounts) {
-            if (ac2.accountNum == acct.lastTransaction.Account) {
+        for (Account ac2 : usr.getAccounts()) {
+            if (ac2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()) {
                 TransferAct = ac2;
             }
         }
         if (TransferAct != null) {
-            acct.balance += acct.lastTransaction.Amount;
-            TransferAct.balance -= acct.lastTransaction.Amount;
+            double amount = acct.getLastTransaction().getTransactionAmount();
+            acct.addBalance(amount);
+            TransferAct.subtractBalance(amount);
             if (check_other_acct(usr, acct)) {
-                TransferAct.listOfTransactions.remove(TransferAct.listOfTransactions.size() - 1);
-                TransferAct.lastTransaction = TransferAct.listOfTransactions.get(TransferAct.listOfTransactions.size() - 1);
+                TransferAct.removeLastTransactionFromList();
             }
-            acct.listOfTransactions.remove(acct.listOfTransactions.size() - 1);
-            acct.lastTransaction = acct.listOfTransactions.get(acct.listOfTransactions.size() - 1);
+            acct.removeLastTransactionFromList();
         }
     }
 
     private void undoPayBill(Account acct) {
-        acct.balance += acct.lastTransaction.Amount;
-        acct.listOfTransactions.remove(acct.listOfTransactions.size() - 1);
-        acct.lastTransaction = acct.listOfTransactions.get(acct.listOfTransactions.size() - 1);
+            acct.addBalance(acct.getLastTransaction().getTransactionAmount());
+            acct.removeLastTransactionFromList();
     }
 
 
     public boolean check_other_acct(User usr, Account acct){
         Account otheract = null;
 
-        for (Account ac2 : usr.accounts) {
-            if (ac2.accountNum == acct.lastTransaction.Account){
+        String acctTransactionType = acct.getLastTransaction().getTransactionType();
+        int acctNum = acct.getAccountNum();
+        double acctTransactionAmount = acct.getLastTransaction().getTransactionAmount();
+
+        for (Account ac2 : usr.getAccounts()) {
+            if (ac2.getAccountNum() == acctNum){
                 otheract = ac2;
             }
         }
-        if (otheract == null || otheract.lastTransaction == null){
+        if (otheract == null || otheract.getLastTransaction() == null){
             return false;
         }
-        return (otheract.lastTransaction.Type.equalsIgnoreCase(acct.lastTransaction.Type)
-                && (otheract.lastTransaction.Account == acct.accountNum)
-                && (otheract.lastTransaction.Amount.equals(acct.lastTransaction.Amount)));
+        return (otheract.getLastTransaction().getTransactionType().equalsIgnoreCase(acctTransactionType)
+                && (otheract.getLastTransaction().getTransactionAccount() == acctNum)
+                && (otheract.getLastTransaction().getTransactionAmount() == acctTransactionAmount));
     }
 
     private void writeObject(ObjectOutputStream oos) throws IOException{
