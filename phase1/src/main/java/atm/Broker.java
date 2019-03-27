@@ -11,8 +11,8 @@ public class Broker {
     private final StockBroker stockBroker = new StockBroker();
     private final MutualFundsBroker mutualFundsBroker = new MutualFundsBroker();
 
-    void buyStocks() {
-        stockBroker.buyStocks();
+    void buyStocks(User user, String symbol, int shares) {
+        stockBroker.buyStocks(user, symbol, shares);
     }
 
     void sellStocks() {
