@@ -10,7 +10,7 @@ public abstract class Account implements Serializable {
     public final int accountNum;
     protected double balance;
     public Transaction lastTransaction;
-    public ArrayList<Transaction> listOfTransactions;
+    public ArrayList<Transaction> listOfTransactions = new ArrayList<>();
     public Calendar dateCreated;
     private int depositNum;
     private final ATM atm;
@@ -23,7 +23,6 @@ public abstract class Account implements Serializable {
         this.lastTransaction = null;
         this.dateCreated = this.atm.getDate();
         this.depositNum = 0;
-
     }
 
     public double getBalance(){
@@ -51,7 +50,7 @@ public abstract class Account implements Serializable {
 
     abstract boolean removeMoney (double amount);
 
-    void appendTransactionFromList(Transaction transaction){
+    void appendTransactionToList(Transaction transaction){
         getListOfTransactions().add(transaction);
     }
 
@@ -158,6 +157,7 @@ public abstract class Account implements Serializable {
             removeMoney(amount);
             Transaction transaction = new Transaction(amount, "withdraw");
             this.lastTransaction = transaction;
+            System.out.println(this.listOfTransactions);
             this.listOfTransactions.add(transaction);
         }else{System.out.println("\nTransaction not possible: not enough funds in ATM");}
 
