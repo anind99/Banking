@@ -14,30 +14,33 @@ public class MutualFundsStocks {
     }
 
     public void createLowRiskStocks(){
-        lowRiskStocks.add(new Stock());
-        lowRiskStocks.add(new Stock());
-        lowRiskStocks.add(new Stock());
-        lowRiskStocks.add(new Stock());
-        lowRiskStocks.add(new Stock());
-        lowRiskStocks.add(new Stock());
+        lowRiskStocks.add(new Stock(0.0, 1000));
+        lowRiskStocks.add(new Stock(0.0, 1000));
+        lowRiskStocks.add(new Stock(0.0, 1000));
+        lowRiskStocks.add(new Stock(0.0, 1000));
+        lowRiskStocks.add(new Stock(0.0,1000));
+        lowRiskStocks.add(new Stock(0.0,1000));
+        for (Stock stock : lowRiskStocks){stock.updatePrice();}
     }
 
     public void createMediumRiskStocks(){
-        mediumRiskStocks.add(new Stock());
-        mediumRiskStocks.add(new Stock());
-        mediumRiskStocks.add(new Stock());
-        mediumRiskStocks.add(new Stock());
-        mediumRiskStocks.add(new Stock());
-        mediumRiskStocks.add(new Stock());
+        mediumRiskStocks.add(new Stock(0.0,1000));
+        mediumRiskStocks.add(new Stock(0.0,1000));
+        mediumRiskStocks.add(new Stock(0.0,1000));
+        mediumRiskStocks.add(new Stock(0.0,1000));
+        mediumRiskStocks.add(new Stock(0.0,1000));
+        mediumRiskStocks.add(new Stock(0.0,1000));
+        for (Stock stock : mediumRiskStocks){stock.updatePrice();}
     }
 
     public void createHighRiskStocks(){
-        highRiskStocks.add(new Stock());
-        highRiskStocks.add(new Stock());
-        highRiskStocks.add(new Stock());
-        highRiskStocks.add(new Stock());
-        highRiskStocks.add(new Stock());
-        highRiskStocks.add(new Stock());
+        highRiskStocks.add(new Stock(0.0,1000));
+        highRiskStocks.add(new Stock(0.0,1000));
+        highRiskStocks.add(new Stock(0.0,1000));
+        highRiskStocks.add(new Stock(0.0,1000));
+        highRiskStocks.add(new Stock(0.0,1000));
+        highRiskStocks.add(new Stock(0.0,1000));
+        for (Stock stock : highRiskStocks){stock.updatePrice();}
     }
 
     public ArrayList<Stock> getLowRiskStocks(){
@@ -51,5 +54,6 @@ public class MutualFundsStocks {
     public ArrayList<Stock> getHighRiskStocks(){
         return highRiskStocks;
     }
+
 }
 
