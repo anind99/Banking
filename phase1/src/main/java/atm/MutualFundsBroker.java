@@ -1,5 +1,7 @@
 package atm;
 
+import java.util.ArrayList;
+
 public class MutualFundsBroker {
     public MutualFund lowRiskFund;
     public MutualFund mediumRiskFund;
@@ -14,7 +16,7 @@ public class MutualFundsBroker {
     }
 
 
-    void refillFunds() {
+    void refillFunds(MutualFund fund) {
 
     }
 
@@ -27,9 +29,23 @@ public class MutualFundsBroker {
 
     }
 
-    public void buyMutualFunds(User user, double amount) {
+    public void buyMutualFunds(User user, MutualFund fund, double amount) {
+        double total = calculateBrokerFree(amount) + amount;
+        if(user.enoughStockBalance(total)){
+            if (fund.getValue() < amount){
+                refillFunds(fund);}
+            buyMutualFundsHelper(user, fund, amount);
+        }else{
+            System.out.println("Not enough funds in your stock account");
+        }
+    }
 
-
+    public void buyMutualFundsHelper(User user, MutualFund fund, double amount){
+        ArrayList<Double> investment = new ArrayList<>();
+        investment.add(amount);
+        investment.add(fund.getValue());
+        user.getInvestments().setMutualFundsPortfolio(fund, investment);
+        fund.setInvestors(user, investment);
     }
 
     void calculatePercentageIncrease() {

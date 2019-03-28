@@ -27,8 +27,22 @@ public class User implements Serializable {
         return sum;
     }
 
+    public InvestmentPortfolio getInvestments(){
+        return investments;
+    }
+
     public ArrayList<Account> getAccounts(){
         return accounts;
+    }
+
+    public boolean enoughStockBalance(double amount){
+        for (Account account : accounts){
+            if (account.getType().equals("stock")){
+                if (account.getBalance() >= amount){
+                    return true;
+                }
+            }
+        }return false;
     }
 
     public void addAccount(Account account){
