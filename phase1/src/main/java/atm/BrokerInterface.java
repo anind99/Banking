@@ -16,12 +16,7 @@ public class BrokerInterface {
                 displayBrokerInterface(broker);
             }
             case "2": {
-                for (User usr : atm.getListOfUsers()) {
-                    if (usr.getUsername().equals("broker")) {
-                        usrInterface.displayUserMenu(usr);
-                        break;
-                    }
-                }
+                usrInterface.displayUserMenu(atm.getUser("broker"));
             }
         }
     }

@@ -52,14 +52,20 @@ public class ATM implements Serializable {
             } else if (username.equals("broker")) {
                 brokerInterface.displayBrokerOrUserChoice(broker, this, UserInterface);
             } else {
-                for (User usr : listOfUsers) {
-                    if (usr.getUsername().equals(username)) {
-                        UserInterface.displayUserMenu(usr);
-                        break;
-                    }
-                }
+                UserInterface.displayUserMenu(getUser(username));
             }
         }
+    }
+
+    User getUser(String username) {
+        for (User usr : listOfUsers) {
+            if (usr.getUsername().equals(username)) {
+                return usr;
+            }
+        }
+        // This will never happen because we have a previous function that already checks if the user is in the
+        // listOfUser in Interface class.
+        return null;
     }
 
     private void addSavingsInterest(){
@@ -76,8 +82,6 @@ public class ATM implements Serializable {
         }
 
     }
-
-
 
     Calendar getDate(){
         // Has to be package-private.
