@@ -13,6 +13,7 @@ public class UndoTransaction {
     }
 
     protected void undoTransferIn(User usr, Account acct) {
+        // TransferAct refers to the account that was transferred to.
         Account TransferAct = null;
         for (Account ac2:usr.getAccounts()){
             if (ac2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()){
@@ -31,6 +32,7 @@ public class UndoTransaction {
     }
 
     protected void undoTransferOut(User usr, Account acct) {
+        // TransferAct refers to the account that was transferred from.
         Account TransferAct = null;
         for (Account ac2 : usr.getAccounts()) {
             if (ac2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()) {
@@ -52,7 +54,6 @@ public class UndoTransaction {
         acct.addBalance(acct.getLastTransaction().getTransactionAmount());
         acct.removeLastTransactionFromList();
     }
-
 
     private boolean check_other_acct(User usr, Account acct){
         Account otheract = null;
