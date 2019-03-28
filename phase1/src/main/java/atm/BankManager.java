@@ -32,7 +32,7 @@ public class BankManager implements Serializable{
         }
 
         public void create_user(String username, String password){
-            // Creates a new user. This user will have all the account types open.
+            // Creates a new user. When a new user is created, all account types will be opened for this user.
             ArrayList<Account> accounts = new ArrayList<>();
             boolean contains = false;
             for (User parameter : atm.getListOfUsers()) {
