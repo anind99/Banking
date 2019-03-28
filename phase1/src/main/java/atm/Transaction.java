@@ -8,7 +8,6 @@ public class Transaction implements Serializable {
     int Account = 0;
     double Amount;
     String billname = null;
-    private int id = 1;
 
     public Transaction(int Acc, Double Amount, String Type) {
         /**
@@ -20,7 +19,6 @@ public class Transaction implements Serializable {
         this.Type = Type;
         this.Amount = Amount;
         this.Account = Acc;
-        this.id += 1;
     }
 
     public Transaction(Double Amount, String Type) {
@@ -29,7 +27,6 @@ public class Transaction implements Serializable {
          */
         this.Type = Type;
         this.Amount = Amount;
-        this.id += 1;
     }
 
     public Transaction(String billname, Double Amount){
@@ -40,7 +37,6 @@ public class Transaction implements Serializable {
         this.billname = billname;
         this.Type = "paybill";
         this.Amount = Amount;
-        this.id += 1;
     }
 
     public double getTransactionAmount() {
