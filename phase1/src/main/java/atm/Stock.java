@@ -31,6 +31,10 @@ public class Stock {
         return currentPrice;
     }
 
+    public void setNumShares(int shares){
+        numShares += shares;
+    }
+
 
 
     void updatePrice(){
