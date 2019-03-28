@@ -27,6 +27,10 @@ public class Stock {
         this.updated = false;
     }
 
+    public double getValue(){
+        return currentPrice;
+    }
+
 
 
     void updatePrice(){
