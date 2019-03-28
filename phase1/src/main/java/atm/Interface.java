@@ -186,6 +186,7 @@ public abstract class Interface implements Serializable {
         String amount = scanner.next();
         StringBuilder amountB = new StringBuilder(amount);
 
+        // Checks that the amount entered by the user is valid.
         boolean valid = true;
         if (amountB.length() >= 3) {
             for (int i = 0; i < amountB.length() - 3; i++) {

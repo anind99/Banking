@@ -5,6 +5,8 @@ import java.io.*;
 public class BankManager implements Serializable{
     protected int acct_counter;
     private final ATM atm;
+    private final CreateAccount createAccount = new CreateAccount();
+    private final UndoTransaction undoTransaction = new UndoTransaction();
 
         public BankManager(ATM atm){
             this.atm = atm;
@@ -37,7 +39,7 @@ public class BankManager implements Serializable{
                 if (parameter.getUsername().equals(username)) {
                     contains = true;
                 }
-            }if(!contains){
+            } if (!contains){
             User newUser = new User(username, password, accounts);
             create_account(newUser, "Chequing");
             create_account(newUser, "Savings");
@@ -45,156 +47,60 @@ public class BankManager implements Serializable{
             create_account(newUser, "LOC");
             System.out.println("New user: " + username + " created");
             atm.addUserToList(newUser);
-            }else{ System.out.println("User name already exists, please try a different name");}
+            } else{
+                System.out.println("User name already exists, please try a different name");
+            }
 
         }
 
 
         public void create_account(User user, String acct_type){
+            // Creates a new account as specified by the parameter.
             if (acct_type.equalsIgnoreCase("chequing")) {
-                createAccountHelper(user, createNewChequing(), "chequing");
+                createAccountHelper(user, createAccount.newChequing(this.acct_counter, atm), "chequing");
             }
             else if (acct_type.equalsIgnoreCase("CreditCard")) {
-                createAccountHelper(user, createNewCreditCard(), "credit card");
+                createAccountHelper(user, createAccount.newCreditCard(this.acct_counter, atm), "credit card");
             }
             else if (acct_type.equalsIgnoreCase("LOC")){
-                createAccountHelper(user, createNewLOC(), "line of credit");
+                createAccountHelper(user, createAccount.newLOC(this.acct_counter, atm), "line of credit");
             }
 
             else if (acct_type.equalsIgnoreCase("savings")){
-                createAccountHelper(user, createNewSavings(), "savings");
+                createAccountHelper(user, createAccount.newSavings(this.acct_counter, atm), "savings");
             }
 
-            checkForPrimary(user);
+            createAccount.checkForPrimary(user);
 
-        }
-
-        private Chequing createNewChequing() {
-            return new Chequing(this.acct_counter, atm);
-        }
-
-        private void checkForPrimary(User user) {
-            // Checks for primary account. The first chequing account the user makes is always the primary account.
-            boolean primary = false;
-            for (Account a : user.getAccounts()) {
-                if (a.getType().equals("chequing")) {
-                    if (((Chequing)a).isPrimary()){primary = true;}
-                }
-            }if(!primary){
-                for (Account a : user.getAccounts()) {
-                    if (a.getType().equals("chequing")){
-                        ((Chequing)a).setPrimary();
-                        break;}}}
-        }
-
-        private CreditCard createNewCreditCard() {
-            return new CreditCard(this.acct_counter, atm);
-        }
-
-        private Savings createNewSavings() {
-            return new Savings(this.acct_counter, atm);
-        }
-
-        private LOC createNewLOC() {
-            return new LOC(this.acct_counter, atm);
         }
 
         private void createAccountHelper(User user, Account account, String type){
+            // Create account helper method for create_account. Increases acc_counter by 1 and adds the created account
+            // to the user.
             user.getAccounts().add(account);
             this.acct_counter += 1;
             System.out.println("New " + type + " account created.");
         }
 
     public void undo_transaction(User usr, Account acct){
+            // Allows Bank Manager to undo any type of transaction.
         if (acct.getLastTransaction() == null){
             System.out.println("No previous transactions");
         } else {
             String transactionType = acct.getLastTransaction().getTransactionType();
 
             if (transactionType.equalsIgnoreCase("deposit")) {
-                undoDeposit(acct);
+                undoTransaction.undoDeposit(acct);
             } else if (transactionType.equals("withdraw")) {
-                undoWithdraw(acct);
+                undoTransaction.undoWithdraw(acct);
             } else if (transactionType.equalsIgnoreCase("transferin")){
-                undoTransferIn(usr, acct);
+                undoTransaction.undoTransferIn(usr, acct);
             } else if (transactionType.equalsIgnoreCase("transferout")) {
-                undoTransferOut(usr, acct);
+                undoTransaction.undoTransferOut(usr, acct);
             } else if (transactionType.equalsIgnoreCase("paybill")){
-                undoPayBill(acct);
+                undoTransaction.undoPayBill(acct);
             }
         }
-    }
-
-    private void undoDeposit(Account acct) {
-            acct.subtractBalance(acct.getLastTransaction().getTransactionAmount());
-            acct.removeLastTransactionFromList();
-    }
-
-    private void undoWithdraw(Account acct) {
-            acct.addBalance(acct.getLastTransaction().getTransactionAmount());
-            acct.removeLastTransactionFromList();
-    }
-
-    private void undoTransferIn(User usr, Account acct) {
-        Account TransferAct = null;
-        for (Account ac2:usr.getAccounts()){
-            if (ac2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()){
-                TransferAct = ac2;
-            }
-        }
-        if (TransferAct != null) {
-            double amount = acct.getLastTransaction().getTransactionAmount();
-            acct.subtractBalance(amount);
-            TransferAct.addBalance(amount);
-            if (check_other_acct(usr, acct)) {
-                TransferAct.removeLastTransactionFromList();
-            }
-            acct.removeLastTransactionFromList();
-        }
-    }
-
-    private void undoTransferOut(User usr, Account acct) {
-        Account TransferAct = null;
-        for (Account ac2 : usr.getAccounts()) {
-            if (ac2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()) {
-                TransferAct = ac2;
-            }
-        }
-        if (TransferAct != null) {
-            double amount = acct.getLastTransaction().getTransactionAmount();
-            acct.addBalance(amount);
-            TransferAct.subtractBalance(amount);
-            if (check_other_acct(usr, acct)) {
-                TransferAct.removeLastTransactionFromList();
-            }
-            acct.removeLastTransactionFromList();
-        }
-    }
-
-    private void undoPayBill(Account acct) {
-            acct.addBalance(acct.getLastTransaction().getTransactionAmount());
-            acct.removeLastTransactionFromList();
-    }
-
-
-    public boolean check_other_acct(User usr, Account acct){
-        Account otheract = null;
-
-        String acctTransactionType = acct.getLastTransaction().getTransactionType();
-        int acctNum = acct.getAccountNum();
-        double acctTransactionAmount = acct.getLastTransaction().getTransactionAmount();
-
-        for (Account ac2 : usr.getAccounts()) {
-            if (ac2.getAccountNum() == acctNum){
-                otheract = ac2;
-            }
-        }
-        if (otheract == null || otheract.getLastTransaction() == null){
-            return false;
-        }
-        return (otheract.getLastTransaction().getTransactionType().equalsIgnoreCase(acctTransactionType)
-                && (otheract.getLastTransaction().getTransactionAccount() == acctNum)
-                && (otheract.getLastTransaction().getTransactionAmount() == acctTransactionAmount));
     }
 
     private void writeObject(ObjectOutputStream oos) throws IOException{
