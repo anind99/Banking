@@ -32,4 +32,8 @@ public class CreateAccount {
     protected LOC newLOC(int acct_counter, ATM atm) {
         return new LOC(acct_counter, atm);
     }
+
+    protected StockAccount newStockAccount(int acct_counter, ATM atm) {
+        return new StockAccount(acct_counter, atm);
+    }
 }

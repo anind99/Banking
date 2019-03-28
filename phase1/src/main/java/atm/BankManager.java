@@ -45,6 +45,7 @@ public class BankManager implements Serializable{
             create_account(newUser, "Savings");
             create_account(newUser, "CreditCard");
             create_account(newUser, "LOC");
+            create_account(newUser, "Stock");
             System.out.println("New user: " + username + " created");
             atm.addUserToList(newUser);
             } else{
@@ -68,6 +69,8 @@ public class BankManager implements Serializable{
 
             else if (acct_type.equalsIgnoreCase("savings")){
                 createAccountHelper(user, createAccount.newSavings(this.acct_counter, atm), "savings");
+            } else if (acct_type.equalsIgnoreCase("stock")) {
+                createAccountHelper(user, createAccount.newStockAccount(this.acct_counter, atm), "stock");
             }
 
             createAccount.checkForPrimary(user);
