@@ -5,25 +5,16 @@ import java.util.Scanner;
 
 public class UserInterface extends Interface{
 
+
     public UserInterface(ATM atm) {
         super(atm);
     }
 
     public void displayUserMenu(User user) {
-        Scanner scanner = new Scanner(System.in);
         boolean validselection = false;
         boolean logout = false;
         while (!logout) {
-            System.out.println("Select an option:");
-            System.out.println("1. Deposit");
-            System.out.println("2. Withdraw");
-            System.out.println("3. Transfer In");
-            System.out.println("4. Transfer Out");
-            System.out.println("5. Pay Bills");
-            System.out.println("6. Request Account Creation");
-            System.out.println("7. View Summary of Accounts");
-            System.out.println("8. Change Password");
-            System.out.println("9. Logout");
+            printOptions();
             String option = scanner.next();
             switch (option) {
                 case "1":
@@ -62,6 +53,19 @@ public class UserInterface extends Interface{
 
     }
 
+    private void printOptions() {
+        System.out.println("Select an option:");
+        System.out.println("1. Deposit");
+        System.out.println("2. Withdraw");
+        System.out.println("3. Transfer In");
+        System.out.println("4. Transfer Out");
+        System.out.println("5. Pay Bills");
+        System.out.println("6. Request Account Creation");
+        System.out.println("7. View Summary of Accounts");
+        System.out.println("8. Change Password");
+        System.out.println("9. Logout");
+    }
+
     private void deposit(User user) {
         ArrayList<Account> chequingAccounts = listOfAccounts(user, "chequing");
 
@@ -78,7 +82,6 @@ public class UserInterface extends Interface{
         String type = selectTypeOfAccount(false, user);
         printChoices(user, false, type);
 
-        Scanner scanner = new Scanner(System.in);
         Account account = selectAccount(user, "withdraw from", listOfAccounts(user, type));
         boolean running = true;
 
@@ -140,7 +143,6 @@ public class UserInterface extends Interface{
     private void payBill(User user) {
         // Method for users to pay bills.
 
-        Scanner scanner = new Scanner(System.in);
         System.out.println("From which account would you like to pay the bill?");
         String type = selectTypeOfAccount(true, user);
         printChoices(user, false, type);
@@ -157,7 +159,6 @@ public class UserInterface extends Interface{
         // Method for users to change their password.
 
         System.out.println("Type in your new password:");
-        Scanner scanner = new Scanner(System.in);
         String newPassword = scanner.nextLine();
         user.setPassword(newPassword);
         System.out.println("\nPassword change successful");

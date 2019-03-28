@@ -6,13 +6,13 @@ import java.util.Scanner;
 
 public abstract class Interface implements Serializable {
     protected final ATM atm;
+    protected Scanner scanner = new Scanner(System.in);
 
     protected Interface(ATM atm) {
         this.atm = atm;
     }
 
     String displayLoginMenu() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome. Please login.");
         User loginUser;
         System.out.println("Username: ");
@@ -98,7 +98,6 @@ public abstract class Interface implements Serializable {
             System.out.println(toPrint);
         }
 
-        Scanner scanner = new Scanner(System.in);
         String type = null;
         boolean validselection = false;
 
@@ -154,7 +153,6 @@ public abstract class Interface implements Serializable {
     Account selectAccount(User user, String action, ArrayList<Account> listOfAccounts) {
         // Allows users to select an account by entering their account number. Returns that account.
 
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the account number you want to " + action + ": ");
         String accountNumTo = scanner.nextLine();
         StringBuilder accountNumToB = new StringBuilder(accountNumTo);
@@ -184,7 +182,6 @@ public abstract class Interface implements Serializable {
     double selectAmount() {
         // Returns the amount a user would like to deposit/transfer.
 
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the desired amount you would like to transfer: ");
         String amount = scanner.next();
         StringBuilder amountB = new StringBuilder(amount);

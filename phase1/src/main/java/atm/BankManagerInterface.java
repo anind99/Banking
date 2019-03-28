@@ -7,8 +7,6 @@ import java.util.Scanner;
 
 public class BankManagerInterface extends Interface {
 
-    private Scanner scanner = new Scanner(System.in);
-
     public BankManagerInterface(ATM atm) {
         super(atm);
     }
@@ -17,15 +15,7 @@ public class BankManagerInterface extends Interface {
         boolean loggedOut = false;
         boolean validselection = false;
         while (!validselection){
-            System.out.println("Select an option:");
-            System.out.println("0. Set Date");
-            System.out.println("1. Create User");
-            System.out.println("2. Create Account");
-            System.out.println("3. Check Alerts");
-            System.out.println("4. Restock Machine");
-            System.out.println("5. Undo transaction");
-            System.out.println("6. Logout");
-            System.out.println("7. Turn Off System");
+            printOptions();
             String option = scanner.next();
             switch (option) {
                 case "0": {
@@ -72,6 +62,18 @@ public class BankManagerInterface extends Interface {
                 }
             }if (!loggedOut) displayManagerMenu(bm, atm);
         }
+    }
+
+    private void printOptions() {
+        System.out.println("Select an option:");
+        System.out.println("0. Set Date");
+        System.out.println("1. Create User");
+        System.out.println("2. Create Account");
+        System.out.println("3. Check Alerts");
+        System.out.println("4. Restock Machine");
+        System.out.println("5. Undo transaction");
+        System.out.println("6. Logout");
+        System.out.println("7. Turn Off System");
     }
 
     private void settingDate() {
