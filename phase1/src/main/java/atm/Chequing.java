@@ -26,7 +26,9 @@ public class Chequing extends Asset {
         if(balance >= 0 && balance - amount >= -100){
             balance -= amount;
             return true;
-        }else{return false;}
+        } else {
+            return false;
+        }
     }
 
 }

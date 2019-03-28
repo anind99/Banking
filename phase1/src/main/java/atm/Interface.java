@@ -37,7 +37,7 @@ public abstract class Interface implements Serializable {
         return "";
     }
 
-    public void CreateAccount(User user) {
+    void CreateAccount(User user) {
         String type = selectTypeOfAccount(false, user);
         atm.getBM().create_account(user, type);
     }
@@ -61,7 +61,7 @@ public abstract class Interface implements Serializable {
         return accounts;
     }
 
-    StringBuilder printListOfAccounts(ArrayList<Account> listOfAccounts, boolean summary) {
+    private StringBuilder printListOfAccounts(ArrayList<Account> listOfAccounts, boolean summary) {
         // Will return a StringBuilder with the account number, balance, last transaction and date
         // created of the accounts a user has.
 
@@ -115,7 +115,7 @@ public abstract class Interface implements Serializable {
         return returnTypeOfAccount(type, transferOut);
     }
 
-    String returnTypeOfAccount(String selection, boolean transferOut) {
+    private String returnTypeOfAccount(String selection, boolean transferOut) {
         // Helper function for selectTypeOfAccount. The function recognizes the selection the user makes and returns
         // the corresponding account type as a string.
 
