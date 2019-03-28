@@ -43,7 +43,7 @@ public class ATM implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Booting on " + sdf.format(date.getTime()));
         addSavingsInterest();
-        // Creating a user account for password.
+        // Creating a user account for broker.
         BM.create_user("broker", "password");
         while (running){
             String username = BankManagerInterface.displayLoginMenu();
