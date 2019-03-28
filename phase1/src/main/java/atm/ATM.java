@@ -20,6 +20,8 @@ public class ATM implements Serializable {
     private Calendar date = Calendar.getInstance();
     private final UserInterface UserInterface;
     private final BankManagerInterface BankManagerInterface;
+    private final Broker broker = new Broker();
+    private final BrokerInterface brokerInterface = new BrokerInterface();
 
     public ATM() {
         this.UserInterface = new UserInterface(this);
@@ -41,18 +43,21 @@ public class ATM implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Booting on " + sdf.format(date.getTime()));
         addSavingsInterest();
+        // Creating a user account for password.
+        BM.create_user("broker", "password");
         while (running){
             String username = BankManagerInterface.displayLoginMenu();
-            if (!username.equals("manager")){
+            if (username.equals("manager")) {
+                BankManagerInterface.displayManagerMenu(BM, this);
+            } else if (username.equals("broker")) {
+                brokerInterface.displayBrokerOrUserChoice(broker, this, UserInterface);
+            } else {
                 for (User usr : listOfUsers) {
                     if (usr.getUsername().equals(username)) {
                         UserInterface.displayUserMenu(usr);
                         break;
                     }
                 }
-
-            } else if (username.equals("manager")) {
-                BankManagerInterface.displayManagerMenu(BM,this);
             }
         }
     }

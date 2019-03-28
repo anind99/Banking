@@ -4,8 +4,29 @@ import java.util.Scanner;
 
 public class BrokerInterface {
 
+    private Scanner scanner = new Scanner(System.in);
+
+    void displayBrokerOrUserChoice(Broker broker, ATM atm, UserInterface usrInterface) {
+        System.out.println("Would you like to sign in as:");
+        System.out.println("1. Broker");
+        System.out.println("2. User");
+        String option = scanner.next();
+        switch (option) {
+            case "1": {
+                displayBrokerInterface(broker);
+            }
+            case "2": {
+                for (User usr : atm.getListOfUsers()) {
+                    if (usr.getUsername().equals("broker")) {
+                        usrInterface.displayUserMenu(usr);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     void displayBrokerInterface(Broker broker){
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Choose one of the following options:");
         System.out.println("1. View User Stock Account Info");
         System.out.println("2. View/Edit Stock Info");
