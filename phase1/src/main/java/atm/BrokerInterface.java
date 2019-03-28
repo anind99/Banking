@@ -2,11 +2,16 @@ package atm;
 
 import java.util.Scanner;
 
-public class BrokerInterface {
+public class BrokerInterface extends Interface {
+
+    public BrokerInterface(ATM atm) {
+        super(atm);
+    }
+    private UserInterface usrInterface = new UserInterface(atm);
 
     private Scanner scanner = new Scanner(System.in);
 
-    void displayBrokerOrUserChoice(Broker broker, ATM atm, UserInterface usrInterface) {
+    void displayBrokerOrUserChoice(Broker broker) {
         System.out.println("Would you like to sign in as:");
         System.out.println("1. Broker");
         System.out.println("2. User");

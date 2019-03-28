@@ -21,7 +21,7 @@ public class ATM implements Serializable {
     private final UserInterface UserInterface;
     private final BankManagerInterface BankManagerInterface;
     private final Broker broker = new Broker();
-    private final BrokerInterface brokerInterface = new BrokerInterface();
+    private final BrokerInterface brokerInterface = new BrokerInterface(this);
 
     public ATM() {
         this.UserInterface = new UserInterface(this);
@@ -50,7 +50,7 @@ public class ATM implements Serializable {
             if (username.equals("manager")) {
                 BankManagerInterface.displayManagerMenu(BM, this);
             } else if (username.equals("broker")) {
-                brokerInterface.displayBrokerOrUserChoice(broker, this, UserInterface);
+                brokerInterface.displayBrokerOrUserChoice(broker);
             } else {
                 UserInterface.displayUserMenu(getUser(username));
             }
