@@ -1,11 +1,19 @@
 package BankManager;
+import atm.*;
 
+import atm.ATM;
 import atm.Account;
 import atm.User;
 
 import java.util.ArrayList;
 
 public class UserManager extends BankManager{
+
+
+    public UserManager(ATM atm) {
+        super(atm);
+    }
+
     public void create_user(String username, String password){
         // Creates a new user. When a new user is created, all account types will be opened for this user.
         ArrayList<Account> accounts = new ArrayList<>();
