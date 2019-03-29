@@ -35,10 +35,11 @@ public class Stock {
     // 4: +/- 2% daily change.
     // 5: +/- 5% daily change.
 
-    public Stock(String n, String s, double p, int r){
+    public Stock(String n, String s, double p){
         this.name = n;
         this.symbol = s;
         this.currentPrice = p;
+        this.numShares = 0;
         this.updated = false;
     }
 
@@ -73,6 +74,8 @@ public class Stock {
     public double getValue(){
         return currentPrice;
     }
+
+    public int getNumShares(){return numShares;}
 
     public void setNumShares(int shares){
         numShares += shares;
