@@ -74,6 +74,8 @@ public class Stock {
         return currentPrice;
     }
 
+    public int getNumShares(){return numShares;}
+
     public void setNumShares(int shares){
         numShares += shares;
     }

@@ -2,7 +2,7 @@ package atm;
 
 import java.util.ArrayList;
 
-public class MutualFundsBroker {
+public class MutualFundsBroker extends Broker{
     public MutualFund lowRiskFund;
     public MutualFund mediumRiskFund;
     public MutualFund highRiskFund;
@@ -15,17 +15,27 @@ public class MutualFundsBroker {
         this.highRiskFund = new MutualFund(3, "highRiskFund1", mutualFundsStocks.getHighRiskStocks());
     }
 
-
-    void refillFunds(MutualFund fund) {
-
+// buy more shares of the Stocks in a mutual fund a user wants to invest in so we put all the users money in shares
+    public void refillFunds(MutualFund fund, double amount) {
+        int num = calculateRefill(fund, amount);
+        fund.setStocks(num);
     }
+
+    public int calculateRefill(MutualFund fund, double amount){
+        int numStocks = fund.getShares();
+        double netWorth = fund.getValue();
+        int  increase =  (int) (amount / netWorth) + 1;
+        return numStocks * increase;
+    }
+
 
     public double calculateBrokerFree(double amount) {
         double fee = amount / 100;
         return fee;
     }
 
-    void sellMutualFunds() {
+    void sellMutualFunds(User user, MutualFund fund, double amount) {
+
 
     }
 
@@ -33,14 +43,14 @@ public class MutualFundsBroker {
         double total = calculateBrokerFree(amount) + amount;
         if(user.enoughStockBalance(total)){
             if (fund.getValue() < amount){
-                refillFunds(fund);}
-            buyMutualFundsHelper(user, fund, amount);
+                refillFunds(fund, amount);}
+            updateFundInvestors(user, fund, amount);
         }else{
             System.out.println("Not enough funds in your stock account");
         }
     }
 
-    public void buyMutualFundsHelper(User user, MutualFund fund, double amount){
+    public void updateFundInvestors(User user, MutualFund fund, double amount){
         ArrayList<Double> investment = new ArrayList<>();
         investment.add(amount);
         investment.add(fund.getValue());
@@ -51,7 +61,7 @@ public class MutualFundsBroker {
     void calculatePercentageIncrease() {
 
     }
-
+//updates the price the fund every day upon ATM restart
     void updateMutualFunds() {
 
     }

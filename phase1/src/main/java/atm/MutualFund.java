@@ -32,4 +32,14 @@ public class MutualFund {
     public void setInvestors(User user, ArrayList<Double> investment){
         investors.put(user, investment);
         }
+
+    public void setStocks(int num) {
+        for (Stock stock : stocks) {
+            stock.setNumShares(num);
+        }
+    }
+
+    public int getShares(){
+        return stocks.get(0).getNumShares();
+    }
 }
