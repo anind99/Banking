@@ -15,4 +15,9 @@ public class InvestmentPortfolio {
     public void setMutualFundsPortfolio(MutualFund fund, ArrayList<Double> value){
         mutualFundsPortfolio.put(fund.getName(), value);
     }
+
+    public HashMap<String, ArrayList<Double>> getMutualFundPortfolio(){
+        return mutualFundsPortfolio;
+    }
+
 }

@@ -29,11 +29,15 @@ public class MutualFund {
         return name;
     }
 
+    public ArrayList<Stock> getStocks(){
+        return stocks;
+    }
+
     public void setInvestors(User user, ArrayList<Double> investment){
         investors.put(user, investment);
         }
 
-    public void setStocks(int num) {
+    public void setSharesStocks(int num) {
         for (Stock stock : stocks) {
             stock.setNumShares(num);
         }
