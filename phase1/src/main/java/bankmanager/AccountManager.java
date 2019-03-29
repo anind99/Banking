@@ -12,31 +12,22 @@ public class AccountManager extends BankManager{
     public void create_account(User user, String acct_type){
         // Creates a new account as specified by the parameter.
         if (acct_type.equalsIgnoreCase("chequing")) {
-            updateUserAccounts(user, createChequingAccount(this.acct_counter, atm), "chequing");
+            createChequingAccount(user, atm);
         }
         else if (acct_type.equalsIgnoreCase("CreditCard")) {
-            updateUserAccounts(user, createCreditCard(this.acct_counter, atm), "credit card");
+            createCreditCard(user, atm);
         }
         else if (acct_type.equalsIgnoreCase("LOC")){
-            updateUserAccounts(user, createLOC(this.acct_counter, atm), "line of credit");
+            createLOC(user, atm);
         }
         else if (acct_type.equalsIgnoreCase("savings")){
-            updateUserAccounts(user, createSavingsAccount(this.acct_counter, atm), "savings");
+            createSavingsAccount(user, atm);
         } else if (acct_type.equalsIgnoreCase("stock")) {
-            updateUserAccounts(user, createStockAccount(this.acct_counter, atm), "stock");
+            createStockAccount(user, atm);
         }
-
         checkForPrimary(user);
-
     }
 
-    private void updateUserAccounts(User user, Account account, String type){
-        // Create account helper method for create_account. Increases acc_counter by 1 and adds the created account
-        // to the user.
-        user.getAccounts().add(account);
-        System.out.println("New " + type + " account created.");
-        this.acct_counter += 1;
-    }
 
     protected void checkForPrimary(User user) {
         // Checks for primary account. The first chequing account the user makes is always the primary account.
@@ -47,28 +38,38 @@ public class AccountManager extends BankManager{
             }
         }if(!primary){
             for (Account a : user.getAccounts()) {
-                if (a.getType().equals("chequing")){
+                if (a.getType().equalsIgnoreCase("chequing")){
                     ((Chequing)a).setPrimary();
                     break;}}}
     }
 
-    protected Chequing createChequingAccount(int account_counter, ATM atm){
-        return new Chequing(acct_counter, atm);
+    protected void createChequingAccount(User user, ATM atm){
+        user.getAccounts().add(new Chequing(acct_counter, atm));
+        System.out.println("New chequing account created.");
+        acct_counter+=1;
     }
 
-    protected Savings createSavingsAccount(int acct_counter, ATM atm) {
-        return new Savings(acct_counter, atm);
+    protected void createSavingsAccount(User user, ATM atm) {
+        user.getAccounts().add(new Savings(acct_counter, atm));
+        System.out.println("New savings account created.");
+        acct_counter+=1;
     }
 
-    protected CreditCard createCreditCard(int acct_counter, ATM atm) {
-        return new CreditCard(acct_counter, atm);
+    protected void createCreditCard(User user, ATM atm) {
+        user.getAccounts().add(new CreditCard(acct_counter, atm));
+        System.out.println("New credit card created.");
+        acct_counter+=1;
     }
 
-    protected LOC createLOC(int acct_counter, ATM atm) {
-        return new LOC(acct_counter, atm);
+    protected void createLOC(User user, ATM atm) {
+        user.getAccounts().add(new LOC(acct_counter, atm));
+        System.out.println("New Line of Credit created.");
+        acct_counter+=1;
     }
 
-    protected StockAccount createStockAccount(int acct_counter, ATM atm) {
-        return new StockAccount(acct_counter, atm);
+    protected void createStockAccount(User user, ATM atm) {
+        user.getAccounts().add(new StockAccount(acct_counter, atm));
+        System.out.println("New Stock Account created.");
+        acct_counter+=1;
     }
 }
