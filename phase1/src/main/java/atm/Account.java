@@ -50,7 +50,7 @@ public abstract class Account implements Serializable {
 
     abstract boolean removeMoney (double amount);
 
-    void removeLastTransactionFromList() {
+    public void removeLastTransactionFromList() {
         // Remove the last transaction from listOfTransactions and re-initialize lastTransaction to the new last
         // transaction or null otherwise.
         ArrayList<Transaction> lst = getListOfTransactions();
