@@ -1,4 +1,6 @@
-package atm;
+package atm.BankManager;
+
+import atm.*;
 
 public class CreateAccount {
 
@@ -11,8 +13,8 @@ public class CreateAccount {
         // Checks for primary account. The first chequing account the user makes is always the primary account.
         boolean primary = false;
         for (Account a : user.getAccounts()) {
-            if (a.getType().equals("chequing")) {
-                if (((Chequing)a).isPrimary()){primary = true;}
+            if(a.isPrimary()) {
+                primary = true;
             }
         }if(!primary){
             for (Account a : user.getAccounts()) {

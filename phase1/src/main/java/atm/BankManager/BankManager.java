@@ -1,4 +1,6 @@
-package atm;
+package atm.BankManager;
+import atm.*;
+
 import java.util.ArrayList;
 import java.io.*;
 

@@ -206,4 +206,8 @@ public abstract class Account implements Serializable {
         System.out.println("Account readObjectNoData, this should never happen!");
         System.exit(-1);
     }
+
+    public boolean isPrimary() {
+        return false;
+    }
 }

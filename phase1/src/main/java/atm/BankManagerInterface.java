@@ -1,9 +1,10 @@
 package atm;
 
+import atm.BankManager.BankManager;
+
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Scanner;
 
 public class BankManagerInterface extends Interface {
 
