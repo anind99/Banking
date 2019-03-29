@@ -6,7 +6,7 @@ import java.io.*;
 
 public class BankManager implements Serializable{
     protected int acct_counter;
-    private final ATM atm;
+    final ATM atm;
 
     public BankManager(ATM atm){
         this.atm = atm;

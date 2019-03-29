@@ -1,7 +1,4 @@
 package BankManager;
-
-import atm.Account;
-import atm.User;
 import atm.*;
 
 public class TransactionManager extends BankManager{
