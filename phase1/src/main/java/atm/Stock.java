@@ -39,6 +39,7 @@ public class Stock {
         this.name = n;
         this.symbol = s;
         this.currentPrice = p;
+        this.numShares = 0;
         this.updated = false;
     }
 
