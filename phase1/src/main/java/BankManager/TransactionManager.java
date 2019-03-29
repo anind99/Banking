@@ -13,15 +13,15 @@ public class TransactionManager extends BankManager{
             String transactionType = acct.getLastTransaction().getTransactionType();
 
             if (transactionType.equalsIgnoreCase("deposit")) {
-                undoTransaction.undoDeposit(acct);
+                undoDeposit(acct);
             } else if (transactionType.equals("withdraw")) {
-                undoTransaction.undoWithdraw(acct);
+                undoWithdraw(acct);
             } else if (transactionType.equalsIgnoreCase("transferin")){
-                undoTransaction.undoTransferIn(usr, acct);
+                undoTransferIn(usr, acct);
             } else if (transactionType.equalsIgnoreCase("transferout")) {
-                undoTransaction.undoTransferOut(usr, acct);
+                undoTransferOut(usr, acct);
             } else if (transactionType.equalsIgnoreCase("paybill")){
-                undoTransaction.undoPayBill(acct);
+                undoPayBill(acct);
             }
         }
     }
