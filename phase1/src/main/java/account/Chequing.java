@@ -12,13 +12,9 @@ public class Chequing extends Asset {
         this.type = "chequing";
     }
 
-    public Chequing(int accountNum, ATM atm, boolean number){
-        super(accountNum, atm);
-        primary = number;
-        this.type = "chequing";
+    public void setPrimary(){
+        primary = true;
     }
-
-    public void setPrimary(){primary = true;}
 
     @Override
     public boolean isPrimary(){
