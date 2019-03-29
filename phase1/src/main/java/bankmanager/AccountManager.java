@@ -74,4 +74,35 @@ public class AccountManager extends BankManager{
         System.out.println("New Stock Account created.");
         acct_counter+=1;
     }
+
+    /***
+     * Creates a joint account with two users.
+     *
+     * @param user1 the user that wants to create a joint account
+     * @param user2 the other user that wants to create a joint account
+     * @param accountType the type of account to be created
+     */
+    public void createJointAccount(User user1, User user2, String accountType) {
+        create_account(user1, accountType);
+        Account account = user1.getAccounts().get(user1.getAccounts().size()-1);
+        addExistingUserToAccount(user2, account);
+    }
+
+    /***
+     * Adds an existing user to an existing account that belongs to another user. Up to two people are allowed to share
+     * one account.
+     *
+     * @param user the user that is to be added to the account
+     * @param account the account that is to be joined
+     */
+    public void addExistingUserToAccount(User user, Account account) {
+        if (account.getIsJoint()) {
+            System.out.println("Not possible to add a user this account because there are already two users sharing" +
+                    "this account!");
+        } else {
+            user.getAccounts().add(account);
+            account.setIsJoint(true);
+        }
+    }
+
 }

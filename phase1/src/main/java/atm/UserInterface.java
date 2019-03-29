@@ -1,8 +1,6 @@
 package atm;
 
 import account.Account;
-import account.Chequing;
-
 
 import java.util.ArrayList;
 

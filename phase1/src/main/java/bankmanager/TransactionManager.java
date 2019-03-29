@@ -2,6 +2,8 @@ package bankmanager;
 import account.Account;
 import atm.*;
 
+import java.util.ArrayList;
+
 public class TransactionManager extends BankManager{
 
     public TransactionManager(ATM atm) {
@@ -31,12 +33,12 @@ public class TransactionManager extends BankManager{
 
     protected void undoDeposit(Account acct) {
         acct.subtractBalance(acct.getLastTransaction().getTransactionAmount());
-        acct.removeLastTransactionFromList();
+        removeLastTransactionFromList(acct);
     }
 
     protected void undoWithdraw(Account acct) {
         acct.addBalance(acct.getLastTransaction().getTransactionAmount());
-        acct.removeLastTransactionFromList();
+        removeLastTransactionFromList(acct);
     }
 
     protected void undoTransferIn(User usr, Account acct) {
@@ -51,7 +53,7 @@ public class TransactionManager extends BankManager{
             double amount = acct.getLastTransaction().getTransactionAmount();
             acct.subtractBalance(amount);
             TransferAct.addBalance(amount);
-            acct.removeLastTransactionFromList();
+            removeLastTransactionFromList(acct);
         }
     }
 
@@ -67,13 +69,25 @@ public class TransactionManager extends BankManager{
             double amount = acct.getLastTransaction().getTransactionAmount();
             acct.addBalance(amount);
             TransferAct.subtractBalance(amount);
-            acct.removeLastTransactionFromList();
+            removeLastTransactionFromList(acct);
         }
     }
 
     protected void undoPayBill(Account acct) {
         acct.addBalance(acct.getLastTransaction().getTransactionAmount());
-        acct.removeLastTransactionFromList();
+        removeLastTransactionFromList(acct);
+    }
+
+    public void removeLastTransactionFromList(Account account) {
+        // Remove the last transaction from listOfTransactions and re-initialize lastTransaction to the new last
+        // transaction or null otherwise.
+        ArrayList<Transaction> lst = account.getListOfTransactions();
+        lst.remove(lst.size() - 1);
+        if (lst.size() > 0) {
+            account.setLastTransaction(lst.get(lst.size() - 1));
+        } else {
+            account.setLastTransaction(null);
+        }
     }
 
 }

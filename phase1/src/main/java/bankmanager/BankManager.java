@@ -1,17 +1,25 @@
 package bankmanager;
 import atm.*;
+import account.*;
 
 import java.io.*;
 
 public class BankManager implements Serializable{
     protected int acct_counter;
     final ATM atm;
+    private final AccountManager accountManager;
+    private final TransactionManager transactionManager;
+    private final UserManager userManager;
 
     public BankManager(ATM atm){
         this.atm = atm;
         this.acct_counter = 1000;
             // acct_counter is the variable that provides users with unique account numbers, it will increment by 1
             // each time a new account is created.
+        this.accountManager = new AccountManager(atm);
+        this.transactionManager = new TransactionManager(atm);
+        this.userManager = new UserManager(atm);
+
     }
 
     //Bank manager will always add 100 new bills when restocking
@@ -28,6 +36,18 @@ public class BankManager implements Serializable{
         } catch (IOException e) {
             System.err.println("Problem writing to the file alerts.txt");
         }
+    }
+
+    public void create_account(User user, String acct_type) {
+        accountManager.create_account(user, acct_type);
+    }
+
+    public void createUser(String username, String password) {
+        userManager.createUser(username, password);
+    }
+
+    public void undoTransaction(User usr, Account acct) {
+        transactionManager.undoTransaction(usr, acct);
     }
 
     private void writeObject(ObjectOutputStream oos) throws IOException{

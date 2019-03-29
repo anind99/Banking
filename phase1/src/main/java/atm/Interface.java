@@ -70,7 +70,7 @@ public abstract class Interface implements Serializable {
         StringBuilder choices = new StringBuilder();
 
         for (Account i : listOfAccounts) {
-            choices.append(i.accountNum).append(", Balance: ").append(i.balance);
+            choices.append(i.accountNum).append(", Balance: ").append(i.getBalance());
             if (summary) {
                 choices.append(", Last Transaction: ");
                 if (i.lastTransaction != null) {
