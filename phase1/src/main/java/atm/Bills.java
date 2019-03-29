@@ -26,16 +26,16 @@ public class Bills implements Serializable {
         return bills[index];
     }
 
-    double get_amount(){
+    public double get_amount(){
         // Returns how much money the ATM has.
         return (bills[0]*5.0 + bills[1]*10.0 + bills[2]*20.0 + bills[3]* 50.0);
     }
 
-    void add_bills(int bill, int number){
+    public void add_bills(int bill, int number){
         bills[bill] += number;
     }
 
-    void withdrawBills(double amount){
+    public void withdrawBills(double amount){
         int amountToWithdraw = (int) amount;
 
         amountToWithdraw = withdrawBillsHelper(amountToWithdraw, 50, 3);

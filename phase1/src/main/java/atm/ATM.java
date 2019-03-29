@@ -86,7 +86,7 @@ public class ATM implements Serializable {
 
     }
 
-    Calendar getDate(){
+    public Calendar getDate(){
         // Has to be package-private.
         return (Calendar) date.clone();
     }
@@ -106,7 +106,7 @@ public class ATM implements Serializable {
         getListOfUsers().add(u); }
 
     /**Alerts the manager when the amount of any denomination goes below 20.*/
-    void alertManager() {
+    public void alertManager() {
         boolean fiveBills = true;
         boolean tenBills = true;
         boolean twentyBills = true;
