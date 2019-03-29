@@ -2,6 +2,9 @@ package account;
 
 import atm.ATM;
 
+/**
+ *
+ */
 public class Chequing extends Asset {
 
     public boolean primary;
