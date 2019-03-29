@@ -31,21 +31,6 @@ public class BankManager implements Serializable{
         }
     }
 
-    protected void addstockaccount(User user){
-        boolean added = false;
-        for (Account a: user.getAccounts()){
-            if (a.type.equalsIgnoreCase("Stock"))
-                added = true;
-
-        }
-        if (!added){
-            int accNum = atm.getBM().acct_counter;
-            atm.getBM().acct_counter += 1;
-            StockAccount Stocks =  new StockAccount(accNum, atm);
-            user.accounts.add(Stocks);
-        }
-    }
-
     private void writeObject(ObjectOutputStream oos) throws IOException{
         try {
             oos.defaultWriteObject();

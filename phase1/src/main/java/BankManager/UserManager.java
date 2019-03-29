@@ -1,20 +1,15 @@
 package BankManager;
 import atm.*;
 
-import atm.ATM;
-import atm.Account;
-import atm.User;
-
 import java.util.ArrayList;
 
 public class UserManager extends BankManager{
-
 
     public UserManager(ATM atm) {
         super(atm);
     }
 
-    public void create_user(String username, String password){
+    public void createUser(String username, String password){
         // Creates a new user. When a new user is created, all account types will be opened for this user.
         ArrayList<Account> accounts = new ArrayList<>();
         boolean contains = false;
@@ -24,11 +19,6 @@ public class UserManager extends BankManager{
             }
         } if (!contains){
             User newUser = new User(username, password, accounts);
-            create_account(newUser, "Chequing");
-            create_account(newUser, "Savings");
-            create_account(newUser, "CreditCard");
-            create_account(newUser, "LOC");
-            create_account(newUser, "Stock");
             System.out.println("New user: " + username + " created");
             atm.addUserToList(newUser);
         } else{
