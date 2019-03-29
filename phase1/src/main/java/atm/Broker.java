@@ -13,23 +13,13 @@ import bankmanager.*;
 public class Broker {
     private final ATM atm = new ATM();
     private final BankManager bm = new BankManager(atm);
-    private final StockBroker stockBroker = new StockBroker(atm);
+    private  StockBroker stockBroker;
 
-    public Broker() {
+    public Broker(ATM Atm, BankManager Bm) {
         bm.createUser("broker", "password");
+        this.stockBroker = new StockBroker(atm);
     }
 
-    void buyStocks(String symbol, int shares, Account account, InvestmentPortfolio investmentPortfolio) {
-        stockBroker.buyStocks(symbol, shares, account, investmentPortfolio);
-    }
-
-    void sellStocks() {
-
-    }
-
-    void updateStocks() {
-
-    }
 
     void calculatePercentageIncreaseStocks() {
 
