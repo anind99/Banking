@@ -7,8 +7,9 @@ import java.io.*;
 public class BankManager implements Serializable{
     protected int acct_counter;
     private final ATM atm;
-    private final CreateAccount createAccount = new CreateAccount();
-    private final UndoTransaction undoTransaction = new UndoTransaction();
+    private final AccountManager accountManager = new AccountManager();
+    private final TransactionManager transactionManager = new TransactionManager();
+    private final UserManager userManager = new UserManager();
 
         public BankManager(ATM atm){
             this.atm = atm;
@@ -60,22 +61,22 @@ public class BankManager implements Serializable{
         public void create_account(User user, String acct_type){
             // Creates a new account as specified by the parameter.
             if (acct_type.equalsIgnoreCase("chequing")) {
-                createAccountHelper(user, createAccount.newChequing(this.acct_counter, atm), "chequing");
+                createAccountHelper(user, accountManager.newChequing(this.acct_counter, atm), "chequing");
             }
             else if (acct_type.equalsIgnoreCase("CreditCard")) {
-                createAccountHelper(user, createAccount.newCreditCard(this.acct_counter, atm), "credit card");
+                createAccountHelper(user, accountManager.newCreditCard(this.acct_counter, atm), "credit card");
             }
             else if (acct_type.equalsIgnoreCase("LOC")){
-                createAccountHelper(user, createAccount.newLOC(this.acct_counter, atm), "line of credit");
+                createAccountHelper(user, accountManager.newLOC(this.acct_counter, atm), "line of credit");
             }
 
             else if (acct_type.equalsIgnoreCase("savings")){
-                createAccountHelper(user, createAccount.newSavings(this.acct_counter, atm), "savings");
+                createAccountHelper(user, accountManager.newSavings(this.acct_counter, atm), "savings");
             } else if (acct_type.equalsIgnoreCase("stock")) {
-                createAccountHelper(user, createAccount.newStockAccount(this.acct_counter, atm), "stock");
+                createAccountHelper(user, accountManager.newStockAccount(this.acct_counter, atm), "stock");
             }
 
-            createAccount.checkForPrimary(user);
+            accountManager.checkForPrimary(user);
 
         }
 

@@ -51,5 +51,5 @@ public class TransactionManager {
         acct.addBalance(acct.getLastTransaction().getTransactionAmount());
         acct.removeLastTransactionFromList();
     }
-    
+
 }
