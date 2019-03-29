@@ -9,31 +9,31 @@ public class Transaction implements Serializable {
     double Amount;
     String billname = null;
 
+    /**
+     * Constructor for Transfer In/Out
+     * Type: refers to transaction type
+     * Account: refers to account which is being transfer in from/ transfered out to
+     *
+     */
     public Transaction(int Acc, Double Amount, String Type) {
-        /**
-         * Constructor for Transfer In/Out
-         * Type: refers to transaction type
-         * Account: refers to account which is being transfer in from/ transfered out to
-         *
-         */
         this.Type = Type;
         this.Amount = Amount;
         this.Account = Acc;
     }
 
+    /**
+     * Withdraw/Deposit Constructor
+     */
     public Transaction(Double Amount, String Type) {
-        /**
-         * Withdraw/Deposit Constructor
-         */
         this.Type = Type;
         this.Amount = Amount;
     }
 
+    /**
+     * Constructor for pay bill
+     * Billname: Billname
+     */
     public Transaction(String billname, Double Amount){
-        /**
-         * Constructor for pay bill
-         * Billname: Billname
-         */
         this.billname = billname;
         this.Type = "paybill";
         this.Amount = Amount;
