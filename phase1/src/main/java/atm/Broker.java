@@ -5,11 +5,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
+import bankmanager.*;
 
 
 public class Broker {
+    private final ATM atm = new ATM();
+    private final UserManager um = new UserManager(atm);
     private final StockBroker stockBroker = new StockBroker();
-    private final MutualFundsBroker mutualFundsBroker = new MutualFundsBroker();
+
+    public Broker() {
+        UserManager um = new UserManager(atm);
+        um.createUser("broker", "password");
+    }
 
     void buyStocks(User user, String symbol, int shares) {
         stockBroker.buyStocks(user, symbol, shares);

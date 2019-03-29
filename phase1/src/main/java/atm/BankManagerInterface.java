@@ -110,7 +110,7 @@ public class BankManagerInterface extends Interface {
         String username = scanner.next();
         System.out.println("Type the password for the new user");
         String password = scanner.next();
-        atm.getBM().create_user(username, password);
+        atm.getBM().createUser(username, password);
     }
 
     private void creatingAccount() {
@@ -201,7 +201,7 @@ public class BankManagerInterface extends Interface {
         }
 
         Account account = selectAccount(user, "undo its last transaction", user.getAccounts());
-        atm.getBM().undo_transaction(user, account);
+        atm.getBM().undoTransaction(user, account);
     }
 
     private void shutDownSystem(){

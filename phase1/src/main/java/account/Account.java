@@ -17,6 +17,7 @@ public abstract class Account implements Serializable {
     public Calendar dateCreated;
     private int depositNum;
     private final ATM atm;
+    private boolean isJoint = false;
 
 
     public Account(int accountNum, ATM atm) {
@@ -30,6 +31,14 @@ public abstract class Account implements Serializable {
 
     public double getBalance(){
         return this.balance;
+    }
+
+    public boolean getIsJoint() {
+        return isJoint;
+    }
+
+    public void setIsJoint(boolean joined) {
+        this.isJoint = joined;
     }
 
     public void addBalance(double balance) {this.balance += balance;}
@@ -53,23 +62,11 @@ public abstract class Account implements Serializable {
 
     abstract boolean removeMoney (double amount);
 
-    public void removeLastTransactionFromList() {
-        // Remove the last transaction from listOfTransactions and re-initialize lastTransaction to the new last
-        // transaction or null otherwise.
-        ArrayList<Transaction> lst = getListOfTransactions();
-        lst.remove(lst.size() - 1);
-        if (lst.size() > 0) {
-            setLastTransaction(lst.get(lst.size() - 1));
-        } else {
-            setLastTransaction(null);
-        }
-    }
-
     public Transaction getLastTransaction() {
         return this.lastTransaction;
     }
 
-    private void setLastTransaction(Transaction transaction) {
+    public void setLastTransaction(Transaction transaction) {
         this.lastTransaction = transaction;
     }
 
