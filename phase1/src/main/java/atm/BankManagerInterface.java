@@ -1,6 +1,6 @@
 package atm;
 
-import atm.BankManager.BankManager;
+import BankManager.BankManager;
 
 import java.io.*;
 import java.text.ParseException;

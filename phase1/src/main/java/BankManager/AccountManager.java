@@ -1,4 +1,4 @@
-package atm.BankManager;
+package BankManager;
 
 import atm.*;
 

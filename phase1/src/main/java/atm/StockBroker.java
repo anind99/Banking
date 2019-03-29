@@ -1,6 +1,6 @@
 package atm;
 
-import atm.BankManager.BankManager;
+import BankManager.BankManager;
 
 public class StockBroker {
 
