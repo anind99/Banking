@@ -1,5 +1,6 @@
 package BankManager;
 
+import Account.Account;
 import atm.*;
 
 public class AccountManager extends BankManager{

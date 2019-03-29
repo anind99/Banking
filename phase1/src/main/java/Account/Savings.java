@@ -1,4 +1,6 @@
-package atm;
+package Account;
+
+import atm.ATM;
 
 public class Savings extends Asset {
 

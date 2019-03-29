@@ -1,5 +1,6 @@
 package atm;
 
+import Account.Account;
 import BankManager.BankManager;
 
 public class StockBroker {
@@ -31,7 +32,7 @@ public class StockBroker {
             System.out.println("Stocks not purchase because of insufficient funds or invalid symbol");
     }
 
-    private boolean buyNewStock(String symbol, int shares,  StockAccount sa, InvestmentPortfolio Iv){
+    private boolean buyNewStock(String symbol, int shares, StockAccount sa, InvestmentPortfolio Iv){
 
             Stock st = fetchStock(symbol);
             if (st != null){

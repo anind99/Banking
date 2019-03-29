@@ -1,7 +1,8 @@
 package atm;
 
+import Account.Account;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class UserInterface extends Interface{
 
