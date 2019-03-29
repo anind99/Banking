@@ -95,15 +95,15 @@ public class MutualFundsBroker {
 //updates the price the fund every day upon ATM restart
     public void updateMutualFunds() {
         for(Stock stock : lowRiskFund.getStocks()){
-            stock.updatePrice(date);
+            stock.updateStock(date);
         }
 
         for(Stock stock : mediumRiskFund.getStocks()){
-            stock.updatePrice(date);
+            stock.updateStock(date);
         }
 
         for(Stock stock : highRiskFund.getStocks()){
-            stock.updatePrice(date);
+            stock.updateStock(date);
         }
 
     }

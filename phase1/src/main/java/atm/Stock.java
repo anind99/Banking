@@ -82,7 +82,7 @@ public class Stock {
     }
 
 
-    void updatePrice(Calendar date){
+    void updateStock(Calendar date){
         URL url = null;
         try {
             JSONObject jsonobject = readJsonFromUrl("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY" +
@@ -93,7 +93,7 @@ public class Stock {
             String todayString = sdf.format(date.getTime());
             String yesterdayString = sdf.format(yesterday.getTime());
             if (!jsonobject.getJSONObject("Time Series (Daily)").has(todayString)){
-                System.out.println("updatePrice in Stock.java failed: Cannot find dateString in JSONObject. " +
+                System.out.println("updateStock in Stock.java failed: Cannot find dateString in JSONObject. " +
                         "Is your ATM time ahead in the future of actual time?");
                 System.exit(-1);
             }
@@ -113,13 +113,13 @@ public class Stock {
 
         } catch (MalformedURLException e){
             System.out.println(e.getMessage());
-            System.out.println("updatePrice failed, malformed URL. This should never happen!");
+            System.out.println("updateStock failed, malformed URL. This should never happen!");
 
 
             System.exit(-1);
         } catch (IOException e){
             System.out.println(e.getMessage());
-            System.out.println("updatePrice failed, IOException in url.openStream. This should never happen!");
+            System.out.println("updateStock failed, IOException in url.openStream. This should never happen!");
             System.out.println("Do you have the appropriate certificate installed on your JVM?");
             System.out.println("Check the readme file for steps on how to install the certificate on your machine. ");
 
