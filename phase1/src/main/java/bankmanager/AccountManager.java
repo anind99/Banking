@@ -39,8 +39,10 @@ public class AccountManager extends BankManager{
         }if(!primary){
             for (Account a : user.getAccounts()) {
                 if (a.getType().equalsIgnoreCase("chequing")){
-                    ((Chequing)a).setPrimary();
-                    break;}}}
+                    a.setPrimary();
+                    break;}
+            }
+        }
     }
 
     protected void createChequingAccount(User user, ATM atm){

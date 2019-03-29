@@ -12,6 +12,7 @@ public class Chequing extends Asset {
         this.type = "chequing";
     }
 
+    @Override
     public void setPrimary(){
         primary = true;
     }

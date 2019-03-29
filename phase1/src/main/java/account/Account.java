@@ -213,4 +213,6 @@ public abstract class Account implements Serializable {
     public boolean isPrimary() {
         return false;
     }
+
+    public void setPrimary() { };
 }
