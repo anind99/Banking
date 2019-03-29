@@ -2,8 +2,13 @@ package BankManager;
 
 import atm.Account;
 import atm.User;
+import atm.*;
 
 public class TransactionManager extends BankManager{
+
+    public TransactionManager(ATM atm) {
+        super(atm);
+    }
 
     public void undo_transaction(User usr, Account acct){
         // Allows Bank Manager to undo any type of transaction.
