@@ -1,25 +1,27 @@
 package atm;
 
-
 import account.Account;
+import account.Asset;
 import bankmanager.BankManager;
+
+import java.util.ArrayList;
 
 public class StockBroker {
 
     private BankManager BM;
     private ATM atm;
 
-    StockBroker(BankManager bm){
-        this.BM = bm;
+    StockBroker(ATM Atm){
+        this.atm = Atm;
     }
 
-    void buyStocks(String symbol, int shares, StockAccount sa, InvestmentPortfolio Iv) {
+    void buyStocks(String symbol, int shares ,Account sa, InvestmentPortfolio Iv) {
         boolean bought = false;
         boolean contains = false;
         for (Stock st: Iv.stockPortfolio){
             if (st.symbol.equalsIgnoreCase(symbol)){
-                if ((st.currentPrice * shares) <= sa.balance){
-                   sa.balance -= st.currentPrice * shares;
+                if ((st.currentPrice * shares) <= sa.getBalance()){
+                    sa.subtractBalance(st.currentPrice * shares);
                     st.numShares += shares;
                     bought = true;
                 }
@@ -33,30 +35,27 @@ public class StockBroker {
             System.out.println("Stocks not purchase because of insufficient funds or invalid symbol");
     }
 
-    private boolean buyNewStock(String symbol, int shares, StockAccount sa, InvestmentPortfolio Iv){
+    private boolean buyNewStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
 
-            Stock st = fetchStock(symbol);
-            if (st != null){
-                if (st.currentPrice * shares <= sa.balance){
-                    Iv.stockPortfolio.add(st);
-                    st.numShares = shares;
-                   sa.balance -= st.currentPrice * shares;
-                    return  true;
-                }
-            } else {
-                System.out.println("There is no stock of symbol: "+symbol);
+        Stock st = fetchStock(symbol);
+        if (st != null){
+            if (st.currentPrice * shares <= sa.getBalance()){
+                Iv.stockPortfolio.add(st);
+                st.numShares = shares;
+                sa.subtractBalance(st.currentPrice * shares);
+                return  true;
             }
+        } else {
+            System.out.println("There is no stock of symbol: "+symbol);
+        }
         return false;
     }
 
-    void sellStocks(String Symbol, int shares){
-
-    }
 
     private Stock fetchStock(String Symbol){
         // not implemented
         // returns a stock of Symbol symbol, that is fetched from API
-        Stock st = new Stock("name", Symbol, 0, 0);
+        Stock st = new Stock("name", Symbol, 0);
         try {
             st.updatePrice(atm.getDate());
             return st;
@@ -65,16 +64,12 @@ public class StockBroker {
         }
     }
 
-    void sellStocks(User user, String stock, int shares) {
+    void sellStocks(Asset SA, String stock, int shares, InvestmentPortfolio IV) {
         boolean sold = false;
-        for (Stock st: user.investments.stockPortfolio){
+        for (Stock st: IV.stockPortfolio){
             if (st.name.equalsIgnoreCase(stock)){
                 if (shares <= st.numShares) {
                     st.numShares -= shares;
-                    StockAccount SA = getStockAct(user);
-                    if (SA == null){
-                        BM.create_account(user, "Stock");
-                    }
                     SA.addMoney(shares * st.currentPrice);
                     sold = true;
                     break;
@@ -82,18 +77,11 @@ public class StockBroker {
             }
         }
         if (!sold){
-            System.out.println("Not enough shares, or stock is not owned by user: "+user);
+            System.out.println("Not enough shares, or stock is not owned by user. ");
         }
     }
 
-    private StockAccount getStockAct(User user){
-        for (Account act: user.getAccounts()){
-            if (act instanceof StockAccount){
-                return (StockAccount)act;
-            }
-        }
-        return null;
-    }
+
 
     void updateStocks(ATM atm) {
         for (User user:atm.getListOfUsers()){
@@ -111,5 +99,14 @@ public class StockBroker {
         return total;
     }
 
+    void viewUserStocks(User user){
+        ArrayList<Stock> Iv = user.investments.stockPortfolio;
+        System.out.println("User Currently owns: "+Iv.size()+" types of stocks");
+        for (Stock st: Iv){
+            System.out.println("Stock: "+st.symbol+" Shares: "+st.numShares);
+        }
+    }
+
 
 }
+

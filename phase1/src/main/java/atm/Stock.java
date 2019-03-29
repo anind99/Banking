@@ -35,7 +35,7 @@ public class Stock {
     // 4: +/- 2% daily change.
     // 5: +/- 5% daily change.
 
-    public Stock(String n, String s, double p, int r){
+    public Stock(String n, String s, double p){
         this.name = n;
         this.symbol = s;
         this.currentPrice = p;
