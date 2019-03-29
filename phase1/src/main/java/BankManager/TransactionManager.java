@@ -7,7 +7,7 @@ public class TransactionManager extends BankManager{
         super(atm);
     }
 
-    public void undo_transaction(User usr, Account acct){
+    public void undoTransaction(User usr, Account acct){
         // Allows Bank Manager to undo any type of transaction.
         if (acct.getLastTransaction() == null){
             System.out.println("No previous transactions");
