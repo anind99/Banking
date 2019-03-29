@@ -15,7 +15,7 @@ public class StockBroker {
         this.atm = Atm;
     }
 
-    void buyStocks(String symbol, int shares ,Account sa, InvestmentPortfolio Iv) {
+    void buyStocks(String symbol, int shares, Account sa, InvestmentPortfolio Iv) {
         boolean bought = false;
         boolean contains = false;
         for (Stock st: Iv.stockPortfolio){
@@ -43,7 +43,7 @@ public class StockBroker {
                 Iv.stockPortfolio.add(st);
                 st.numShares = shares;
                 sa.subtractBalance(st.currentPrice * shares);
-                return  true;
+                return true;
             }
         } else {
             System.out.println("There is no stock of symbol: "+symbol);
@@ -57,7 +57,7 @@ public class StockBroker {
         // returns a stock of Symbol symbol, that is fetched from API
         Stock st = new Stock("name", Symbol, 0);
         try {
-            st.updatePrice(atm.getDate());
+            st.updateStock(atm.getDate());
             return st;
         } catch (Exception e) {
             return null;
@@ -86,7 +86,7 @@ public class StockBroker {
     void updateStocks(ATM atm) {
         for (User user:atm.getListOfUsers()){
             for (Stock st:user.investments.stockPortfolio){
-                st.updatePrice(atm.getDate());
+                st.updateStock(atm.getDate());
             }
         }
     }
