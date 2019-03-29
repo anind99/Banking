@@ -1,7 +1,7 @@
 package atm;
 
-import account.Account;
-import bankmanager.BankManager;
+import account.*;
+import bankmanager.*;
 
 import java.io.*;
 import java.io.File;
