@@ -11,7 +11,7 @@ public abstract class Account implements Serializable {
 
     public String type;
     public final int accountNum;
-    protected double balance;
+    public double balance;
     public Transaction lastTransaction;
     public ArrayList<Transaction> listOfTransactions = new ArrayList<>();
     public Calendar dateCreated;
