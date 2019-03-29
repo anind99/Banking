@@ -12,7 +12,7 @@ public class Transaction implements Serializable {
     /**
      * Constructor for Transfer In/Out
      * Type: refers to transaction type
-     * Account: refers to account which is being transfer in from/ transfered out to
+     * account: refers to account which is being transfer in from/ transfered out to
      *
      */
     public Transaction(int Acc, Double Amount, String Type) {

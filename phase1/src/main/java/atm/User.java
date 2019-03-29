@@ -1,6 +1,6 @@
 package atm;
 
-import Account.Account;
+import account.Account;
 
 import java.io.*;
 import java.util.ArrayList;

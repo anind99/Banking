@@ -1,4 +1,4 @@
-package Account;
+package account;
 
 import atm.ATM;
 import atm.Transaction;
@@ -190,7 +190,7 @@ public abstract class Account implements Serializable {
         try {
             oos.defaultWriteObject();
         } catch (IOException e){
-            System.out.println("Account writeObject Failed!");
+            System.out.println("account writeObject Failed!");
             System.out.println(e.getMessage());
             System.exit(-1);
         }
@@ -199,14 +199,14 @@ public abstract class Account implements Serializable {
         try{
             ois.defaultReadObject();
         } catch (Exception e){
-            System.out.println("Account readObject Failed!");
+            System.out.println("account readObject Failed!");
             System.out.println(e.getMessage());
             System.exit(-1);
         }
     }
 
     private void readObjectNoData() throws ObjectStreamException {
-        System.out.println("Account readObjectNoData, this should never happen!");
+        System.out.println("account readObjectNoData, this should never happen!");
         System.exit(-1);
     }
 

@@ -28,7 +28,7 @@ public class BrokerInterface extends Interface {
 
     void displayBrokerInterface(Broker broker){
         System.out.println("Choose one of the following options:");
-        System.out.println("1. View User Stock Account Info");
+        System.out.println("1. View User Stock account Info");
         System.out.println("2. View/Edit Stock Info");
         System.out.println("3. Log Off");
         String option = scanner.next();

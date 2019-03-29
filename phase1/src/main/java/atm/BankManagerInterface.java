@@ -1,7 +1,7 @@
 package atm;
 
-import Account.Account;
-import BankManager.BankManager;
+import account.Account;
+import bankmanager.BankManager;
 
 import java.io.*;
 import java.text.ParseException;
@@ -70,7 +70,7 @@ public class BankManagerInterface extends Interface {
         System.out.println("Select an option:");
         System.out.println("0. Set Date");
         System.out.println("1. Create User");
-        System.out.println("2. Create Account");
+        System.out.println("2. Create account");
         System.out.println("3. Check Alerts");
         System.out.println("4. Restock Machine");
         System.out.println("5. Undo transaction");

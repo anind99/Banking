@@ -15,7 +15,7 @@ public class ATMTest {
 
 //        ATM.bills = new int[4];
 //        ATM.listOfUsers = new ArrayList<User>();
-//        ATM.BM = new BankManager();
+//        ATM.BM = new bankmanager();
 //        ATM.date = Calendar.getInstance();
 
     }

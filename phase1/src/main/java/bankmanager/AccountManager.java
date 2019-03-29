@@ -1,6 +1,6 @@
-package BankManager;
+package bankmanager;
 
-import Account.Account;
+import account.Account;
 import atm.*;
 
 public class AccountManager extends BankManager{

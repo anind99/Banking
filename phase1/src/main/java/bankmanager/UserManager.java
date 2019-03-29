@@ -1,5 +1,5 @@
-package BankManager;
-import Account.Account;
+package bankmanager;
+import account.Account;
 import atm.*;
 
 import java.util.ArrayList;

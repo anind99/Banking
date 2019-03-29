@@ -1,7 +1,6 @@
-package BankManager;
+package bankmanager;
 import atm.*;
 
-import java.util.ArrayList;
 import java.io.*;
 
 public class BankManager implements Serializable{
