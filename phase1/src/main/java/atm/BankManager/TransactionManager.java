@@ -3,7 +3,7 @@ package atm.BankManager;
 import atm.Account;
 import atm.User;
 
-public class UndoTransaction {
+public class TransactionManager {
 
     protected void undoDeposit(Account acct) {
         acct.subtractBalance(acct.getLastTransaction().getTransactionAmount());
@@ -51,4 +51,5 @@ public class UndoTransaction {
         acct.addBalance(acct.getLastTransaction().getTransactionAmount());
         acct.removeLastTransactionFromList();
     }
+    
 }
