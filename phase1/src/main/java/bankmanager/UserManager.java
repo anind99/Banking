@@ -4,10 +4,10 @@ import atm.*;
 
 import java.util.ArrayList;
 
-public class UserManager extends BankManager{
+public class UserManager {
+    private ATM atm = new ATM();
 
-    public UserManager(ATM atm) {
-        super(atm);
+    public UserManager() {
     }
 
     public void createUser(String username, String password){

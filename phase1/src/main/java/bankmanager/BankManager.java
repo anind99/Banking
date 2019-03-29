@@ -5,7 +5,6 @@ import account.*;
 import java.io.*;
 
 public class BankManager implements Serializable{
-    protected int acct_counter;
     final ATM atm;
     private final AccountManager accountManager;
     private final TransactionManager transactionManager;
@@ -13,12 +12,11 @@ public class BankManager implements Serializable{
 
     public BankManager(ATM atm){
         this.atm = atm;
-        this.acct_counter = 1000;
             // acct_counter is the variable that provides users with unique account numbers, it will increment by 1
             // each time a new account is created.
-        this.accountManager = new AccountManager(atm);
-        this.transactionManager = new TransactionManager(atm);
-        this.userManager = new UserManager(atm);
+        this.accountManager = new AccountManager();
+        this.transactionManager = new TransactionManager();
+        this.userManager = new UserManager();
 
     }
 

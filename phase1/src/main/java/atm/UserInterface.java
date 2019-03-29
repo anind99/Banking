@@ -61,10 +61,14 @@ public class UserInterface extends Interface{
         System.out.println("3. Transfer In");
         System.out.println("4. Transfer Out");
         System.out.println("5. Pay Bills");
-        System.out.println("6. Request account Creation");
-        System.out.println("7. View Summary of Accounts");
-        System.out.println("8. Change Password");
-        System.out.println("9. Logout");
+        System.out.println("6. Request account creation");
+        System.out.println("7. Request joint account creation");
+        System.out.println("8. Add user to existing account");
+        System.out.println("9. View Summary of Accounts");
+        System.out.println("10. Change Password");
+        System.out.println("11. Buy/Sell Stocks");
+        System.out.println("12. Buy/Sell Stocks");
+        System.out.println("13. Logout");
     }
 
     private void deposit(User user) {

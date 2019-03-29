@@ -4,11 +4,7 @@ import atm.*;
 
 import java.util.ArrayList;
 
-public class TransactionManager extends BankManager{
-
-    public TransactionManager(ATM atm) {
-        super(atm);
-    }
+public class TransactionManager{
 
     public void undoTransaction(User usr, Account acct){
         // Allows Bank Manager to undo any type of transaction.
