@@ -1,6 +1,6 @@
 package bankmanager;
 
-import account.Account;
+import account.*;
 import atm.*;
 
 public class AccountManager extends BankManager{
@@ -8,7 +8,6 @@ public class AccountManager extends BankManager{
     public AccountManager(ATM atm){
         super(atm);
     }
-
 
     public void create_account(User user, String acct_type){
         // Creates a new account as specified by the parameter.
