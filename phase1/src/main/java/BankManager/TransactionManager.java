@@ -5,6 +5,27 @@ import atm.User;
 
 public class TransactionManager {
 
+    public void undo_transaction(User usr, Account acct){
+        // Allows Bank Manager to undo any type of transaction.
+        if (acct.getLastTransaction() == null){
+            System.out.println("No previous transactions");
+        } else {
+            String transactionType = acct.getLastTransaction().getTransactionType();
+
+            if (transactionType.equalsIgnoreCase("deposit")) {
+                undoTransaction.undoDeposit(acct);
+            } else if (transactionType.equals("withdraw")) {
+                undoTransaction.undoWithdraw(acct);
+            } else if (transactionType.equalsIgnoreCase("transferin")){
+                undoTransaction.undoTransferIn(usr, acct);
+            } else if (transactionType.equalsIgnoreCase("transferout")) {
+                undoTransaction.undoTransferOut(usr, acct);
+            } else if (transactionType.equalsIgnoreCase("paybill")){
+                undoTransaction.undoPayBill(acct);
+            }
+        }
+    }
+
     protected void undoDeposit(Account acct) {
         acct.subtractBalance(acct.getLastTransaction().getTransactionAmount());
         acct.removeLastTransactionFromList();

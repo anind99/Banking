@@ -100,7 +100,7 @@ public class ATM implements Serializable {
         }
     }
 
-    void addUserToList(User u){
+    public void addUserToList(User u){
         // Has to be package-private.
         getListOfUsers().add(u); }
 
@@ -132,7 +132,7 @@ public class ATM implements Serializable {
         }
     }
 
-    ArrayList<User> getListOfUsers(){
+    public ArrayList<User> getListOfUsers(){
         // Has to be package-private.
         return listOfUsers;
     }

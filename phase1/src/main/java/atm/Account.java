@@ -62,7 +62,7 @@ public abstract class Account implements Serializable {
         }
     }
 
-    Transaction getLastTransaction() {
+    public Transaction getLastTransaction() {
         return this.lastTransaction;
     }
 

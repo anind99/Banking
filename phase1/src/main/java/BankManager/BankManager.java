@@ -58,56 +58,9 @@ public class BankManager implements Serializable{
         }
 
 
-        public void create_account(User user, String acct_type){
-            // Creates a new account as specified by the parameter.
-            if (acct_type.equalsIgnoreCase("chequing")) {
-                createAccountHelper(user, accountManager.newChequing(this.acct_counter, atm), "chequing");
-            }
-            else if (acct_type.equalsIgnoreCase("CreditCard")) {
-                createAccountHelper(user, accountManager.newCreditCard(this.acct_counter, atm), "credit card");
-            }
-            else if (acct_type.equalsIgnoreCase("LOC")){
-                createAccountHelper(user, accountManager.newLOC(this.acct_counter, atm), "line of credit");
-            }
 
-            else if (acct_type.equalsIgnoreCase("savings")){
-                createAccountHelper(user, accountManager.newSavings(this.acct_counter, atm), "savings");
-            } else if (acct_type.equalsIgnoreCase("stock")) {
-                createAccountHelper(user, accountManager.newStockAccount(this.acct_counter, atm), "stock");
-            }
 
-            accountManager.checkForPrimary(user);
 
-        }
-
-        private void createAccountHelper(User user, Account account, String type){
-            // Create account helper method for create_account. Increases acc_counter by 1 and adds the created account
-            // to the user.
-            user.getAccounts().add(account);
-            this.acct_counter += 1;
-            System.out.println("New " + type + " account created.");
-        }
-
-    public void undo_transaction(User usr, Account acct){
-            // Allows Bank Manager to undo any type of transaction.
-        if (acct.getLastTransaction() == null){
-            System.out.println("No previous transactions");
-        } else {
-            String transactionType = acct.getLastTransaction().getTransactionType();
-
-            if (transactionType.equalsIgnoreCase("deposit")) {
-                undoTransaction.undoDeposit(acct);
-            } else if (transactionType.equals("withdraw")) {
-                undoTransaction.undoWithdraw(acct);
-            } else if (transactionType.equalsIgnoreCase("transferin")){
-                undoTransaction.undoTransferIn(usr, acct);
-            } else if (transactionType.equalsIgnoreCase("transferout")) {
-                undoTransaction.undoTransferOut(usr, acct);
-            } else if (transactionType.equalsIgnoreCase("paybill")){
-                undoTransaction.undoPayBill(acct);
-            }
-        }
-    }
 
     private void writeObject(ObjectOutputStream oos) throws IOException{
         try {
