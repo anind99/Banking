@@ -14,7 +14,7 @@ public class Bills implements Serializable {
     }
 
     /** Set the number of bills at array index "bill" */
-    void set_bills(int bill, int number){
+    public void set_bills(int bill, int number){
         bills[bill - 1] = number;
     }
 

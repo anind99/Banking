@@ -31,7 +31,7 @@ public class ATM implements Serializable {
         bills = new Bills(100, 100, 100, 100);
     }
 
-    Bills getBills() {
+    public Bills getBills() {
         return bills;
     }
 
