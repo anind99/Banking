@@ -2,7 +2,7 @@ package BankManager;
 
 import atm.*;
 
-public class AccountManager {
+public class AccountManager extends BankManager{
     // acct_counter refers to the account number that the Bank Manager sets for each account.
     protected Chequing newChequing(int acct_counter, ATM atm) {
         return new Chequing(acct_counter, atm);
