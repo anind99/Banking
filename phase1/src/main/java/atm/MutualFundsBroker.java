@@ -138,9 +138,14 @@ public class MutualFundsBroker {
         for(Stock stock : highRiskFund.getStocks()){stock.updateStock(date);}
     }
 
-    //TODO
-    public double calculateInvestmentIncrease(){
-        for
+    //Calculate the %profit or loss of the user's investments in mutual funds
+    public double calculateInvestmentIncrease(User user){
+        double invested = 0.0;
+        double netWorth = 0.0;
+        for (MutualFund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
+            invested += user.getInvestments().getMutualFundPortfolio().get(fund).get(0);
+            netWorth += (fund.getValue() * (user.getInvestments().getMutualFundPortfolio().get(fund).get(1) / 100));
+        } return (netWorth / invested) * 100;
     }
 
     //TODO check is symbol is valid and add valid string name wait for alan to make the list
@@ -184,6 +189,8 @@ public class MutualFundsBroker {
             total += value;
         }
         mutualFundInvestments += "\n The total value of your mutual fund investments is $" + total;
+        mutualFundInvestments += "\n Your total mutual fund investment increase is " +
+                calculateInvestmentIncrease(user) + " $";
         return mutualFundInvestments;
     }
 }
