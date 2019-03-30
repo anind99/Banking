@@ -15,27 +15,30 @@ public abstract class Interface implements Serializable {
     }
 
     String displayLoginMenu() {
-        System.out.println("Welcome. Please login.");
-        User loginUser;
-        System.out.println("Username: ");
-        String usernameAttempt = scanner.next();
-        System.out.println("Password: ");
-        String passwordAttempt = scanner.next();
-        if (usernameAttempt.equals("manager") && passwordAttempt.equals("password")) {
-            System.out.println("Login successful. Logging in as bank manager.");
-            return "manager";
-        } else {
-            for (User usr : atm.getListOfUsers()) {
-                if (usr.getUsername().equals(usernameAttempt) && usr.getPassword().equals(passwordAttempt)) {
-                    loginUser = usr;
-                    System.out.println("Login successful. Logging into " + loginUser.getUsername());
-                    return loginUser.getUsername();
+        boolean exitcondition = false;
+        while (!exitcondition) {
+            System.out.println("Welcome. Please login.");
+            User loginUser;
+            System.out.println("Username: ");
+            String usernameAttempt = scanner.next();
+            System.out.println("Password: ");
+            String passwordAttempt = scanner.next();
+            if (usernameAttempt.equals("manager") && passwordAttempt.equals("password")) {
+                System.out.println("Login successful. Logging in as bank manager.");
+                return "manager";
+            } else {
+                for (User usr : atm.getListOfUsers()) {
+                    if (usr.getUsername().equals(usernameAttempt) && usr.getPassword().equals(passwordAttempt)) {
+                        loginUser = usr;
+                        System.out.println("Login successful. Logging into " + loginUser.getUsername());
+                        return loginUser.getUsername();
 
+                    }
                 }
             }
-        }
 
-        System.out.println("Login Failed, please try again");
+            System.out.println("Login Failed, please try again");
+        }
         return "";
     }
 

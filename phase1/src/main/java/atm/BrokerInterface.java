@@ -7,26 +7,43 @@ import java.util.Scanner;
 
 public class BrokerInterface extends Interface {
 
+    private UserInterface usrInterface;
+
+
     public BrokerInterface(ATM atm) {
         super(atm);
-    }
-    private UserInterface usrInterface = new UserInterface(atm);
+        usrInterface = new UserInterface(atm);
 
-    private Scanner scanner = new Scanner(System.in);
+    }
 
     void displayBrokerOrUserChoice(Broker broker) {
-        System.out.println("Would you like to sign in as:");
+        System.out.println("Would you like to access account as:");
         System.out.println("1. Broker");
         System.out.println("2. User");
+        System.out.println("3. Log Out");
+        Scanner scanner = new Scanner(System.in);
         String option = scanner.next();
-        switch (option) {
-            case "1": {
-                displayBrokerInterface(broker);
-            }
-            case "2": {
-                usrInterface.displayUserMenu(atm.getUser("broker"));
+        boolean condition = false;
+        while (!condition) {
+            switch (option) {
+                case "1": {
+                    displayBrokerInterface(broker);
+                    break;
+                }
+                case "2": {
+                    usrInterface.displayUserMenu(atm.getUser("broker"));
+                    break;
+                }
+                case "3": {
+                    condition = true;
+                    break;
+                }
+                default: {
+                    System.out.println("Pick an option from 1-3");
+                }
             }
         }
+        scanner.close();
     }
 
     void displayBrokerInterface(Broker broker){
@@ -35,18 +52,24 @@ public class BrokerInterface extends Interface {
         System.out.println("2. View/Edit Stock Info");
         System.out.println("3. Log Off");
         String option = scanner.next();
-        switch (option){
-            case "1": {
-                brokerViewUser(broker);
-            }
-            case "2": {
-                brokerViewStock(broker);
-            }
-            case "3": {
-                break;
-            }
-            default: {
-                System.out.println("There is no option \"" + option + "\". Please try again.");
+        boolean condition = false;
+        while (condition) {
+            switch (option) {
+                case "1": {
+                    brokerViewUser(broker);
+                    break;
+                }
+                case "2": {
+                    brokerViewStock(broker);
+                    break;
+                }
+                case "3": {
+                    condition = false;
+                    break;
+                }
+                default: {
+                    System.out.println("There is no option \"" + option + "\". Please try again.");
+                }
             }
         }
         scanner.close();
@@ -56,6 +79,9 @@ public class BrokerInterface extends Interface {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type the symbol of the stock. For list of all symbols type \"*\", To go back press \"/\"");
         String symbol = scanner.next();
+        Stock stock = new Stock("name", symbol, 0);
+        stock.updateStock(atm.getDate());
+        System.out.println(stock.currentPrice);
     }
 
     void brokerViewUser(Broker broker){

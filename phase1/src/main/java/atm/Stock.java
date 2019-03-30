@@ -43,33 +43,33 @@ public class Stock {
         this.updated = false;
     }
 
-    //Source: https://stackoverflow.com/questions/18576069/how-to-save-the-file-from-https-url-in-java
-    static {
-        final TrustManager[] trustAllCertificates = new TrustManager[] {
-                new X509TrustManager() {
-                    @Override
-                    public X509Certificate[] getAcceptedIssuers() {
-                        return null; // Not relevant.
-                    }
-                    @Override
-                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                        // Do nothing. Just allow them all.
-                    }
-                    @Override
-                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                        // Do nothing. Just allow them all.
-                    }
-                }
-        };
-
-        try {
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCertificates, new SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        } catch (GeneralSecurityException e) {
-            throw new ExceptionInInitializerError(e);
-        }
-    }
+//    //Source: https://stackoverflow.com/questions/18576069/how-to-save-the-file-from-https-url-in-java
+//    static {
+//        final TrustManager[] trustAllCertificates = new TrustManager[] {
+//                new X509TrustManager() {
+//                    @Override
+//                    public X509Certificate[] getAcceptedIssuers() {
+//                        return null; // Not relevant.
+//                    }
+//                    @Override
+//                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+//                        // Do nothing. Just allow them all.
+//                    }
+//                    @Override
+//                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+//                        // Do nothing. Just allow them all.
+//                    }
+//                }
+//        };
+//
+//        try {
+//            SSLContext sc = SSLContext.getInstance("SSL");
+//            sc.init(null, trustAllCertificates, new SecureRandom());
+//            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+//        } catch (GeneralSecurityException e) {
+//            throw new ExceptionInInitializerError(e);
+//        }
+//    }
 
     public double getValue(){
         return currentPrice;
@@ -122,7 +122,6 @@ public class Stock {
             System.out.println("updateStock failed, IOException in url.openStream. This should never happen!");
             System.out.println("Do you have the appropriate certificate installed on your JVM?");
             System.out.println("Check the readme file for steps on how to install the certificate on your machine. ");
-
             System.exit(-1);
 
         }
