@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class InvestmentPortfolio {
     ArrayList <Stock> stockPortfolio = new ArrayList<>();
-    HashMap<String, ArrayList<Double>> mutualFundsPortfolio = new HashMap<>();
+    HashMap<MutualFund , ArrayList<Double>> mutualFundsPortfolio = new HashMap<>();
     // maps name of the fund: [amount user invested, amount fund was worth at the time of investment]
 
     public ArrayList <Stock> getStockPortfolio(){
@@ -13,10 +13,10 @@ public class InvestmentPortfolio {
     }
 
     public void setMutualFundsPortfolio(MutualFund fund, ArrayList<Double> value){
-        mutualFundsPortfolio.put(fund.getName(), value);
+        mutualFundsPortfolio.put(fund, value);
     }
 
-    public HashMap<String, ArrayList<Double>> getMutualFundPortfolio(){
+    public HashMap<MutualFund, ArrayList<Double>> getMutualFundPortfolio(){
         return mutualFundsPortfolio;
     }
 

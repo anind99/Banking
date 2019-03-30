@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import account.*;
 
-
 public class MutualFundsBroker {
     public MutualFund lowRiskFund;
     public MutualFund mediumRiskFund;
@@ -53,7 +52,7 @@ public class MutualFundsBroker {
             }
 
 
-        }else{System.out.println("Not enough funds to sell");}
+        }else{System.out.println("\nNot enough funds to sell");}
 
 
     }
@@ -79,7 +78,7 @@ public class MutualFundsBroker {
                 }
             }
         }else{
-            System.out.println("Not enough funds in your stock account");
+            System.out.println("\nNot enough funds in your stock account");
         }
     }
 
@@ -91,8 +90,11 @@ public class MutualFundsBroker {
         fund.setInvestors(user, investment);
     }
 
-    void calculatePercentageIncrease() {
-
+    //calculate the % increase or decrease of a user's mutual fund portfolio
+    public double calculatePercentageIncrease(User user){
+        for (Mutualfund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
+            user.getInvestments().getMutualFundPortfolio().get(fund).get(0) // change hashmap to object
+        }
     }
 //updates the price the fund every day upon ATM restart
     public void updateMutualFunds() {

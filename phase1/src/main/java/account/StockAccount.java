@@ -13,18 +13,16 @@ public class StockAccount extends Asset {
         this.profitmade = 0;
     }
 
-    public boolean removeMoney(double amount){
-        // Needs to calculate total deposit.
-        if(balance - amount >= 0){
+    public boolean removeMoney(double amount) {
+        if (balance - amount >= 0) {
             balance -= amount;
             return true;
-        }else{return false;}
+        } else {
+            return false;
+        }
     }
 
     public void payBill(double amount, String receiver) {
-        System.out.println("You cannot pay bills from a Stock account. Please try again.");
+        System.out.println("\nYou cannot pay bills from a Stock account. Please try again.");
     }
-
-
-
 }

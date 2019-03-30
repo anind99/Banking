@@ -211,5 +211,5 @@ public abstract class Account implements Serializable {
         return false;
     }
 
-    public void setPrimary() { };
+    public void setPrimary(){}
 }
