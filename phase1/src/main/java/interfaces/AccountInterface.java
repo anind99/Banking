@@ -33,6 +33,9 @@ public class AccountInterface {
                     summary(user);
                 case "5":
                     goBack = true;
+                default:
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 5.");
+                    break;
             }
         }
 
