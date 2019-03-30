@@ -35,6 +35,10 @@ public abstract class Account implements Serializable {
         return isJoint;
     }
 
+    public Calendar getDateCreated() {
+        return this.dateCreated;
+    }
+
     public void setIsJoint(boolean joined) {
         this.isJoint = joined;
     }

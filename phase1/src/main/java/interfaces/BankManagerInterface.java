@@ -296,7 +296,7 @@ public class BankManagerInterface {
         if(valid) {
             Account account = null;
             for (Account a : listOfAccounts) {
-                if (a.accountNum == Integer.valueOf(accountNumTo)){
+                if (a.getAccountNum() == Integer.valueOf(accountNumTo)){
                     account = a;
                 }
             }

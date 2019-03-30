@@ -65,7 +65,7 @@ public class User implements Serializable {
     }
 
     public Date getDateCreated(Account account) {
-        return account.dateCreated.getTime();
+        return account.getDateCreated().getTime();
     }
 
     public Transaction getLastTransaction(Account account) {

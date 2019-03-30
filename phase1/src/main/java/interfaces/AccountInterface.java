@@ -170,7 +170,7 @@ public class AccountInterface {
         StringBuilder choices = new StringBuilder();
 
         for (Account i : listOfAccounts) {
-            choices.append(i.accountNum).append(", Balance: ").append(i.getBalance());
+            choices.append(i.getAccountNum()).append(", Balance: ").append(i.getBalance());
             if (summary) {
                 choices.append(", Last Transaction: ");
                 if (i.getLastTransaction() != null) {
@@ -178,7 +178,7 @@ public class AccountInterface {
                 } else {
                     choices.append("No previous transaction.");
                 }
-                choices.append(", Date Created: ").append(i.dateCreated.getTime());
+                choices.append(", Date Created: ").append(i.getDateCreated().getTime());
             }
             choices.append("\n");
         }
@@ -233,7 +233,7 @@ public class AccountInterface {
         if(valid) {
             Account account = null;
             for (Account a : listOfAccounts) {
-                if (a.accountNum == Integer.valueOf(accountNumTo)){
+                if (a.getAccountNum() == Integer.valueOf(accountNumTo)){
                     account = a;
                 }
             }
