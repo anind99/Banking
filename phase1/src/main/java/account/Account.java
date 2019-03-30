@@ -7,6 +7,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * Abstract class containing all the shared methods between all types of accounts.
+ */
 public abstract class Account implements Serializable {
 
     public String type;
@@ -18,7 +21,11 @@ public abstract class Account implements Serializable {
     private boolean isJoint = false;
     private ReadAndWrite readAndWrite;
 
-
+    /**
+     * Account constructor.
+     * @param accountNum  assigns a unique account number to each account
+     * @param atm an instance of the ATM
+     */
     public Account(int accountNum, ATM atm) {
         this.accountNum = accountNum;
         this.atm = atm;
@@ -27,34 +34,72 @@ public abstract class Account implements Serializable {
         this.readAndWrite = new ReadAndWrite(atm);
     }
 
+    /**
+     * Returns the balance of the account.
+     *
+     * @return the balance of the account
+     */
+
     public double getBalance(){
         return this.balance;
     }
 
+    /**
+     * Returns True if the account is a joint account and False if it is not.
+     *
+     * @return True if account is joint, False if it is not joint
+     */
     public boolean getIsJoint() {
         return isJoint;
     }
 
+    /**
+     * Returns the date that the account was created.
+     *
+     * @return date when account was created
+     */
     public Calendar getDateCreated() {
         return this.dateCreated;
     }
 
+    /**
+     * Updates the joint status of an account.
+     * @param joined a boolean that is true when the account is joint and false otherwise
+     */
     public void setIsJoint(boolean joined) {
         this.isJoint = joined;
     }
 
-    public void addBalance(double balance) {
-        this.balance += balance;
-    }
+//    /**
+//     * Increases the balance of an account by dollarAmount.
+//     * @param dollarAmount the dollar amount to increase the balance by
+//     */
+//    public void addBalance(double dollarAmount) {
+//        this.balance += dollarAmount;
+//    }
 
-    public void subtractBalance(double balance) {
-        this.balance -= balance;
-    }
+//    /**
+//     * Decreases the balance of an account by dollarAmount.
+//     * @param dollarAmount the dollar amount to decrease the balance by
+//     */
+//    public void subtractBalance(double dollarAmount) {
+//        this.balance -= dollarAmount;
+//    }
 
+    /**
+     * Returns the list of all transactions ever performed using the account.
+     * @return listofTransactions  a list of Transaction objects
+     * @see Transaction
+     */
     public ArrayList<Transaction> getListOfTransactions() {
         return this.listOfTransactions;
     }
 
+    /**
+     * Returns the most recent transaction performed using the account.
+     * @return the last Transaction object  in the listofTransactions
+     * for an account or null if no transactions have been performed yet
+     */
     public Transaction getLastTransaction() {
         if (listOfTransactions.size() > 0) {
             return this.listOfTransactions.get(listOfTransactions.size() - 1);
@@ -63,23 +108,44 @@ public abstract class Account implements Serializable {
         }
     }
 
+    /**
+     * Returns the type of the account (i.e Chequing, Savings, etc.).
+     * @return type a String that states the type of the account
+     */
+
     public String getType(){
         return this.type;
     }
 
+    /**
+     * Returns the account number.
+     * @return accountNum a unique number assigned to each account
+     */
     public int getAccountNum() {
         return this.accountNum;
     }
 
+    /**
+     * Returns a boolean stating if an account is the primary account of a user.
+     * @return primaryStatus a boolean that is true if the account is the user's primary account and false otherwise
+     */
     public boolean isPrimary() {
-        return false;
+        boolean primaryStatus = false;
+        return primaryStatus;
     }
 
+    /**
+     * Updates the primaryStatus of an account.
+     */
     public void setPrimary() {}
 
-    abstract void addMoney (double amount);
+    /**
+     *
+     * @param amount
+     */
+    public abstract void addMoney (double amount);
 
-    abstract boolean removeMoney (double amount);
+    public abstract boolean removeMoney (double amount);
 
     public void transferIn(double amount, Account accountFrom) {
         boolean removed = accountFrom.removeMoney(amount);

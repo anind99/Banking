@@ -9,6 +9,6 @@
  * Each child class is responsible for
  * handling a set of related specific
  * requests.
- * 
+ *
  */
 package bankmanager;
