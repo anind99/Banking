@@ -184,7 +184,7 @@ public abstract class Account implements Serializable {
     }
 
     public void transferOut(double amount, Account accountTo) {
-        boolean sufficientFunds = removeMoney(amount);
+        boolean sufficientFunds = checkFundsSufficient(amount);
         if(sufficientFunds){accountTo.addMoney(amount);
             Transaction transaction =  new Transaction(accountTo.accountNum, amount, "TransferOut");
             this.listOfTransactions.add(transaction);
@@ -214,8 +214,8 @@ public abstract class Account implements Serializable {
     }
 
     public void payBill(double amount, String receiver){
-        boolean removed = removeMoney(amount);
-        if(removed){
+        boolean sufficientFunds = checkFundsSufficient(amount);
+        if(sufficientFunds){
             this.readAndWrite.payBillWriting(amount, receiver, accountNum);
             System.out.println("You paid " + amount + " to " + receiver);
         }
