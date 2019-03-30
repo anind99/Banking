@@ -163,7 +163,7 @@ public class UserInterface extends Interface{
     private void changePassword(User user) {
         // Method for users to change their password.
 
-        System.out.println("Type in your new password:");
+        System.out.println("type in your new password:");
         String newPassword = scanner.nextLine();
         user.setPassword(newPassword);
         System.out.println("\nPassword change successful");

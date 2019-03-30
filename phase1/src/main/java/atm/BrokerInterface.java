@@ -54,7 +54,7 @@ public class BrokerInterface extends Interface {
 
     void brokerViewStock(Broker broker){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type the symbol of the stock. For list of all symbols type \"*\", To go back press \"/\"");
+        System.out.println("type the symbol of the stock. For list of all symbols type \"*\", To go back press \"/\"");
         String symbol = scanner.next();
     }
 

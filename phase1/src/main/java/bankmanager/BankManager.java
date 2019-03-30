@@ -36,12 +36,12 @@ public class BankManager implements Serializable{
         }
     }
 
-    public void create_account(User user, String acct_type) {
+    public void createAccount(User user, String acct_type) {
         accountManager.createAccount(user, acct_type);
     }
 
-    public void createUser(String username, String password) {
-        userManager.createUser(username, password);
+    public User createUser(String username, String password) {
+        return userManager.createUser(username, password);
     }
 
     public void undoTransaction(User usr, Account acct) {

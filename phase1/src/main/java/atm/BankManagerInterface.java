@@ -105,12 +105,22 @@ public class BankManagerInterface extends Interface {
                 "date will still increment another day if you restart the system via the manager");
     }
 
+
+    /***
+     * Creates a new user. All account types will be automatically opened for each user.
+     *
+     */
     private void creatingUser(){
-        System.out.println("Type the username for the new user");
+        System.out.println("type the username for the new user");
         String username = scanner.next();
-        System.out.println("Type the password for the new user");
+        System.out.println("type the password for the new user");
         String password = scanner.next();
-        atm.getBM().createUser(username, password);
+        User user = atm.getBM().createUser(username, password);
+        atm.getBM().createAccount(user, "chequing");
+        atm.getBM().createAccount(user, "creditcard");
+        atm.getBM().createAccount(user, "loc");
+        atm.getBM().createAccount(user, "savings");
+        atm.getBM().createAccount(user, "stock");
     }
 
     private void creatingAccount() {
@@ -120,7 +130,7 @@ public class BankManagerInterface extends Interface {
         int count2 = 0;
         while (user == null) {
             if (count != 0) {
-                System.out.println("Type in the username of the user that would like to create an account: ");
+                System.out.println("type in the username of the user that would like to create an account: ");
             }
             String username = scanner.nextLine();
             for (User parameter : atm.getListOfUsers()) {
@@ -185,7 +195,7 @@ public class BankManagerInterface extends Interface {
         int count2 = 0;
         while (user == null) {
             if (count2 != 0){
-                System.out.println("Type in the username of the user that would like to undo their last transaction: ");
+                System.out.println("type in the username of the user that would like to undo their last transaction: ");
             }
             String username = scanner.nextLine();
             System.out.println(username);

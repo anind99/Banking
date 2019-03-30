@@ -26,10 +26,10 @@ public class AccountManager {
         if (acct_type.equalsIgnoreCase("chequing")) {
             createChequingAccount(user, atm);
         }
-        else if (acct_type.equalsIgnoreCase("CreditCard")) {
+        else if (acct_type.equalsIgnoreCase("creditcard")) {
             createCreditCard(user, atm);
         }
-        else if (acct_type.equalsIgnoreCase("LOC")){
+        else if (acct_type.equalsIgnoreCase("loc")){
             createLOC(user, atm);
         }
         else if (acct_type.equalsIgnoreCase("savings")){

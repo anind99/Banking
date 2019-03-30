@@ -41,7 +41,7 @@ public abstract class Interface implements Serializable {
 
     void CreateAccount(User user) {
         String type = selectTypeOfAccount(false, user);
-        atm.getBM().create_account(user, type);
+        atm.getBM().createAccount(user, type);
     }
 
     boolean divisibleByFive(int amount) {
@@ -126,7 +126,7 @@ public abstract class Interface implements Serializable {
         if (selection.equals("1")) {
             toReturn = "chequing";
         } else if (selection.equals("2")) {
-            toReturn = "LOC";
+            toReturn = "loc";
         } else if (selection.equals("3")) {
             toReturn = "savings";
         } else if (!transferOut && selection.equals("4")) {
