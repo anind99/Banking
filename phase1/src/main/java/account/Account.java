@@ -178,7 +178,7 @@ public abstract class Account implements Serializable {
     public void withdraw(double amount) {
         if(atm.getBills().getTotalAmount() >= amount) {
             atm.getBills().withdrawBills(amount);
-            atm.alertManager();
+            atm.getBills().alertManager();
             removeMoney(amount);
             Transaction transaction = new Transaction(amount, "withdraw");
             System.out.println(this.listOfTransactions);

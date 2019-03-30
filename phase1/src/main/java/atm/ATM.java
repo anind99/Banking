@@ -85,7 +85,6 @@ public class ATM implements Serializable {
     }
 
     public Calendar getDate(){
-        // Has to be package-private.
         return (Calendar) date.clone();
     }
 
@@ -100,8 +99,8 @@ public class ATM implements Serializable {
     }
 
     public void addUserToList(User u){
-        // Has to be package-private.
-        getListOfUsers().add(u); }
+        getListOfUsers().add(u);
+    }
 
     /**Alerts the manager when the amount of any denomination goes below 20.*/
     public void alertManager() {
@@ -132,7 +131,6 @@ public class ATM implements Serializable {
     }
 
     public ArrayList<User> getListOfUsers(){
-        // Has to be package-private.
         return listOfUsers;
     }
 
@@ -185,10 +183,6 @@ public class ATM implements Serializable {
             System.exit(-1);
         }
     }
-
-//    ArrayList<Stock> getQueriedStocks() {
-//
-//    }
 
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
