@@ -124,7 +124,7 @@ public class MutualFundsBroker {
     }
 
     //calculate the total net worth of mutual funds of a user
-    public double getTotalMatualFundWorth(User user){
+    public double getTotalMutualFundWorth(User user){
         double totalWorth = 0.0;
         for (MutualFund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
             totalWorth += fund.getValue() * (user.getInvestments().getMutualFundPortfolio().get(fund).get(1) / 100);
@@ -141,7 +141,14 @@ public class MutualFundsBroker {
     //TODO
     public double calculateInvestmentIncrease(){}
 
-    public void buyStocksFund(MutualFund fund, Stock symbol, int shares){}
+    public void buyStocksFund(MutualFund fund, Stock symbol, int shares){
+        for(Stock stock : fund.getStocks()){
+            if (stock.getSymbol().equals(symbol){
+
+            }
+        }
+
+    }
 
     public void sellStocksFund(MutualFund fund, Stock symbol, int shares){}
 
