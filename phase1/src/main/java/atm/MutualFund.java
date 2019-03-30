@@ -39,9 +39,10 @@ public class MutualFund {
         investors.put(user, investment);
         }
 
-    public void setSharesStocks(int num) {
-        for (Stock stock : stocks) {
-            stock.increaseNumShares(num);
+    public void setSharesStocks(Stock stock, int num) {
+        for (Stock fundStock : stocks) {
+            if (fundStock.equals(stock)){
+            stock.setNumShares(num);}
         }
     }
 
