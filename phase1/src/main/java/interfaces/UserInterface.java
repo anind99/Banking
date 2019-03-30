@@ -1,6 +1,5 @@
 package interfaces;
 
-import account.*;
 import atm.*;
 
 import java.util.*;
@@ -33,7 +32,7 @@ public class UserInterface {
                 case "2":
                     this.accountInterface.displayAccountMenu(user);
                 case "3":
-                    this.investmentInterface.displayInvestmentMenu();
+                    this.investmentInterface.displayInvestmentMenu(user);
                 case "4":
                     this.updateProfileInterface.displayUpdateProfileMenu(user);
                 case "5":

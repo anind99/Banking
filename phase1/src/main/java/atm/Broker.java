@@ -29,6 +29,10 @@ public class Broker {
         return stockBroker;
     }
 
+    public MutualFundsBroker getMutualFundsBroker() {
+        return mutualFundsBroker;
+    }
+
 
     void calculatePercentageIncreaseStocks() {
 

@@ -38,6 +38,8 @@ public class ATM implements Serializable {
         return BM;
     }
 
+    public Broker getBroker() {return broker;}
+
     public void run(){
         boolean running = true;
         testBoot();

@@ -83,10 +83,10 @@ public class BrokerInterface {
             shares = -1;
         }
         if (shares != -1) {
-            Br.getStockBroker().buyStocks(sym,shares, Ac, user.getInvestments());
+            Br.getStockBroker().buyStocks(sym, shares, Ac, user.getInvestments());
         }
         else {
-            System.out.println("Enter integer greater than 0");
+            System.out.println("Enter integer greater than 0.");
         }
     }
 
