@@ -14,9 +14,9 @@ public class BankManager implements Serializable{
         this.atm = atm;
             // acct_counter is the variable that provides users with unique account numbers, it will increment by 1
             // each time a new account is created.
-        this.accountManager = new AccountManager();
+        this.accountManager = new AccountManager(atm);
         this.transactionManager = new TransactionManager();
-        this.userManager = new UserManager();
+        this.userManager = new UserManager(atm);
 
     }
 

@@ -5,9 +5,12 @@ import atm.*;
 import java.util.ArrayList;
 
 public class UserManager {
-    private ATM atm = new ATM();
 
-    public UserManager() {
+    private ATM atm;
+
+    public UserManager(ATM atm) {
+        this.atm = atm;
+
     }
 
     public void createUser(String username, String password){

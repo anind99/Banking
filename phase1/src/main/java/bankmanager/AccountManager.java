@@ -3,10 +3,18 @@ package bankmanager;
 import account.*;
 import atm.*;
 
+
 public class AccountManager {
+
+    ATM atm;
+
+
     private int acct_counter = 1000;
 
-    private ATM atm = new ATM();
+    public AccountManager(ATM atm){
+        this.atm = atm;
+    }
+
 
     public void create_account(User user, String acct_type){
         // Creates a new account as specified by the parameter.

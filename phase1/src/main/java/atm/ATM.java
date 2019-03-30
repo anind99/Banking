@@ -23,7 +23,7 @@ public class ATM implements Serializable {
     private Calendar date = Calendar.getInstance();
     private final UserInterface UserInterface;
     private final BankManagerInterface BankManagerInterface;
-    private final Broker broker = new Broker();
+    private final Broker broker = new Broker(this);
     private final BrokerInterface brokerInterface = new BrokerInterface(this);
 
     public ATM() {
