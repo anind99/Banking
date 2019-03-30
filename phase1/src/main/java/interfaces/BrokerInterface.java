@@ -45,12 +45,11 @@ public class BrokerInterface {
 
         System.out.println("Enter the stock symbol: ");
         String symbol = scanner.next();
-        Stock stock = atm.getBroker().getStockBroker().fetchStock(symbol);
 
         System.out.println("Enter the amount of shares: ");
         String shares = scanner.next();
 
-        atm.getBroker().getMutualFundsBroker().buyStocksFund(fundToBuy, stock, Integer.valueOf(shares));
+        atm.getBroker().getMutualFundsBroker().buyStocksFund(fundToBuy, symbol, Integer.valueOf(shares));
     }
 
     private void sellFunds() {
@@ -58,12 +57,11 @@ public class BrokerInterface {
 
         System.out.println("Enter the stock symbol: ");
         String symbol = scanner.next();
-        Stock stock = atm.getBroker().getStockBroker().fetchStock(symbol);
 
         System.out.println("Enter the amount of shares: ");
         String shares = scanner.next();
 
-        atm.getBroker().getMutualFundsBroker().sellStocksFund(fundToSell, stock, Integer.valueOf(shares));
+        atm.getBroker().getMutualFundsBroker().sellStocksFund(fundToSell, symbol, Integer.valueOf(shares));
     }
 
     private MutualFund listFunds() {
