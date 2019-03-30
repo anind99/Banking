@@ -95,7 +95,7 @@ public class StockBroker {
      */
 
 
-    private Stock fetchStock(String Symbol){
+    public Stock fetchStock(String Symbol){
         // not implemented
         // returns a stock of Symbol symbol, that is fetched from API
         Stock st = new Stock(Symbol, Symbol, 0);

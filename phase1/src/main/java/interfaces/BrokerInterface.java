@@ -16,19 +16,22 @@ public class BrokerInterface {
     private Scanner scanner = new Scanner(System.in);
 
     void displayBrokerMenu(Broker broker){
-        System.out.println("Choose one of the following options:");
-        System.out.println("1. View User Stock account Info");
-        System.out.println("2. View/Edit Stock Info");
-        System.out.println("3. Log Off");
+        System.out.println("Select an option:");
+        System.out.println("1. Buy Funds");
+        System.out.println("2. Sell Funds");
+        System.out.println("3. Log Out");
         String option = scanner.next();
         switch (option){
             case "1": {
-                brokerViewUser(broker);
+                buyFunds();
             }
             case "2": {
-                brokerViewStock(broker);
+                buyFunds();
             }
-            case "3": {
+            case "3":{
+                sellFunds();
+            }
+            case "4": {
                 break;
             }
             default: {
@@ -38,13 +41,57 @@ public class BrokerInterface {
         scanner.close();
     }
 
-    void brokerViewStock(Broker broker){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("type the symbol of the stock. For list of all symbols type \"*\", To go back press \"/\"");
+    private void buyFunds() {
+        MutualFund fundToBuy = listFunds();
+
+        System.out.println("Enter the stock symbol: ");
         String symbol = scanner.next();
+        Stock stock = atm.getBroker().getStockBroker().fetchStock(symbol);
+
+        System.out.println("Enter the amount of shares: ");
+        String shares = scanner.next();
+
+        atm.getBroker().getMutualFundsBroker().buyStocksFund(fundToBuy, stock, Integer.valueOf(shares));
     }
 
-    void brokerViewUser(Broker broker){
+    private void sellFunds() {
+        MutualFund fundToSell = listFunds();
 
+        System.out.println("Enter the stock symbol: ");
+        String symbol = scanner.next();
+        Stock stock = atm.getBroker().getStockBroker().fetchStock(symbol);
+
+        System.out.println("Enter the amount of shares: ");
+        String shares = scanner.next();
+
+        atm.getBroker().getMutualFundsBroker().sellStocksFund(fundToSell, stock, Integer.valueOf(shares));
     }
+
+    private MutualFund listFunds() {
+        System.out.println("Select the type of fund:");
+        System.out.println("1. Low Risk Fund");
+        System.out.println("2. Medium Risk Fund");
+        System.out.println("3. High Risk Fund");
+        System.out.println("4. Enter the number: ");
+
+        String option = scanner.next();
+        boolean validSelection = false;
+
+        while (!validSelection) {
+            switch (option) {
+                case "1":
+                    return atm.getBroker().getMutualFundsBroker().getLowRiskFund();
+                case "2":
+                    return atm.getBroker().getMutualFundsBroker().getMediumRiskFund();
+                case "3":
+                    return atm.getBroker().getMutualFundsBroker().getHighRiskFund();
+                default:
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 3.");
+                    break;
+            }
+        }
+
+        return null;
+    }
+
 }
