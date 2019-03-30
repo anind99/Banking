@@ -37,7 +37,7 @@ public class BankManager implements Serializable{
     }
 
     public void create_account(User user, String acct_type) {
-        accountManager.create_account(user, acct_type);
+        accountManager.createAccount(user, acct_type);
     }
 
     public void createUser(String username, String password) {

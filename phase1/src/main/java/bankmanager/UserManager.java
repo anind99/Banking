@@ -13,8 +13,13 @@ public class UserManager {
 
     }
 
+    /***
+     * Creates a new user.
+     *
+     * @param username the username this user uses to log in
+     * @param password the password this user uses to log in
+     */
     public void createUser(String username, String password){
-        // Creates a new user. When a new user is created, all account types will be opened for this user.
         ArrayList<Account> accounts = new ArrayList<>();
         boolean contains = false;
         for (User parameter : atm.getListOfUsers()) {
