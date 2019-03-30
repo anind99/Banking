@@ -27,9 +27,11 @@ public class UpdateProfileInterface {
                     changePassword(user);
                 case "2":
                     goBack = true;
+                default:
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 2.");
+                    break;
             }
         }
-
     }
 
     private void printOptions() {

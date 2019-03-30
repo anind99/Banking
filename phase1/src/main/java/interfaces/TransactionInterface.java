@@ -34,6 +34,9 @@ public class TransactionInterface {
                     payBill(user);
                 case "6":
                     goBack = true;
+                default:
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
+                    break;
             }
 
         }
@@ -139,7 +142,7 @@ public class TransactionInterface {
         accountFrom.payBill(amount, receiver.trim());
     }
 
-    String selectTypeOfAccount(boolean transferOut, User user) {
+    private String selectTypeOfAccount(boolean transferOut, User user) {
         // Allows users to pick the type of account they want to access and returns their type as a string.
 
         StringBuilder toPrint = new StringBuilder("Select the type of account: \n 1. Chequing \n" +

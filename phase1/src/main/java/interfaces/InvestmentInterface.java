@@ -30,6 +30,12 @@ public class InvestmentInterface {
 
                 case "4":
 
+                case "5":
+                    goBack = true;
+                default:
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 5.");
+                    break;
+
             }
         }
     }
@@ -40,6 +46,7 @@ public class InvestmentInterface {
         System.out.println("2. Sell Stocks");
         System.out.println("3. Buy Mutual Funds");
         System.out.println("4. Sell Mutual Funds");
+        System.out.println("5. Go Back");
         System.out.println("Enter the number: ");
     }
 }

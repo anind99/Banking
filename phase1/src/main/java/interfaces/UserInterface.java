@@ -19,7 +19,6 @@ public class UserInterface {
         this.transactionInterface = new TransactionInterface(atm);
         this.investmentInterface = new InvestmentInterface(atm);
         this.updateProfileInterface = new UpdateProfileInterface(atm);
-
     }
 
     public void displayUserMenu(User user) {
