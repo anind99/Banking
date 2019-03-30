@@ -11,12 +11,13 @@ import bankmanager.*;
 
 
 public class Broker {
-    private final ATM atm = new ATM();
-    private final BankManager bm = new BankManager(atm);
-    private  StockBroker stockBroker;
+    private ATM atm = new ATM();
+    private BankManager bm = new BankManager(atm);
+    StockBroker stockBroker;
 
-    public Broker(ATM Atm, BankManager Bm) {
+    Broker(ATM Atm, BankManager Bm) {
         bm.createUser("broker", "password");
+        this.atm = Atm;
         this.stockBroker = new StockBroker(atm);
     }
 
