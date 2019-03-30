@@ -12,13 +12,11 @@ import bankmanager.*;
 
 public class Broker {
     private ATM atm;
-    private BankManager bm;
     public StockBroker stockBroker;
     public MutualFundsBroker mutualFundsBroker;
 
-    public Broker(ATM atm, BankManager Bm) {
+    public Broker(ATM atm, BankManager bm) {
         this.atm = atm;
-        this.bm = Bm;
         this.stockBroker = new StockBroker(atm);
         this.mutualFundsBroker = new MutualFundsBroker(atm);
         bm.createUser("broker", "password");
@@ -32,36 +30,5 @@ public class Broker {
     public MutualFundsBroker getMutualFundsBroker() {
         return mutualFundsBroker;
     }
-
-
-    void calculatePercentageIncreaseStocks() {
-
-    }
-
-    void refillFunds() {
-
-    }
-
-    void calculateBrokerFree() {
-
-    }
-
-    void sellMutualFunds() {
-
-    }
-
-    void buyMutualFunds() {
-
-    }
-
-    void calculatePercentageIncreaseMF() {
-
-    }
-
-    void updateMutualFunds() {
-
-    }
-
-
 }
 
