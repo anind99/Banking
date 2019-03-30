@@ -8,14 +8,42 @@ import java.util.ArrayList;
 
 public class StockBroker {
 
-    private BankManager BM;
+    /**
+     * CLass to Implement Functions of Broker related to stocks.
+     * It has an attribute function of type ATM, so all the methods
+     * can be calibrated to ATM.date.
+     *
+     * Methods:
+     *
+     * buyStocks() : Purchases a number of stocks and stores into the user portfolio.
+     * buyNewStock(): Helper function to buyStocks(); purchases a stock not already
+     * in the user portfolio.
+     * fetchStock(): Creates of a new stock of the given symbol.
+     * fetchStockHelper(): Helper function to fetchStock().
+     * sellStocks(): Sells the stock with the given symbol from user portfolio.
+     * getTotalStockWorth(): Prints the total net worth of the user in Stocks.
+     * viewUserStocks(): Prints all the Stocks and Shares owned by the user.
+     * updateAllStocks(): Updates every stock owned by all the users.
+     */
+
     private ATM atm;
 
     StockBroker(ATM Atm){
         this.atm = Atm;
     }
 
+    /**
+     *buyStocks():
+     * Buys stocks of given share amount for a user.
+     *
+     * @param symbol: the symbol in String of the stock the user wants to purchase.
+     * @param Iv : The user's investment portfolio.
+     * @param sa : The user's stocks account.
+     * @param shares : The number of shares to be purchased.
+     */
+
     public void buyStocks(String symbol, int shares, Account sa, InvestmentPortfolio Iv) {
+
         boolean bought = false;
         boolean contains = false;
         for (Stock st: Iv.stockPortfolio){
@@ -35,6 +63,15 @@ public class StockBroker {
             System.out.println("Stocks not purchase because of insufficient funds or invalid symbol");
     }
 
+    /**
+     * buyNewStock(): Helper function to buyStocks(), purchases a stock not already owned by User.
+     *
+     * @param symbol: the symbol in String of the stock the user wants to purchase.
+     * @param shares: The number of shares to be purchased.
+     * @param sa: The user's stocks account.
+     * @param Iv: The user's investment portfolio.
+     */
+
     private boolean buyNewStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
 
         Stock st = fetchStock(symbol);
@@ -50,6 +87,12 @@ public class StockBroker {
         }
         return false;
     }
+
+    /**
+     * fetchStock(): Returns a stock of the given symbol.
+     * @param Symbol: Symbol of stock.
+     * @return Stock object of given symbol
+     */
 
 
     private Stock fetchStock(String Symbol){
@@ -70,6 +113,12 @@ public class StockBroker {
 
     }
 
+    /**
+     * fetchStockHelper(): Finds a stock in a given arraylist, and matches names.
+     * @param s: Stock to be found.
+     * @param stocklist: Arraylist to be searched.
+     */
+
     private void fetchStockHelper(Stock s, ArrayList<Stock> stocklist){
         for (Stock st: stocklist){
             if (st.symbol.equalsIgnoreCase(s.symbol)){
@@ -77,6 +126,14 @@ public class StockBroker {
             }
         }
     }
+
+    /**
+     * sellStocks(): sells stocks of given symbol and share amount for user.
+     * @param SA: The user's stocks account.
+     * @param symbol: Symbol of stock to be sold.
+     * @param shares: Number of shares to be sold.
+     * @param IV: The user's stock portfolio.
+     */
 
     public void sellStocks(Asset SA, String symbol, int shares, InvestmentPortfolio IV) {
         boolean sold = false;
@@ -96,14 +153,24 @@ public class StockBroker {
     }
 
 
+    /**
+     * updateAllStocks(): Updates all the stocks in the atm to their current value.
+     * @param atm: atm to be updated.
+     */
 
-    void updateStocks(ATM atm) {
+    void updateAllStocks(ATM atm) {
         for (User user:atm.getListOfUsers()){
             for (Stock st:user.investments.stockPortfolio){
                 st.updateStock(atm.getDate());
             }
         }
     }
+
+    /**
+     * getTotalStockWorth(): Returns the total money a user owns in stocks.
+     * @param user: User that owns stocks.
+     * @return Amount of type double, of the user's networth in Stocks.
+     */
 
     public double getTotalStockWorth(User user){
         double total = 0.0;
@@ -112,6 +179,11 @@ public class StockBroker {
         }
         return total;
     }
+
+    /**
+     * viewUserStocks(): Prints all the stocks and shares of a user.
+     * @param user: user object.
+     */
 
     public void viewUserStocks(User user){
         ArrayList<Stock> Iv = user.investments.stockPortfolio;
