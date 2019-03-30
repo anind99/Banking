@@ -69,7 +69,7 @@ public class User implements Serializable {
     }
 
     public Transaction getLastTransaction(Account account) {
-        return account.lastTransaction;
+        return account.getLastTransaction();
     }
 
     private void writeObject(ObjectOutputStream oos) throws IOException {

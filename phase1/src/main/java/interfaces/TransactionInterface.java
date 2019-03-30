@@ -202,8 +202,8 @@ public class TransactionInterface {
             choices.append(i.accountNum).append(", Balance: ").append(i.getBalance());
             if (summary) {
                 choices.append(", Last Transaction: ");
-                if (i.lastTransaction != null) {
-                    choices.append(i.lastTransaction.toString());
+                if (i.getLastTransaction() != null) {
+                    choices.append(i.getLastTransaction().toString());
                 } else {
                     choices.append("No previous transaction.");
                 }

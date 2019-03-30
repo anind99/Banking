@@ -75,15 +75,9 @@ public class TransactionManager{
     }
 
     public void removeLastTransactionFromList(Account account) {
-        // Remove the last transaction from listOfTransactions and re-initialize lastTransaction to the new last
-        // transaction or null otherwise.
+        // Remove the last transaction from listOfTransactions.
         ArrayList<Transaction> lst = account.getListOfTransactions();
         lst.remove(lst.size() - 1);
-        if (lst.size() > 0) {
-            account.setLastTransaction(lst.get(lst.size() - 1));
-        } else {
-            account.setLastTransaction(null);
-        }
     }
 
 }

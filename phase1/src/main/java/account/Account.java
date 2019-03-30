@@ -12,7 +12,6 @@ public abstract class Account implements Serializable {
     public String type;
     public final int accountNum;
     public double balance;
-    public Transaction lastTransaction;
     public ArrayList<Transaction> listOfTransactions = new ArrayList<>();
     public Calendar dateCreated;
     private final ATM atm;
@@ -24,7 +23,6 @@ public abstract class Account implements Serializable {
         this.accountNum = accountNum;
         this.atm = atm;
         this.balance = 0;
-        this.lastTransaction = null;
         this.dateCreated = this.atm.getDate();
         this.readAndWrite = new ReadAndWrite(atm);
     }
@@ -53,6 +51,13 @@ public abstract class Account implements Serializable {
         return this.listOfTransactions;
     }
 
+    public Transaction getLastTransaction() {
+        if (listOfTransactions.size() > 0) {
+            return this.listOfTransactions.get(listOfTransactions.size() - 1);
+        } else {
+            return null;
+        }
+    }
 
     public String getType(){
         return this.type;
@@ -60,14 +65,6 @@ public abstract class Account implements Serializable {
 
     public int getAccountNum() {
         return this.accountNum;
-    }
-
-    public Transaction getLastTransaction() {
-        return this.lastTransaction;
-    }
-
-    public void setLastTransaction(Transaction transaction) {
-        this.lastTransaction = transaction;
     }
 
     public boolean isPrimary() {
@@ -84,7 +81,6 @@ public abstract class Account implements Serializable {
         boolean removed = accountFrom.removeMoney(amount);
         if(removed){addMoney(amount);
             Transaction transaction = new Transaction(accountFrom.accountNum, amount, "TransferIn");
-            this.lastTransaction = transaction;
             this.listOfTransactions.add(transaction);
             System.out.println("\n" + amount + " has been transferred");}
         else{System.out.println("\nThis transaction i;s not possible: insufficient funds");}
@@ -95,7 +91,6 @@ public abstract class Account implements Serializable {
         boolean removed = removeMoney(amount);
         if(removed){accountTo.addMoney(amount);
             Transaction transaction =  new Transaction(accountTo.accountNum, amount, "TransferOut");
-            this.lastTransaction = transaction;
             this.listOfTransactions.add(transaction);
             System.out.println("\n" + amount + " has been transferred");}
         else{System.out.println("\nThis transaction is not possible: insufficient funds");}
@@ -107,7 +102,6 @@ public abstract class Account implements Serializable {
         Double amount = this.readAndWrite.depositReader();
         addMoney(amount);
         Transaction transaction = new Transaction(amount, "deposit");
-        this.lastTransaction = transaction;
         this.listOfTransactions.add(transaction);
     }
 
@@ -117,7 +111,6 @@ public abstract class Account implements Serializable {
             atm.alertManager();
             removeMoney(amount);
             Transaction transaction = new Transaction(amount, "withdraw");
-            this.lastTransaction = transaction;
             System.out.println(this.listOfTransactions);
             this.listOfTransactions.add(transaction);
         }else{System.out.println("\nTransaction not possible: not enough funds in ATM");}
@@ -131,7 +124,7 @@ public abstract class Account implements Serializable {
             System.out.println("You paid " + amount + " to " + receiver);
         }
         else{System.out.println("\nThis transaction is not possible: insufficient funds");}
-        this.lastTransaction = new Transaction(receiver, amount);
+        this.listOfTransactions.add(new Transaction(receiver, amount));
     }
 
     private void writeObject(ObjectOutputStream oos) throws IOException {
