@@ -1,8 +1,9 @@
-package atm;
+package investments;
 
 import account.Account;
 import account.Asset;
-import bankmanager.BankManager;
+import atm.ATM;
+import atm.User;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,7 @@
 package interfaces;
 
-import account.*;
-import bankmanager.*;
 import atm.*;
+import investments.MutualFund;
 
 import java.util.Scanner;
 

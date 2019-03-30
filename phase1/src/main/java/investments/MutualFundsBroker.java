@@ -1,9 +1,11 @@
-package atm;
+package investments;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import account.*;
+import atm.ATM;
+import atm.User;
 
 public class MutualFundsBroker {
     public MutualFund lowRiskFund;

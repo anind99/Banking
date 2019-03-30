@@ -1,12 +1,6 @@
-package atm;
+package investments;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import account.Account;
+import atm.*;
 import bankmanager.*;
 
 

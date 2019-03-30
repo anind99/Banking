@@ -1,4 +1,6 @@
-package atm;
+package investments;
+
+import atm.ATM;
 
 import java.util.ArrayList;
 import java.util.Calendar;

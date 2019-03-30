@@ -1,4 +1,6 @@
-package atm;
+package investments;
+
+import atm.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
