@@ -93,7 +93,14 @@ public class MutualFundsBroker {
      //lets a user buy into a mutual fund
     public void buyMutualFunds(User user, MutualFund fund, double amount){
         double total = calculateBrokerFree(amount) + amount;
-        if(user.enoughStockBalance(total)){
+        boolean enoughStockBalance = false;
+        for (Account account: user.getAccounts()){
+            if (account.getType().equals("stock")){
+                enoughStockBalance = account.checkFundsSufficient(total);
+                break;
+            }
+        }
+        if(enoughStockBalance){
             if (!possibleToBuy(fund, amount)){
                 refillFunds(fund, amount);}
             updateFundInvestors(user, fund, amount);
