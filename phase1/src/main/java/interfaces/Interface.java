@@ -57,7 +57,7 @@ public class Interface implements Serializable {
         String option = scanner.next();
         switch (option) {
             case "1": {
-                brokerInterface.displayBrokerMenu(broker);
+                brokerInterface.displayBrokerMenu();
             }
             case "2": {
                 userInterface.displayUserMenu(atm.getUser("broker"));
@@ -72,11 +72,6 @@ public class Interface implements Serializable {
     public void displayManagerMenu(BankManager bankManager) {
         bankManagerInterface.displayManagerMenu(bankManager);
     }
-
-    public void displayBrokerMenu(Broker broker){
-        brokerInterface.displayBrokerMenu(broker);
-    }
-
 
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {

@@ -15,10 +15,9 @@ public class BrokerInterface {
 
     private Scanner scanner = new Scanner(System.in);
 
-    void displayBrokerMenu(Broker broker){
+    void displayBrokerMenu(){
         System.out.println("Select an option:");
         System.out.println("1. Buy Funds");
-        System.out.println("2. Sell Funds");
         System.out.println("3. Log Out");
         String option = scanner.next();
         switch (option){
