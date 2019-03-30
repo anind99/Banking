@@ -8,6 +8,7 @@ import atm.ATM;
 import atm.User;
 
 public class MutualFundsBroker {
+
     public MutualFund lowRiskFund;
     public MutualFund mediumRiskFund;
     public MutualFund highRiskFund;
@@ -123,14 +124,6 @@ public class MutualFundsBroker {
             investment.add(percentOfFund);
             user.getInvestments().setMutualFundsPortfolio(fund, investment);
             fund.setInvestors(user, investment);}
-    }
-
-    //calculate the total net worth of mutual funds of a user
-    public double getTotalMutualFundWorth(User user){
-        double totalWorth = 0.0;
-        for (MutualFund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
-            totalWorth += fund.getValue() * (user.getInvestments().getMutualFundPortfolio().get(fund).get(1) / 100);
-        }return totalWorth;
     }
 
 //updates the price the fund every day upon ATM restart
