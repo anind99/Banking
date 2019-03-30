@@ -49,11 +49,6 @@ public class AccountInterface extends GeneralInterface{
         System.out.println("Enter a number: ");
     }
 
-    public void createAccount(User user) {
-        String type = selectTypeOfAccount(false, user);
-        atm.getBM().createAccount(user, type);
-    }
-
     private void requestJointAccountCreation(User user1) {
         System.out.println("Enter the username of the user you would like to open an account with: ");
         String username = scanner.next();

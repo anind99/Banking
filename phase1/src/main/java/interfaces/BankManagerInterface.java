@@ -150,11 +150,6 @@ public class BankManagerInterface extends GeneralInterface{
         }
     }
 
-    public void createAccount(User user) {
-        String type = selectTypeOfAccount(false, user);
-        atm.getBM().createAccount(user, type);
-    }
-
     private void checkAlerts(){
         try {System.out.println(System.getProperty("user.dir"));
             File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/alerts.txt");

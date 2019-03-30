@@ -14,6 +14,11 @@ public class GeneralInterface {
         this.atm = atm;
     }
 
+    public void createAccount(User user) {
+        String type = selectTypeOfAccount(false, user);
+        atm.getBM().createAccount(user, type);
+    }
+
     public String selectTypeOfAccount(boolean transferOut, User user) {
         // Allows users to pick the type of account they want to access and returns their type as a string.
 

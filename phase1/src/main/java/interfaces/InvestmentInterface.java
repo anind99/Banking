@@ -15,7 +15,6 @@ public class InvestmentInterface {
     }
 
     public void displayInvestmentMenu(User user) {
-        boolean validselection = false;
         boolean goBack = false;
         printOptions();
         String option = scanner.next();
