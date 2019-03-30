@@ -14,11 +14,13 @@ public class Broker {
     private ATM atm;
     private BankManager bm;
     StockBroker stockBroker;
+    MutualFundsBroker mutualFundsBroker;
 
     Broker(ATM atm, BankManager Bm) {
         this.atm = atm;
         this.bm = Bm;
         this.stockBroker = new StockBroker(atm);
+        this.mutualFundsBroker = new MutualFundsBroker();
         bm.createUser("broker", "password");
 
     }

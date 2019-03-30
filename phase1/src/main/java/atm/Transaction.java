@@ -4,29 +4,29 @@ import java.io.*;
 
 public class Transaction implements Serializable {
 
-    String Type;
-    int Account = 0;
-    double Amount;
-    String billname = null;
+    String type;
+    int account = 0;
+    double amount;
+    String billName = null;
 
     /**
      * Constructor for Transfer In/Out
-     * Type: refers to transaction type
+     * type: refers to transaction type
      * account: refers to account which is being transfer in from/ transfered out to
      *
      */
     public Transaction(int Acc, Double Amount, String Type) {
-        this.Type = Type;
-        this.Amount = Amount;
-        this.Account = Acc;
+        this.type = Type;
+        this.amount = Amount;
+        this.account = Acc;
     }
 
     /**
      * Withdraw/Deposit Constructor
      */
     public Transaction(Double Amount, String Type) {
-        this.Type = Type;
-        this.Amount = Amount;
+        this.type = Type;
+        this.amount = Amount;
     }
 
     /**
@@ -34,21 +34,21 @@ public class Transaction implements Serializable {
      * Billname: Billname
      */
     public Transaction(String billname, Double Amount){
-        this.billname = billname;
-        this.Type = "paybill";
-        this.Amount = Amount;
+        this.billName = billname;
+        this.type = "paybill";
+        this.amount = Amount;
     }
 
     public double getTransactionAmount() {
-        return this.Amount;
+        return this.amount;
     }
 
     public String getTransactionType() {
-        return this.Type;
+        return this.type;
     }
 
     public int getTransactionAccount() {
-        return this.Account;
+        return this.account;
     }
 
     private void writeObject(ObjectOutputStream oos) throws IOException {
@@ -76,16 +76,16 @@ public class Transaction implements Serializable {
     }
 
     public String toString() {
-        if (this.Type.equalsIgnoreCase("transferin")) {
-            return "Transferred in " + this.Amount +" from account " + this.Account;
-        } else if (this.Type.equalsIgnoreCase("transferout")) {
-            return "Transferred out " + this.Amount + " from account: " + this.Account;
-        } else if (this.Type.equalsIgnoreCase("withdraw")) {
-            return "Withdrew " + this.Amount;
-        } else if (this.Type.equals("deposit")) {
-            return "Deposited " + this.Amount;
+        if (this.type.equalsIgnoreCase("transferin")) {
+            return "Transferred in " + this.amount +" from account " + this.account;
+        } else if (this.type.equalsIgnoreCase("transferout")) {
+            return "Transferred out " + this.amount + " from account: " + this.account;
+        } else if (this.type.equalsIgnoreCase("withdraw")) {
+            return "Withdrew " + this.amount;
+        } else if (this.type.equals("deposit")) {
+            return "Deposited " + this.amount;
         } else {
-            return "Paid " + this.Amount + " to " + this.billname;
+            return "Paid " + this.amount + " to " + this.billName;
         }
     }
 

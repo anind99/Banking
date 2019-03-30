@@ -13,52 +13,100 @@ public class Bills implements Serializable {
         bills[3] = fifty;
     }
 
-    /** Set the number of bills at array index "bill" */
-    public void set_bills(int bill, int number){
+    /***
+     * Sets the number of bills of a certain type of bill to number
+     *
+     * @param bill the index at which the type of bill (50, 20, 10, 5 dollar bill) is located
+     * @param number the number of bills to set the type of bill to
+     */
+    public void setBills(int bill, int number){
         bills[bill - 1] = number;
     }
 
-    private void remove_bills(int bill, int number){
-        bills[bill] -= number;
-    }
-
+    /***
+     * Returns the number of a certain type of bill the ATM has.
+     *
+     * @param index the index at which the type of bill is located in the bills array
+     * @return the number of bills that the type of bill specified at index has
+     */
     int getNumBills(int index) {
         return bills[index];
     }
 
-    public double get_amount(){
-        // Returns how much money the ATM has.
+    /***
+     * Returns the total amount of money the ATM has
+     *
+     * @return the amount of money the ATM has
+     */
+    public double getTotalAmount(){
         return (bills[0]*5.0 + bills[1]*10.0 + bills[2]*20.0 + bills[3]* 50.0);
     }
 
-    public void add_bills(int bill, int number){
-        bills[bill] += number;
+    /***
+     * Adds a certain number of a type of bill to the ATM. Updates the bills array.
+     *
+     * @param index the index at which the type of bill (50, 20, 10, 5 dollar bill) is located in the bills array
+     * @param number the number of bills to add to the ATM
+     */
+    public void addBills(int index, int number){
+        bills[index] += number;
     }
+
+    /***
+     *
+     * @param index the index at which the type of bill (50, 20, 10, 5 dollar bill) is located in the bills array
+     * @param number the number of bills to remove from the ATM
+     */
+    private void removeBills(int index, int number){
+        bills[index] -= number;
+    }
+
+    /***
+     * Withdraws a certain amount from the ATM. This method will optimize the amount of bills to withdraw from the ATM.
+     * The user will receive the smallest number of bills possible.
+     *
+     * @param amount the total amount the user wants to withdraw, this amount has to be an integer that is divisible by
+     *              5 because you cannot withdraw cents from the ATM and there are only 5, 10, 20, 50 dollar bills
+     *               available in the ATM
+     */
+
 
     public void withdrawBills(double amount){
         int amountToWithdraw = (int) amount;
 
-        amountToWithdraw = withdrawBillsHelper(amountToWithdraw, 50, 3);
-        amountToWithdraw = withdrawBillsHelper(amountToWithdraw, 20, 2);
-        amountToWithdraw = withdrawBillsHelper(amountToWithdraw, 10, 1);
-        withdrawBillsHelper(amountToWithdraw, 5, 0);
+        amountToWithdraw = maximizeBillWithdrawal(amountToWithdraw, 50, 3);
+        amountToWithdraw = maximizeBillWithdrawal(amountToWithdraw, 20, 2);
+        amountToWithdraw = maximizeBillWithdrawal(amountToWithdraw, 10, 1);
+        maximizeBillWithdrawal(amountToWithdraw, 5, 0);
 
     }
 
-    private int withdrawBillsHelper(int amountToWithdraw, int typeOfBill, int index) {
-        // typeOfBill refers to either a 50, 20, 10 or 5 dollar bill in the ATM.
-        // index refers to where typeOfBill is referred to in the bills array.
-        // amountToWithdraw refers to the amount that the user wants to withdraw.
+    /***
+     * Returns the number of a certain type of bill to withdraw from the ATM and updates bills array with the new
+     * amount of bills in the ATM after withdrawal.
+     *
+     * <p>
+     *     Depending on the amount of money that the user wants to withdraw, this method will maximize how many
+     *     of a certain type of bill (either a 50, 20, 10, or 5) the ATM will withdraw.
+     * </p>
+     *
+     *
+     * @param amountToWithdraw the amount of money that user wants to withdraw from the ATM
+     * @param typeOfBill the type of bill to withdraw (either a 50, 20, 10 or 5 dollar bill)
+     * @param index the index where typeOfBill is stored in bills array
+     * @return int the number of a certain type of bill to withdraw
+     */
+    private int maximizeBillWithdrawal(int amountToWithdraw, int typeOfBill, int index) {
 
         if (amountToWithdraw/typeOfBill > bills[index]) {
             // Go to this if statement if there are not enough bills of this typeOfBill in the ATM.
             amountToWithdraw -= bills[index] * typeOfBill;
             System.out.println("You have received " + bills[index] + " " + typeOfBill + "$ bills");
-            set_bills(index, 0);
+            setBills(index, 0);
         } else {
             int billsToWithdraw = (amountToWithdraw/typeOfBill);
             amountToWithdraw -= (billsToWithdraw * typeOfBill);
-            remove_bills(index, billsToWithdraw);
+            removeBills(index, billsToWithdraw);
             System.out.println("You have received " + (billsToWithdraw) + " " + typeOfBill + "$ bills");
         }
 

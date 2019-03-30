@@ -15,16 +15,21 @@ public class AccountManager {
         this.atm = atm;
     }
 
-
-    public void create_account(User user, String acct_type){
+    /***
+     * Creates an account for user. The type of account is specified by acct_type.
+     *
+     * @param user the user that wants to create a new account
+     * @param acct_type the type of account that user wants to create
+     */
+    public void createAccount(User user, String acct_type){
         // Creates a new account as specified by the parameter.
         if (acct_type.equalsIgnoreCase("chequing")) {
             createChequingAccount(user, atm);
         }
-        else if (acct_type.equalsIgnoreCase("CreditCard")) {
+        else if (acct_type.equalsIgnoreCase("creditcard")) {
             createCreditCard(user, atm);
         }
-        else if (acct_type.equalsIgnoreCase("LOC")){
+        else if (acct_type.equalsIgnoreCase("loc")){
             createLOC(user, atm);
         }
         else if (acct_type.equalsIgnoreCase("savings")){
@@ -34,7 +39,6 @@ public class AccountManager {
         }
         checkForPrimary(user);
     }
-
 
     protected void checkForPrimary(User user) {
         // Checks for primary account. The first chequing account the user makes is always the primary account.
@@ -52,30 +56,60 @@ public class AccountManager {
         }
     }
 
-    protected void createChequingAccount(User user, ATM atm){
+    /***
+     * Creates a new chequing account.
+     *
+     * @param user the user that wants to create a new chequing account
+     * @param atm the ATM that user uses to create the new chequing account
+     */
+    private void createChequingAccount(User user, ATM atm){
         user.getAccounts().add(new Chequing(acct_counter, atm));
         System.out.println("New chequing account created.");
         acct_counter+=1;
     }
 
-    protected void createSavingsAccount(User user, ATM atm) {
+    /***
+     * Creates a new savings account for user.
+     *
+     * @param user the user that wants to create the new savings account
+     * @param atm the ATM that user uses to create the new savings account
+     */
+    private void createSavingsAccount(User user, ATM atm) {
         user.getAccounts().add(new Savings(acct_counter, atm));
         System.out.println("New savings account created.");
         acct_counter+=1;
     }
 
-    protected void createCreditCard(User user, ATM atm) {
+    /***
+     * Creates a new credit card account for user.
+     *
+     * @param user the user that wants to create the new credit card account
+     * @param atm the ATM that user uses to create the credit card account
+     */
+    private void createCreditCard(User user, ATM atm) {
         user.getAccounts().add(new CreditCard(acct_counter, atm));
         System.out.println("New credit card created.");
         acct_counter+=1;
     }
 
+    /***
+     * Creates a new line of credit account for user.
+     *
+     * @param user the user that wants to create the line of credit account
+     * @param atm the ATM that user uses to create the line of credit account
+     */
     protected void createLOC(User user, ATM atm) {
         user.getAccounts().add(new LOC(acct_counter, atm));
         System.out.println("New Line of Credit created.");
         acct_counter+=1;
     }
 
+    /***
+     * Creates a new stock account for user.
+     *
+     * @param user the user that wants to create the stock account
+     * @param atm the ATM that user uses to create the stock account
+     */
     protected void createStockAccount(User user, ATM atm) {
         user.getAccounts().add(new StockAccount(acct_counter, atm));
         System.out.println("New Stock Account created.");
@@ -90,7 +124,7 @@ public class AccountManager {
      * @param accountType the type of account to be created
      */
     public void createJointAccount(User user1, User user2, String accountType) {
-        create_account(user1, accountType);
+        createAccount(user1, accountType);
         Account account = user1.getAccounts().get(user1.getAccounts().size()-1);
         addExistingUserToAccount(user2, account);
     }

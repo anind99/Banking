@@ -22,7 +22,7 @@ public class BankManager implements Serializable{
 
     //Bank manager will always add 100 new bills when restocking
     public void restock(int index){
-        atm.getBills().set_bills(index, 100);
+        atm.getBills().setBills(index, 100);
         try {
             //System.out.println(System.getProperty("user.dir"));
             File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/alerts.txt");
@@ -36,12 +36,12 @@ public class BankManager implements Serializable{
         }
     }
 
-    public void create_account(User user, String acct_type) {
-        accountManager.create_account(user, acct_type);
+    public void createAccount(User user, String acct_type) {
+        accountManager.createAccount(user, acct_type);
     }
 
-    public void createUser(String username, String password) {
-        userManager.createUser(username, password);
+    public User createUser(String username, String password) {
+        return userManager.createUser(username, password);
     }
 
     public void undoTransaction(User usr, Account acct) {
