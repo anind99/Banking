@@ -20,14 +20,22 @@ public class ATM implements Serializable {
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
 
     private Bills bills;
-    private ArrayList<User> listOfUsers = new ArrayList<User>();
-    private BankManager BM = new BankManager(this);
-    private Calendar date = Calendar.getInstance();
+    private ArrayList<User> listOfUsers;
+    private BankManager BM;
+    private Calendar date;
     private final Interface interfaces;
-    private final Broker broker = new Broker(this, BM);
+    private final Broker broker;
 
     public ATM() {
         this.interfaces = new Interface(this);
+        this.listOfUsers  = new ArrayList<User>();
+        this.BM = new BankManager(this);
+        this.date = Calendar.getInstance();
+        this.date.add(Calendar.YEAR, -3);
+        this.broker = new Broker(this, BM);
+        // Our Calendar defaults 3 years behind normal because the API we use to source stock data doesn't have
+        // data that is within a year past. To be safe we go back three years.
+
         bills = new Bills(100, 100, 100, 100);
     }
 
