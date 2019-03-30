@@ -15,9 +15,9 @@ public abstract class Account implements Serializable {
     public Transaction lastTransaction;
     public ArrayList<Transaction> listOfTransactions = new ArrayList<>();
     public Calendar dateCreated;
-    private int depositNum;
     private final ATM atm;
     private boolean isJoint = false;
+    private ReadAndWrite readAndWrite;
 
 
     public Account(int accountNum, ATM atm) {
@@ -26,7 +26,7 @@ public abstract class Account implements Serializable {
         this.balance = 0;
         this.lastTransaction = null;
         this.dateCreated = this.atm.getDate();
-        this.depositNum = 0;
+        this.readAndWrite = new ReadAndWrite(atm);
     }
 
     public double getBalance(){
@@ -41,9 +41,13 @@ public abstract class Account implements Serializable {
         this.isJoint = joined;
     }
 
-    public void addBalance(double balance) {this.balance += balance;}
+    public void addBalance(double balance) {
+        this.balance += balance;
+    }
 
-    public void subtractBalance(double balance) {this.balance -= balance;}
+    public void subtractBalance(double balance) {
+        this.balance -= balance;
+    }
 
     public ArrayList<Transaction> getListOfTransactions() {
         return this.listOfTransactions;
@@ -58,10 +62,6 @@ public abstract class Account implements Serializable {
         return this.accountNum;
     }
 
-    abstract void addMoney (double amount);
-
-    abstract boolean removeMoney (double amount);
-
     public Transaction getLastTransaction() {
         return this.lastTransaction;
     }
@@ -69,6 +69,16 @@ public abstract class Account implements Serializable {
     public void setLastTransaction(Transaction transaction) {
         this.lastTransaction = transaction;
     }
+
+    public boolean isPrimary() {
+        return false;
+    }
+
+    public void setPrimary() {}
+
+    abstract void addMoney (double amount);
+
+    abstract boolean removeMoney (double amount);
 
     public void transferIn(double amount, Account accountFrom) {
         boolean removed = accountFrom.removeMoney(amount);
@@ -94,56 +104,11 @@ public abstract class Account implements Serializable {
     }
 
     public void deposit() {
-        Double amount = depositReader();
+        Double amount = this.readAndWrite.depositReader();
         addMoney(amount);
         Transaction transaction = new Transaction(amount, "deposit");
         this.lastTransaction = transaction;
         this.listOfTransactions.add(transaction);
-    }
-
-    private Double depositReader() {
-        Double amount;
-        try {
-            File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/deposits.txt");
-            FileInputStream is = new FileInputStream(file);
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader r = new BufferedReader(isr);
-            String line = r.readLine();
-            String firstLine = line;
-
-            int count = 0;
-            while (line != null && count < depositNum) {
-                count += 1;
-                line = r.readLine();
-            } amount = depositReaderHelper(line, count, firstLine);
-            r.close();
-            return amount;
-        } catch (IOException e) {
-            System.err.println("Problem reading the file deposits.txt");
-            return 0.0;
-        }
-    }
-
-    private double depositReaderHelper(String line, int count, String firstLine){
-        double amount;
-        if (line != null && count >= depositNum){depositNum += 1;
-        }else{line = firstLine;
-                depositNum = 1;}
-
-        if (line.contains(".")){
-            amount = Double.parseDouble(line);
-            System.out.println("\nYou have deposited a cheque for $" + amount);
-        }else{ amount = (double) ((Character.getNumericValue(line.charAt(0))) * 5 +
-                Character.getNumericValue(line.charAt(1)) * 10 +
-                Character.getNumericValue(line.charAt(2)) * 20 +
-                Character.getNumericValue(line.charAt(3)) * 50);
-
-            atm.getBills().addBills(0, Character.getNumericValue(line.charAt(0)));
-            atm.getBills().addBills(1, Character.getNumericValue(line.charAt(1)));
-            atm.getBills().addBills(2, Character.getNumericValue(line.charAt(2)));
-            atm.getBills().addBills(3, Character.getNumericValue(line.charAt(3)));
-            System.out.println("\nYou have deposited $" + amount + " in cash");
-        }return amount;
     }
 
     public void withdraw(double amount) {
@@ -161,28 +126,14 @@ public abstract class Account implements Serializable {
 
     public void payBill(double amount, String receiver){
         boolean removed = removeMoney(amount);
-        if(removed){payBillWriting(amount, receiver);
+        if(removed){
+            this.readAndWrite.payBillWriting(amount, receiver, accountNum);
             System.out.println("You paid " + amount + " to " + receiver);
         }
         else{System.out.println("\nThis transaction is not possible: insufficient funds");}
         this.lastTransaction = new Transaction(receiver, amount);
     }
 
-    //Helper function to Paybill that adds the information of the paid bill to a text file
-    public boolean payBillWriting(double amount, String receiver) {
-        try {
-            File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/outgoing.txt");
-            FileOutputStream is = new FileOutputStream(file);
-            OutputStreamWriter osw = new OutputStreamWriter(is);
-            Writer w = new BufferedWriter(osw);
-            w.write(accountNum + " payed " + amount + " to " + receiver);
-            w.close();
-            return true;
-        } catch (IOException e) {
-            System.err.println("Problem writing to the file outgoing.txt");
-            return false;
-        }
-    }
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -206,10 +157,4 @@ public abstract class Account implements Serializable {
         System.out.println("account readObjectNoData, this should never happen!");
         System.exit(-1);
     }
-
-    public boolean isPrimary() {
-        return false;
-    }
-
-    public void setPrimary(){}
 }
