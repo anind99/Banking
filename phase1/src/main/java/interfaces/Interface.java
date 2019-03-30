@@ -1,4 +1,4 @@
-package atm;
+package interfaces;
 
 import atm.*;
 import account.*;
@@ -8,18 +8,18 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public abstract class Interface implements Serializable {
+public class Interface implements Serializable {
     protected final ATM atm;
     private final BankManagerInterface bankManagerInterface;
     private final UserInterface userInterface;
-    private final atm.BrokerInterface brokerInterface;
+    private final BrokerInterface brokerInterface;
     protected Scanner scanner = new Scanner(System.in);
 
-    protected Interface(ATM atm) {
+    public Interface(ATM atm) {
         this.atm = atm;
         this.bankManagerInterface = new BankManagerInterface(atm);
         this.userInterface = new UserInterface(atm);
-        this.brokerInterface = new atm.BrokerInterface(atm);
+        this.brokerInterface = new BrokerInterface(atm);
     }
 
     public String displayLoginMenu() {
@@ -66,7 +66,7 @@ public abstract class Interface implements Serializable {
         userInterface.displayUserMenu(user);
     }
 
-    public void displayBankManagerMenu(BankManager bankManager) {
+    public void displayManagerMenu(BankManager bankManager) {
         bankManagerInterface.displayManagerMenu(bankManager);
     }
 

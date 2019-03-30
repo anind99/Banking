@@ -1,7 +1,8 @@
-package atm;
+package interfaces;
 
-import account.Asset;
-import bankmanager.BankManager;
+import account.*;
+import bankmanager.*;
+import atm.*;
 
 import java.util.Scanner;
 
@@ -65,7 +66,7 @@ public class BrokerInterface {
             } else if (option.equals("3")){
                 Br.stockBroker.viewUserStocks(user);
             } else if (option.equals("4")){
-                System.out.println(Br.stockBroker.getTotalStockWorth(user));
+                System.out.println(Br.getStockBroker().getTotalStockWorth(user));
             }
         }
     }
@@ -82,7 +83,7 @@ public class BrokerInterface {
             shares = -1;
         }
         if (shares != -1) {
-            Br.stockBroker.buyStocks(sym,shares, Ac, user.investments );
+            Br.getStockBroker().buyStocks(sym,shares, Ac, user.getInvestments());
         }
         else {
             System.out.println("Enter integer greater than 0");
@@ -101,7 +102,7 @@ public class BrokerInterface {
             shares = -1;
         }
         if (shares != -1) {
-            Br.stockBroker.sellStocks(Ac, sym, shares, user.investments);
+            Br.getStockBroker().sellStocks(Ac, sym, shares, user.getInvestments());
         }
         else {
             System.out.println("Enter integer greater than 0");
