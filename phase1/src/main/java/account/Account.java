@@ -164,19 +164,28 @@ public abstract class Account implements Serializable {
         }
     }
 
+    /**
+     * Transfers money into the account from another account
+     * and prints the result of the transaction.
+     * @param amount the dollar amount being transferred
+     * @param accountFrom the account the money is being transferred from
+     */
     public void transferIn(double amount, Account accountFrom) {
-        boolean removed = accountFrom.removeMoney(amount);
-        if(removed){addMoney(amount);
+        boolean sufficientFunds = accountFrom.checkFundsSufficient(amount);
+        if(sufficientFunds){
+            addMoney(amount);
             Transaction transaction = new Transaction(accountFrom.accountNum, amount, "TransferIn");
             this.listOfTransactions.add(transaction);
             System.out.println("\n" + amount + " has been transferred");}
-        else{System.out.println("\nThis transaction i;s not possible: insufficient funds");}
+        else{
+            System.out.println("\nThis transaction i;s not possible: insufficient funds");
+        }
 
     }
 
     public void transferOut(double amount, Account accountTo) {
-        boolean removed = removeMoney(amount);
-        if(removed){accountTo.addMoney(amount);
+        boolean sufficientFunds = removeMoney(amount);
+        if(sufficientFunds){accountTo.addMoney(amount);
             Transaction transaction =  new Transaction(accountTo.accountNum, amount, "TransferOut");
             this.listOfTransactions.add(transaction);
             System.out.println("\n" + amount + " has been transferred");}
