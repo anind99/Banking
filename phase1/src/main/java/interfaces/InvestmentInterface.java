@@ -46,7 +46,26 @@ public class InvestmentInterface {
         System.out.println("2. Sell Stocks");
         System.out.println("3. Buy Mutual Funds");
         System.out.println("4. Sell Mutual Funds");
+        System.out.println("5. View summary of stocks");
         System.out.println("5. Go Back");
         System.out.println("Enter the number: ");
     }
+
+    private void buyStocks() {
+
+    }
+
+    private void sellStocks() {
+
+    }
+
+    private void buyMutualFunds() {
+
+    }
+
+    private void sellMutualFunds() {
+
+    }
+
+
 }
