@@ -32,6 +32,9 @@ public class Interface implements Serializable {
         if (usernameAttempt.equals("manager") && passwordAttempt.equals("password")) {
             System.out.println("Login successful. Logging in as bank manager.");
             return "manager";
+        } else if (usernameAttempt.equals("broker") && passwordAttempt.equals("password")) {
+            System.out.println("Login successful. Logging in as broker.");
+            return "broker";
         } else {
             for (User usr : atm.getListOfUsers()) {
                 if (usr.getUsername().equals(usernameAttempt) && usr.getPassword().equals(passwordAttempt)) {

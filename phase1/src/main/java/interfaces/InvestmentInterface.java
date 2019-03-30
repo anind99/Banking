@@ -2,6 +2,8 @@ package interfaces;
 
 import atm.*;
 import account.*;
+import bankmanager.BankManager;
+
 import java.util.*;
 
 public class InvestmentInterface {
@@ -33,9 +35,11 @@ public class InvestmentInterface {
                 case "6":
                     System.out.println(atm.getBroker().getMutualFundsBroker().toString(user));
                 case "7":
+                    System.out.println(atm.getBroker().getStockBroker().getTotalStockWorth(user));
+                case "8":
                     goBack = true;
                 default:
-                    System.out.println("There is no option " + option + ". Pick a number from 1 to 7.");
+                    System.out.println("There is no option " + option + ". Pick a number from 1 to 8.");
                     break;
 
             }
@@ -49,8 +53,9 @@ public class InvestmentInterface {
         System.out.println("3. Buy Mutual Funds");
         System.out.println("4. Sell Mutual Funds");
         System.out.println("5. View your Stocks investments");
-        System.out.println("6. View your Mutual Funds investments");
-        System.out.println("7. Go Back");
+        System.out.println("6. View total money in stocks");
+        System.out.println("7. View your Mutual Funds investments");
+        System.out.println("8. Go Back");
         System.out.println("Enter the number: ");
     }
 
@@ -76,7 +81,7 @@ public class InvestmentInterface {
     }
 
     private void sellStocks(User user) {
-        viewUserStocks(user);
+        atm.getBroker().getStockBroker().viewUserStocks(user);
         System.out.println("What would you like to sell?");
 
         System.out.println("Enter Stock symbol: ");
@@ -148,13 +153,6 @@ public class InvestmentInterface {
         }
 
         return null;
-    }
-
-    private void viewUserStocks(User user) {
-        System.out.println("Here are your current stocks:");
-        for (Stock stock : user.getInvestments().getStockPortfolio()) {
-            System.out.println(stock);
-        }
     }
 
     private void viewUserMutualFunds(User user) {
