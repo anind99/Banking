@@ -51,6 +51,20 @@ public class Transaction implements Serializable {
         return this.account;
     }
 
+    public String toString() {
+        if (this.type.equalsIgnoreCase("transferin")) {
+            return "Transferred in " + this.amount +" from account " + this.account;
+        } else if (this.type.equalsIgnoreCase("transferout")) {
+            return "Transferred out " + this.amount + " from account: " + this.account;
+        } else if (this.type.equalsIgnoreCase("withdraw")) {
+            return "Withdrew " + this.amount;
+        } else if (this.type.equals("deposit")) {
+            return "Deposited " + this.amount;
+        } else {
+            return "Paid " + this.amount + " to " + this.billName;
+        }
+    }
+
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -60,6 +74,7 @@ public class Transaction implements Serializable {
             System.exit(-1);
         }
     }
+
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -73,20 +88,6 @@ public class Transaction implements Serializable {
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("Transaction readObjectNoData, this should never happen!");
         System.exit(-1);
-    }
-
-    public String toString() {
-        if (this.type.equalsIgnoreCase("transferin")) {
-            return "Transferred in " + this.amount +" from account " + this.account;
-        } else if (this.type.equalsIgnoreCase("transferout")) {
-            return "Transferred out " + this.amount + " from account: " + this.account;
-        } else if (this.type.equalsIgnoreCase("withdraw")) {
-            return "Withdrew " + this.amount;
-        } else if (this.type.equals("deposit")) {
-            return "Deposited " + this.amount;
-        } else {
-            return "Paid " + this.amount + " to " + this.billName;
-        }
     }
 
 }

@@ -40,6 +40,14 @@ public class BankManager implements Serializable{
         accountManager.createAccount(user, acct_type);
     }
 
+    public void createJointAccount(User user1, User user2, String accountType) {
+        accountManager.createJointAccount(user1, user2, accountType);
+    }
+
+    public void addExistingUserToAccount(User user, Account account) {
+        accountManager.addExistingUserToAccount(user, account);
+    }
+
     public User createUser(String username, String password) {
         return userManager.createUser(username, password);
     }
