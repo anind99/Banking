@@ -7,11 +7,11 @@ public class ReadAndWrite {
     private int depositNum = 0;
     private ATM atm;
 
-    public ReadAndWrite(ATM atm){
+    ReadAndWrite(ATM atm){
         this.atm = atm;
     }
 
-    public Double depositReader() {
+    Double depositReader() {
         Double amount;
         try {
             File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/deposits.txt");
@@ -57,7 +57,7 @@ public class ReadAndWrite {
     }
 
     // Adds information of the paid bill to the text file.
-    public boolean payBillWriting(double amount, String receiver, int accountNum) {
+    boolean payBillWriting(double amount, String receiver, int accountNum) {
         try {
             File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/outgoing.txt");
             FileOutputStream is = new FileOutputStream(file);
