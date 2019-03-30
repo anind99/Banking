@@ -77,9 +77,18 @@ public class Stock {
 
     public int getNumShares(){return numShares;}
 
-    public void setNumShares(int shares){
-        numShares += shares;
-    }
+    public String getSymbol(){return symbol;}
+
+    public String getName() {return name;}
+
+    public void setName(String name){this.name = name;}
+
+    public void setNumShares(int shares){this.numShares = shares;}
+
+    public void increaseNumShares(int shares){numShares += shares;}
+
+    public void decreaseNumShares(int shares){numShares -= shares;}
+
 
 
     void updateStock(Calendar date){
@@ -146,8 +155,12 @@ public class Stock {
             return json;
         } finally {
             is.close();
-            //dfdf
         }
+    }
+
+    public String toString() {
+        return this.name + " (" + this.symbol + "):\n" + this.numShares + " shares\n" + "total value: "
+                + (this.numShares * this.currentPrice) + "\n";
     }
 }
 

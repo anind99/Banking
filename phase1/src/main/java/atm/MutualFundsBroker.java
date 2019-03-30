@@ -58,7 +58,7 @@ public class MutualFundsBroker {
     }
     // WHAT IF THE USER INVESTED IN THE FUND MULTIPLE TIMES??
     double calculateUserMoney(User user, MutualFund fund){
-        HashMap<String, ArrayList<Double>> portfolio = user.getInvestments().getMutualFundPortfolio();
+        HashMap<MutualFund, ArrayList<Double>> portfolio = user.getInvestments().getMutualFundPortfolio();
         double invested = portfolio.get(fund.getName()).get(0);
         double previousValueFund = portfolio.get(fund.getName()).get(1);
         double currentValueFund = fund.getValue();

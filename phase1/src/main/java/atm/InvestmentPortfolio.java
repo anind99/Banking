@@ -20,4 +20,19 @@ public class InvestmentPortfolio {
         return mutualFundsPortfolio;
     }
 
+    public double stocksTotalValue() {
+        double totalValue = 0.0;
+        for (Stock stock : stockPortfolio) {
+            totalValue += stock.getValue()*stock.getNumShares();
+        }
+        return totalValue;
+    }
+
+    public String stocksToString(){
+        String totalStocks = "";
+        for (Stock stock : stockPortfolio){
+            totalStocks += stock.toString();
+        } return totalStocks + "Total value of all your stocks:" + stocksTotalValue();
+    }
+
 }

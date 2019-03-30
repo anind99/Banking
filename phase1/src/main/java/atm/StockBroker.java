@@ -46,11 +46,11 @@ public class StockBroker {
 
         boolean bought = false;
         boolean contains = false;
-        for (Stock st: Iv.stockPortfolio){
-            if (st.symbol.equalsIgnoreCase(symbol)){
+        for (Stock st: Iv.getStockPortfolio()){
+            if (st.getSymbol().equalsIgnoreCase(symbol)){
                 if ((st.getValue() * shares) <= sa.getBalance()){
                     sa.subtractBalance(st.getValue() * shares);
-                    st.numShares += shares;
+                    st.increaseNumShares(shares);
                     bought = true;
                 }
                 contains = true;
@@ -75,10 +75,10 @@ public class StockBroker {
     private boolean buyNewStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
 
         Stock st = fetchStock(symbol);
-        if (st.currentPrice != 0){
+        if (st.getValue() != 0){
             if (st.getValue() * shares <= sa.getBalance()){
-                Iv.stockPortfolio.add(st);
-                st.numShares = shares;
+                Iv.getStockPortfolio().add(st);
+                st.setNumShares(shares);
                 sa.subtractBalance(st.getValue() * shares);
                 return true;
             }
@@ -102,7 +102,7 @@ public class StockBroker {
         MutualFundsStocks Ms = new MutualFundsStocks(atm);
         st.updateStock(atm.getDate());
 
-        if (st.currentPrice != 0){
+        if (st.getValue() != 0){
             fetchStockHelper(st, Ms.lowRiskStocks);
             fetchStockHelper(st, Ms.mediumRiskStocks);
             fetchStockHelper(st, Ms.highRiskStocks);
@@ -121,8 +121,8 @@ public class StockBroker {
 
     private void fetchStockHelper(Stock s, ArrayList<Stock> stocklist){
         for (Stock st: stocklist){
-            if (st.symbol.equalsIgnoreCase(s.symbol)){
-                s.name = st.name;
+            if (st.getSymbol().equalsIgnoreCase(s.getSymbol())){
+                s.setName(st.getName());
             }
         }
     }
@@ -137,10 +137,10 @@ public class StockBroker {
 
     public void sellStocks(Asset SA, String symbol, int shares, InvestmentPortfolio IV) {
         boolean sold = false;
-        for (Stock st: IV.stockPortfolio){
-            if (st.symbol.equalsIgnoreCase(symbol)){
+        for (Stock st: IV.getStockPortfolio()){
+            if (st.getSymbol().equalsIgnoreCase(symbol)){
                 if (shares <= st.getNumShares()) {
-                    st.numShares -= shares;
+                    st.decreaseNumShares(shares);
                     SA.addMoney(shares * st.getValue());
                     sold = true;
                     break;
@@ -158,9 +158,9 @@ public class StockBroker {
      * @param atm: atm to be updated.
      */
 
-    void updateAllStocks(ATM atm) {
+    public void updateAllStocks(ATM atm) {
         for (User user:atm.getListOfUsers()){
-            for (Stock st:user.investments.stockPortfolio){
+            for (Stock st:user.getInvestments().getStockPortfolio()){
                 st.updateStock(atm.getDate());
             }
         }
@@ -174,7 +174,7 @@ public class StockBroker {
 
     public double getTotalStockWorth(User user){
         double total = 0.0;
-        for (Stock st: user.investments.stockPortfolio){
+        for (Stock st: user.getInvestments().getStockPortfolio()){
             total += st.getValue() * st.getNumShares();
         }
         return total;
@@ -186,10 +186,10 @@ public class StockBroker {
      */
 
     public void viewUserStocks(User user){
-        ArrayList<Stock> Iv = user.investments.stockPortfolio;
+        ArrayList<Stock> Iv = user.getInvestments().getStockPortfolio();
         System.out.println("User Currently owns: "+Iv.size()+" types of stocks");
         for (Stock st: Iv){
-            System.out.println("Stock: "+st.symbol+" Shares: "+st.numShares);
+            System.out.println("Stock: "+st.getSymbol()+" Shares: "+st.getNumShares());
         }
     }
 

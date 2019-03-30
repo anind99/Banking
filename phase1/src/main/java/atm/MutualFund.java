@@ -1,8 +1,6 @@
 package atm;
 
-import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class MutualFund {
@@ -39,7 +37,7 @@ public class MutualFund {
 
     public void setSharesStocks(int num) {
         for (Stock stock : stocks) {
-            stock.setNumShares(num);
+            stock.increaseNumShares(num);
         }
     }
 
