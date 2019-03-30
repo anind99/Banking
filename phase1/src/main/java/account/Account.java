@@ -138,16 +138,16 @@ public abstract class Account implements Serializable {
                 Character.getNumericValue(line.charAt(2)) * 20 +
                 Character.getNumericValue(line.charAt(3)) * 50);
 
-            atm.getBills().add_bills(0, Character.getNumericValue(line.charAt(0)));
-            atm.getBills().add_bills(1, Character.getNumericValue(line.charAt(1)));
-            atm.getBills().add_bills(2, Character.getNumericValue(line.charAt(2)));
-            atm.getBills().add_bills(3, Character.getNumericValue(line.charAt(3)));
+            atm.getBills().addBills(0, Character.getNumericValue(line.charAt(0)));
+            atm.getBills().addBills(1, Character.getNumericValue(line.charAt(1)));
+            atm.getBills().addBills(2, Character.getNumericValue(line.charAt(2)));
+            atm.getBills().addBills(3, Character.getNumericValue(line.charAt(3)));
             System.out.println("\nYou have deposited $" + amount + " in cash");
         }return amount;
     }
 
     public void withdraw(double amount) {
-        if(atm.getBills().get_amount() >= amount) {
+        if(atm.getBills().getTotalAmount() >= amount) {
             atm.getBills().withdrawBills(amount);
             atm.alertManager();
             removeMoney(amount);
