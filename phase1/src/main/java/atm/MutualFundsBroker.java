@@ -23,17 +23,35 @@ public class MutualFundsBroker {
         this.highRiskFund = new MutualFund(3, "highRiskFund1", mutualFundsStocks.getHighRiskStocks());
     }
 
-// buy more shares of the Stocks in a mutual fund a user wants to invest in so we put all the users money in shares
+    public MutualFund getLowRiskFund() {return lowRiskFund;}
+
+    public MutualFund getMediumRiskFund() {return mediumRiskFund;}
+
+    public MutualFund getHighRiskFund() {return highRiskFund;}
+
+    // buy more shares of the Stocks in a mutual fund a user wants to invest in so we put all the users money in shares
     public void refillFunds(MutualFund fund, double amount) {
         int num = calculateRefill(fund, amount);
         fund.setSharesStocks(num);
     }
 
+    //NEEDS FIXING TO ACCOUNT FOR VARYING NUMBERS OF STOCKS
     public int calculateRefill(MutualFund fund, double amount){
         int numStocks = fund.getShares();
         double netWorth = fund.getValue();
         int  increase =  (int) (amount / netWorth) + 1;
         return numStocks * increase;
+    }
+
+    //update % owned of the shareholders
+    public void updateShareHolders(MutualFund fund, double oldValue, double newValue){
+        double increase = newValue / oldValue;
+        for (User shareholder : fund.getInvestors().keySet()){
+            double oldPercent = fund.getInvestors().get(shareholder).get(1);
+            double newPercent = oldPercent / increase;
+            fund.getInvestors().
+        }
+
     }
 
 
@@ -59,8 +77,8 @@ public class MutualFundsBroker {
     // WHAT IF THE USER INVESTED IN THE FUND MULTIPLE TIMES??
     double calculateUserMoney(User user, MutualFund fund){
         HashMap<MutualFund, ArrayList<Double>> portfolio = user.getInvestments().getMutualFundPortfolio();
-        double invested = portfolio.get(fund.getName()).get(0);
-        double previousValueFund = portfolio.get(fund.getName()).get(1);
+        double invested = portfolio.get(fund).get(0);
+        double previousValueFund = portfolio.get(fund).get(1);
         double currentValueFund = fund.getValue();
         return ((currentValueFund - previousValueFund) / previousValueFund + 1) * invested;
     }
@@ -90,9 +108,9 @@ public class MutualFundsBroker {
         fund.setInvestors(user, investment);
     }
 
-    //calculate the % increase or decrease of a user's mutual fund portfolio
-    public double calculatePercentageIncrease(User user){
-        for (Mutualfund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
+    //calculate the total net worth of mutual funds
+    public double getTotalMatualFundWorth(User user){
+        for (MutualFund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
             user.getInvestments().getMutualFundPortfolio().get(fund).get(0) // change hashmap to object
         }
     }
@@ -111,4 +129,6 @@ public class MutualFundsBroker {
         }
 
     }
+
+    public String toString(User user){}
 }

@@ -48,17 +48,11 @@ public class MutualFundsStocks {
         for (Stock stock : highRiskStocks){stock.updateStock(date);}
     }
 
-    public ArrayList<Stock> getLowRiskStocks(){
-        return lowRiskStocks;
-    }
+    public ArrayList<Stock> getLowRiskStocks(){return lowRiskStocks;}
 
-    public ArrayList<Stock> getMediumRiskStocks(){
-        return mediumRiskStocks;
-    }
+    public ArrayList<Stock> getMediumRiskStocks(){return mediumRiskStocks;}
 
-    public ArrayList<Stock> getHighRiskStocks(){
-        return highRiskStocks;
-    }
+    public ArrayList<Stock> getHighRiskStocks(){return highRiskStocks;}
 
 }
 

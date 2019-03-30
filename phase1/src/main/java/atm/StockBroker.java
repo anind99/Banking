@@ -193,6 +193,11 @@ public class StockBroker {
         }
     }
 
-
+    public String stocksToString(User user){
+        String totalStocks = "";
+        for (Stock stock : user.getInvestments().getStockPortfolio()){
+            totalStocks += stock.toString();
+        } return totalStocks + "Total value of all your stocks:" + getTotalStockWorth(user);
+    }
 }
 

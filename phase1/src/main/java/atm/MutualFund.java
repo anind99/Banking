@@ -8,7 +8,7 @@ public class MutualFund {
     public String name;
     public ArrayList<Stock> stocks; // a list of stocks in this mutual fund
     public HashMap<User, ArrayList<Double>> investors = new HashMap<>();
-    // maps user: [amount user invested, amount fund was worth at the time of investment]
+    // maps user: [amount user invested, % of the fund the user owns through this investment]
 
     public MutualFund(int risk, String name, ArrayList<Stock> stocks){
         this.risk = risk;
@@ -29,6 +29,10 @@ public class MutualFund {
 
     public ArrayList<Stock> getStocks(){
         return stocks;
+    }
+
+    public HashMap<User, ArrayList<Double>> getInvestors(){
+        return investors;
     }
 
     public void setInvestors(User user, ArrayList<Double> investment){
