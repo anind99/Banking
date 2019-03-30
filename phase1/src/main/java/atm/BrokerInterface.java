@@ -1,5 +1,8 @@
 package atm;
 
+import account.Asset;
+import bankmanager.BankManager;
+
 import java.util.Scanner;
 
 public class BrokerInterface extends Interface {
@@ -57,5 +60,75 @@ public class BrokerInterface extends Interface {
 
     void brokerViewUser(Broker broker){
 
+    }
+
+    void userStockBroker(ATM atm, BankManager Bm, User user, Asset Ac){
+        boolean loop = true;
+        Broker Br = new Broker(atm, Bm);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Choose option: ");
+        usbHelper();
+
+        while (loop){
+            String option = scanner.next();
+            if (option.equals("0")){
+
+            } else if (option.equals("1")){
+                userBuyStock(atm, Bm, user, Br,  Ac);
+            } else if (option.equals("2")){
+                userSellStock(atm, Bm, user, Br,  Ac);
+            } else if (option.equals("3")){
+                Br.stockBroker.viewUserStocks(user);
+            } else if (option.equals("4")){
+                System.out.println(Br.stockBroker.getTotalStockWorth(user));
+            }
+        }
+    }
+
+    void userBuyStock(ATM atm, BankManager Bm, User user, Broker Br, Asset Ac){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Stock symbol");
+        String sym = scanner.next();
+        System.out.println("Enter number of shares");
+        int shares;
+        try {
+            shares = Integer.getInteger(scanner.next());
+        } catch (Exception e){
+            shares = -1;
+        }
+        if (shares != -1) {
+            Br.stockBroker.buyStocks(sym,shares, Ac, user.investments );
+        }
+        else {
+            System.out.println("Enter integer greater than 0");
+        }
+    }
+
+    void userSellStock(ATM atm, BankManager Bm, User user, Broker Br, Asset Ac){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Stock symbol");
+        String sym = scanner.next();
+        System.out.println("Enter number of shares");
+        int shares;
+        try {
+            shares = Integer.getInteger(scanner.next());
+        } catch (Exception e){
+            shares = -1;
+        }
+        if (shares != -1) {
+            Br.stockBroker.sellStocks(Ac, sym, shares, user.investments);
+        }
+        else {
+            System.out.println("Enter integer greater than 0");
+        }
+    }
+
+
+    private void usbHelper(){
+        System.out.println("0: Exit");
+        System.out.println("1: Buy Stocks");
+        System.out.println("1: Sell Stocks");
+        System.out.println("3: View all your stocks and shares");
+        System.out.println("4: View Total Money in Stocks");
     }
 }

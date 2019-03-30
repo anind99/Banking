@@ -11,30 +11,16 @@ import bankmanager.*;
 
 
 public class Broker {
-    private final ATM atm;
-    private final BankManager bm;
-    private final StockBroker stockBroker;
+    private ATM atm = new ATM();
+    private BankManager bm = new BankManager(atm);
+    StockBroker stockBroker;
 
-    public Broker(ATM atm) {
-        this.atm = atm;
-        this.bm = new BankManager(atm);
-        this.stockBroker = new StockBroker(atm);
+    Broker(ATM Atm, BankManager Bm) {
         bm.createUser("broker", "password");
-
-
+        this.atm = Atm;
+        this.stockBroker = new StockBroker(atm);
     }
 
-    void buyStocks(String symbol, int shares, Account account, InvestmentPortfolio investmentPortfolio) {
-        stockBroker.buyStocks(symbol, shares, account, investmentPortfolio);
-    }
-
-    void sellStocks() {
-
-    }
-
-    void updateStocks() {
-
-    }
 
     void calculatePercentageIncreaseStocks() {
 
