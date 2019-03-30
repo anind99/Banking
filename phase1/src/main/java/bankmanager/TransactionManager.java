@@ -28,12 +28,12 @@ public class TransactionManager{
     }
 
     protected void undoDeposit(Account acct) {
-        acct.subtractBalance(acct.getLastTransaction().getTransactionAmount());
+        acct.removeMoney(acct.getLastTransaction().getTransactionAmount());
         removeLastTransactionFromList(acct);
     }
 
     protected void undoWithdraw(Account acct) {
-        acct.addBalance(acct.getLastTransaction().getTransactionAmount());
+        acct.addMoney(acct.getLastTransaction().getTransactionAmount());
         removeLastTransactionFromList(acct);
     }
 
@@ -47,8 +47,8 @@ public class TransactionManager{
         }
         if (TransferAct != null) {
             double amount = acct.getLastTransaction().getTransactionAmount();
-            acct.subtractBalance(amount);
-            TransferAct.addBalance(amount);
+            acct.removeMoney(amount);
+            TransferAct.addMoney(amount);
             removeLastTransactionFromList(acct);
         }
     }
@@ -63,14 +63,14 @@ public class TransactionManager{
         }
         if (TransferAct != null) {
             double amount = acct.getLastTransaction().getTransactionAmount();
-            acct.addBalance(amount);
-            TransferAct.subtractBalance(amount);
+            acct.addMoney(amount);
+            TransferAct.removeMoney(amount);
             removeLastTransactionFromList(acct);
         }
     }
 
     protected void undoPayBill(Account acct) {
-        acct.addBalance(acct.getLastTransaction().getTransactionAmount());
+        acct.addMoney(acct.getLastTransaction().getTransactionAmount());
         removeLastTransactionFromList(acct);
     }
 

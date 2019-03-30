@@ -49,7 +49,7 @@ public class StockBroker {
         for (Stock st: Iv.getStockPortfolio()){
             if (st.getSymbol().equalsIgnoreCase(symbol)){
                 if ((st.getValue() * shares) <= sa.getBalance()){
-                    sa.subtractBalance(st.getValue() * shares);
+                    sa.removeMoney(st.getValue() * shares);
                     st.increaseNumShares(shares);
                     bought = true;
                 }
@@ -79,7 +79,7 @@ public class StockBroker {
             if (st.getValue() * shares <= sa.getBalance()){
                 Iv.getStockPortfolio().add(st);
                 st.setNumShares(shares);
-                sa.subtractBalance(st.getValue() * shares);
+                sa.removeMoney(st.getValue() * shares);
                 return true;
             }
         } else {

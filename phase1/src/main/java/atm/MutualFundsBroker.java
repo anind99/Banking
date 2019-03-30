@@ -71,7 +71,7 @@ public class MutualFundsBroker {
             updateFundInvestors(user, fund, sold);
             for (Account account: user.getAccounts()){
                 if (account.getType().equals("stock")){
-                    account.addBalance(amount);
+                    account.addMoney(amount);
                 }
             }
         }else{System.out.println("\nNot enough funds to sell");}
@@ -95,7 +95,7 @@ public class MutualFundsBroker {
             updateFundInvestors(user, fund, amount);
             for (Account account: user.getAccounts()){
                 if (account.getType().equals("stock")){
-                    account.subtractBalance(amount);
+                    account.removeMoney(amount);
                 }
             }
         }else{
@@ -139,20 +139,39 @@ public class MutualFundsBroker {
     }
 
     //TODO
-    public double calculateInvestmentIncrease(){}
+    public double calculateInvestmentIncrease(){
+        for
+    }
 
-    public void buyStocksFund(MutualFund fund, Stock symbol, int shares){
+    //TODO check is symbol is valid and add valid string name wait for alan to make the list
+    //Lets the mutual funds broker buy stocks into a specified mutual fund
+    public void buyStocksFund(MutualFund fund, String symbol, int shares){
+        boolean found = false;
         for(Stock stock : fund.getStocks()){
-            if (stock.getSymbol().equals(symbol){
-
+            if (stock.getSymbol().equals(symbol)){
+                stock.increaseNumShares(shares);
+                found = true;}
+        }if(!found){
+            Stock bought = new Stock(symbol, symbol,0.0);
+            bought.setNumShares(shares);
+            bought.updateStock(date);
+            fund.getStocks().add(bought);
             }
         }
 
+    //TODO check is symbol is valid wait for alan to make the list
+    //Lets the mutual funds broker sell stocks from a specified mutual fund
+    public void sellStocksFund(MutualFund fund, String symbol, int shares) {
+        boolean found = false;
+        for (Stock stock : fund.getStocks()) {
+            if (stock.getSymbol().equals(symbol)) {
+                found = true;
+                if (stock.getNumShares() <= shares) {
+                    stock.decreaseNumShares(shares);
+                } else {System.out.println("You do not own enough shares please try again");}
+            }
+        }if (!found) {System.out.println("This stock does not exists in this fund");}
     }
-
-    public void sellStocksFund(MutualFund fund, Stock symbol, int shares){}
-
-
 
     // prints the funds the user invested in and how much their investment is worth currently
     public String toString(User user){
