@@ -1,19 +1,24 @@
-package atm;
+package interfaces;
 
-import account.Account;
-import bankmanager.BankManager;
+import account.*;
+import atm.*;
+import bankmanager.*;
 
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-public class BankManagerInterface extends Interface {
+public class BankManagerInterface {
+    private final ATM atm;
+    private Scanner scanner = new Scanner(System.in);
 
     public BankManagerInterface(ATM atm) {
-        super(atm);
+        this.atm = atm;
     }
 
-    void displayManagerMenu(BankManager bm, ATM atm){
+    public void displayManagerMenu(BankManager bm){
         boolean loggedOut = false;
         boolean validselection = false;
         while (!validselection){
@@ -62,7 +67,7 @@ public class BankManagerInterface extends Interface {
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 7.");
                     break;
                 }
-            }if (!loggedOut) displayManagerMenu(bm, atm);
+            }if (!loggedOut) displayManagerMenu(bm);
         }
     }
 
@@ -136,7 +141,7 @@ public class BankManagerInterface extends Interface {
             for (User parameter : atm.getListOfUsers()) {
                 if (parameter.getUsername().equals(username)) {
                     user = parameter;
-                    CreateAccount(user);
+                    createAccount(user);
                     created = true;
                     break;
                 }
@@ -147,6 +152,61 @@ public class BankManagerInterface extends Interface {
             count += 1;
             count2 += 1;
         }
+    }
+
+    void createAccount(User user) {
+        String type = selectTypeOfAccount(false, user);
+        atm.getBM().createAccount(user, type);
+    }
+
+    String selectTypeOfAccount(boolean transferOut, User user) {
+        // Allows users to pick the type of account they want to access and returns their type as a string.
+
+        StringBuilder toPrint = new StringBuilder("Select the type of account: \n 1. Chequing \n" +
+                " 2. Line of Credit \n 3. Savings");
+
+
+        if (transferOut) {
+            System.out.println(toPrint);
+        } else {
+            toPrint.append("\n 4. Credit Card");
+            System.out.println(toPrint);
+        }
+
+        String type = null;
+        boolean validselection = false;
+
+
+        while (!validselection) {
+            type = scanner.nextLine();
+
+            if (type.equals("1") || type.equals("2") || type.equals("3") || (!transferOut && type.equals("4"))) {
+                validselection = true;
+            } else {
+                System.out.println("That is not a valid selection. Please try again.");
+            }
+        }
+
+        return returnTypeOfAccount(type, transferOut);
+    }
+
+    private String returnTypeOfAccount(String selection, boolean transferOut) {
+        // Helper function for selectTypeOfAccount. The function recognizes the selection the user makes and returns
+        // the corresponding account type as a string.
+
+        String toReturn = null;
+
+        if (selection.equals("1")) {
+            toReturn = "chequing";
+        } else if (selection.equals("2")) {
+            toReturn = "loc";
+        } else if (selection.equals("3")) {
+            toReturn = "savings";
+        } else if (!transferOut && selection.equals("4")) {
+            toReturn = "creditcard";
+        }
+
+        return toReturn;
     }
 
     private void checkingAlerts(){
@@ -212,6 +272,36 @@ public class BankManagerInterface extends Interface {
 
         Account account = selectAccount(user, "undo its last transaction", user.getAccounts());
         atm.getBM().undoTransaction(user, account);
+    }
+
+    Account selectAccount(User user, String action, ArrayList<Account> listOfAccounts) {
+        // Allows users to select an account by entering their account number. Returns that account.
+
+        System.out.println("Enter the account number you want to " + action + ": ");
+        String accountNumTo = scanner.nextLine();
+        StringBuilder accountNumToB = new StringBuilder(accountNumTo);
+
+
+        boolean valid = true;
+        for(int i = 0; i < accountNumToB.length();i++){
+            if(!Character.isDigit(accountNumToB.charAt(i))){valid = false;}}
+
+
+        if(valid) {
+            Account account = null;
+            for (Account a : listOfAccounts) {
+                if (a.accountNum == Integer.valueOf(accountNumTo)){
+                    account = a;
+                }
+            }
+
+            if (account != null) {
+                return account;
+            }
+        }
+
+        System.out.println("The account number you entered is not valid. Please try again.");
+        return selectAccount(user, action, listOfAccounts);
     }
 
     private void shutDownSystem(){

@@ -2,6 +2,7 @@ package atm;
 
 import account.*;
 import bankmanager.*;
+import interfaces.*;
 
 import java.io.*;
 import java.io.File;
@@ -21,14 +22,11 @@ public class ATM implements Serializable {
     private ArrayList<User> listOfUsers = new ArrayList<User>();
     private BankManager BM = new BankManager(this);
     private Calendar date = Calendar.getInstance();
-    private final UserInterface UserInterface;
-    private final BankManagerInterface BankManagerInterface;
+    private final Interface interfaces;
     private final Broker broker = new Broker(this, BM);
-    private final BrokerInterface brokerInterface = new BrokerInterface(this);
 
     public ATM() {
-        this.UserInterface = new UserInterface(this);
-        this.BankManagerInterface = new BankManagerInterface(this);
+        this.interfaces = new Interface(this);
         bills = new Bills(100, 100, 100, 100);
     }
 
@@ -36,7 +34,7 @@ public class ATM implements Serializable {
         return bills;
     }
 
-    BankManager getBM(){
+    public BankManager getBM(){
         return BM;
     }
 
@@ -47,18 +45,18 @@ public class ATM implements Serializable {
         System.out.println("Booting on " + sdf.format(date.getTime()));
         addSavingsInterest();
         while (running){
-            String username = BankManagerInterface.displayLoginMenu();
+            String username = interfaces.displayLoginMenu();
             if (username.equals("manager")) {
-                BankManagerInterface.displayManagerMenu(BM, this);
+                interfaces.displayManagerMenu(BM);
             } else if (username.equals("broker")) {
-                brokerInterface.displayBrokerOrUserChoice(broker);
+                interfaces.displayBrokerOrUserChoice(broker);
             } else {
-                UserInterface.displayUserMenu(getUser(username));
+                interfaces.displayUserMenu(getUser(username));
             }
         }
     }
 
-    User getUser(String username) {
+    public User getUser(String username) {
         for (User usr : listOfUsers) {
             if (usr.getUsername().equals(username)) {
                 return usr;
@@ -89,7 +87,7 @@ public class ATM implements Serializable {
         return (Calendar) date.clone();
     }
 
-    void setDate(String sdfFormattedDate){
+    public void setDate(String sdfFormattedDate){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try{
             date.setTime(sdf.parse(sdfFormattedDate));
@@ -136,7 +134,7 @@ public class ATM implements Serializable {
         return listOfUsers;
     }
 
-    void testShutDown(){
+    public void testShutDown(){
         date.add(Calendar.DATE, 1);
         try {
             File file = new File("serialized.blob");

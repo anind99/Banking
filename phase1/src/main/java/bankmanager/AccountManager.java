@@ -7,8 +7,6 @@ import atm.*;
 public class AccountManager {
 
     ATM atm;
-
-
     private int acct_counter = 1000;
 
     public AccountManager(ATM atm){

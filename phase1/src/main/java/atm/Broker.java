@@ -13,16 +13,20 @@ import bankmanager.*;
 public class Broker {
     private ATM atm;
     private BankManager bm;
-    StockBroker stockBroker;
-    MutualFundsBroker mutualFundsBroker;
+    public StockBroker stockBroker;
+    public MutualFundsBroker mutualFundsBroker;
 
-    Broker(ATM atm, BankManager Bm) {
+    public Broker(ATM atm, BankManager Bm) {
         this.atm = atm;
         this.bm = Bm;
         this.stockBroker = new StockBroker(atm);
-        this.mutualFundsBroker = new MutualFundsBroker();
+        this.mutualFundsBroker = new MutualFundsBroker(atm);
         bm.createUser("broker", "password");
 
+    }
+
+    public StockBroker getStockBroker() {
+        return stockBroker;
     }
 
 

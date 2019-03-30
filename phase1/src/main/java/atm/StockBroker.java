@@ -15,7 +15,7 @@ public class StockBroker {
         this.atm = Atm;
     }
 
-    void buyStocks(String symbol, int shares, Account sa, InvestmentPortfolio Iv) {
+    public void buyStocks(String symbol, int shares, Account sa, InvestmentPortfolio Iv) {
         boolean bought = false;
         boolean contains = false;
         for (Stock st: Iv.stockPortfolio){
@@ -56,7 +56,7 @@ public class StockBroker {
         // not implemented
         // returns a stock of Symbol symbol, that is fetched from API
         Stock st = new Stock(Symbol, Symbol, 0);
-        MutualFundsStocks Ms = new MutualFundsStocks();
+        MutualFundsStocks Ms = new MutualFundsStocks(atm);
         st.updateStock(atm.getDate());
 
         if (st.currentPrice != 0){
@@ -78,7 +78,7 @@ public class StockBroker {
         }
     }
 
-    void sellStocks(Asset SA, String symbol, int shares, InvestmentPortfolio IV) {
+    public void sellStocks(Asset SA, String symbol, int shares, InvestmentPortfolio IV) {
         boolean sold = false;
         for (Stock st: IV.stockPortfolio){
             if (st.symbol.equalsIgnoreCase(symbol)){
@@ -105,7 +105,7 @@ public class StockBroker {
         }
     }
 
-    double getTotalStockWorth(User user){
+    public double getTotalStockWorth(User user){
         double total = 0.0;
         for (Stock st: user.investments.stockPortfolio){
             total += st.getValue() * st.getNumShares();
@@ -113,7 +113,7 @@ public class StockBroker {
         return total;
     }
 
-    void viewUserStocks(User user){
+    public void viewUserStocks(User user){
         ArrayList<Stock> Iv = user.investments.stockPortfolio;
         System.out.println("User Currently owns: "+Iv.size()+" types of stocks");
         for (Stock st: Iv){

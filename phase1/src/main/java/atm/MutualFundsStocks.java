@@ -7,10 +7,12 @@ public class MutualFundsStocks {
     public ArrayList<Stock> lowRiskStocks = new ArrayList<>();
     public ArrayList<Stock> mediumRiskStocks = new ArrayList<>();
     public ArrayList<Stock> highRiskStocks = new ArrayList<>();
-    public ATM atm = new ATM();
-    public  Calendar date = atm.getDate();
+    public ATM atm;
+    public  Calendar date;
 
-    public MutualFundsStocks(){
+    public MutualFundsStocks(ATM atm){
+        this.atm = atm;
+        date = atm.getDate();
         createLowRiskStocks();
         createMediumRiskStocks();
         createHighRiskStocks();

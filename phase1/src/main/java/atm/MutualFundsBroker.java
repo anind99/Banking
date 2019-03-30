@@ -11,12 +11,14 @@ public class MutualFundsBroker {
     public MutualFund mediumRiskFund;
     public MutualFund highRiskFund;
     public MutualFundsStocks mutualFundsStocks;
-    public ATM atm = new ATM();
-    public Calendar date = atm.getDate();
+    public ATM atm;
+    public Calendar date;
 
 
-    public MutualFundsBroker(){
-        this.mutualFundsStocks = new MutualFundsStocks();
+    public MutualFundsBroker(ATM atm){
+        this.atm = atm;
+        date = atm.getDate();
+        this.mutualFundsStocks = new MutualFundsStocks(atm);
         this.lowRiskFund = new MutualFund(1, "lowRiskFund1", mutualFundsStocks.getLowRiskStocks());
         this.mediumRiskFund = new MutualFund(2, "mediumRiskFund1", mutualFundsStocks.getMediumRiskStocks());
         this.highRiskFund = new MutualFund(3, "highRiskFund1", mutualFundsStocks.getHighRiskStocks());
