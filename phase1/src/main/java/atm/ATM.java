@@ -38,7 +38,28 @@ public class ATM implements Serializable {
         return BM;
     }
 
-    public Broker getBroker() {return broker;}
+    public Broker getBroker() {
+        return broker;
+    }
+
+    public Calendar getDate(){
+        return (Calendar) date.clone();
+    }
+
+    public ArrayList<User> getListOfUsers(){
+        return listOfUsers;
+    }
+
+    public User getUser(String username) {
+        for (User usr : listOfUsers) {
+            if (usr.getUsername().equals(username)) {
+                return usr;
+            }
+        }
+        // This will never happen because we have a previous function that already checks if the user is in the
+        // listOfUser in Interface class.
+        return null;
+    }
 
     public void run(){
         boolean running = true;
@@ -58,17 +79,6 @@ public class ATM implements Serializable {
         }
     }
 
-    public User getUser(String username) {
-        for (User usr : listOfUsers) {
-            if (usr.getUsername().equals(username)) {
-                return usr;
-            }
-        }
-        // This will never happen because we have a previous function that already checks if the user is in the
-        // listOfUser in Interface class.
-        return null;
-    }
-
     private void addSavingsInterest(){
         if (date.get(Calendar.DAY_OF_MONTH) == 1){
             for (User user : listOfUsers){
@@ -84,10 +94,6 @@ public class ATM implements Serializable {
 
     }
 
-    public Calendar getDate(){
-        return (Calendar) date.clone();
-    }
-
     public void setDate(String sdfFormattedDate){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try{
@@ -100,10 +106,6 @@ public class ATM implements Serializable {
 
     public void addUserToList(User u){
         getListOfUsers().add(u);
-    }
-
-    public ArrayList<User> getListOfUsers(){
-        return listOfUsers;
     }
 
     public void testShutDown(){
