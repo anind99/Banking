@@ -93,10 +93,11 @@ public class BrokerInterface implements Serializable {
         System.out.println("Enter the number: ");
 
         Scanner scanner = new Scanner(System.in);
-        String option = scanner.next();
+        String option;
         boolean validSelection = false;
 
         while (!validSelection) {
+            option = scanner.next();
             switch (option) {
                 case "1":
                     return atm.getBroker().getMutualFundsBroker().getLowRiskFund();
