@@ -60,9 +60,9 @@ public class InvestmentInterface implements Serializable {
         System.out.println("2. Sell Stocks");
         System.out.println("3. Buy Mutual Funds");
         System.out.println("4. Sell Mutual Funds");
-        System.out.println("5. View your Stocks investmentPortfolio");
+        System.out.println("5. View your Stocks Investment Portfolio");
         System.out.println("6. View total money in stocks");
-        System.out.println("7. View your Mutual Funds investmentPortfolio");
+        System.out.println("7. View your Mutual Funds Investment Portfolio");
         System.out.println("8. Go Back");
         System.out.println("Enter the number: ");
     }
