@@ -18,6 +18,7 @@ public class InvestmentInterface implements Serializable {
     public void displayInvestmentMenu(User user) {
         boolean goBack = false;
         printOptions();
+        scanner = new Scanner(System.in);
         String option = scanner.next();
 
         while(!goBack) {
@@ -99,6 +100,7 @@ public class InvestmentInterface implements Serializable {
         System.out.println("What would you like to sell?");
 
         System.out.println("Enter Stock symbol: ");
+        scanner = new Scanner(System.in);
         String sym = scanner.next();
 
         // Makes the user re-enter the symbol if they do not have this stock.
@@ -126,6 +128,7 @@ public class InvestmentInterface implements Serializable {
     private void buyMutualFunds(User user) {
         MutualFund fundToBuy = listFunds();
         System.out.println("Enter the amount you would like to invest: ");
+        scanner = new Scanner(System.in);
         String amount = scanner.next();
 
         atm.getBroker().getMutualFundsBroker().buyMutualFunds(user, fundToBuy, Double.valueOf(amount));
@@ -134,6 +137,7 @@ public class InvestmentInterface implements Serializable {
     private void sellMutualFunds(User user) {
         viewUserMutualFunds(user);
         System.out.println("Enter the fund you would like to sell: ");
+        scanner = new Scanner(System.in);
         String name = scanner.next();
         MutualFund fundToSell = findMutualFund(user, name);
 
@@ -155,7 +159,7 @@ public class InvestmentInterface implements Serializable {
         System.out.println("2. Medium Risk Fund");
         System.out.println("3. High Risk Fund");
         System.out.println("4. Enter the number: ");
-
+        scanner = new Scanner(System.in);
         String option = scanner.next();
         boolean validSelection = false;
 

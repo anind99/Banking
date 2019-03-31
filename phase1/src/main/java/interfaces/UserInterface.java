@@ -25,6 +25,8 @@ public class UserInterface implements Serializable {
 
     public void displayUserMenu(User user) {
         boolean logout = false;
+        scanner = new Scanner(System.in);
+
         while (!logout) {
             printOptions();
             String option = scanner.next();
