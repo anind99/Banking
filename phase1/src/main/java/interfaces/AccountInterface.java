@@ -13,7 +13,6 @@ public class AccountInterface extends GeneralInterface{
     }
 
     public void displayAccountMenu(User user) {
-        boolean validselection = false;
         boolean goBack = false;
 
         while (!goBack) {
