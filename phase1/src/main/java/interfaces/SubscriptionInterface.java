@@ -16,27 +16,27 @@ public class SubscriptionInterface implements Serializable {
 
     public void displaySubscriptionMenu(User user) {
         printChoices();
-        String choice = "";
+        boolean goBack = false;
+        String choice = scanner.next();
 
-        while (!choice.equals("5")) {
-
-            choice = scanner.next();
-
+        while (!goBack) {
             switch(choice) {
-                    case "1":
+                case "1":
                     addSubscription(user);
                     break;
-                    case "2":
+                case "2":
                     removeSubscription(user);
                     break;
-                    case "3":
+                case "3":
                     atm.getSubscriber().showUserSubscriptions(user);
                     break;
-                     case "4":
+                case "4":
                     atm.getSubscriber().showAllSubscriptions();
                     break;
-                    default:
-                    System.out.println("Enter integer from 1 to 5");
+                case "5":
+                    goBack = true;
+                default:
+                    System.out.println("Choice not valid. Please enter an integer from 1 to 5.");
                     break;
 
             }
