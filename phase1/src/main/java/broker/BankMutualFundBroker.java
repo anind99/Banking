@@ -43,6 +43,8 @@ public class BankMutualFundBroker {
         bought.setNumShares(shares);
         bought.updateStock(date);
         fund.getStocks().add(bought);
+        System.out.println("The bank has bought " + shares + " shares of the stock " + bought.getName()
+                + " into the " + fund.getName() + " fund");
     }
 
     //Lets the mutual funds broker sell stocks from a specified mutual fund given that the stock exists in the fund
@@ -61,6 +63,8 @@ public class BankMutualFundBroker {
             if (stock.getSymbol().equals(symbol)) {
                 if (stock.getNumShares() <= shares) {
                     stock.decreaseNumShares(shares);
+                    System.out.println("The bank has sold " + shares + " shares of the stock " + stock.getName()
+                            + " out of the " + fund.getName() + " fund");
                     return true;
                 } else {
                     System.out.println("You do not own enough shares please try again");
