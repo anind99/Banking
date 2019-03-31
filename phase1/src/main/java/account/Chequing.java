@@ -3,7 +3,7 @@ package account;
 import atm.ATM;
 
 /**
- *Chequing is a child class of Asset and represents a chequing account.
+ *Chequing is a child class of {@link Asset} and represents a user's chequing account.
  */
 public class Chequing extends Asset {
 
@@ -14,8 +14,8 @@ public class Chequing extends Asset {
 
     /**
      * Constructor of Chequing class.
-     * Calls on super (Asset class) and also initializes an account
-     * as non-primary and updates the type {@link Account#type}.
+     * Calls on super ({@link Asset} and also initializes an account
+     * as non-primary and updates {@link Account#type}.
      * @param accountNum the unique account number
      * @param atm instance of the ATM class
      */

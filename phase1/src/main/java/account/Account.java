@@ -10,12 +10,11 @@ import java.util.Calendar;
 
 /**
  * Abstract class representing a user's bank account.
- *
  */
 public abstract class Account implements Serializable {
 
     /**
-     * The type of account.
+     * The account type (i.e chequing, saving, credit card, loc, and stock).
      */
     public String type;
     /**
