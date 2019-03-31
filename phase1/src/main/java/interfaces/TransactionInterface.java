@@ -2,14 +2,18 @@ package interfaces;
 
 import atm.*;
 import account.*;
-import bankmanager.*;
 
+import java.io.*;
 import java.util.*;
 
-public class TransactionInterface extends GeneralInterface{
+public class TransactionInterface implements Serializable {
+    private ATM atm;
+    transient Scanner scanner;
+    private GeneralInterfaceMethods general;
 
     public TransactionInterface(ATM atm) {
-        super(atm);
+        this.atm = atm;
+        this.general = new GeneralInterfaceMethods(atm);
     }
 
     public void displayTransactionMenu(User user) {
@@ -57,7 +61,7 @@ public class TransactionInterface extends GeneralInterface{
     }
 
     private void deposit(User user) {
-        ArrayList<Account> chequingAccounts = listOfAccounts(user, "chequing");
+        ArrayList<Account> chequingAccounts = general.listOfAccounts(user, "chequing");
 
         for (Account a : chequingAccounts) {
             Chequing account = (Chequing)a;
@@ -69,10 +73,10 @@ public class TransactionInterface extends GeneralInterface{
     }
 
     private void withdraw(User user) {
-        String type = selectTypeOfAccount(false, user);
-        printChoices(user, false, type);
+        String type = general.selectTypeOfAccount(false, user);
+        general.printChoices(user, false, type);
 
-        Account account = selectAccount(user, "withdraw from", listOfAccounts(user, type));
+        Account account = general.selectAccount(user, "withdraw from", general.listOfAccounts(user, type));
         boolean running = true;
 
         while (running) {
@@ -100,15 +104,15 @@ public class TransactionInterface extends GeneralInterface{
         // Method for users to transfer in.
 
         System.out.println("Which account do you want to transfer to?");
-        String type = selectTypeOfAccount(false, user);
-        printChoices(user, false, type);
-        Account accountTo = selectAccount(user, "transfer to", listOfAccounts(user, type));
+        String type = general.selectTypeOfAccount(false, user);
+        general.printChoices(user, false, type);
+        Account accountTo = general.selectAccount(user, "transfer to", general.listOfAccounts(user, type));
 
         System.out.println("Which account do you want to transfer out from?");
-        String typeTwo = selectTypeOfAccount(true, user);
-        printChoices(user, false, typeTwo);
-        Account accountFrom = selectAccount(user, "transfer from", listOfAccounts(user, typeTwo));
-        double amount = selectAmount();
+        String typeTwo = general.selectTypeOfAccount(true, user);
+        general.printChoices(user, false, typeTwo);
+        Account accountFrom = general.selectAccount(user, "transfer from", general.listOfAccounts(user, typeTwo));
+        double amount = general.selectAmount();
 
         accountTo.transferIn(amount, accountFrom);
     }
@@ -117,16 +121,16 @@ public class TransactionInterface extends GeneralInterface{
         // Method for users to transfer out.
 
         System.out.println("Which account do you want to transfer out from?");
-        String type = selectTypeOfAccount(true, user);
-        printChoices(user, false, type);
-        Account accountFrom = selectAccount(user, "transfer out from", listOfAccounts(user, type));
+        String type = general.selectTypeOfAccount(true, user);
+        general.printChoices(user, false, type);
+        Account accountFrom = general.selectAccount(user, "transfer out from", general.listOfAccounts(user, type));
 
         System.out.println("Which account do you want to transfer to?");
-        String typeTwo = selectTypeOfAccount(false, user);
-        printChoices(user, false, typeTwo);
-        Account accountTo = selectAccount(user, "transfer to", listOfAccounts(user, typeTwo));
+        String typeTwo = general.selectTypeOfAccount(false, user);
+        general.printChoices(user, false, typeTwo);
+        Account accountTo = general.selectAccount(user, "transfer to", general.listOfAccounts(user, typeTwo));
 
-        double amount = selectAmount();
+        double amount = general.selectAmount();
 
         accountFrom.transferOut(amount, accountTo);
     }
@@ -135,14 +139,38 @@ public class TransactionInterface extends GeneralInterface{
         // Method for users to pay bills.
 
         System.out.println("From which account would you like to pay the bill?");
-        String type = selectTypeOfAccount(true, user);
-        printChoices(user, false, type);
-        Account accountFrom = selectAccount(user, "pay the bill from", listOfAccounts(user, type));
+        String type = general.selectTypeOfAccount(true, user);
+        general.printChoices(user, false, type);
+        Account accountFrom = general.selectAccount(user, "pay the bill from", general.listOfAccounts(user, type));
         System.out.println("Enter the name of the receiver of the bill: ");
         scanner = new Scanner(System.in);
         String receiver = scanner.next();
-        double amount = selectAmount();
+        double amount = general.selectAmount();
 
         accountFrom.payBill(amount, receiver.trim());
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("TransactionInterface writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("TransactionInterface readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("TransactionInterface readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

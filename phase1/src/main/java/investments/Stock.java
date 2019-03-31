@@ -107,11 +107,7 @@ public class Stock implements Serializable {
                 String todayString = sdf.format(thisDate.getTime());
                 url = "https://www.quandl.com/api/v3/datasets/WIKI/" + symbol + ".json?api_key=Hr_Vc1vsvQMfwf7xeK4S" +
                         "&start_date=" + todayString + "&end_date=" + todayString;
-                System.out.println(url);
-                System.out.println(symbol);
-                System.out.println(todayString);
                 JSONObject jsonobject = readJsonFromUrl(url);
-                System.out.println(jsonobject);
                 if (jsonobject.has("dataset")){
                     if (jsonobject.getJSONObject("dataset").has("data")){
                         if (jsonobject.getJSONObject("dataset").getJSONArray("data").length() != 0){
