@@ -174,7 +174,7 @@ public class StockBroker {
 
     public void updateAllStocks(ATM atm) {
         for (User user:atm.getListOfUsers()){
-            for (Stock st:user.getInvestments().getStockPortfolio()){
+            for (Stock st:user.getInvestmentPortfolio().getStockPortfolio()){
                 st.updateStock(atm.getDate());
             }
         }
@@ -188,7 +188,7 @@ public class StockBroker {
 
     public double getTotalStockWorth(User user){
         double total = 0.0;
-        for (Stock st: user.getInvestments().getStockPortfolio()){
+        for (Stock st: user.getInvestmentPortfolio().getStockPortfolio()){
             total += st.getValue() * st.getNumShares();
         }
         return total;
@@ -200,7 +200,7 @@ public class StockBroker {
      */
 
     public void viewUserStocks(User user){
-        ArrayList<Stock> Iv = user.getInvestments().getStockPortfolio();
+        ArrayList<Stock> Iv = user.getInvestmentPortfolio().getStockPortfolio();
         System.out.println("User Currently owns: "+Iv.size()+" types of stocks");
         for (Stock st: Iv){
             System.out.println("Stock: "+st.getSymbol()+" Shares: "+st.getNumShares());
@@ -209,7 +209,7 @@ public class StockBroker {
 
     public String stocksToString(User user){
         String totalStocks = "";
-        for (Stock stock : user.getInvestments().getStockPortfolio()){
+        for (Stock stock : user.getInvestmentPortfolio().getStockPortfolio()){
             totalStocks += stock.toString();
         } return totalStocks + "Total value of all your stocks:" + getTotalStockWorth(user);
     }

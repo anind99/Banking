@@ -69,7 +69,7 @@ public class BankMutualFundBroker {
             double oldPercent = fund.getInvestors().get(shareholder).get(1);
             double newPercent = oldPercent / increase;
             fund.getInvestors().get(shareholder).set(1, newPercent);
-            shareholder.getInvestments().getMutualFundPortfolio().get(fund).set(1, newPercent);
+            shareholder.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).set(1, newPercent);
         }
     }
 }

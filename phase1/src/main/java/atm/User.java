@@ -13,7 +13,7 @@ public class User implements Serializable {
     private String username;
     private String pass;
     protected ArrayList<Account> accounts;
-    protected InvestmentPortfolio investments;
+    protected InvestmentPortfolio investmentPortfolio;
     protected ArrayList<subscription> subscriptions;
 
     public User(String username, String password, ArrayList accounts){
@@ -33,8 +33,8 @@ public class User implements Serializable {
         return sum;
     }
 
-    public InvestmentPortfolio getInvestments(){
-        return investments;
+    public InvestmentPortfolio getInvestmentPortfolio(){
+        return investmentPortfolio;
     }
 
     public ArrayList<Account> getAccounts(){
@@ -84,6 +84,7 @@ public class User implements Serializable {
     public void setUsername(String s){
         this.username = s;
     }
+
     public void setPassword(String s){
         this.pass = s;
     }
