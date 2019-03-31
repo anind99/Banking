@@ -11,6 +11,7 @@ public class UserInterface {
     private final TransactionInterface transactionInterface;
     private final InvestmentInterface investmentInterface;
     private final UpdateProfileInterface updateProfileInterface;
+    private final SubscriptionInteface subscriptionInteface;
 
     public UserInterface(ATM atm) {
         this.atm = atm;
@@ -18,6 +19,7 @@ public class UserInterface {
         this.transactionInterface = new TransactionInterface(atm);
         this.investmentInterface = new InvestmentInterface(atm);
         this.updateProfileInterface = new UpdateProfileInterface(atm);
+        this.subscriptionInteface = new SubscriptionInteface(atm);
     }
 
     public void displayUserMenu(User user) {
@@ -36,6 +38,8 @@ public class UserInterface {
                 case "4":
                     this.updateProfileInterface.displayUpdateProfileMenu(user);
                 case "5":
+                    this.subscriptionInteface.displaySubscriptionMenu(user);
+                case "6":
                     logout = true;
                     break;
                 default:
@@ -52,7 +56,8 @@ public class UserInterface {
         System.out.println("2. Manage Accounts");
         System.out.println("3. Manage Investments");
         System.out.println("4. Update User Profile");
-        System.out.println("5. Logout");
+        System.out.println("5: Manage Subscriptions");
+        System.out.println("6. Logout");
         System.out.println("Enter a number: ");
     }
 }
