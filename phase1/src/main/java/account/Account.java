@@ -244,11 +244,11 @@ public abstract class Account implements Serializable {
             removeMoney(amount);
             this.readAndWrite.payBillWriting(amount, receiver, accountNum);
             System.out.println("You paid " + amount + " to " + receiver);
+            updateTransactionList(new Transaction(receiver, amount));
         }
         else{
             System.out.println("\nThis transaction is not possible: insufficient funds");
         }
-        updateTransactionList(new Transaction(receiver, amount));
     }
 
     public void updateTransactionList(Transaction transaction){
