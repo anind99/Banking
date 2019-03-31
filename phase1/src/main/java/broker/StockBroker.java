@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class StockBroker implements Serializable {
 
     /**
-     * CLass to Implement Functions of Broker related to stocks.
+     * Class to Implement Functions of Broker related to stocks.
      * It has an attribute function of type ATM, so all the methods
      * can be calibrated to ATM.date.
      *

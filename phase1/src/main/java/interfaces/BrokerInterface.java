@@ -3,6 +3,7 @@ package interfaces;
 import atm.*;
 import investments.MutualFund;
 
+import java.awt.*;
 import java.io.*;
 import java.util.Scanner;
 
@@ -13,8 +14,9 @@ public class BrokerInterface implements Serializable {
         this.atm = atm;
     }
 
+    transient Scanner scanner = new Scanner(System.in);
+
     void displayBrokerMenu(){
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Select an option:");
         System.out.println("1. Buy Funds");
         System.out.println("2. Sell Funds");
@@ -43,13 +45,10 @@ public class BrokerInterface implements Serializable {
                 }
             }
         }
-        scanner.close();
     }
 
     private void buyFunds() {
         MutualFund fundToBuy = listFunds();
-        Scanner scanner = new Scanner(System.in);
-
 
         System.out.println("Enter the stock symbol: ");
         String symbol = scanner.next();
@@ -57,14 +56,13 @@ public class BrokerInterface implements Serializable {
         System.out.println("Enter the amount of shares: ");
         String shares = scanner.next();
 
-        atm.getBroker().getMutualFundsBroker().buyStocksFund(fundToBuy, symbol, Integer.valueOf(shares));
-        scanner.close();
+        if (checkIfValid(shares)){
+        atm.getBroker().getMutualFundsBroker().buyStocksFund(fundToBuy, symbol, Integer.valueOf(shares));}
+        else{System.out.println("Not a valid input, please try again");}
     }
 
     private void sellFunds() {
         MutualFund fundToSell = listFunds();
-        Scanner scanner = new Scanner(System.in);
-
 
         System.out.println("Enter the stock symbol: ");
         String symbol = scanner.next();
@@ -72,12 +70,21 @@ public class BrokerInterface implements Serializable {
         System.out.println("Enter the amount of shares: ");
         String shares = scanner.next();
 
-        atm.getBroker().getMutualFundsBroker().sellStocksFund(fundToSell, symbol, Integer.valueOf(shares));
-        scanner.close();
+        if (checkIfValid(shares)){
+        atm.getBroker().getMutualFundsBroker().sellStocksFund(fundToSell, symbol, Integer.valueOf(shares));}
+        else{System.out.println("Not a valid input, please try again");}
+    }
+
+    private boolean checkIfValid(String shares){
+       StringBuilder s = new StringBuilder(shares);
+       boolean valid = true;
+
+       for (int i = 0; i < s.length(); i++){
+           if(!Character.isDigit(s.charAt(i))){valid = false;}
+       }return valid;
     }
 
     private MutualFund listFunds() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Select the type of fund:");
         System.out.println("1. Low Risk Fund");
         System.out.println("2. Medium Risk Fund");
@@ -100,7 +107,7 @@ public class BrokerInterface implements Serializable {
                     break;
             }
         }
-        scanner.close();
+
         return null;
     }
 

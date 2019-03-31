@@ -33,6 +33,8 @@ public class BankMutualFundBroker implements Serializable {
         for(Stock stock : fund.getStocks()){
             if (stock.getSymbol().equals(symbol)){
                 stock.increaseNumShares(shares);
+                System.out.println("The bank has bought " + shares + " shares of the stock " + stock.getName()
+                        + " into the " + fund.getName() + " fund");
                 return true;}
         }return false;
     }
