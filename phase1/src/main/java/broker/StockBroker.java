@@ -23,7 +23,6 @@ public class StockBroker {
      * buyNewStock(): Helper function to buyStocks(); purchases a stock not already
      * in the user portfolio.
      * fetchStock(): Creates of a new stock of the given symbol.
-     * fetchStockHelper(): Helper function to fetchStock().
      * sellStocks(): Sells the stock with the given symbol from user portfolio.
      * getTotalStockWorth(): Prints the total net worth of the user in Stocks.
      * viewUserStocks(): Prints all the Stocks and Shares owned by the user.
@@ -85,7 +84,8 @@ public class StockBroker {
      */
 
     private boolean buyNewStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
-
+        boolean valid = atm.getBroker().checkIfStockIsValid(symbol);
+        if (valid){
         Stock st = fetchStock(symbol);
         if (st.getValue() != 0 && shares > 0){
             if (st.getValue() * shares <= sa.getBalance()){
@@ -101,47 +101,24 @@ public class StockBroker {
             else {
                 System.out.println("There is no stock of symbol: " + symbol);
             }
-        }
+        }}
         return false;
     }
 
     /**
      * fetchStock(): Returns a stock of the given symbol.
-     * @param Symbol: Symbol of stock.
+     * @param symbol: Symbol of stock.
      * @return Stock object of given symbol
      */
 
-    //TODO Need to check for symbol
-    public Stock fetchStock(String Symbol){
 
-        Stock st = new Stock(Symbol, Symbol, 0);
-        MutualFundsStocks Ms = new MutualFundsStocks(atm);
+    public Stock fetchStock(String symbol){
+        String stockName = atm.getBroker().companyNameFromSymbol(symbol);
+        Stock st = new Stock(symbol, stockName, 0);
         st.updateStock(atm.getDate());
-
-        if (st.getValue() != 0){
-            fetchStockHelper(st, Ms.lowRiskStocks);
-            fetchStockHelper(st, Ms.mediumRiskStocks);
-            fetchStockHelper(st, Ms.highRiskStocks);
-
-        }
-
         return st;
-
     }
 
-    /**
-     * fetchStockHelper(): Finds a stock in a given arraylist, and matches names.
-     * @param s: Stock to be found.
-     * @param stocklist: Arraylist to be searched.
-     */
-
-    private void fetchStockHelper(Stock s, ArrayList<Stock> stocklist){
-        for (Stock st: stocklist){
-            if (st.getSymbol().equalsIgnoreCase(s.getSymbol())){
-                s.setName(st.getName());
-            }
-        }
-    }
 
     /**
      * sellStocks(): sells stocks of given symbol and share amount for user.
