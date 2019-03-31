@@ -86,6 +86,7 @@ public class ATM implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Booting on " + sdf.format(date.getTime()));
         addSavingsInterest();
+        this.getBroker().getMutualFundsBroker().updateMutualFunds();
         while (running){
             String username = interfaces.displayLoginMenu();
             if (username.equals("manager")) {

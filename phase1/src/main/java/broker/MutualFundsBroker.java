@@ -57,7 +57,7 @@ public class MutualFundsBroker {
     }
 
     public void sellStocksFund(MutualFund fundToSell, String symbol, Integer valueOf) {
-        bankMutualFundBroker.buyStocksFund(fundToSell, symbol, valueOf);
+        bankMutualFundBroker.sellStocksFund(fundToSell, symbol, valueOf);
     }
 
     //updates the price the fund every day upon ATM restart
