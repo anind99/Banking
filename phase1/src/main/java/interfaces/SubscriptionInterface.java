@@ -15,11 +15,11 @@ public class SubscriptionInterface implements Serializable {
     }
 
     public void displaySubscriptionMenu(User user) {
-        printChoices();
-        boolean goBack = false;
-        String choice = scanner.next();
 
+        boolean goBack = false;
+        printChoices();
         while (!goBack) {
+            String choice = scanner.next();
             switch(choice) {
                 case "1":
                     addSubscription(user);
@@ -40,8 +40,11 @@ public class SubscriptionInterface implements Serializable {
                     break;
 
             }
+            System.out.println("Enter choice: ");
         }
     }
+
+
 
     private void printChoices(){
 

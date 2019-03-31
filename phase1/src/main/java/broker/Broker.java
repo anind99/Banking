@@ -25,7 +25,7 @@ public class Broker implements Serializable {
 
     public Broker(ATM atm, BankManager bm) {
         this.atm = atm;
-        this.stockBroker = new StockBroker(atm, this);
+        this.stockBroker = new StockBroker(atm);
         this.mutualFundsBroker = new MutualFundsBroker(atm, this);
         JSONObject jsonObject = loadJSONFromText();
         json = jsonObject.toString();
