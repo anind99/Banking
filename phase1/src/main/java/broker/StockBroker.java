@@ -157,10 +157,9 @@ public class StockBroker implements Serializable {
 
     /**
      * updateAllStocks(): Updates all the stocks in the atm to their current value.
-     * @param atm: atm to be updated.
      */
 
-    public void updateAllStocks(ATM atm) {
+    public void updateAllStocks() {
         for (User user:atm.getListOfUsers()){
             for (Stock st:user.getInvestmentPortfolio().getStockPortfolio()){
                 st.updateStock(atm.getDate());
