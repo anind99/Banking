@@ -78,6 +78,7 @@ public class Bills implements Serializable {
         amountToWithdraw = maximizeBillWithdrawal(amountToWithdraw, 20, 2);
         amountToWithdraw = maximizeBillWithdrawal(amountToWithdraw, 10, 1);
         maximizeBillWithdrawal(amountToWithdraw, 5, 0);
+        alertManager();
 
     }
 
