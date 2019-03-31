@@ -21,16 +21,23 @@ public class SubscriptionInterface {
 
             choice = scanner.next();
 
-            if (choice.equals("1")) {
-                addSubscription(user);
-            } else if (choice.equals("2")) {
-                removeSubscription(user);
-            } else if (choice.equals("3")) {
-                atm.getSubscriber().showUserSubscriptions(user);
-            } else if (choice.equals("4")) {
-                atm.getSubscriber().showAllSubscriptions();
-            } else {
-                System.out.println("Enter integer from 1 to 5");
+            switch(choice) {
+                    case "1":
+                    addSubscription(user);
+                    break;
+                    case "2":
+                    removeSubscription(user);
+                    break;
+                    case "3":
+                    atm.getSubscriber().showUserSubscriptions(user);
+                    break;
+                     case "4":
+                    atm.getSubscriber().showAllSubscriptions();
+                    break;
+                    default:
+                    System.out.println("Enter integer from 1 to 5");
+                    break;
+
             }
         }
     }
