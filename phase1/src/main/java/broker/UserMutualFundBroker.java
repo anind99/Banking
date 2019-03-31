@@ -3,17 +3,16 @@ package broker;
 import account.Account;
 import atm.ATM;
 import atm.User;
-import investments.FundsTrader;
 import investments.MutualFund;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserMutualFundBroker {
-    private final FundsTrader fundsTrader;
+    private final BankMutualFundBroker bankMutualFundBroker;
 
     public UserMutualFundBroker(ATM atm) {
-        this.fundsTrader = new FundsTrader(atm);
+        this.bankMutualFundBroker = new BankMutualFundBroker(atm);
     }
 
     // calculate the broker free for buying this mutual fund
@@ -58,7 +57,7 @@ public class UserMutualFundBroker {
         }
         if(enoughStockBalance){
             if (!possibleToBuy(fund, amount)){
-                fundsTrader.refillFunds(fund, amount);}
+                bankMutualFundBroker.refillFunds(fund, amount);}
             updateFundInvestors(user, fund, amount);
             for (Account account: user.getAccounts()){
                 if (account.getType().equals("stock")){
