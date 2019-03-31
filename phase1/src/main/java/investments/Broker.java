@@ -24,5 +24,9 @@ public class Broker {
     public MutualFundsBroker getMutualFundsBroker() {
         return mutualFundsBroker;
     }
+
+    public boolean checkIfStockIsValid(String symbol){
+
+    }
 }
 
