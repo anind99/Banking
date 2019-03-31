@@ -177,7 +177,7 @@ public class InvestmentInterface {
 
     private Asset findStockAccount(User user) {
         for (Account account : user.getAccounts()) {
-            if (account.getType().equals("stock")) {
+            if (account.getType().equalsIgnoreCase("stock")) {
                 return (Asset)account;
             }
         }

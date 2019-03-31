@@ -34,7 +34,7 @@ public class Subscriber {
 
 
 
-    void addSubscription(User user, String name){
+    public void addSubscription(User user, String name){
         CreditCard hascredit = checkCredit(user);
 
         subscription s;
@@ -125,7 +125,12 @@ public class Subscriber {
                 CreditCard userCred = checkCredit(user);
                 if (userCred != null){
                     for (subscription sub: user.getSubscriptions()){
+                        double m = userCred.getBalance();
                         userCred.removeMoney(sub.getCost());
+                        if (userCred.getBalance() == m){
+                            user.removeSubsciption(sub.getName());
+                            System.out.println("Not enough funds for subscription: "+sub.getName());
+                        }
                     }
                 } else {
                     user.removeAllSubscriptions();
