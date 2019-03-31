@@ -12,7 +12,7 @@ public class Interface implements Serializable {
     private final BankManagerInterface bankManagerInterface;
     private final UserInterface userInterface;
     private final BrokerInterface brokerInterface;
-    protected Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
 
     public Interface(ATM atm) {
         this.atm = atm;

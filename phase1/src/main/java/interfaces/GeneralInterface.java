@@ -9,7 +9,7 @@ import java.util.*;
 
 public class GeneralInterface implements Serializable {
     ATM atm;
-    Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
 
     public GeneralInterface(ATM atm) {
         this.atm = atm;

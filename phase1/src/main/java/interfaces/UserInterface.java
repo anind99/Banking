@@ -5,7 +5,7 @@ import atm.*;
 import java.util.*;
 
 public class UserInterface {
-    private Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
     private final ATM atm;
     private final AccountInterface accountInterface;
     private final TransactionInterface transactionInterface;
