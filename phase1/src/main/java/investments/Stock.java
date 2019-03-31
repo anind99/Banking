@@ -131,7 +131,7 @@ public class Stock {
                     return false;
                 }
             } catch (IOException e){
-                System.out.println("IOException in Stock.java. Are you connected to the internet?");
+                System.out.println("IOException in Stock.java. Did you pick a non-existing symbol?");
                 System.exit(-1);
             }
         }

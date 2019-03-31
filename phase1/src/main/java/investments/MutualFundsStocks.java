@@ -36,21 +36,21 @@ public class MutualFundsStocks {
         mediumRiskStocks.add(new Stock("MICROSOFT CORP","MSFT", 0.0));
         mediumRiskStocks.add(new Stock("AMAZON COM INC","AMZN", 0.0));
         mediumRiskStocks.add(new Stock("APPLE INC","AAPL", 0.0));
-        mediumRiskStocks.add(new Stock("AURORA CANNABIS INC","ACB",0.0));
-        mediumRiskStocks.add(new Stock("HEXO CORP","HEXO",0.0));
-        mediumRiskStocks.add(new Stock("CRONOS GROUP INC","CRON",0.0));
+        mediumRiskStocks.add(new Stock("PAYPAL INC","PYPL",0.0));
+        mediumRiskStocks.add(new Stock("Expedia Group, Inc.","EXPE",0.0));
+        mediumRiskStocks.add(new Stock("Starbucks","SBUX",0.0));
         for (Stock stock : mediumRiskStocks){
             stock.increaseNumShares(1000);
             stock.updateStock(date);}
     }
 
     public void createHighRiskStocks(){
-        highRiskStocks.add(new Stock("AURORA CANNABIS INC","ACB",0.0));
-        highRiskStocks.add(new Stock("HEXO CORP","HEXO",0.0));
-        highRiskStocks.add(new Stock("CRONOS GROUP INC","CRON",0.0));
-        highRiskStocks.add(new Stock("CANOPY GROWTH CORPORATION","CGC",0.0));
-        highRiskStocks.add(new Stock("CENTURYLINK INC","CTL",0.0));
-        highRiskStocks.add(new Stock("ALTRIA GROUP INC","MO",0.0));
+        highRiskStocks.add(new Stock("Starbucks","SBUX",0.0));
+        highRiskStocks.add(new Stock("Visa Inc","V",0.0));
+        highRiskStocks.add(new Stock("BAIDU INC","BIDU",0.0));
+        highRiskStocks.add(new Stock("Barrick Gold Corporation","GOLD",0.0));
+        highRiskStocks.add(new Stock("22nd Century Group Inc","XXII",0.0));
+        highRiskStocks.add(new Stock("Smucker","SJM",0.0));
         for (Stock stock : highRiskStocks){
             stock.increaseNumShares(1000);
             stock.updateStock(date);}
