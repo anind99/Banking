@@ -87,6 +87,7 @@ public class Subscriber implements Serializable {
                     cost = -1.00;
                     System.out.println("Enter double greater than 0");
                 } else {
+                    atm.getSubscriptions().addSubscription(name, cost);
                     return new Subscription(name, cost);
                 }
 
