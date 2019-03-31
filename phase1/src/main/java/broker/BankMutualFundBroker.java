@@ -66,7 +66,7 @@ public class BankMutualFundBroker {
                 System.out.println("This stock does not exists in this fund");
             }
         } else {
-            System.out.println("Not a valid symbol, please try again")
+            System.out.println("Not a valid symbol, please try again");
         }
     }
 
