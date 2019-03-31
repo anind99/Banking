@@ -17,15 +17,15 @@ public class Debt extends Account{
 
     //Removing money from a debt account will increase its balance
     public void removeMoney(double amount){
-        if (checkMaxDebt(this.balance += amount)) {
+        if (checkFundsSufficient(amount)) {
             System.out.println("This account has hit the maximum amount of debt! Transaction not possible!");
         } else {
             this.balance += amount;
         }
     }
 
-    private boolean checkMaxDebt(double balance){
-        // Return true if balance has hit the maximum amount of debt and false otherwise.
-        return balance <= maxDebt;
+    @Override
+    public boolean checkFundsSufficient(double amount) {
+        return (balance + amount) >= maxDebt;
     }
 }
