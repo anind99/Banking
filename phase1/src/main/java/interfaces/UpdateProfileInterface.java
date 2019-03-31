@@ -10,14 +10,13 @@ import java.util.Scanner;
 
 public class UpdateProfileInterface implements Serializable {
     private final ATM atm;
-    private Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
 
     public UpdateProfileInterface(ATM atm) {
         this.atm = atm;
     }
 
     public void displayUpdateProfileMenu(User user) {
-        boolean validselection = false;
         boolean goBack = false;
 
         while (!goBack) {

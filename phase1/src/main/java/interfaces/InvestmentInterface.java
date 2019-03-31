@@ -9,7 +9,7 @@ import java.util.*;
 
 public class InvestmentInterface implements Serializable {
     private final ATM atm;
-    private Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
 
     public InvestmentInterface(ATM atm) {
         this.atm = atm;

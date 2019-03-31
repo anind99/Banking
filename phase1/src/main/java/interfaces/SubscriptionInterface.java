@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class SubscriptionInterface implements Serializable {
     private final ATM atm;
-    private Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
 
     public SubscriptionInterface(ATM a){
         this.atm = a;
