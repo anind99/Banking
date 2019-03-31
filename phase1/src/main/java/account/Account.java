@@ -241,6 +241,7 @@ public abstract class Account implements Serializable {
     public void payBill(double amount, String receiver){
         boolean sufficientFunds = checkFundsSufficient(amount);
         if(sufficientFunds){
+            removeMoney(amount);
             this.readAndWrite.payBillWriting(amount, receiver, accountNum);
             System.out.println("You paid " + amount + " to " + receiver);
         }
