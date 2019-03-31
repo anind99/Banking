@@ -18,6 +18,7 @@ public class SubscriptionInterface implements Serializable {
 
         boolean goBack = false;
         printChoices();
+        scanner = new Scanner(System.in);
         while (!goBack) {
             String choice = scanner.next();
             switch(choice) {
@@ -59,12 +60,14 @@ public class SubscriptionInterface implements Serializable {
 
     private void addSubscription(User user){
         System.out.println("Enter name of Subscription.");
+        scanner = new Scanner(System.in);
         String name = scanner.next();
         atm.getSubscriber().addSubscription(user, name);
     }
 
     private void removeSubscription(User user){
         System.out.println("Enter name of Subscription.");
+        scanner = new Scanner(System.in);
         String name = scanner.next();
         atm.getSubscriber().removeSubscription(user, name);
     }

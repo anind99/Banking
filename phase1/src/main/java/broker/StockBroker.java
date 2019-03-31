@@ -36,17 +36,6 @@ public class StockBroker implements Serializable {
         this.atm = Atm;
     }
 
-    public static void main(String args[]){
-        ATM Atm = new ATM();
-        Atm.setDate("2018-01-01");
-        updateTest(Atm);
-    }
-
-    private static void updateTest(ATM Atm){
-        Stock s = new Stock("Agilent Technologies Inc.", "AA", 1.00);
-        s.updateStock(Atm.getDate());
-    }
-
     /**
      *buyStocks():
      * Buys stocks of given share amount for a user.
