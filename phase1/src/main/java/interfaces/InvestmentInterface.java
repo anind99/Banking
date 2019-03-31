@@ -2,7 +2,7 @@ package interfaces;
 
 import atm.*;
 import account.*;
-import investments.MutualFund;
+import investments.*;
 
 import java.util.*;
 
@@ -66,10 +66,17 @@ public class InvestmentInterface {
         System.out.println("Enter the number: ");
     }
 
+    // TODO: Check whether stock symbol is valid
     private void buyStocks(User user) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Stock symbol: ");
         String symbol = scanner.next();
+
+        while (!atm.getBroker().checkIfStockIsValid(symbol)) {
+            System.out.println("Stock symbol is not valid. Please enter again: ");
+            symbol = scanner.next();
+        }
+
         System.out.println("Enter number of shares: ");
 
         int shares;
@@ -93,6 +100,13 @@ public class InvestmentInterface {
 
         System.out.println("Enter Stock symbol: ");
         String sym = scanner.next();
+
+        // Makes the user re-enter the symbol if they do not have this stock.
+        while (!atm.getBroker().getStockBroker().checkIfUserHasStock(user, sym)) {
+            System.out.println("Stock symbol is not valid. Please enter again: ");
+            sym = scanner.next();
+        }
+
         System.out.println("Enter number of shares: ");
         int shares;
         try {

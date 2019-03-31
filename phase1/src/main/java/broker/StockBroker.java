@@ -215,5 +215,14 @@ public class StockBroker {
             totalStocks += stock.toString();
         } return totalStocks + "Total value of all your stocks:" + getTotalStockWorth(user);
     }
+
+    public boolean checkIfUserHasStock(User user, String symbol) {
+        for (Stock stock : user.getInvestmentPortfolio().getStockPortfolio()) {
+            if (stock.getSymbol().equals(symbol)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
