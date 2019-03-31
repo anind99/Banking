@@ -9,40 +9,65 @@ import java.util.Calendar;
 
 public class BankMutualFundBroker {
     public Calendar date;
+    public ATM atm;
 
     public BankMutualFundBroker(ATM atm){
+        this.atm = atm;
         this.date = atm.getDate();
     }
 
-
-    //TODO check is symbol is valid and add valid string name wait for alan to make the list
     //Lets the mutual funds broker buy stocks into a specified mutual fund
     public void buyStocksFund(MutualFund fund, String symbol, int shares){
-        boolean found = false;
+        boolean valid = atm.getBroker().checkIfStockIsValid(symbol);
+        if (valid){
+        boolean found = checkIfStockOwned(fund, symbol, shares);
+        if(!found){
+            buyStockBank(fund, symbol, shares);
+            }
+        }else{System.out.println("Not a valid symbol, please try again");}
+    }
+
+    //Update the number of shares of a certain stock if the bank owns the stock in the mutual fund
+    public boolean checkIfStockOwned(MutualFund fund, String symbol, int shares){
         for(Stock stock : fund.getStocks()){
             if (stock.getSymbol().equals(symbol)){
                 stock.increaseNumShares(shares);
-                found = true;}
-        }if(!found){
-            Stock bought = new Stock(symbol, symbol,0.0);
-            bought.setNumShares(shares);
-            bought.updateStock(date);
-            fund.getStocks().add(bought);
-        }
+                return true;}
+        }return false;
     }
+
+    //buy a certain number of shares of a new stock for a mutual fund
+    public void buyStockBank(MutualFund fund, String symbol, int shares){
+        String stockName = atm.getBroker().companyNameFromSymbol(symbol);
+        Stock bought = new Stock(symbol, stockName,0.0);
+        bought.setNumShares(shares);
+        bought.updateStock(date);
+        fund.getStocks().add(bought);
+    }
+
 
     //TODO check is symbol is valid wait for alan to make the list
     //Lets the mutual funds broker sell stocks from a specified mutual fund
     public void sellStocksFund(MutualFund fund, String symbol, int shares) {
-        boolean found = false;
-        for (Stock stock : fund.getStocks()) {
-            if (stock.getSymbol().equals(symbol)) {
-                found = true;
-                if (stock.getNumShares() <= shares) {
-                    stock.decreaseNumShares(shares);
-                } else {System.out.println("You do not own enough shares please try again");}
+        boolean valid = atm.getBroker().checkIfStockIsValid(symbol);
+        if (valid) {
+            boolean found = false;
+            for (Stock stock : fund.getStocks()) {
+                if (stock.getSymbol().equals(symbol)) {
+                    found = true;
+                    if (stock.getNumShares() <= shares) {
+                        stock.decreaseNumShares(shares);
+                    } else {
+                        System.out.println("You do not own enough shares please try again");
+                    }
+                }
             }
-        }if (!found) {System.out.println("This stock does not exists in this fund");}
+            if (!found) {
+                System.out.println("This stock does not exists in this fund");
+            }
+        } else {
+            System.out.println("Not a valid symbol, please try again")
+        }
     }
 
     // buy more shares of the Stocks in a mutual fund a user wants to invest in so we put all the users money in shares
