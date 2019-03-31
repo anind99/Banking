@@ -75,11 +75,14 @@ public class User implements Serializable {
     }
 
     public void removeSubsciption(String name){
+        Subscription removal = null;
         for (Subscription sub: subscriptions){
             if (sub.getName().equalsIgnoreCase(name)){
-                subscriptions.remove(sub);
+                removal = sub;
+                break;
             }
         }
+        subscriptions.remove(removal);
     }
 
     public void setUsername(String s){

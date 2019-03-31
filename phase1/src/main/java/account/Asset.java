@@ -3,22 +3,27 @@ package account;
 import atm.ATM;
 
 /**
- *
+ * Asset is a child of {@link Account} and is an abstract class
+ * for all asset accounts: {@link Chequing}, {@link Savings}, and {@link StockAccount}.
  */
 public abstract class Asset extends Account{
 
+    /**
+     * Asset constructor calls on super {@link Account}.
+     * @param accountNum unique account number
+     * @param atm instance of the ATM
+     */
     public Asset(int accountNum, ATM atm) {
-
         super(accountNum, atm);
     }
 
-        //Adding money to an asset account will increase its balance
-        public void addMoney(double amount){balance += amount;}
 
-        //Removing money from an asset account will decrease its balance this will be implemented in children
-        // but if it creases might need to implement is as an abstract method here as well
-        //public abstract boolean removeMoney(double amount); { balance -= amount;
-
-
+    /**
+     * Adds money to the account and increases the balance.
+     * @param amount dollar amount added into the account
+     */
+    public void addMoney(double amount){
+        balance += amount;
     }
+}
 
