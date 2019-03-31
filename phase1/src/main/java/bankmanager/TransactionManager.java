@@ -14,7 +14,7 @@ public class TransactionManager{
             String transactionType = acct.getLastTransaction().getTransactionType();
 
             if (transactionType.equalsIgnoreCase("deposit")) {
-                undoDeposit(acct);
+                System.out.println("Deposit Transactions Cannot be undone!");
             } else if (transactionType.equals("withdraw")) {
                 undoWithdraw(acct);
             } else if (transactionType.equalsIgnoreCase("transferin")){
@@ -27,10 +27,10 @@ public class TransactionManager{
         }
     }
 
-    protected void undoDeposit(Account acct) {
-        acct.removeMoney(acct.getLastTransaction().getTransactionAmount());
-        removeLastTransactionFromList(acct);
-    }
+//    protected void undoDeposit(Account acct) {
+//        acct.removeMoney(acct.getLastTransaction().getTransactionAmount());
+//        removeLastTransactionFromList(acct);
+//    }
 
     protected void undoWithdraw(Account acct) {
         acct.addMoney(acct.getLastTransaction().getTransactionAmount());
@@ -39,32 +39,32 @@ public class TransactionManager{
 
     protected void undoTransferIn(User usr, Account acct) {
         // TransferAct refers to the account that was transferred to.
-        Account TransferAct = null;
-        for (Account ac2:usr.getAccounts()){
-            if (ac2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()){
-                TransferAct = ac2;
+        Account TransferAcct = null;
+        for (Account acct2:usr.getAccounts()){
+            if (acct2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()){
+                TransferAcct = acct2;
             }
         }
-        if (TransferAct != null) {
+        if (TransferAcct != null) {
             double amount = acct.getLastTransaction().getTransactionAmount();
             acct.removeMoney(amount);
-            TransferAct.addMoney(amount);
+            TransferAcct.addMoney(amount);
             removeLastTransactionFromList(acct);
         }
     }
 
     protected void undoTransferOut(User usr, Account acct) {
         // TransferAct refers to the account that was transferred from.
-        Account TransferAct = null;
-        for (Account ac2 : usr.getAccounts()) {
-            if (ac2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()) {
-                TransferAct = ac2;
+        Account TransferAcct = null;
+        for (Account acct2 : usr.getAccounts()) {
+            if (acct2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()) {
+                TransferAcct = acct2;
             }
         }
-        if (TransferAct != null) {
+        if (TransferAcct != null) {
             double amount = acct.getLastTransaction().getTransactionAmount();
             acct.addMoney(amount);
-            TransferAct.removeMoney(amount);
+            TransferAcct.removeMoney(amount);
             removeLastTransactionFromList(acct);
         }
     }

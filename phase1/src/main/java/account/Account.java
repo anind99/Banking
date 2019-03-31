@@ -207,7 +207,7 @@ public abstract class Account implements Serializable {
     public void deposit() {
         Double amount = this.readAndWrite.depositReader();
         addMoney(amount);
-        updateTransactionList(new Transaction(amount, "deposit"));
+        //updateTransactionList(new Transaction(amount, "deposit"));
     }
 
     /**
