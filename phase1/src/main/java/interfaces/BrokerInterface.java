@@ -13,9 +13,8 @@ public class BrokerInterface implements Serializable {
         this.atm = atm;
     }
 
-    private Scanner scanner = new Scanner(System.in);
-
     void displayBrokerMenu(){
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Select an option:");
         System.out.println("1. Buy Funds");
         System.out.println("2. Sell Funds");
@@ -44,10 +43,13 @@ public class BrokerInterface implements Serializable {
                 }
             }
         }
+        scanner.close();
     }
 
     private void buyFunds() {
         MutualFund fundToBuy = listFunds();
+        Scanner scanner = new Scanner(System.in);
+
 
         System.out.println("Enter the stock symbol: ");
         String symbol = scanner.next();
@@ -56,10 +58,13 @@ public class BrokerInterface implements Serializable {
         String shares = scanner.next();
 
         atm.getBroker().getMutualFundsBroker().buyStocksFund(fundToBuy, symbol, Integer.valueOf(shares));
+        scanner.close();
     }
 
     private void sellFunds() {
         MutualFund fundToSell = listFunds();
+        Scanner scanner = new Scanner(System.in);
+
 
         System.out.println("Enter the stock symbol: ");
         String symbol = scanner.next();
@@ -68,9 +73,11 @@ public class BrokerInterface implements Serializable {
         String shares = scanner.next();
 
         atm.getBroker().getMutualFundsBroker().sellStocksFund(fundToSell, symbol, Integer.valueOf(shares));
+        scanner.close();
     }
 
     private MutualFund listFunds() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Select the type of fund:");
         System.out.println("1. Low Risk Fund");
         System.out.println("2. Medium Risk Fund");
@@ -93,7 +100,7 @@ public class BrokerInterface implements Serializable {
                     break;
             }
         }
-
+        scanner.close();
         return null;
     }
 

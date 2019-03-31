@@ -35,7 +35,8 @@ public class ATM implements Serializable {
         this.BM = new BankManager(this);
         this.listOfUsers = new ArrayList<User>();
         this.date = Calendar.getInstance();
-        this.date.add(Calendar.YEAR, -3);
+        this.date.add(Calendar.YEAR, -1);
+        this.date.add(Calendar.MONTH, -3);
         this.broker = new Broker(this, BM);
         this.subscriptions = new AvailableSubscriptions();
         this.subscriber = new Subscriber(this);
