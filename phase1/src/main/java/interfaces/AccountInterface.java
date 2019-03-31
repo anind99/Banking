@@ -2,14 +2,18 @@ package interfaces;
 
 import atm.*;
 import account.*;
-import bankmanager.*;
 
+import java.io.*;
 import java.util.*;
 
-public class AccountInterface extends GeneralInterface{
+public class AccountInterface implements Serializable {
+    public ATM atm;
+    public GeneralInterfaceMethods general;
+    transient Scanner scanner;
 
     public AccountInterface(ATM atm) {
-        super(atm);
+        this.atm = atm;
+        this.general = new GeneralInterfaceMethods(atm);
     }
 
     public void displayAccountMenu(User user) {
@@ -22,7 +26,7 @@ public class AccountInterface extends GeneralInterface{
 
             switch (option) {
                 case "1":
-                    createAccount(user);
+                    general.createAccount(user);
                     break;
                 case "2":
                     requestJointAccountCreation(user);
@@ -58,20 +62,20 @@ public class AccountInterface extends GeneralInterface{
         System.out.println("Enter the username of the user you would like to open an account with: ");
         String username = scanner.next();
 
-        User user2 = findUser(username);
+        User user2 = general.findUser(username);
 
         while (user2 == null || user2 == user1) {
             System.out.println("The user name you entered is not valid. Please enter a valid username (Press * to quit): ");
             username = scanner.next();
 
-            user2 = findUser(username);
+            user2 = general.findUser(username);
             if (username.equals("*")) {
                 break;
             }
         }
 
         if (!username.equals("*")) {
-            String type = selectTypeOfAccount(false, user1);
+            String type = general.selectTypeOfAccount(false, user1);
             atm.getBM().createJointAccount(user1, user2, type);
         }
     }
@@ -79,20 +83,20 @@ public class AccountInterface extends GeneralInterface{
     private void addUserToExistingAccount(User user1) {
         scanner = new Scanner(System.in);
 
-        String type = selectTypeOfAccount(false, user1);
-        printChoices(user1, false, type);
+        String type = general.selectTypeOfAccount(false, user1);
+        general.printChoices(user1, false, type);
 
-        Account accountToAddUser = selectAccount(user1, "add user to", listOfAccounts(user1, type));
+        Account accountToAddUser = general.selectAccount(user1, "add user to", general.listOfAccounts(user1, type));
         System.out.println("Enter the username of the user you would to like to add to this account: ");
         String username = scanner.next();
 
-        User user2 = findUser(username);
+        User user2 = general.findUser(username);
 
         while (user2 == null || user2 == user1 ) {
             System.out.println("The user name you entered is not valid. Please enter a valid username (Press * to quit): ");
             username = scanner.next();
 
-            user2 = findUser(username);
+            user2 = general.findUser(username);
             if (username.equals("*")) {
                 break;
             }
@@ -106,12 +110,36 @@ public class AccountInterface extends GeneralInterface{
     private void summary(User user) {
         // Method for users to see a summary of their accounts.
 
-        printChoices(user, true, "chequing");
-        printChoices(user, true, "loc");
-        printChoices(user, true, "savings");
-        printChoices(user, true, "creditcard");
-        printChoices(user, true, "stock");
+        general.printChoices(user, true, "chequing");
+        general.printChoices(user, true, "loc");
+        general.printChoices(user, true, "savings");
+        general.printChoices(user, true, "creditcard");
+        general.printChoices(user, true, "stock");
         System.out.println("Your net total is: " + user.getNetTotal());
 
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("AccountInterface writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("AccountInterface readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("AccountInterface readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

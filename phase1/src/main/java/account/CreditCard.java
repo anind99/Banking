@@ -8,7 +8,7 @@ import atm.ATM;
 public class CreditCard extends Debt {
 
     /**
-     * CreditCard constructor calls on Debt class constructor and sets account type to credit card.
+     * CreditCard constructor calls on super {@link Debt} and sets {@link Account#type} to credit card.
      * @param accountNum the unique account number
      * @param atm instance of the ATM class
      */

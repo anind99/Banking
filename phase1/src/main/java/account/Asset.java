@@ -3,12 +3,13 @@ package account;
 import atm.ATM;
 
 /**
- * Asset is a child of Account and is an abstract class for all asset accounts: Chequing, Savings, and Stocks
+ * Asset is a child of {@link Account} and is an abstract class
+ * for all asset accounts: {@link Chequing}, {@link Savings}, and {@link StockAccount}.
  */
 public abstract class Asset extends Account{
 
     /**
-     * Asset constructor calls on super (Account class).
+     * Asset constructor calls on super {@link Account}.
      * @param accountNum unique account number
      * @param atm instance of the ATM
      */

@@ -9,10 +9,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-public class BankManagerInterface extends GeneralInterface implements Serializable{
+public class BankManagerInterface implements Serializable{
+    private ATM atm;
+    public GeneralInterfaceMethods general;
+    transient Scanner scanner;
 
     public BankManagerInterface(ATM atm) {
-        super(atm);
+        this.atm = atm;
+        this.general = new GeneralInterfaceMethods(atm);
     }
 
     public void displayManagerMenu(BankManager bm){
@@ -115,12 +119,12 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
 
         String username = scanner.next();
 
-        User user = findUser(username);
+        User user = general.findUser(username);
 
         while (user != null) {
             System.out.println("Username is already taken. Please enter a new username:");
             username = scanner.next();
-            user = findUser(username);
+            user = general.findUser(username);
         }
 
         System.out.println("Type the password for the new user");
@@ -142,7 +146,7 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
             for (User parameter : atm.getListOfUsers()) {
                 if (parameter.getUsername().equals(username)) {
                     user = parameter;
-                    createAccount(user);
+                    general.createAccount(user);
                     created = true;
                     break;
                 }
@@ -200,7 +204,7 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
         System.out.println("Type in the name of the user that would like to undo their last transaction: ");
         scanner = new Scanner(System.in);
         String username = scanner.next();
-        User user = findUser(username);
+        User user = general.findUser(username);
 
         while (user == null) {
             System.out.println("The username you entered is not valid. Please enter a valid username or press * to" +
@@ -211,13 +215,13 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
                 break;
             }
 
-            user = findUser(username);
+            user = general.findUser(username);
         }
 
         if (!username.equals("*")) {
-            String type = selectTypeOfAccount(false, user);
-            printChoices(user, false, type);
-            Account account = selectAccount(user, "undo its last transaction", user.getAccounts());
+            String type = general.selectTypeOfAccount(false, user);
+            general.printChoices(user, false, type);
+            Account account = general.selectAccount(user, "undo its last transaction", user.getAccounts());
             atm.getBM().undoTransaction(user, account);
         }
     }
