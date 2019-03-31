@@ -19,9 +19,9 @@ public class InvestmentInterface implements Serializable {
         boolean goBack = false;
         printOptions();
         scanner = new Scanner(System.in);
-        String option = scanner.next();
 
         while(!goBack) {
+            String option = scanner.next();
             switch (option) {
                 case "1":
                     buyStocks(user);
@@ -160,10 +160,10 @@ public class InvestmentInterface implements Serializable {
         System.out.println("3. High Risk Fund");
         System.out.println("4. Enter the number: ");
         scanner = new Scanner(System.in);
-        String option = scanner.next();
         boolean validSelection = false;
 
         while (!validSelection) {
+            String option = scanner.next();
             switch (option) {
                 case "1":
                     return atm.getBroker().getMutualFundsBroker().getLowRiskFund();
