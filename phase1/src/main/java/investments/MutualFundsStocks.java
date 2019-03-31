@@ -11,7 +11,7 @@ public class MutualFundsStocks implements Serializable {
     public ArrayList<Stock> mediumRiskStocks = new ArrayList<>();
     public ArrayList<Stock> highRiskStocks = new ArrayList<>();
     public ATM atm;
-    public  Calendar date;
+    public Calendar date;
 
     public MutualFundsStocks(ATM atm){
         this.atm = atm;
@@ -30,7 +30,8 @@ public class MutualFundsStocks implements Serializable {
         lowRiskStocks.add(new Stock("NETFLIX INC","NFLX",0.0));
         for (Stock stock : lowRiskStocks){
             stock.increaseNumShares(1000);
-            stock.updateStock(date);}
+//            stock.updateStock(date);
+        }
     }
 
     public void createMediumRiskStocks(){
@@ -42,7 +43,8 @@ public class MutualFundsStocks implements Serializable {
         mediumRiskStocks.add(new Stock("Starbucks","SBUX",0.0));
         for (Stock stock : mediumRiskStocks){
             stock.increaseNumShares(1000);
-            stock.updateStock(date);}
+//            stock.updateStock(date);
+        }
     }
 
     public void createHighRiskStocks(){
@@ -54,7 +56,8 @@ public class MutualFundsStocks implements Serializable {
         highRiskStocks.add(new Stock("Smucker","SJM",0.0));
         for (Stock stock : highRiskStocks){
             stock.increaseNumShares(1000);
-            stock.updateStock(date);}
+//            stock.updateStock(date);
+        }
     }
 
     public ArrayList<Stock> getLowRiskStocks(){return lowRiskStocks;}

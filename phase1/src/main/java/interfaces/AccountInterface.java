@@ -17,6 +17,7 @@ public class AccountInterface extends GeneralInterface{
 
         while (!goBack) {
             printOptions();
+            scanner = new Scanner(System.in);
             String option = scanner.next();
 
             switch (option) {
@@ -53,6 +54,7 @@ public class AccountInterface extends GeneralInterface{
     }
 
     private void requestJointAccountCreation(User user1) {
+        scanner = new Scanner(System.in);
         System.out.println("Enter the username of the user you would like to open an account with: ");
         String username = scanner.next();
 
@@ -75,6 +77,8 @@ public class AccountInterface extends GeneralInterface{
     }
 
     private void addUserToExistingAccount(User user1) {
+        scanner = new Scanner(System.in);
+
         String type = selectTypeOfAccount(false, user1);
         printChoices(user1, false, type);
 
