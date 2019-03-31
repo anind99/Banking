@@ -14,16 +14,16 @@ public class Subscriber {
      *
      * Methods:
      *
-     * addSubscription: adds a new subscription of the given name to the user's subscriptions (ArrayList)
-     * checkCredit: User can make a subscription if they have a credit card.
-     * createSubscription: creates a new subscription not currently in the atm subscription list
-     * hasSubscriptionAtm: Checks if the atm has a subscription in it's list
-     * hasSubscriptionUser: Checks if the user has a subscription in their list
+     * addSubscription: adds a new Subscription of the given name to the user's subscriptions (ArrayList)
+     * checkCredit: User can make a Subscription if they have a credit card.
+     * createSubscription: creates a new Subscription not currently in the atm Subscription list
+     * hasSubscriptionAtm: Checks if the atm has a Subscription in it's list
+     * hasSubscriptionUser: Checks if the user has a Subscription in their list
      * updateAllSubscriptions: To be called in the atm upon restart,
-     * updates all subscription from every user once a month.
+     * updates all Subscription from every user once a month.
      * showAllSubscriptions: Prints all the current subscriptions in the atm.
      * showUserSubscriptions: Prints all the subscriptions the user has.
-     * removeSubscription: Removes given subscription from user's list.
+     * removeSubscription: Removes given Subscription from user's list.
      */
 
     private ATM atm;
@@ -37,7 +37,7 @@ public class Subscriber {
     public void addSubscription(User user, String name){
         CreditCard hascredit = checkCredit(user);
 
-        subscription s;
+        Subscription s;
         boolean userHas = false;
         if (hascredit != null){
             s = hasSubscriptionUser(name, user);
@@ -57,7 +57,7 @@ public class Subscriber {
                 hascredit.removeMoney(s.getCost());
             }
         } else {
-            System.out.println("User must create a credit card before making a subscription.");
+            System.out.println("User must create a credit card before making a Subscription.");
         }
     }
 
@@ -71,10 +71,10 @@ public class Subscriber {
         return null;
     }
 
-    private subscription createSubscription(String name){
+    private Subscription createSubscription(String name){
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Enter cost of subscription");
+        System.out.println("Enter cost of Subscription");
 
         double cost = -1.00;
 
@@ -86,7 +86,7 @@ public class Subscriber {
                     cost = -1.00;
                     System.out.println("Enter double greater than 0");
                 } else {
-                    return new subscription(name, cost);
+                    return new Subscription(name, cost);
                 }
 
             } catch (Exception e) {
@@ -94,13 +94,13 @@ public class Subscriber {
             }
         }
 
-        return new subscription(name, cost);
+        return new Subscription(name, cost);
 
     }
 
 
-    private subscription hasSubscriptionAtm(String name, ATM atm){
-        for (subscription sub: atm.getSubscriptions().getListOfSubscriptions()){
+    private Subscription hasSubscriptionAtm(String name, ATM atm){
+        for (Subscription sub: atm.getSubscriptions().getListOfSubscriptions()){
             if (sub.getName().equalsIgnoreCase(name)){
                 return sub;
             }
@@ -108,8 +108,8 @@ public class Subscriber {
         return null;
     }
 
-    private subscription hasSubscriptionUser(String name, User user){
-        for (subscription sub: user.getSubscriptions()){
+    private Subscription hasSubscriptionUser(String name, User user){
+        for (Subscription sub: user.getSubscriptions()){
             if (sub.getName().equalsIgnoreCase(name)){
                 return sub;
             }
@@ -124,30 +124,30 @@ public class Subscriber {
             for (User user: this.atm.getListOfUsers()){
                 CreditCard userCred = checkCredit(user);
                 if (userCred != null){
-                    for (subscription sub: user.getSubscriptions()){
+                    for (Subscription sub: user.getSubscriptions()){
                         double m = userCred.getBalance();
                         userCred.removeMoney(sub.getCost());
                         if (userCred.getBalance() == m){
                             user.removeSubsciption(sub.getName());
-                            System.out.println("Not enough funds for subscription: "+sub.getName());
+                            System.out.println("Not enough funds for Subscription: "+sub.getName());
                         }
                     }
                 } else {
                     user.removeAllSubscriptions();
-                    System.out.println("No Credit card found, all Subscriptions cancelled from user: "+user.getUsername());
+                    System.out.println("No Credit card found, all subscriptions cancelled from user: "+user.getUsername());
                 }
             }
         }
     }
 
     public void showAllSubscriptions(){
-        for (subscription sub: atm.getSubscriptions().getListOfSubscriptions()){
+        for (Subscription sub: atm.getSubscriptions().getListOfSubscriptions()){
             System.out.println("Subscription: "+sub.getName()+" Cost: "+sub.getCost());
         }
     }
 
     public void showUserSubscriptions(User user){
-        for (subscription sub: user.getSubscriptions()){
+        for (Subscription sub: user.getSubscriptions()){
             System.out.println("Subscription: "+sub.getName()+" Cost: "+sub.getCost());
         }
     }

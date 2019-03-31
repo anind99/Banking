@@ -4,10 +4,8 @@ import account.*;
 import bankmanager.*;
 import broker.Broker;
 import interfaces.*;
-import investments.*;
 import subscriptions.Subscriber;
-import subscriptions.availableSubscriptions;
-import subscriptions.subscription;
+import subscriptions.AvailableSubscriptions;
 
 import java.io.*;
 import java.io.File;
@@ -29,7 +27,7 @@ public class ATM implements Serializable {
     private Calendar date;
     private final Interface interfaces;
     private final Broker broker;
-    private availableSubscriptions subscriptions;
+    private AvailableSubscriptions subscriptions;
     private Subscriber subscriber;
 
     public ATM() {
@@ -38,7 +36,7 @@ public class ATM implements Serializable {
         this.date = Calendar.getInstance();
         this.date.add(Calendar.YEAR, -3);
         this.broker = new Broker(this, BM);
-        this.subscriptions = new availableSubscriptions();
+        this.subscriptions = new AvailableSubscriptions();
         this.subscriber = new Subscriber(this);
         bills = new Bills(100, 100, 100, 100);
     }
@@ -55,7 +53,7 @@ public class ATM implements Serializable {
         return broker;
     }
 
-    public availableSubscriptions getSubscriptions(){
+    public AvailableSubscriptions getSubscriptions(){
         return this.subscriptions;
     }
 
