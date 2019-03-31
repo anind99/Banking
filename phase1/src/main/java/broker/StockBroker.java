@@ -63,13 +63,12 @@ public class StockBroker {
                 }
             }
         }
-        if (!contains){
-            bought = buyNewStock(symbol, shares, sa, Iv);
-        }
         if (shares <= 0){
             System.out.println("Enter Share amount greater than 0");
+        } else if (!contains){
+            bought = buyNewStock(symbol, shares, sa, Iv);
         }
-        else if (!bought){
+        if (!bought){
             System.out.println("Stocks not purchase because of insufficient funds or invalid symbol");}
     }
 

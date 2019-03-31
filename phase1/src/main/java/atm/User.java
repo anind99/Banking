@@ -16,11 +16,12 @@ public class User implements Serializable {
     protected InvestmentPortfolio investmentPortfolio;
     protected ArrayList<Subscription> subscriptions;
 
-    public User(String username, String password, ArrayList accounts){
+    public User(String username, String password, ArrayList<Account> accounts){
         this.username = username;
         this.pass = password;
         this.accounts = accounts;
         this.subscriptions = new ArrayList<>();
+        this.investmentPortfolio = new InvestmentPortfolio();
     }
 
     public double getNetTotal(){
