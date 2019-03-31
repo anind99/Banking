@@ -19,7 +19,6 @@ public class GeneralInterface {
         atm.getBM().createAccount(user, type);
     }
 
-    // TODO: Fix scanner.nextLine() thing, the valid selection keeps popping up, i'm not sure why.
     public String selectTypeOfAccount(boolean transferOut, User user) {
         // Allows users to pick the type of account they want to access and returns their type as a string.
 
