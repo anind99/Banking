@@ -54,7 +54,9 @@ public class BrokerInterface {
         System.out.println("Enter the amount of shares: ");
         String shares = scanner.next();
 
-        atm.getBroker().getMutualFundsBroker().buyStocksFund(fundToBuy, symbol, Integer.valueOf(shares));
+        if (checkIfValid(shares)){
+        atm.getBroker().getMutualFundsBroker().buyStocksFund(fundToBuy, symbol, Integer.valueOf(shares));}
+        else{System.out.println("Not a valid input, please try again");}
     }
 
     private void sellFunds() {
@@ -66,7 +68,18 @@ public class BrokerInterface {
         System.out.println("Enter the amount of shares: ");
         String shares = scanner.next();
 
-        atm.getBroker().getMutualFundsBroker().sellStocksFund(fundToSell, symbol, Integer.valueOf(shares));
+        if (checkIfValid(shares)){
+        atm.getBroker().getMutualFundsBroker().sellStocksFund(fundToSell, symbol, Integer.valueOf(shares));}
+        else{System.out.println("Not a valid input, please try again");}
+    }
+
+    private boolean checkIfValid(String shares){
+       StringBuilder s = new StringBuilder(shares);
+       boolean valid = true;
+
+       for (int i = 0; i < s.length(); i++){
+           if(!Character.isDigit(s.charAt(i))){valid = false;}
+       }return valid;
     }
 
     private MutualFund listFunds() {
