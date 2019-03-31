@@ -2,7 +2,7 @@ package interfaces;
 
 import atm.*;
 import account.*;
-import investments.MutualFund;
+import investments.*;
 
 import java.util.*;
 
@@ -23,20 +23,28 @@ public class InvestmentInterface {
             switch (option) {
                 case "1":
                     buyStocks(user);
+                    break;
                 case "2":
                     sellStocks(user);
+                    break;
                 case "3":
                     buyMutualFunds(user);
+                    break;
                 case "4":
                     sellMutualFunds(user);
+                    break;
                 case "5":
                     System.out.println(atm.getBroker().getStockBroker().stocksToString(user));
+                    break;
                 case "6":
                     System.out.println(atm.getBroker().getMutualFundsBroker().toString(user));
+                    break;
                 case "7":
                     System.out.println(atm.getBroker().getStockBroker().getTotalStockWorth(user));
+                    break;
                 case "8":
                     goBack = true;
+                    break;
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 8.");
                     break;
@@ -62,6 +70,12 @@ public class InvestmentInterface {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Stock symbol: ");
         String symbol = scanner.next();
+
+        while (!atm.getBroker().checkIfStockIsValid(symbol)) {
+            System.out.println("Stock symbol is not valid. Please enter again: ");
+            symbol = scanner.next();
+        }
+
         System.out.println("Enter number of shares: ");
 
         int shares;
@@ -85,6 +99,13 @@ public class InvestmentInterface {
 
         System.out.println("Enter Stock symbol: ");
         String sym = scanner.next();
+
+        // Makes the user re-enter the symbol if they do not have this stock.
+        while (!atm.getBroker().getStockBroker().checkIfUserHasStock(user, sym)) {
+            System.out.println("Stock symbol is not valid. Please enter again: ");
+            sym = scanner.next();
+        }
+
         System.out.println("Enter number of shares: ");
         int shares;
         try {

@@ -174,6 +174,7 @@ public abstract class Account implements Serializable {
         boolean sufficientFunds = accountFrom.checkFundsSufficient(amount);
         if(sufficientFunds){
             addMoney(amount);
+            accountFrom.removeMoney(amount);
             updateTransactionList(new Transaction(accountFrom.accountNum, amount, "TransferIn"));
             System.out.println("\n" + amount + " has been transferred");}
         else{
@@ -191,6 +192,7 @@ public abstract class Account implements Serializable {
         boolean sufficientFunds = checkFundsSufficient(amount);
         if(sufficientFunds){
             accountTo.addMoney(amount);
+            removeMoney(amount);
             updateTransactionList(new Transaction(accountTo.accountNum, amount, "TransferOut"));
             System.out.println("\n" + amount + " has been transferred");}
         else{
@@ -239,13 +241,14 @@ public abstract class Account implements Serializable {
     public void payBill(double amount, String receiver){
         boolean sufficientFunds = checkFundsSufficient(amount);
         if(sufficientFunds){
+            removeMoney(amount);
             this.readAndWrite.payBillWriting(amount, receiver, accountNum);
             System.out.println("You paid " + amount + " to " + receiver);
+            updateTransactionList(new Transaction(receiver, amount));
         }
         else{
             System.out.println("\nThis transaction is not possible: insufficient funds");
         }
-        updateTransactionList(new Transaction(receiver, amount));
     }
 
     public void updateTransactionList(Transaction transaction){

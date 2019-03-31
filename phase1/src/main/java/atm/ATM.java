@@ -4,10 +4,8 @@ import account.*;
 import bankmanager.*;
 import broker.Broker;
 import interfaces.*;
-import investments.*;
 import subscriptions.Subscriber;
-import subscriptions.availableSubscriptions;
-import subscriptions.subscription;
+import subscriptions.AvailableSubscriptions;
 
 import java.io.*;
 import java.io.File;
@@ -27,9 +25,9 @@ public class ATM implements Serializable {
     private ArrayList<User> listOfUsers;
     private BankManager BM;
     private Calendar date;
-    private Interface interfaces;
-    private Broker broker;
-    private availableSubscriptions subscriptions;
+    private final Interface interfaces;
+    private final Broker broker;
+    private AvailableSubscriptions subscriptions;
     private Subscriber subscriber;
 
     public ATM() {
@@ -39,7 +37,7 @@ public class ATM implements Serializable {
         this.date = Calendar.getInstance();
         this.date.add(Calendar.YEAR, -3);
         this.broker = new Broker(this, BM);
-        this.subscriptions = new availableSubscriptions();
+        this.subscriptions = new AvailableSubscriptions();
         this.subscriber = new Subscriber(this);
         bills = new Bills(100, 100, 100, 100);
     }
@@ -56,7 +54,7 @@ public class ATM implements Serializable {
         return broker;
     }
 
-    public availableSubscriptions getSubscriptions(){
+    public AvailableSubscriptions getSubscriptions(){
         return this.subscriptions;
     }
 
@@ -88,13 +86,14 @@ public class ATM implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Booting on " + sdf.format(date.getTime()));
         addSavingsInterest();
+        this.getBroker().getMutualFundsBroker().updateMutualFunds();
         while (running){
             String username = interfaces.displayLoginMenu();
             if (username.equals("manager")) {
                 interfaces.displayManagerMenu(BM);
             } else if (username.equals("broker")) {
                 interfaces.displayBrokerOrUserChoice(broker);
-            } else {
+            } else if (!username.equals("")){
                 interfaces.displayUserMenu(getUser(username));
             }
         }

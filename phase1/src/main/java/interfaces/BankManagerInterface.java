@@ -16,8 +16,8 @@ public class BankManagerInterface extends GeneralInterface{
 
     public void displayManagerMenu(BankManager bm){
         boolean loggedOut = false;
-        boolean validselection = false;
-        while (!validselection){
+
+        while (!loggedOut){
             printOptions();
             String option = scanner.next();
             switch (option) {
@@ -27,37 +27,32 @@ public class BankManagerInterface extends GeneralInterface{
                 }
                 case "1": {
                     createUser();
-                    validselection = true;
                     break;
                 }
                 case "2": {
                     creatingAccount();
-                    validselection = true;
                     break;
                 }
                 case "3": {
                     checkAlerts();
-                    validselection = true;
                     break;
                 }
                 case "4": {
                     restockMachine(bm);
-                    validselection = true;
                     break;
 
                 }
                 case "5": {
                     undoTransaction();
-                    validselection = true;
                     break;
                 }
                 case "6": {
-                    validselection = true;
                     loggedOut = true;
                     break;
                 }
                 case "7":{
                     shutDownSystem();
+                    break;
                 }
                 default: {
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 7.");
@@ -112,16 +107,11 @@ public class BankManagerInterface extends GeneralInterface{
      *
      */
     private void createUser(){
-        System.out.println("type the username for the new user");
+        System.out.println("Type the username for the new user");
         String username = scanner.next();
-        System.out.println("type the password for the new user");
+        System.out.println("Type the password for the new user");
         String password = scanner.next();
-        User user = atm.getBM().createUser(username, password);
-        atm.getBM().createAccount(user, "chequing");
-        atm.getBM().createAccount(user, "creditcard");
-        atm.getBM().createAccount(user, "loc");
-        atm.getBM().createAccount(user, "savings");
-        atm.getBM().createAccount(user, "stock");
+        atm.getBM().createUser(username, password);
     }
 
     private void creatingAccount() {
@@ -131,9 +121,9 @@ public class BankManagerInterface extends GeneralInterface{
         int count2 = 0;
         while (user == null) {
             if (count != 0) {
-                System.out.println("type in the username of the user that would like to create an account: ");
+                System.out.println("Type in the username of the user that would like to create an account: ");
             }
-            String username = scanner.nextLine();
+            String username = scanner.next();
             for (User parameter : atm.getListOfUsers()) {
                 if (parameter.getUsername().equals(username)) {
                     user = parameter;
@@ -196,9 +186,9 @@ public class BankManagerInterface extends GeneralInterface{
         int count2 = 0;
         while (user == null) {
             if (count2 != 0){
-                System.out.println("type in the username of the user that would like to undo their last transaction: ");
+                System.out.println("Type in the username of the user that would like to undo their last transaction: ");
             }
-            String username = scanner.nextLine();
+            String username = scanner.next();
             System.out.println(username);
             for (User parameter : atm.getListOfUsers()) {
                 if (parameter.getUsername().equals(username)) {

@@ -17,26 +17,32 @@ public class BrokerInterface {
     void displayBrokerMenu(){
         System.out.println("Select an option:");
         System.out.println("1. Buy Funds");
+        System.out.println("2. Sell Funds");
         System.out.println("3. Log Out");
         String option = scanner.next();
-        switch (option){
-            case "1": {
-                buyFunds();
-            }
-            case "2": {
-                buyFunds();
-            }
-            case "3":{
-                sellFunds();
-            }
-            case "4": {
-                break;
-            }
-            default: {
-                System.out.println("There is no option \"" + option + "\". Please try again.");
+
+        boolean logout = false;
+
+        while (!logout) {
+            switch (option){
+                case "1": {
+                    buyFunds();
+                    break;
+                }
+                case "2": {
+                    sellFunds();
+                    break;
+                }
+                case "3":{
+                    logout = true;
+                    break;
+                }
+                default: {
+                    System.out.println("There is no option \"" + option + "\". Please try again.");
+                    break;
+                }
             }
         }
-        scanner.close();
     }
 
     private void buyFunds() {

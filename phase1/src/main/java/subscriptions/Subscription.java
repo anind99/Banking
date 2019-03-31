@@ -1,17 +1,17 @@
 package subscriptions;
 
-public class subscription {
+public class Subscription {
     /**
      * Suscription class.
      *
      * Attributes:
-     * name: Name of subscription (String)
-     * cost: Cost of subscription (double)
+     * name: Name of Subscription (String)
+     * cost: Cost of Subscription (double)
      */
     private double cost;
     private String name;
 
-    public subscription (String n, double c){
+    public Subscription(String n, double c){
         this.name = n;
         this.cost = c;
     }

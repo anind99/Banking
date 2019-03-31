@@ -28,9 +28,7 @@ public class MutualFund {
         }return total;
     }
 
-    public String getName(){
-        return name;
-    }
+    public String getName(){return name;}
 
     public ArrayList<Stock> getStocks(){
         return stocks;
@@ -44,14 +42,4 @@ public class MutualFund {
         investors.put(user, investment);
         }
 
-    public void setSharesStocks(Stock stock, int num) {
-        for (Stock fundStock : stocks) {
-            if (fundStock.equals(stock)){
-            stock.setNumShares(num);}
-        }
-    }
-
-    public int getShares(){
-        return stocks.get(0).getNumShares();
-    }
 }

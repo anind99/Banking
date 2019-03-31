@@ -27,9 +27,10 @@ public class GeneralInterface {
 
 
         if (transferOut) {
+            toPrint.append("\n 4. Stocks");
             System.out.println(toPrint);
         } else {
-            toPrint.append("\n 4. Credit Card");
+            toPrint.append("\n 4. Stocks \n 5. Credit Card");
             System.out.println(toPrint);
         }
 
@@ -38,9 +39,9 @@ public class GeneralInterface {
 
 
         while (!validselection) {
-            type = scanner.nextLine();
+            type = scanner.next();
 
-            if (type.equals("1") || type.equals("2") || type.equals("3") || (!transferOut && type.equals("4"))) {
+            if (type.equals("1") || type.equals("2") || type.equals("3") || type.equals("4") || (!transferOut && type.equals("5"))) {
                 validselection = true;
             } else {
                 System.out.println("That is not a valid selection. Please try again.");
@@ -62,7 +63,9 @@ public class GeneralInterface {
             toReturn = "loc";
         } else if (selection.equals("3")) {
             toReturn = "savings";
-        } else if (!transferOut && selection.equals("4")) {
+        } else if (selection.equals("4")){
+            toReturn = "stock";
+        } else if (!transferOut && selection.equals("5")) {
             toReturn = "creditcard";
         }
 
@@ -127,7 +130,7 @@ public class GeneralInterface {
         // Allows users to select an account by entering their account number. Returns that account.
 
         System.out.println("Enter the account number you want to " + action + ": ");
-        String accountNumTo = scanner.nextLine();
+        String accountNumTo = scanner.next();
         StringBuilder accountNumToB = new StringBuilder(accountNumTo);
 
 

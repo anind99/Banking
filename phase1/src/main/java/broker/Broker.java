@@ -18,7 +18,7 @@ import account.*;
  *
  */
 public class Broker {
-    private ATM atm;
+    public ATM atm;
     public StockBroker stockBroker;
     public MutualFundsBroker mutualFundsBroker;
     JSONObject json;
@@ -73,4 +73,3 @@ public class Broker {
     }
 
 }
-

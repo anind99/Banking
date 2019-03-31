@@ -2,7 +2,7 @@ package atm;
 
 import account.Account;
 import investments.InvestmentPortfolio;
-import subscriptions.subscription;
+import subscriptions.Subscription;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class User implements Serializable {
     private String pass;
     protected ArrayList<Account> accounts;
     protected InvestmentPortfolio investmentPortfolio;
-    protected ArrayList<subscription> subscriptions;
+    protected ArrayList<Subscription> subscriptions;
 
     public User(String username, String password, ArrayList accounts){
         this.username = username;
@@ -26,7 +26,7 @@ public class User implements Serializable {
     public double getNetTotal(){
         double sum = 0;
         for (Account acc : accounts){
-            if (acc.getType().equals("chequing") || acc.getType().equals("savings")){
+            if (acc.getType().equals("chequing") || acc.getType().equals("savings") || acc.getType().equals("stock")) {
             sum += acc.getBalance();
             }else{sum -= acc.getBalance();}
         }
@@ -61,11 +61,11 @@ public class User implements Serializable {
         return this.pass;
     }
 
-    public ArrayList<subscription> getSubscriptions(){
+    public ArrayList<Subscription> getSubscriptions(){
         return this.subscriptions;
     }
 
-    public void addSubscription(subscription s){
+    public void addSubscription(Subscription s){
         subscriptions.add(s);
     }
 
@@ -74,7 +74,7 @@ public class User implements Serializable {
     }
 
     public void removeSubsciption(String name){
-        for (subscription sub: subscriptions){
+        for (Subscription sub: subscriptions){
             if (sub.getName().equalsIgnoreCase(name)){
                 subscriptions.remove(sub);
             }

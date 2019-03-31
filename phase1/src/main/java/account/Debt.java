@@ -2,6 +2,9 @@ package account;
 
 import atm.ATM;
 
+/***
+ * This is subclass of account class.
+ */
 public class Debt extends Account{
 
     protected double maxDebt = 50000;
