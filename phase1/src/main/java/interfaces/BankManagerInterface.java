@@ -129,7 +129,7 @@ public class BankManagerInterface extends GeneralInterface{
             if (count != 0) {
                 System.out.println("Type in the username of the user that would like to create an account: ");
             }
-            String username = scanner.nextLine();
+            String username = scanner.next();
             for (User parameter : atm.getListOfUsers()) {
                 if (parameter.getUsername().equals(username)) {
                     user = parameter;
@@ -192,9 +192,9 @@ public class BankManagerInterface extends GeneralInterface{
         int count2 = 0;
         while (user == null) {
             if (count2 != 0){
-                System.out.println("type in the username of the user that would like to undo their last transaction: ");
+                System.out.println("Type in the username of the user that would like to undo their last transaction: ");
             }
-            String username = scanner.nextLine();
+            String username = scanner.next();
             System.out.println(username);
             for (User parameter : atm.getListOfUsers()) {
                 if (parameter.getUsername().equals(username)) {
