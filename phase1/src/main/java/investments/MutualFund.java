@@ -28,9 +28,7 @@ public class MutualFund {
         }return total;
     }
 
-    public String getName(){
-        return name;
-    }
+    public String getName(){return name;}
 
     public ArrayList<Stock> getStocks(){
         return stocks;
