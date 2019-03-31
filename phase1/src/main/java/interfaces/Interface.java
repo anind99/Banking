@@ -2,7 +2,7 @@ package interfaces;
 
 import atm.*;
 import bankmanager.*;
-import investments.Broker;
+import broker.Broker;
 
 import java.io.*;
 import java.util.Scanner;

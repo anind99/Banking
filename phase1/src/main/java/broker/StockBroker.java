@@ -1,9 +1,12 @@
-package investments;
+package broker;
 
 import account.Account;
 import account.Asset;
 import atm.ATM;
 import atm.User;
+import investments.InvestmentPortfolio;
+import investments.MutualFundsStocks;
+import investments.Stock;
 
 import java.util.ArrayList;
 

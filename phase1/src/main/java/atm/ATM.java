@@ -4,8 +4,6 @@ import account.*;
 import bankmanager.*;
 import interfaces.*;
 import investments.*;
-import subscriptions.Subscriber;
-import subscriptions.availableSubscriptions;
 
 import java.io.*;
 import java.io.File;
@@ -26,8 +24,6 @@ public class ATM implements Serializable {
     private BankManager BM = new BankManager(this);
     private Calendar date = Calendar.getInstance();
     private final Interface interfaces;
-    private Subscriber subscriber = new Subscriber(this);
-    private availableSubscriptions Av = new availableSubscriptions();
     private final Broker broker = new Broker(this, BM);
 
     public ATM() {
@@ -130,14 +126,6 @@ public class ATM implements Serializable {
             System.out.println(e.getMessage());
             System.exit(-1);
         }
-    }
-
-    public Subscriber getSubscriber() {
-        return subscriber;
-    }
-
-    public availableSubscriptions getSubscriptions(){
-        return Av;
     }
 
     private void testBoot(){

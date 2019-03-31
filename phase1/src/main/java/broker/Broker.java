@@ -1,7 +1,9 @@
-package investments;
+package broker;
 
 import atm.*;
 import bankmanager.*;
+import broker.MutualFundsBroker;
+import broker.StockBroker;
 
 
 public class Broker {
@@ -23,6 +25,10 @@ public class Broker {
 
     public MutualFundsBroker getMutualFundsBroker() {
         return mutualFundsBroker;
+    }
+
+    public boolean checkIfStockIsValid(String symbol){
+
     }
 }
 

@@ -2,6 +2,9 @@ package account;
 
 import atm.ATM;
 
+/**
+ *
+ */
 public abstract class Asset extends Account{
 
     public Asset(int accountNum, ATM atm) {
