@@ -3,16 +3,18 @@ package interfaces;
 import atm.*;
 import investments.MutualFund;
 
+import java.awt.*;
+import java.io.*;
 import java.util.Scanner;
 
-public class BrokerInterface {
+public class BrokerInterface implements Serializable {
     private final ATM atm;
 
     public BrokerInterface(ATM atm) {
         this.atm = atm;
     }
 
-    private Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
 
     void displayBrokerMenu(){
         System.out.println("Select an option:");
@@ -94,6 +96,30 @@ public class BrokerInterface {
         }
 
         return null;
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("BrokerInterface writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("BrokerInterface readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("BrokerInterface readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 
 }

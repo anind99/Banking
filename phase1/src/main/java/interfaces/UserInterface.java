@@ -2,9 +2,10 @@ package interfaces;
 
 import atm.*;
 
+import java.io.*;
 import java.util.*;
 
-public class UserInterface {
+public class UserInterface implements Serializable {
     transient Scanner scanner = new Scanner(System.in);
     private final ATM atm;
     private final AccountInterface accountInterface;
@@ -63,5 +64,29 @@ public class UserInterface {
         System.out.println("5. Manage subscriptions");
         System.out.println("6. Logout");
         System.out.println("Enter a number: ");
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("UserInterface writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("UserInterface readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("UserInterface readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }
