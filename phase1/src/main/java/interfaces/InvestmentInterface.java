@@ -39,10 +39,11 @@ public class InvestmentInterface implements Serializable {
                     System.out.println(atm.getBroker().getStockBroker().stocksToString(user));
                     break;
                 case "6":
-                    System.out.println(atm.getBroker().getMutualFundsBroker().toString(user));
+                    System.out.println("Your stocks are worth: " +
+                            atm.getBroker().getStockBroker().getTotalStockWorth(user));
                     break;
                 case "7":
-                    System.out.println(atm.getBroker().getStockBroker().getTotalStockWorth(user));
+                    System.out.println(atm.getBroker().getMutualFundsBroker().toString(user));
                     break;
                 case "8":
                     goBack = true;

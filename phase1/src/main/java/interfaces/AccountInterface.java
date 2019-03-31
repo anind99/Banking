@@ -6,16 +6,40 @@ import account.*;
 import java.io.*;
 import java.util.*;
 
+/***
+ * Class representing the account menu that will be displayed in the interface for users to manage their accounts.
+ *
+ */
 public class AccountInterface implements Serializable {
+
+    /***
+     * The ATM that this interface is running on.
+     */
     public ATM atm;
+
+    /***
+     * GeneralInterfaceMethods represents a class that contains helper methods that AccountInterface uses.
+     */
     public GeneralInterfaceMethods general;
+    /***
+     * The scanner attribute that is used for the user to enter inputs into the function.
+     */
     transient Scanner scanner;
 
+    /***
+     * Constructor for AccountInterface.
+     * @param atm the atm that this atm is running on
+     */
     public AccountInterface(ATM atm) {
         this.atm = atm;
         this.general = new GeneralInterfaceMethods(atm);
     }
 
+    /***
+     * The account menu that the user sees in the interface.
+     *
+     * @param user the user that is viewing this interface
+     */
     public void displayAccountMenu(User user) {
         boolean goBack = false;
 
@@ -47,6 +71,10 @@ public class AccountInterface implements Serializable {
         }
     }
 
+    /***
+     * The options the user can pick from in the interface.
+     *
+     */
     private void printOptions() {
         System.out.println("Select an option:");
         System.out.println("1. Request account creation");
@@ -57,6 +85,11 @@ public class AccountInterface implements Serializable {
         System.out.println("Enter a number: ");
     }
 
+    /***
+     * A method to request to create a new joint account with another user to the Bank manager.
+     *
+     * @param user1 the user that wants to create the joint account
+     */
     private void requestJointAccountCreation(User user1) {
         scanner = new Scanner(System.in);
         System.out.println("Enter the username of the user you would like to open an account with: ");
@@ -80,6 +113,11 @@ public class AccountInterface implements Serializable {
         }
     }
 
+    /***
+     * A method to add an existing user to one of the user's existing accounts.
+     *
+     * @param user1 the user that wants to add another user into one of its accounts
+     */
     private void addUserToExistingAccount(User user1) {
         scanner = new Scanner(System.in);
 
@@ -107,6 +145,12 @@ public class AccountInterface implements Serializable {
         }
     }
 
+    /***
+     * A method to print a summary of all the accounts a user has including the net total of all the accounts together.
+     * It will print the account number, the balance, the last transaction on that account and the date created.
+     *
+     * @param user the user that wants to view a summary of their accounts
+     */
     private void summary(User user) {
         // Method for users to see a summary of their accounts.
 
