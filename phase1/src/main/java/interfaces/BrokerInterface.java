@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class BrokerInterface implements Serializable {
     private final ATM atm;
+    transient Scanner scanner;
 
     public BrokerInterface(ATM atm) {
         this.atm = atm;
@@ -18,7 +19,7 @@ public class BrokerInterface implements Serializable {
     void displayBrokerMenu(){
         String option;
         boolean logout = false;
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
 
         while (!logout) {
             System.out.println("Select an option:");
@@ -65,7 +66,7 @@ public class BrokerInterface implements Serializable {
         MutualFund fundToSell = listFunds();
 
         System.out.println("Enter the stock symbol: ");
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         String symbol = scanner.next();
 
         System.out.println("Enter the amount of shares: ");
@@ -92,11 +93,12 @@ public class BrokerInterface implements Serializable {
         System.out.println("3. High Risk Fund");
         System.out.println("Enter the number: ");
 
-        Scanner scanner = new Scanner(System.in);
-        String option = scanner.next();
+        scanner = new Scanner(System.in);
+        String option;
         boolean validSelection = false;
 
         while (!validSelection) {
+            option = scanner.next();
             switch (option) {
                 case "1":
                     return atm.getBroker().getMutualFundsBroker().getLowRiskFund();
