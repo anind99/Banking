@@ -2,23 +2,53 @@ package account;
 
 import atm.ATM;
 import atm.Transaction;
+import atm.User;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Abstract class containing all the shared methods between all types of accounts.
+ * Abstract class representing a user's bank account.
+ *
  */
 public abstract class Account implements Serializable {
 
+    /**
+     * The type of account.
+     */
     public String type;
+    /**
+     * The unique account number.
+     */
     public final int accountNum;
+    /**
+     * The dollar balance on the account.
+     */
     public double balance;
+    /**
+     * A list containing all transactions {@link Transaction} performed through the account.
+     * Deposits are not recorded in this list because they cannot be undone
+     * {@link bankmanager.TransactionManager#undoTransaction(User, Account)}.
+     */
     public ArrayList<Transaction> listOfTransactions = new ArrayList<>();
+    /**
+     * The date the account was created.
+     */
     public Calendar dateCreated;
+    /**
+     * An instance of the ATM object{@link ATM}.
+     */
     private final ATM atm;
+    /**
+     * Is true if the account is shared by 2 users
+     * and false if it has a sole owner.
+     */
     private boolean isJoint = false;
+    /**
+     * An instance of the ReadAndWrite class
+     *
+     */
     private ReadAndWrite readAndWrite;
 
     /**
@@ -35,17 +65,16 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * Returns the balance of the account.
+     * Returns the balance of the account {@link Account#balance}.
      *
      * @return the balance of the account
      */
-
     public double getBalance(){
         return this.balance;
     }
 
     /**
-     * Returns True if the account is a joint account and False if it is not.
+     * Returns the joint status of the account {@link Account#isJoint}.
      *
      * @return True if account is joint, False if it is not joint
      */
@@ -63,37 +92,23 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * Updates the joint status of an account.
-     * @param joined a boolean that is true when the account is joint and false otherwise
-     */
-    public void setIsJoint(boolean joined) {
-        this.isJoint = joined;
-    }
-
-//    /**
-//     * Increases the balance of an account by dollarAmount.
-//     * @param dollarAmount the dollar amount to increase the balance by
-//     */
-//    public void addBalance(double dollarAmount) {
-//        this.balance += dollarAmount;
-//    }
-
-//    /**
-//     * Decreases the balance of an account by dollarAmount.
-//     * @param dollarAmount the dollar amount to decrease the balance by
-//     */
-//    public void subtractBalance(double dollarAmount) {
-//        this.balance -= dollarAmount;
-//    }
-
-    /**
-     * Returns the list of all transactions ever performed using the account.
+     * Returns the list of all transactions ever performed using the account {@link Account#listOfTransactions}.
      * @return listofTransactions  a list of Transaction objects
      * @see Transaction
      */
     public ArrayList<Transaction> getListOfTransactions() {
         return this.listOfTransactions;
     }
+
+    /**
+     * Updates the joint status of an account {@link Account#isJoint}.
+     * @param joined a boolean that is true when the account is joint and false otherwise
+     */
+    public void setIsJoint(boolean joined) {
+        this.isJoint = joined;
+    }
+
+
 
     /**
      * Returns the most recent transaction performed using the account.
@@ -109,7 +124,7 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * Returns the type of the account (i.e Chequing, Savings, etc.).
+     * Returns the type of the account {@link Account#type}.
      * @return type a String that states the type of the account
      */
 
@@ -118,7 +133,7 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * Returns the account number.
+     * Returns the account number {@link Account#accountNum}.
      * @return accountNum a unique number assigned to each account
      */
     public int getAccountNum() {
@@ -136,18 +151,23 @@ public abstract class Account implements Serializable {
 
     /**
      * Updates the primaryStatus of an account.
+     * A primary account can only be of type Chequing.
      */
     public void setPrimary() {}
 
     /**
-     * Adds money to the account and updates the balance accordingly.
+     * Adds money to the account and updates the balance according to the type of account.
+     * Balance of Asset accounts increases when money is added.
+     * Balance of Debt accounts decreases when money is added.
      * @param amount dollar amount added into the account
      */
     public abstract void addMoney (double amount);
 
     /**
      * Removes money from the account and updates the balance accordingly.
-     * @param amount
+     * Balance of Asset accounts decreases when money is removed.
+     * Balance of Debt accounts increases when money is removed.
+     * @param amount dollar amount removed from the account
      */
     public abstract void removeMoney (double amount);
 
