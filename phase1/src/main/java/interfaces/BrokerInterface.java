@@ -43,7 +43,6 @@ public class BrokerInterface {
                 }
             }
         }
-        scanner.close();
     }
 
     private void buyFunds() {

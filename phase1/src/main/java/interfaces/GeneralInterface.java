@@ -19,6 +19,7 @@ public class GeneralInterface {
         atm.getBM().createAccount(user, type);
     }
 
+    // TODO: Fix scanner.nextLine() thing, the valid selection keeps popping up, i'm not sure why.
     public String selectTypeOfAccount(boolean transferOut, User user) {
         // Allows users to pick the type of account they want to access and returns their type as a string.
 
@@ -27,20 +28,21 @@ public class GeneralInterface {
 
 
         if (transferOut) {
+            toPrint.append("\n 4. Stocks");
             System.out.println(toPrint);
         } else {
-            toPrint.append("\n 4. Credit Card");
+            toPrint.append("\n 4. Stocks \n 5. Credit Card");
             System.out.println(toPrint);
         }
 
-        String type = null;
+        String type = scanner.next();
         boolean validselection = false;
 
 
         while (!validselection) {
             type = scanner.nextLine();
 
-            if (type.equals("1") || type.equals("2") || type.equals("3") || (!transferOut && type.equals("4"))) {
+            if (type.equals("1") || type.equals("2") || type.equals("3") || type.equals("4") || (!transferOut && type.equals("5"))) {
                 validselection = true;
             } else {
                 System.out.println("That is not a valid selection. Please try again.");
@@ -62,7 +64,9 @@ public class GeneralInterface {
             toReturn = "loc";
         } else if (selection.equals("3")) {
             toReturn = "savings";
-        } else if (!transferOut && selection.equals("4")) {
+        } else if (selection.equals("4")){
+            toReturn = "stock";
+        } else if (!transferOut && selection.equals("5")) {
             toReturn = "creditcard";
         }
 
