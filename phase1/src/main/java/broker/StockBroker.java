@@ -31,9 +31,11 @@ public class StockBroker {
      */
 
     private ATM atm;
+    Broker broker;
 
-    StockBroker(ATM Atm){
+    StockBroker(ATM Atm, Broker broker){
         this.atm = Atm;
+        this.broker = broker;
     }
 
     /**
