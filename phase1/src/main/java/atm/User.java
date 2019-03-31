@@ -2,6 +2,7 @@ package atm;
 
 import account.Account;
 import investments.InvestmentPortfolio;
+import subscriptions.subscription;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,11 +14,13 @@ public class User implements Serializable {
     private String pass;
     protected ArrayList<Account> accounts;
     protected InvestmentPortfolio investments;
+    protected ArrayList<subscription> subscriptions;
 
     public User(String username, String password, ArrayList accounts){
         this.username = username;
         this.pass = password;
         this.accounts = accounts;
+        this.subscriptions = new ArrayList<>();
     }
 
     public double getNetTotal(){
@@ -56,6 +59,26 @@ public class User implements Serializable {
 
     public String getPassword(){
         return this.pass;
+    }
+
+    public ArrayList<subscription> getSubscriptions(){
+        return this.subscriptions;
+    }
+
+    public void addSubscription(subscription s){
+        subscriptions.add(s);
+    }
+
+    public void removeAllSubscriptions(){
+        subscriptions = new ArrayList<>();
+    }
+
+    public void removeSubsciption(String name){
+        for (subscription sub: subscriptions){
+            if (sub.getName().equalsIgnoreCase(name)){
+                subscriptions.remove(sub);
+            }
+        }
     }
 
     public void setUsername(String s){
