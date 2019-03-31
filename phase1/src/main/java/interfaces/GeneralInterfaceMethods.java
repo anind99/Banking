@@ -7,11 +7,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.*;
 
-public class GeneralInterface implements Serializable {
-    protected ATM atm;
-    transient Scanner scanner = new Scanner(System.in);
+public class GeneralInterfaceMethods implements Serializable {
+    ATM atm;
+    transient Scanner scanner;
 
-    public GeneralInterface(ATM atm) {
+    public GeneralInterfaceMethods(ATM atm) {
         this.atm = atm;
     }
 
@@ -212,7 +212,7 @@ public class GeneralInterface implements Serializable {
         try {
             oos.defaultWriteObject();
         } catch (IOException e){
-            System.out.println("GeneralInterface writeObject Failed!");
+            System.out.println("GeneralInterfaceMethods writeObject Failed!");
             System.out.println(e.getMessage());
             System.exit(-1);
         }
@@ -221,14 +221,14 @@ public class GeneralInterface implements Serializable {
         try{
             ois.defaultReadObject();
         } catch (Exception e){
-            System.out.println("GeneralInterface readObject Failed!");
+            System.out.println("GeneralInterfaceMethods readObject Failed!");
             System.out.println(e.getMessage());
             System.exit(-1);
         }
     }
 
     private void readObjectNoData() throws ObjectStreamException {
-        System.out.println("GeneralInterface readObjectNoData, this should never happen!");
+        System.out.println("GeneralInterfaceMethods readObjectNoData, this should never happen!");
         System.exit(-1);
     }
 
