@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.*;
 
 public class GeneralInterface implements Serializable {
-    ATM atm;
+    protected ATM atm;
     transient Scanner scanner = new Scanner(System.in);
 
     public GeneralInterface(ATM atm) {
