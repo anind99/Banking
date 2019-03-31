@@ -298,8 +298,8 @@ public abstract class Account implements Serializable {
     /**
      * Used in serialization to restore the account's information after the ATM is restarted.
      * @param ois instance of the ObjectInputStream class used to read the account object
-     * @throws ClassNotFoundException if the class of a serialized object could not be found.
-     * @throws IOException if an IO error occurs.
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
      */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
@@ -313,7 +313,7 @@ public abstract class Account implements Serializable {
 
     /**
      *
-     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails.
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
      */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("account readObjectNoData, this should never happen!");
