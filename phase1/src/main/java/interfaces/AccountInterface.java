@@ -105,9 +105,10 @@ public class AccountInterface extends GeneralInterface{
         // Method for users to see a summary of their accounts.
 
         printChoices(user, true, "chequing");
-        printChoices(user, true, "LOC");
+        printChoices(user, true, "loc");
         printChoices(user, true, "savings");
         printChoices(user, true, "creditcard");
+        printChoices(user, true, "stock");
         System.out.println("Your net total is: " + user.getNetTotal());
 
     }

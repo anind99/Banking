@@ -174,6 +174,7 @@ public abstract class Account implements Serializable {
         boolean sufficientFunds = accountFrom.checkFundsSufficient(amount);
         if(sufficientFunds){
             addMoney(amount);
+            accountFrom.removeMoney(amount);
             updateTransactionList(new Transaction(accountFrom.accountNum, amount, "TransferIn"));
             System.out.println("\n" + amount + " has been transferred");}
         else{
@@ -191,6 +192,7 @@ public abstract class Account implements Serializable {
         boolean sufficientFunds = checkFundsSufficient(amount);
         if(sufficientFunds){
             accountTo.addMoney(amount);
+            removeMoney(amount);
             updateTransactionList(new Transaction(accountTo.accountNum, amount, "TransferOut"));
             System.out.println("\n" + amount + " has been transferred");}
         else{

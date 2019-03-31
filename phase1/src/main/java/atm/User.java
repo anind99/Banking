@@ -26,7 +26,7 @@ public class User implements Serializable {
     public double getNetTotal(){
         double sum = 0;
         for (Account acc : accounts){
-            if (acc.getType().equals("chequing") || acc.getType().equals("savings")){
+            if (acc.getType().equals("chequing") || acc.getType().equals("savings") || acc.getType().equals("stock")) {
             sum += acc.getBalance();
             }else{sum -= acc.getBalance();}
         }
