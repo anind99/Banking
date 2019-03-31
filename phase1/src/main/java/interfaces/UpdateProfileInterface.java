@@ -3,6 +3,7 @@ package interfaces;
 import atm.*;
 import account.*;
 import bankmanager.*;
+import com.sun.xml.internal.bind.v2.TODO;
 
 import java.util.Scanner;
 
@@ -43,11 +44,14 @@ public class UpdateProfileInterface {
         System.out.println("Enter a number: ");
     }
 
+    // TODO: If a user enters a password with a space, make sure they have to re-enter a new password or
+    //  make sure the password is allowed to have spaces- somehow scanner.nextLine() does not work
     private void changePassword(User user) {
         // Method for users to change their password.
 
-        System.out.println("type in your new password:");
-        String newPassword = scanner.nextLine();
+        System.out.println("Type in your new password (spaces not allowed):");
+        String newPassword = scanner.next();
+
         user.setPassword(newPassword);
         System.out.println("\nPassword change successful");
     }
