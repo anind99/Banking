@@ -31,11 +31,20 @@ public class StockBroker implements Serializable {
      */
 
     private ATM atm;
-    Broker broker;
 
-    StockBroker(ATM Atm, Broker broker){
+    StockBroker(ATM Atm){
         this.atm = Atm;
-        this.broker = broker;
+    }
+
+    public static void main(String args[]){
+        ATM Atm = new ATM();
+        Atm.setDate("2018-01-01");
+        updateTest(Atm);
+    }
+
+    private static void updateTest(ATM Atm){
+        Stock s = new Stock("Agilent Technologies Inc.", "AA", 1.00);
+        s.updateStock(Atm.getDate());
     }
 
     /**
@@ -114,7 +123,7 @@ public class StockBroker implements Serializable {
 
     public Stock fetchStock(String symbol){
         String stockName = atm.getBroker().companyNameFromSymbol(symbol);
-        Stock st = new Stock(symbol, stockName, 0);
+        Stock st = new Stock(stockName, symbol,0);
         st.updateStock(atm.getDate());
         return st;
     }
