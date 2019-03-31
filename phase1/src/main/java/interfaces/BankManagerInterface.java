@@ -191,7 +191,7 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
 
         while (user == null) {
             System.out.println("The username you entered is not valid. Please enter a valid username or press * to" +
-                    "go back to the main menu");
+                    " go back to the main menu");
             username = scanner.next();
 
             if (username.equals("*")) {
