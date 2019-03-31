@@ -200,6 +200,15 @@ public class GeneralInterface implements Serializable {
         return selectAmount();
     }
 
+    public User findUser(String username) {
+        for (User user : atm.getListOfUsers()) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
