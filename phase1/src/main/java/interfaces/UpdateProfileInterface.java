@@ -44,12 +44,11 @@ public class UpdateProfileInterface {
         System.out.println("Enter a number: ");
     }
 
-    // TODO: If a user enters a password with a space, make sure they have to re-enter a new password or
-    //  make sure the password is allowed to have spaces- somehow scanner.nextLine() does not work
     private void changePassword(User user) {
         // Method for users to change their password.
 
         System.out.println("Type in your new password (spaces not allowed):");
+        System.out.println("If you type in a password with a space, only the word before the space will be your password");
         String newPassword = scanner.next();
 
         user.setPassword(newPassword);
