@@ -12,16 +12,18 @@ public class Interface implements Serializable {
     private final BankManagerInterface bankManagerInterface;
     private final UserInterface userInterface;
     private final BrokerInterface brokerInterface;
-    transient Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner;
 
     public Interface(ATM atm) {
         this.atm = atm;
         this.bankManagerInterface = new BankManagerInterface(atm);
         this.userInterface = new UserInterface(atm);
         this.brokerInterface = new BrokerInterface(atm);
+        this.scanner = new Scanner(System.in);
     }
 
     public String displayLoginMenu() {
+        scanner = new Scanner(System.in);
         System.out.println("Welcome. Please login.");
         User loginUser;
         System.out.println("Username: ");
@@ -50,6 +52,9 @@ public class Interface implements Serializable {
     }
 
     public void displayBrokerOrUserChoice(Broker broker) {
+
+        scanner = new Scanner(System.in);
+
         System.out.println("Would you like to sign in as:");
         System.out.println("1. Broker");
         System.out.println("2. User");

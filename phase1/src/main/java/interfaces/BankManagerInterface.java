@@ -21,6 +21,7 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
 
         while (!loggedOut){
             printOptions();
+            scanner = new Scanner(System.in);
             String option = scanner.next();
             switch (option) {
                 case "0": {
@@ -78,6 +79,7 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
     private void setDate() {
         boolean condition = false;
         String year = null, month = null, day = null;
+        scanner = new Scanner(System.in);
         while(!condition){
             condition = true;
             System.out.println("Setting date:");
@@ -109,6 +111,8 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
      */
     private void createUser(){
         System.out.println("Type the username for the new user");
+        scanner = new Scanner(System.in);
+
         String username = scanner.next();
 
         User user = findUser(username);
@@ -125,7 +129,7 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
     }
 
     private void creatingAccount() {
-
+        scanner = new Scanner(System.in);
         User user = null;
         boolean created = false;
         int count = 0;
@@ -171,6 +175,7 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
     private void restockMachine(BankManager bm){
         System.out.println("Select what type of bill to restock.");
         System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars");
+        scanner = new Scanner(System.in);
         String dollarType = scanner.next();
         switch (dollarType) {
             case "1":
@@ -193,6 +198,7 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
 
     private void undoTransaction(){
         System.out.println("Type in the name of the user that would like to undo their last transaction: ");
+        scanner = new Scanner(System.in);
         String username = scanner.next();
         User user = findUser(username);
 
