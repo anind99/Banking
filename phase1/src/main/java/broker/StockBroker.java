@@ -48,27 +48,34 @@ public class StockBroker implements Serializable {
 
     public void buyStocks(String symbol, int shares, Account sa, InvestmentPortfolio Iv) {
 
-        boolean bought = false;
-        boolean contains = false;
+        double bought =  buyContainedStock(symbol, shares, sa, Iv);
+        if (shares <= 0){
+            System.out.println("Share amount must be greater than 0");
+        } else if (bought == -1){
+            bought = buyNewStock(symbol, shares, sa, Iv);
+        }
+
+        if (bought == -1){
+            System.out.println("Stocks not purchase because of insufficient funds or invalid symbol");}
+
+    }
+
+
+
+    private double buyContainedStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
         if (shares > 0) {
             for (Stock st : Iv.getStockPortfolio()) {
                 if (st.getSymbol().equalsIgnoreCase(symbol)) {
                     if ((st.getValue() * shares) <= sa.getBalance()) {
                         sa.removeMoney(st.getValue() * shares);
                         st.increaseNumShares(shares);
-                        bought = true;
+                        return  st.getValue();
                     }
-                    contains = true;
+
                 }
             }
         }
-        if (shares <= 0){
-            System.out.println("Enter Share amount greater than 0");
-        } else if (!contains){
-            bought = buyNewStock(symbol, shares, sa, Iv);
-        }
-        if (!bought){
-            System.out.println("Stocks not purchase because of insufficient funds or invalid symbol");}
+        return -1;
     }
 
 
@@ -81,7 +88,7 @@ public class StockBroker implements Serializable {
      * @param Iv: The user's investment portfolio.
      */
 
-    private boolean buyNewStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
+    private double buyNewStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
         boolean valid = atm.getBroker().checkIfStockIsValid(symbol);
         if (valid){
         Stock st = fetchStock(symbol);
@@ -90,7 +97,7 @@ public class StockBroker implements Serializable {
                 Iv.getStockPortfolio().add(st);
                 st.setNumShares(shares);
                 sa.removeMoney(st.getValue() * shares);
-                return true;
+                return st.getValue();
             }
         } else {
             if (shares <= 0){
@@ -100,7 +107,7 @@ public class StockBroker implements Serializable {
                 System.out.println("There is no stock of symbol: " + symbol);
             }
         }}
-        return false;
+        return -1;
     }
 
     /**

@@ -3,14 +3,12 @@ package account;
 import atm.ATM;
 
 public class StockAccount extends Asset {
-    protected double profitmade;
-    double totalDeposited;
+
 
     public StockAccount(int accountNum, ATM atm) {
 
         super(accountNum, atm);
         this.type = "stock";
-        this.profitmade = 0;
     }
 
     public void removeMoney(double amount) {
