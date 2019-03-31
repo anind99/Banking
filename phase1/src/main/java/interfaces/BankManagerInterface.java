@@ -216,7 +216,7 @@ public class BankManagerInterface extends GeneralInterface{
     }
 
     private void shutDownSystem(){
-        atm.testShutDown();
+        atm.shutDown();
         System.out.println("System now shutting down");
         System.exit(0);
     }
