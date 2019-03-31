@@ -25,8 +25,10 @@ public class UpdateProfileInterface {
             switch (option) {
                 case "1":
                     changePassword(user);
+                    break;
                 case "2":
                     goBack = true;
+                    break;
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 2.");
                     break;

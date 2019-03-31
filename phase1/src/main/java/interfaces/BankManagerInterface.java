@@ -117,11 +117,6 @@ public class BankManagerInterface extends GeneralInterface{
         System.out.println("type the password for the new user");
         String password = scanner.next();
         User user = atm.getBM().createUser(username, password);
-        atm.getBM().createAccount(user, "chequing");
-        atm.getBM().createAccount(user, "creditcard");
-        atm.getBM().createAccount(user, "loc");
-        atm.getBM().createAccount(user, "savings");
-        atm.getBM().createAccount(user, "stock");
     }
 
     private void creatingAccount() {

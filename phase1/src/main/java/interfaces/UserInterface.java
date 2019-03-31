@@ -23,7 +23,6 @@ public class UserInterface {
     }
 
     public void displayUserMenu(User user) {
-        boolean validselection = false;
         boolean logout = false;
         while (!logout) {
             printOptions();
@@ -31,14 +30,19 @@ public class UserInterface {
             switch (option) {
                 case "1":
                     this.transactionInterface.displayTransactionMenu(user);
+                    break;
                 case "2":
                     this.accountInterface.displayAccountMenu(user);
+                    break;
                 case "3":
                     this.investmentInterface.displayInvestmentMenu(user);
+                    break;
                 case "4":
                     this.updateProfileInterface.displayUpdateProfileMenu(user);
+                    break;
                 case "5":
                     this.subscriptionInteface.displaySubscriptionMenu(user);
+                    break;
                 case "6":
                     logout = true;
                     break;

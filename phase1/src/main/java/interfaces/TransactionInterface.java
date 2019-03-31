@@ -32,6 +32,7 @@ public class TransactionInterface extends GeneralInterface{
                     payBill(user);
                 case "6":
                     goBack = true;
+                    break;
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
                     break;
