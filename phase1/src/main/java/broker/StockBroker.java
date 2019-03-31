@@ -68,7 +68,9 @@ public class StockBroker implements Serializable {
             bought = buyNewStock(symbol, shares, sa, Iv);
         }
         if (!bought){
-            System.out.println("Stocks not purchase because of insufficient funds or invalid symbol");}
+            if (atm.getBroker().checkIfStockIsValid(symbol)){
+            System.out.println("Stocks not purchased because of insufficient funds");}
+            else{System.out.println("Stocks not purchased because of invalid symbol");}}
     }
 
 
