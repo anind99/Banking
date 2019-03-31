@@ -75,7 +75,6 @@ public class AccountInterface extends GeneralInterface{
     }
 
     private void addUserToExistingAccount(User user1) {
-        Scanner scanner = new Scanner(System.in);
         String type = selectTypeOfAccount(false, user1);
         printChoices(user1, false, type);
 
