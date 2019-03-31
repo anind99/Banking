@@ -44,30 +44,30 @@ public class BankMutualFundBroker {
         bought.updateStock(date);
         fund.getStocks().add(bought);
     }
-
-
-    //TODO check is symbol is valid wait for alan to make the list
-    //Lets the mutual funds broker sell stocks from a specified mutual fund
+    
+    //Lets the mutual funds broker sell stocks from a specified mutual fund given that the stock exists in the fund
     public void sellStocksFund(MutualFund fund, String symbol, int shares) {
         boolean valid = atm.getBroker().checkIfStockIsValid(symbol);
         if (valid) {
-            boolean found = false;
-            for (Stock stock : fund.getStocks()) {
-                if (stock.getSymbol().equals(symbol)) {
-                    found = true;
-                    if (stock.getNumShares() <= shares) {
-                        stock.decreaseNumShares(shares);
-                    } else {
-                        System.out.println("You do not own enough shares please try again");
-                    }
+            boolean found = sellPossible(fund, symbol, shares);
+            if (!found) {System.out.println("This stock does not exists in this fund");}
+        }else{
+            System.out.println("Not a valid symbol, please try again");}
+    }
+
+    //sell the stock if possible to sell
+    public boolean sellPossible(MutualFund fund, String symbol, int shares){
+        for (Stock stock : fund.getStocks()) {
+            if (stock.getSymbol().equals(symbol)) {
+                if (stock.getNumShares() <= shares) {
+                    stock.decreaseNumShares(shares);
+                    return true;
+                } else {
+                    System.out.println("You do not own enough shares please try again");
+                    return true;
                 }
             }
-            if (!found) {
-                System.out.println("This stock does not exists in this fund");
-            }
-        } else {
-            System.out.println("Not a valid symbol, please try again");
-        }
+        } return false;
     }
 
     // buy more shares of the Stocks in a mutual fund a user wants to invest in so we put all the users money in shares
