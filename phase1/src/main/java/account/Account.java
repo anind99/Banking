@@ -174,55 +174,89 @@ public abstract class Account implements Serializable {
         boolean sufficientFunds = accountFrom.checkFundsSufficient(amount);
         if(sufficientFunds){
             addMoney(amount);
-            Transaction transaction = new Transaction(accountFrom.accountNum, amount, "TransferIn");
-            this.listOfTransactions.add(transaction);
+            updateTransactionList(new Transaction(accountFrom.accountNum, amount, "TransferIn"));
             System.out.println("\n" + amount + " has been transferred");}
         else{
             System.out.println("\nThis transaction i;s not possible: insufficient funds");
         }
-
     }
 
+    /**
+     * Transfers money out of the account into another account
+     * and prints the result of the transaction.
+     * @param amount
+     * @param accountTo
+     */
     public void transferOut(double amount, Account accountTo) {
         boolean sufficientFunds = checkFundsSufficient(amount);
-        if(sufficientFunds){accountTo.addMoney(amount);
-            Transaction transaction =  new Transaction(accountTo.accountNum, amount, "TransferOut");
-            this.listOfTransactions.add(transaction);
+        if(sufficientFunds){
+            accountTo.addMoney(amount);
+            updateTransactionList(new Transaction(accountTo.accountNum, amount, "TransferOut"));
             System.out.println("\n" + amount + " has been transferred");}
-        else{System.out.println("\nThis transaction is not possible: insufficient funds");}
-
-
+        else{
+            System.out.println("\nThis transaction is not possible: insufficient funds");
+        }
     }
 
+    /**
+     * Deposits money into the account by reading the amount of money being deposited
+     * from deposit.txt using an instance of ReadAndWrite class and updates the
+     * transaction list of the account.
+     * @see ReadAndWrite
+     */
     public void deposit() {
         Double amount = this.readAndWrite.depositReader();
         addMoney(amount);
-        Transaction transaction = new Transaction(amount, "deposit");
-        this.listOfTransactions.add(transaction);
+        //updateTransactionList(new Transaction(amount, "deposit"));
     }
 
+    /**
+     * Withdraws money from the account if there is enough money
+     * in the account and the ATM has enough dollar bills to dispense.
+     * @param amount the amount being withdrawn from the account
+     */
     public void withdraw(double amount) {
-        if(atm.getBills().getTotalAmount() >= amount) {
-            atm.getBills().withdrawBills(amount);
-            atm.getBills().alertManager();
+        if(atm.getBills().getTotalAmount() >= amount && checkFundsSufficient(amount)) {
             removeMoney(amount);
-            Transaction transaction = new Transaction(amount, "withdraw");
+            atm.getBills().withdrawBills(amount);
+            //atm.getBills().alertManager();
+            updateTransactionList(new Transaction(amount, "withdraw"));
             System.out.println(this.listOfTransactions);
-            this.listOfTransactions.add(transaction);
-        }else{System.out.println("\nTransaction not possible: not enough funds in ATM");}
-
+        }
+        else{
+            System.out.println("\nTransaction not possible: not enough funds in ATM");
+        }
     }
 
+    /**
+     * Pays a bill by transferring money from the account to an external account.
+     * <p>
+     * Reads the details of the bill to be paid from outgoing.txt using an instance
+     * of the atm.ReadAndWrite class and if funds sufficient pays the bill.
+     * @param amount the bill amount
+     * @param receiver the external account the money is being paid to
+     */
     public void payBill(double amount, String receiver){
         boolean sufficientFunds = checkFundsSufficient(amount);
         if(sufficientFunds){
             this.readAndWrite.payBillWriting(amount, receiver, accountNum);
             System.out.println("You paid " + amount + " to " + receiver);
         }
-        else{System.out.println("\nThis transaction is not possible: insufficient funds");}
-        this.listOfTransactions.add(new Transaction(receiver, amount));
+        else{
+            System.out.println("\nThis transaction is not possible: insufficient funds");
+        }
+        updateTransactionList(new Transaction(receiver, amount));
     }
 
+    public void updateTransactionList(Transaction transaction){
+        this.listOfTransactions.add(transaction);
+    }
+
+    /**
+     * Used in serialization to store the Account object.
+     * @param oos instance of the ObjectOutputStream class to write the account object
+     * @throws IOException caught if writing the object fails
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -232,6 +266,13 @@ public abstract class Account implements Serializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * Used in serialization to restore the account's information after the ATM is restarted.
+     * @param ois instance of the ObjectInputStream class used to read the account object
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -242,6 +283,10 @@ public abstract class Account implements Serializable {
         }
     }
 
+    /**
+     *
+     * @throws ObjectStreamException
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("account readObjectNoData, this should never happen!");
         System.exit(-1);

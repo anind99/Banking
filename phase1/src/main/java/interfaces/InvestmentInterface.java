@@ -51,9 +51,9 @@ public class InvestmentInterface {
         System.out.println("2. Sell Stocks");
         System.out.println("3. Buy Mutual Funds");
         System.out.println("4. Sell Mutual Funds");
-        System.out.println("5. View your Stocks investments");
+        System.out.println("5. View your Stocks investmentPortfolio");
         System.out.println("6. View total money in stocks");
-        System.out.println("7. View your Mutual Funds investments");
+        System.out.println("7. View your Mutual Funds investmentPortfolio");
         System.out.println("8. Go Back");
         System.out.println("Enter the number: ");
     }
@@ -72,7 +72,7 @@ public class InvestmentInterface {
         }
 
         if (shares != -1) {
-            atm.getBroker().getStockBroker().buyStocks(symbol, shares, findStockAccount(user), user.getInvestments());
+            atm.getBroker().getStockBroker().buyStocks(symbol, shares, findStockAccount(user), user.getInvestmentPortfolio());
         }
         else {
             System.out.println("Please enter integer greater than 0");
@@ -94,7 +94,7 @@ public class InvestmentInterface {
         }
 
         if (shares != -1) {
-            atm.getBroker().getStockBroker().sellStocks(findStockAccount(user), sym, shares, user.getInvestments());
+            atm.getBroker().getStockBroker().sellStocks(findStockAccount(user), sym, shares, user.getInvestmentPortfolio());
         }
         else {
             System.out.println("Please enter integer greater than 0.");
@@ -155,7 +155,7 @@ public class InvestmentInterface {
     }
 
     private void viewUserMutualFunds(User user) {
-        HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestments().getMutualFundPortfolio();
+        HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
 
         for (Map.Entry<MutualFund, ArrayList<Double>> entry : mutualFundsPortfolio.entrySet()) {
             System.out.println(entry.getKey() + " = " + entry.getValue());
@@ -164,7 +164,7 @@ public class InvestmentInterface {
     }
 
     private MutualFund findMutualFund(User user, String name) {
-        HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestments().getMutualFundPortfolio();
+        HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
 
         for (Map.Entry<MutualFund, ArrayList<Double>> entry : mutualFundsPortfolio.entrySet()) {
             if (entry.getKey().getName().equals(name)) {

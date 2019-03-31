@@ -1,39 +1,18 @@
-package investments;
+package broker;
 
 import account.Account;
+import atm.ATM;
 import atm.User;
+import investments.MutualFund;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ClientFacingBroker {
+public class UserMutualFundBroker {
+    private final BankMutualFundBroker bankMutualFundBroker;
 
-    // buy more shares of the Stocks in a mutual fund a user wants to invest in so we put all the users money in shares
-    public void refillFunds(MutualFund fund, double amount) {
-        double oldValue = fund.getValue();
-        double newValue = oldValue + amount;
-        calculateRefill(fund, newValue);
-        updateShareHolders(fund, oldValue, newValue);
-    }
-
-    //Calculates how many stocks should be bought for each stock in the fund
-    public void calculateRefill(MutualFund fund, double amount){
-        double netWorth = fund.getValue();
-        int  increase =  (int) (amount / netWorth) + 1;
-        for (Stock stock: fund.getStocks()){
-            stock.setNumShares(stock.getNumShares() * increase);
-        }
-    }
-
-    //update % owned of the shareholders
-    public void updateShareHolders(MutualFund fund, double oldValue, double newValue){
-        double increase = newValue / oldValue;
-        for (User shareholder : fund.getInvestors().keySet()){
-            double oldPercent = fund.getInvestors().get(shareholder).get(1);
-            double newPercent = oldPercent / increase;
-            fund.getInvestors().get(shareholder).set(1, newPercent);
-            shareholder.getInvestments().getMutualFundPortfolio().get(fund).set(1, newPercent);
-        }
+    public UserMutualFundBroker(ATM atm) {
+        this.bankMutualFundBroker = new BankMutualFundBroker(atm);
     }
 
     // calculate the broker free for buying this mutual fund
@@ -59,7 +38,7 @@ public class ClientFacingBroker {
     }
     //calculates how much the user's investment into a certain fund is worth
     double calculateUserMoney(User user, MutualFund fund){
-        HashMap<MutualFund, ArrayList<Double>> portfolio = user.getInvestments().getMutualFundPortfolio();
+        HashMap<MutualFund, ArrayList<Double>> portfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
         double percentOwned = portfolio.get(fund).get(1);
         double fundTotalValue = fund.getValue();
         return (fundTotalValue / 100) * percentOwned;
@@ -78,7 +57,7 @@ public class ClientFacingBroker {
         }
         if(enoughStockBalance){
             if (!possibleToBuy(fund, amount)){
-                refillFunds(fund, amount);}
+                bankMutualFundBroker.refillFunds(fund, amount);}
             updateFundInvestors(user, fund, amount);
             for (Account account: user.getAccounts()){
                 if (account.getType().equals("stock")){
@@ -108,7 +87,7 @@ public class ClientFacingBroker {
     //Stores information about a users purchase in their investment portfolio and stores the users info in the fund's information
     public void updateFundInvestors(User user, MutualFund fund, double amount){
         double percentOfFund = amount / fund.getValue() * 100;
-        HashMap<MutualFund, ArrayList<Double>> userInvestments = user.getInvestments().getMutualFundPortfolio();
+        HashMap<MutualFund, ArrayList<Double>> userInvestments = user.getInvestmentPortfolio().getMutualFundPortfolio();
         boolean found = false;
         for (MutualFund userFund : userInvestments .keySet()){
             if(userFund.equals(fund)){
@@ -122,17 +101,17 @@ public class ClientFacingBroker {
             ArrayList<Double> investment = new ArrayList<>();
             investment.add(amount);
             investment.add(percentOfFund);
-            user.getInvestments().setMutualFundsPortfolio(fund, investment);
+            user.getInvestmentPortfolio().setMutualFundsPortfolio(fund, investment);
             fund.setInvestors(user, investment);}
     }
 
-    //Calculate the %profit or loss of the user's investments in mutual funds
+    //Calculate the %profit or loss of the user's investmentPortfolio in mutual funds
     public double calculateInvestmentIncrease(User user){
         double invested = 0.0;
         double netWorth = 0.0;
-        for (MutualFund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
-            invested += user.getInvestments().getMutualFundPortfolio().get(fund).get(0);
-            netWorth += (fund.getValue() * (user.getInvestments().getMutualFundPortfolio().get(fund).get(1) / 100));
+        for (MutualFund fund : user.getInvestmentPortfolio().getMutualFundPortfolio().keySet()){
+            invested += user.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).get(0);
+            netWorth += (fund.getValue() * (user.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).get(1) / 100));
         } return (netWorth / invested) * 100;
     }
 
@@ -140,13 +119,13 @@ public class ClientFacingBroker {
     public String toString(User user){
         String mutualFundInvestments = "";
         double total = 0.0;
-        for (MutualFund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
-            double value = fund.getValue() * (user.getInvestments().getMutualFundPortfolio().get(fund).get(1) / 100);
-            mutualFundInvestments += "\n Your mutual fund investments are worth the following:\n" + fund.getName()
+        for (MutualFund fund : user.getInvestmentPortfolio().getMutualFundPortfolio().keySet()){
+            double value = fund.getValue() * (user.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).get(1) / 100);
+            mutualFundInvestments += "\n Your mutual fund investmentPortfolio are worth the following:\n" + fund.getName()
                     + ":" + value;
             total += value;
         }
-        mutualFundInvestments += "\n The total value of your mutual fund investments is $" + total;
+        mutualFundInvestments += "\n The total value of your mutual fund investmentPortfolio is $" + total;
         mutualFundInvestments += "\n Your total mutual fund investment increase is " +
                 calculateInvestmentIncrease(user) + " $";
         return mutualFundInvestments;

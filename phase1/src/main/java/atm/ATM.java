@@ -2,8 +2,12 @@ package atm;
 
 import account.*;
 import bankmanager.*;
+import broker.Broker;
 import interfaces.*;
 import investments.*;
+import subscriptions.Subscriber;
+import subscriptions.availableSubscriptions;
+import subscriptions.subscription;
 
 import java.io.*;
 import java.io.File;
@@ -20,22 +24,16 @@ public class ATM implements Serializable {
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
 
     private Bills bills;
-    private ArrayList<User> listOfUsers;
-    private BankManager BM;
-    private Calendar date;
+    private ArrayList<User> listOfUsers = new ArrayList<User>();
+    private BankManager BM = new BankManager(this);
+    private Calendar date = Calendar.getInstance();
     private final Interface interfaces;
-    private final Broker broker;
+    private final Broker broker = new Broker(this, BM);
+    private availableSubscriptions subscriptions= new availableSubscriptions();
+    private Subscriber subscriber = new Subscriber(this);
 
     public ATM() {
         this.interfaces = new Interface(this);
-        this.listOfUsers  = new ArrayList<User>();
-        this.BM = new BankManager(this);
-        this.date = Calendar.getInstance();
-        this.date.add(Calendar.YEAR, -3);
-        this.broker = new Broker(this, BM);
-        // Our Calendar defaults 3 years behind normal because the API we use to source stock data doesn't have
-        // data that is within a year past. To be safe we go back three years.
-
         bills = new Bills(100, 100, 100, 100);
     }
 
@@ -49,6 +47,14 @@ public class ATM implements Serializable {
 
     public Broker getBroker() {
         return broker;
+    }
+
+    public availableSubscriptions getSubscriptions(){
+        return this.subscriptions;
+    }
+
+    public Subscriber getSubscriber(){
+        return this.subscriber;
     }
 
     public Calendar getDate(){
