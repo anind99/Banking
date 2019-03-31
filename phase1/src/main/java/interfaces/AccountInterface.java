@@ -60,15 +60,20 @@ public class AccountInterface extends GeneralInterface{
 
         User user2 = findUser(username);
 
-        while (user2 == null) {
-            System.out.println("The user name you entered is not valid. Please enter a valid username: ");
+        while (user2 == null || user2 == user1) {
+            System.out.println("The user name you entered is not valid. Please enter a valid username (Press * to quit): ");
             username = scanner.next();
 
             user2 = findUser(username);
+            if (username.equals("*")) {
+                break;
+            }
         }
 
-        String type = selectTypeOfAccount(false, user1);
-        atm.getBM().createJointAccount(user1, user2, type);
+        if (!username.equals("*")) {
+            String type = selectTypeOfAccount(false, user1);
+            atm.getBM().createJointAccount(user1, user2, type);
+        }
     }
 
     private void addUserToExistingAccount(User user1) {
@@ -81,14 +86,19 @@ public class AccountInterface extends GeneralInterface{
 
         User user2 = findUser(username);
 
-        while (user2 == null) {
-            System.out.println("The user name you entered is not valid. Please enter a valid username: ");
+        while (user2 == null || user2 == user1 ) {
+            System.out.println("The user name you entered is not valid. Please enter a valid username (Press * to quit): ");
             username = scanner.next();
 
             user2 = findUser(username);
+            if (username.equals("*")) {
+                break;
+            }
         }
 
-        atm.getBM().addExistingUserToAccount(user2, accountToAddUser);
+        if (!username.equals("*")) {
+            atm.getBM().addExistingUserToAccount(user2, accountToAddUser);
+        }
     }
 
     private void summary(User user) {
