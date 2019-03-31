@@ -17,10 +17,10 @@ public class InvestmentInterface implements Serializable {
 
     public void displayInvestmentMenu(User user) {
         boolean goBack = false;
-        printOptions();
-        String option = scanner.next();
 
         while(!goBack) {
+            printOptions();
+            String option = scanner.next();
             switch (option) {
                 case "1":
                     buyStocks(user);
