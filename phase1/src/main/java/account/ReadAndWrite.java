@@ -3,7 +3,7 @@ package account;
 import java.io.*;
 import atm.*;
 
-public class ReadAndWrite {
+public class ReadAndWrite implements Serializable {
     private int depositNum = 0;
     private ATM atm;
 
@@ -70,5 +70,29 @@ public class ReadAndWrite {
             System.err.println("Problem writing to the file outgoing.txt");
             return false;
         }
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("ReadAndWrite writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("ReadAndWrite readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("ReadAndWrite readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

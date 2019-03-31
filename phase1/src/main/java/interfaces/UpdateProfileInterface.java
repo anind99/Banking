@@ -10,15 +10,15 @@ import java.util.Scanner;
 
 public class UpdateProfileInterface implements Serializable {
     private final ATM atm;
-    private Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
 
     public UpdateProfileInterface(ATM atm) {
         this.atm = atm;
     }
 
     public void displayUpdateProfileMenu(User user) {
-        boolean validselection = false;
         boolean goBack = false;
+        scanner = new Scanner(System.in);
 
         while (!goBack) {
             printOptions();
@@ -47,6 +47,7 @@ public class UpdateProfileInterface implements Serializable {
 
     private void changePassword(User user) {
         // Method for users to change their password.
+        scanner = new Scanner(System.in);
 
         System.out.println("Type in your new password (spaces not allowed):");
         System.out.println("If you type in a password with a space, only the word before the space will be your password");

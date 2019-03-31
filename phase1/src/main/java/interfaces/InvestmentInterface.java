@@ -9,7 +9,7 @@ import java.util.*;
 
 public class InvestmentInterface implements Serializable {
     private final ATM atm;
-    private Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
 
     public InvestmentInterface(ATM atm) {
         this.atm = atm;
@@ -17,10 +17,11 @@ public class InvestmentInterface implements Serializable {
 
     public void displayInvestmentMenu(User user) {
         boolean goBack = false;
-        printOptions();
-        String option = scanner.next();
+        scanner = new Scanner(System.in);
 
         while(!goBack) {
+            printOptions();
+            String option = scanner.next();
             switch (option) {
                 case "1":
                     buyStocks(user);
@@ -49,7 +50,6 @@ public class InvestmentInterface implements Serializable {
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 8.");
                     break;
-
             }
         }
     }
@@ -60,9 +60,9 @@ public class InvestmentInterface implements Serializable {
         System.out.println("2. Sell Stocks");
         System.out.println("3. Buy Mutual Funds");
         System.out.println("4. Sell Mutual Funds");
-        System.out.println("5. View your Stocks investmentPortfolio");
+        System.out.println("5. View your Stocks Investment Portfolio");
         System.out.println("6. View total money in stocks");
-        System.out.println("7. View your Mutual Funds investmentPortfolio");
+        System.out.println("7. View your Mutual Funds Investment Portfolio");
         System.out.println("8. Go Back");
         System.out.println("Enter the number: ");
     }
@@ -99,6 +99,7 @@ public class InvestmentInterface implements Serializable {
         System.out.println("What would you like to sell?");
 
         System.out.println("Enter Stock symbol: ");
+        scanner = new Scanner(System.in);
         String sym = scanner.next();
 
         // Makes the user re-enter the symbol if they do not have this stock.
@@ -126,6 +127,7 @@ public class InvestmentInterface implements Serializable {
     private void buyMutualFunds(User user) {
         MutualFund fundToBuy = listFunds();
         System.out.println("Enter the amount you would like to invest: ");
+        scanner = new Scanner(System.in);
         String amount = scanner.next();
 
         atm.getBroker().getMutualFundsBroker().buyMutualFunds(user, fundToBuy, Double.valueOf(amount));
@@ -134,6 +136,7 @@ public class InvestmentInterface implements Serializable {
     private void sellMutualFunds(User user) {
         viewUserMutualFunds(user);
         System.out.println("Enter the fund you would like to sell: ");
+        scanner = new Scanner(System.in);
         String name = scanner.next();
         MutualFund fundToSell = findMutualFund(user, name);
 
@@ -155,11 +158,11 @@ public class InvestmentInterface implements Serializable {
         System.out.println("2. Medium Risk Fund");
         System.out.println("3. High Risk Fund");
         System.out.println("4. Enter the number: ");
-
-        String option = scanner.next();
+        scanner = new Scanner(System.in);
         boolean validSelection = false;
 
         while (!validSelection) {
+            String option = scanner.next();
             switch (option) {
                 case "1":
                     return atm.getBroker().getMutualFundsBroker().getLowRiskFund();

@@ -3,27 +3,30 @@ package interfaces;
 import atm.*;
 import investments.MutualFund;
 
+import java.awt.*;
 import java.io.*;
 import java.util.Scanner;
 
 public class BrokerInterface implements Serializable {
     private final ATM atm;
+    transient Scanner scanner;
 
     public BrokerInterface(ATM atm) {
         this.atm = atm;
     }
 
-    void displayBrokerMenu(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Select an option:");
-        System.out.println("1. Buy Funds");
-        System.out.println("2. Sell Funds");
-        System.out.println("3. Log Out");
-        String option = scanner.next();
 
+    void displayBrokerMenu(){
+        String option;
         boolean logout = false;
+        scanner = new Scanner(System.in);
 
         while (!logout) {
+            System.out.println("Select an option:");
+            System.out.println("1. Buy Funds");
+            System.out.println("2. Sell Funds");
+            System.out.println("3. Log Out");
+            option = scanner.next();
             switch (option){
                 case "1": {
                     buyFunds();
@@ -37,57 +40,65 @@ public class BrokerInterface implements Serializable {
                     logout = true;
                     break;
                 }
-                default: {
+                default:
                     System.out.println("There is no option \"" + option + "\". Please try again.");
                     break;
-                }
             }
         }
-        scanner.close();
     }
 
     private void buyFunds() {
         MutualFund fundToBuy = listFunds();
-        Scanner scanner = new Scanner(System.in);
-
 
         System.out.println("Enter the stock symbol: ");
+        Scanner scanner = new Scanner(System.in);
         String symbol = scanner.next();
 
         System.out.println("Enter the amount of shares: ");
         String shares = scanner.next();
 
-        atm.getBroker().getMutualFundsBroker().buyStocksFund(fundToBuy, symbol, Integer.valueOf(shares));
-        scanner.close();
+        if (checkIfValid(shares)){
+        atm.getBroker().getMutualFundsBroker().buyStocksFund(fundToBuy, symbol, Integer.valueOf(shares));}
+        else{System.out.println("Not a valid input, please try again");}
     }
 
     private void sellFunds() {
         MutualFund fundToSell = listFunds();
-        Scanner scanner = new Scanner(System.in);
-
 
         System.out.println("Enter the stock symbol: ");
+        scanner = new Scanner(System.in);
         String symbol = scanner.next();
 
         System.out.println("Enter the amount of shares: ");
         String shares = scanner.next();
 
-        atm.getBroker().getMutualFundsBroker().sellStocksFund(fundToSell, symbol, Integer.valueOf(shares));
-        scanner.close();
+        if (checkIfValid(shares)){
+        atm.getBroker().getMutualFundsBroker().sellStocksFund(fundToSell, symbol, Integer.valueOf(shares));}
+        else{System.out.println("Not a valid input, please try again");}
+    }
+
+    private boolean checkIfValid(String shares){
+       StringBuilder s = new StringBuilder(shares);
+       boolean valid = true;
+
+       for (int i = 0; i < s.length(); i++){
+           if(!Character.isDigit(s.charAt(i))){valid = false;}
+       }return valid;
     }
 
     private MutualFund listFunds() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Select the type of fund:");
         System.out.println("1. Low Risk Fund");
         System.out.println("2. Medium Risk Fund");
         System.out.println("3. High Risk Fund");
-        System.out.println("4. Enter the number: ");
+        System.out.println("Enter the number: ");
 
-        String option = scanner.next();
+        scanner = new Scanner(System.in);
+        String option;
         boolean validSelection = false;
 
         while (!validSelection) {
+            option = scanner.next();
             switch (option) {
                 case "1":
                     return atm.getBroker().getMutualFundsBroker().getLowRiskFund();
@@ -100,7 +111,7 @@ public class BrokerInterface implements Serializable {
                     break;
             }
         }
-        scanner.close();
+
         return null;
     }
 

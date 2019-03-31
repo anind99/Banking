@@ -8,18 +8,19 @@ import java.util.Scanner;
 
 public class SubscriptionInterface implements Serializable {
     private final ATM atm;
-    private Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
 
     public SubscriptionInterface(ATM a){
         this.atm = a;
     }
 
     public void displaySubscriptionMenu(User user) {
-        printChoices();
-        boolean goBack = false;
-        String choice = scanner.next();
 
+        boolean goBack = false;
+        printChoices();
+        scanner = new Scanner(System.in);
         while (!goBack) {
+            String choice = scanner.next();
             switch(choice) {
                 case "1":
                     addSubscription(user);
@@ -40,8 +41,11 @@ public class SubscriptionInterface implements Serializable {
                     break;
 
             }
+            System.out.println("Enter choice: ");
         }
     }
+
+
 
     private void printChoices(){
 
@@ -56,12 +60,14 @@ public class SubscriptionInterface implements Serializable {
 
     private void addSubscription(User user){
         System.out.println("Enter name of Subscription.");
+        scanner = new Scanner(System.in);
         String name = scanner.next();
         atm.getSubscriber().addSubscription(user, name);
     }
 
     private void removeSubscription(User user){
         System.out.println("Enter name of Subscription.");
+        scanner = new Scanner(System.in);
         String name = scanner.next();
         atm.getSubscriber().removeSubscription(user, name);
     }

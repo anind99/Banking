@@ -9,7 +9,7 @@ import java.util.*;
 
 public class GeneralInterface implements Serializable {
     ATM atm;
-    Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner;
 
     public GeneralInterface(ATM atm) {
         this.atm = atm;
@@ -37,6 +37,8 @@ public class GeneralInterface implements Serializable {
 
         String type = null;
         boolean validselection = false;
+        scanner = new Scanner(System.in);
+
 
         while (!validselection) {
             type = scanner.next();
@@ -130,6 +132,8 @@ public class GeneralInterface implements Serializable {
         // Allows users to select an account by entering their account number. Returns that account.
 
         System.out.println("Enter the account number you want to " + action + ": ");
+        scanner = new Scanner(System.in);
+
         String accountNumTo = scanner.next();
         StringBuilder accountNumToB = new StringBuilder(accountNumTo);
 
@@ -160,6 +164,8 @@ public class GeneralInterface implements Serializable {
         // Returns the amount a user would like to deposit/transfer.
 
         System.out.println("Enter the desired amount you would like to transfer: ");
+        scanner = new Scanner(System.in);
+
         String amount = scanner.next();
         StringBuilder amountB = new StringBuilder(amount);
 

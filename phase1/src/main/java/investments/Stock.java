@@ -91,7 +91,7 @@ public class Stock implements Serializable {
 
 
 
-    public boolean updateStock(Calendar date){
+    public void updateStock(Calendar date){
 
         // because of issues with the API we are using, we can only fetch historical stock data from 2019 March
         // thus we are making every date go back to 2019 March of the date that was intended
@@ -128,14 +128,12 @@ public class Stock implements Serializable {
                 }
                 if (jsonobject.has("quandl_error")){
                     System.out.println("Bad stock symbol, try again?");
-                    return false;
                 }
             } catch (IOException e){
                 System.out.println("IOException in Stock.java. Did you pick a non-existing symbol?");
                 System.exit(-1);
             }
         }
-        return true;
     }
 
     private static String readAll(Reader rd) throws IOException {

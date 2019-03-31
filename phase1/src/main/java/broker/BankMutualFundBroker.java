@@ -33,6 +33,8 @@ public class BankMutualFundBroker implements Serializable {
         for(Stock stock : fund.getStocks()){
             if (stock.getSymbol().equals(symbol)){
                 stock.increaseNumShares(shares);
+                System.out.println("The bank has bought " + shares + " shares of the stock " + stock.getName()
+                        + " into the " + fund.getName() + " fund");
                 return true;}
         }return false;
     }
@@ -40,7 +42,7 @@ public class BankMutualFundBroker implements Serializable {
     //buy a certain number of shares of a new stock for a mutual fund
     public void buyStockBank(MutualFund fund, String symbol, int shares){
         String stockName = atm.getBroker().companyNameFromSymbol(symbol);
-        Stock bought = new Stock(symbol, stockName,0.0);
+        Stock bought = new Stock(stockName, symbol,0.0);
         bought.setNumShares(shares);
         bought.updateStock(date);
         fund.getStocks().add(bought);
@@ -62,7 +64,7 @@ public class BankMutualFundBroker implements Serializable {
     public boolean sellPossible(MutualFund fund, String symbol, int shares){
         for (Stock stock : fund.getStocks()) {
             if (stock.getSymbol().equals(symbol)) {
-                if (stock.getNumShares() <= shares) {
+                if (stock.getNumShares() >= shares) {
                     stock.decreaseNumShares(shares);
                     System.out.println("The bank has sold " + shares + " shares of the stock " + stock.getName()
                             + " out of the " + fund.getName() + " fund");

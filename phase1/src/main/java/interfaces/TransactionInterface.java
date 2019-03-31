@@ -14,6 +14,7 @@ public class TransactionInterface extends GeneralInterface{
 
     public void displayTransactionMenu(User user) {
         boolean goBack = false;
+        scanner = new Scanner(System.in);
 
         while (!goBack) {
             printOptions();
@@ -76,6 +77,7 @@ public class TransactionInterface extends GeneralInterface{
 
         while (running) {
             System.out.println("Input amount (The amount has to be a multiple of five, no cents allowed): ");
+            scanner = new Scanner(System.in);
             String amount = scanner.next();
             StringBuilder amountB = new StringBuilder(amount);
 
@@ -137,6 +139,7 @@ public class TransactionInterface extends GeneralInterface{
         printChoices(user, false, type);
         Account accountFrom = selectAccount(user, "pay the bill from", listOfAccounts(user, type));
         System.out.println("Enter the name of the receiver of the bill: ");
+        scanner = new Scanner(System.in);
         String receiver = scanner.next();
         double amount = selectAmount();
 
