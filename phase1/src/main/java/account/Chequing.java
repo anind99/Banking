@@ -3,30 +3,43 @@ package account;
 import atm.ATM;
 
 /**
- *
+ *Chequing is a child class of Asset and represents a chequing account.
  */
 public class Chequing extends Asset {
 
-    public boolean primary;
+    /**
+     * Represents a boolean that is true if this account is the user's primary chequing account.
+     */
+    public boolean primaryStatus;
 
+    /**
+     * Constructor of Chequing class.
+     * Calls on super (Asset class) and also initializes an account
+     * as non-primary and updates the type {@link Account#type}.
+     * @param accountNum the unique account number
+     * @param atm instance of the ATM class
+     */
     public Chequing(int accountNum, ATM atm){
         super(accountNum, atm);
-        primary = false;
+        primaryStatus = false;
         this.type = "chequing";
     }
 
     @Override
     public void setPrimary(){
-        primary = true;
+        primaryStatus = true;
     }
 
     @Override
     public boolean isPrimary(){
-        return primary;
+        return primaryStatus;
     }
 
-    //Removing money from an asset account will decrease its balance
-    // 0 is considered a positive balance
+    /**
+     * Removes money from the account and decreases the balance.
+     * There is a maximum of $100 in overdraft per chequing account.
+     * @param amount dollar amount removed from the account
+     */
     public void removeMoney(double amount) {
         if (balance >= 0 && balance - amount >= -100) {
             balance -= amount;
