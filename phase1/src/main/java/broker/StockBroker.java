@@ -80,6 +80,7 @@ public class StockBroker implements Serializable {
                     if ((st.getValue() * shares) <= sa.getBalance()) {
                         sa.removeMoney(st.getValue() * shares);
                         st.increaseNumShares(shares);
+                        System.out.println("You have bought " + shares + " shares of " + st.getName());
                         return true;
                     }
                 }
@@ -108,6 +109,7 @@ public class StockBroker implements Serializable {
                 Iv.getStockPortfolio().add(st);
                 st.setNumShares(shares);
                 sa.removeMoney(st.getValue() * shares);
+                System.out.println("You have bought " + shares + " shares of " + st.getName());
                 return true;
             }
         } else {
@@ -152,6 +154,7 @@ public class StockBroker implements Serializable {
                     st.decreaseNumShares(shares);
                     SA.addMoney(shares * st.getValue());
                     sold = true;
+                    System.out.println("You have sold " + shares + " shares of " + st.getName());
                     break;
                 }
             }
