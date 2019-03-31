@@ -8,6 +8,7 @@ import atm.ATM;
 import atm.User;
 
 public class MutualFundsBroker {
+
     public MutualFund lowRiskFund;
     public MutualFund mediumRiskFund;
     public MutualFund highRiskFund;
@@ -88,11 +89,19 @@ public class MutualFundsBroker {
         return (fundTotalValue / 100) * percentOwned;
     }
 
+
      //lets a user buy into a mutual fund
     public void buyMutualFunds(User user, MutualFund fund, double amount){
         double total = calculateBrokerFree(amount) + amount;
-        if(user.enoughStockBalance(total)){
-            if (fund.getValue() < amount){
+        boolean enoughStockBalance = false;
+        for (Account account: user.getAccounts()){
+            if (account.getType().equals("stock")){
+                enoughStockBalance = account.checkFundsSufficient(total);
+                break;
+            }
+        }
+        if(enoughStockBalance){
+            if (!possibleToBuy(fund, amount)){
                 refillFunds(fund, amount);}
             updateFundInvestors(user, fund, amount);
             for (Account account: user.getAccounts()){
@@ -104,6 +113,22 @@ public class MutualFundsBroker {
             System.out.println("\nNot enough funds in your stock account");
         }
     }
+
+    //Checks the %of the fund that has been bought
+    public boolean possibleToBuy(MutualFund fund, double amount) {
+        if (fund.getValue() < amount) {
+            return false;
+        } else {
+            double totalPercent = 0.0;
+            double percentOfFund = fund.getValue() / amount;
+            for (User user : fund.getInvestors().keySet()) {
+                totalPercent += fund.getInvestors().get(user).get(1);
+            }
+            return (totalPercent + percentOfFund) <= 100;
+        }
+    }
+
+
     //Stores information about a users purchase in their investment portfolio and stores the users info in the fund's information
     public void updateFundInvestors(User user, MutualFund fund, double amount){
         double percentOfFund = amount / fund.getValue() * 100;
@@ -123,14 +148,6 @@ public class MutualFundsBroker {
             investment.add(percentOfFund);
             user.getInvestments().setMutualFundsPortfolio(fund, investment);
             fund.setInvestors(user, investment);}
-    }
-
-    //calculate the total net worth of mutual funds of a user
-    public double getTotalMutualFundWorth(User user){
-        double totalWorth = 0.0;
-        for (MutualFund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
-            totalWorth += fund.getValue() * (user.getInvestments().getMutualFundPortfolio().get(fund).get(1) / 100);
-        }return totalWorth;
     }
 
 //updates the price the fund every day upon ATM restart
