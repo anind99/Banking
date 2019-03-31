@@ -1,15 +1,18 @@
-package investments;
+package broker;
 
 import account.Account;
-import atm.*;
+import atm.ATM;
+import atm.User;
+import investments.FundsTrader;
+import investments.MutualFund;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ClientFacingBroker {
+public class UserMutualFundBroker {
     private final FundsTrader fundsTrader;
 
-    public ClientFacingBroker(ATM atm) {
+    public UserMutualFundBroker(ATM atm) {
         this.fundsTrader = new FundsTrader(atm);
     }
 

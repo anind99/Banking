@@ -91,7 +91,7 @@ public class Stock {
 
 
 
-    boolean updateStock(Calendar date){
+    public boolean updateStock(Calendar date){
 
         // because of issues with the API we are using, we can only fetch historical stock data from 2019 March
         // thus we are making every date go back to 2019 March of the date that was intended

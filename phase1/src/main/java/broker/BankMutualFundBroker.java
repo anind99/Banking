@@ -1,12 +1,16 @@
-package investments;
+package broker;
+
+import atm.ATM;
+import atm.User;
+import investments.MutualFund;
+import investments.Stock;
 
 import java.util.Calendar;
-import atm.*;
 
-public class FundsTrader {
+public class BankMutualFundBroker {
     public Calendar date;
 
-    public FundsTrader(ATM atm){
+    public BankMutualFundBroker(ATM atm){
         this.date = atm.getDate();
     }
 

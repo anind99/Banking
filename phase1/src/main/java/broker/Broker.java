@@ -1,7 +1,9 @@
-package investments;
+package broker;
 
 import atm.*;
 import bankmanager.*;
+import broker.MutualFundsBroker;
+import broker.StockBroker;
 
 
 public class Broker {
