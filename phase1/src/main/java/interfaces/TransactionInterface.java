@@ -13,8 +13,6 @@ public class TransactionInterface extends GeneralInterface{
     }
 
     public void displayTransactionMenu(User user) {
-        Scanner scanner = new Scanner(System.in);
-        boolean validselection = false;
         boolean goBack = false;
 
         while (!goBack) {
@@ -44,7 +42,6 @@ public class TransactionInterface extends GeneralInterface{
                     break;
             }
         }
-        scanner.close();
     }
 
     private void printOptions() {
@@ -76,7 +73,6 @@ public class TransactionInterface extends GeneralInterface{
 
         Account account = selectAccount(user, "withdraw from", listOfAccounts(user, type));
         boolean running = true;
-        Scanner scanner = new Scanner(System.in);
 
         while (running) {
             System.out.println("Input amount (The amount has to be a multiple of five, no cents allowed): ");
@@ -96,7 +92,6 @@ public class TransactionInterface extends GeneralInterface{
                 System.out.println("The amount you entered is not possible, please try again.");
             }
         }
-        scanner.close();
     }
 
     private void transferIn(User user) {
@@ -142,9 +137,7 @@ public class TransactionInterface extends GeneralInterface{
         printChoices(user, false, type);
         Account accountFrom = selectAccount(user, "pay the bill from", listOfAccounts(user, type));
         System.out.println("Enter the name of the receiver of the bill: ");
-        Scanner scanner = new Scanner(System.in);
         String receiver = scanner.next();
-        scanner.close();
         double amount = selectAmount();
 
         accountFrom.payBill(amount, receiver.trim());
