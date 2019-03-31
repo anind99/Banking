@@ -14,18 +14,18 @@ public class BrokerInterface implements Serializable {
         this.atm = atm;
     }
 
-    transient Scanner scanner = new Scanner(System.in);
 
     void displayBrokerMenu(){
-        System.out.println("Select an option:");
-        System.out.println("1. Buy Funds");
-        System.out.println("2. Sell Funds");
-        System.out.println("3. Log Out");
-        String option = scanner.next();
-
+        String option;
         boolean logout = false;
+        Scanner scanner = new Scanner(System.in);
 
         while (!logout) {
+            System.out.println("Select an option:");
+            System.out.println("1. Buy Funds");
+            System.out.println("2. Sell Funds");
+            System.out.println("3. Log Out");
+            option = scanner.next();
             switch (option){
                 case "1": {
                     buyFunds();
@@ -39,10 +39,9 @@ public class BrokerInterface implements Serializable {
                     logout = true;
                     break;
                 }
-                default: {
+                default:
                     System.out.println("There is no option \"" + option + "\". Please try again.");
                     break;
-                }
             }
         }
     }
@@ -51,6 +50,7 @@ public class BrokerInterface implements Serializable {
         MutualFund fundToBuy = listFunds();
 
         System.out.println("Enter the stock symbol: ");
+        Scanner scanner = new Scanner(System.in);
         String symbol = scanner.next();
 
         System.out.println("Enter the amount of shares: ");
@@ -65,6 +65,7 @@ public class BrokerInterface implements Serializable {
         MutualFund fundToSell = listFunds();
 
         System.out.println("Enter the stock symbol: ");
+        Scanner scanner = new Scanner(System.in);
         String symbol = scanner.next();
 
         System.out.println("Enter the amount of shares: ");
@@ -89,8 +90,9 @@ public class BrokerInterface implements Serializable {
         System.out.println("1. Low Risk Fund");
         System.out.println("2. Medium Risk Fund");
         System.out.println("3. High Risk Fund");
-        System.out.println("4. Enter the number: ");
+        System.out.println("Enter the number: ");
 
+        Scanner scanner = new Scanner(System.in);
         String option = scanner.next();
         boolean validSelection = false;
 
