@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Subscriber {
     /**
-     * Class that handles the user's subscribing functionality
+     * Class that handles the user's subscribing functions
      *
      * Methods:
      *
