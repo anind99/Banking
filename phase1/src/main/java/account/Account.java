@@ -17,16 +17,19 @@ public abstract class Account implements Serializable {
      * The account type (i.e chequing, saving, credit card, loc, and stock).
      */
     public String type;
+
     /**
      * The unique account number.
      */
     public final int accountNum;
+
     /**
      * The dollar balance on the account.
      */
     public double balance;
+
     /**
-     * A list containing all transactions {@link Transaction} performed through the account.
+     * A list of {@link Transaction} objects representing transactions performed through the account.
      * Deposits are not recorded in this list because they cannot be undone
      * {@link bankmanager.TransactionManager#undoTransaction(User, Account)}.
      */
@@ -35,15 +38,18 @@ public abstract class Account implements Serializable {
      * The date the account was created.
      */
     public Calendar dateCreated;
+
     /**
      * An instance of the ATM object{@link ATM}.
      */
     private final ATM atm;
+
     /**
      * Is true if the account is shared by 2 users
      * and false if it has a sole owner.
      */
     private boolean isJoint = false;
+
     /**
      * An instance of the ReadAndWrite class
      *
@@ -92,8 +98,7 @@ public abstract class Account implements Serializable {
 
     /**
      * Returns the list of all transactions ever performed using the account {@link Account#listOfTransactions}.
-     * @return listofTransactions  a list of Transaction objects
-     * @see Transaction
+     * @return {@link Account#listOfTransactions} a list of Transaction objects
      */
     public ArrayList<Transaction> getListOfTransactions() {
         return this.listOfTransactions;
@@ -106,8 +111,6 @@ public abstract class Account implements Serializable {
     public void setIsJoint(boolean joined) {
         this.isJoint = joined;
     }
-
-
 
     /**
      * Returns the most recent transaction performed using the account.
@@ -126,7 +129,6 @@ public abstract class Account implements Serializable {
      * Returns the type of the account {@link Account#type}.
      * @return type a String that states the type of the account
      */
-
     public String getType(){
         return this.type;
     }
@@ -270,6 +272,10 @@ public abstract class Account implements Serializable {
         }
     }
 
+    /**
+     * Adds a {@link Transaction} to the end of the account's list of transactions.
+     * @param transaction a {@link Transaction} object
+     */
     public void updateTransactionList(Transaction transaction){
         this.listOfTransactions.add(transaction);
     }
