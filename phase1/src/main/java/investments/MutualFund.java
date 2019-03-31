@@ -5,6 +5,9 @@ import atm.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/***
+ *
+ */
 public class MutualFund {
     public int risk; // 1 is low risk, 2 is medium risk, 3 is high risk
     public String name;

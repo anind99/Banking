@@ -20,9 +20,8 @@ public class Debt extends Account{
     }
 
     //Removing money from a debt account will increase its balance
-    public boolean removeMoney(double amount){
+    public void removeMoney(double amount){
         this.balance += amount;
-        return true;
     }
 
     private boolean checkMaxDebt(double balance){

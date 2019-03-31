@@ -13,12 +13,9 @@ public class StockAccount extends Asset {
         this.profitmade = 0;
     }
 
-    public boolean removeMoney(double amount) {
+    public void removeMoney(double amount) {
         if (balance - amount >= 0) {
             balance -= amount;
-            return true;
-        } else {
-            return false;
         }
     }
 
