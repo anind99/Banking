@@ -113,9 +113,9 @@ public class BankManagerInterface extends GeneralInterface{
      *
      */
     private void createUser(){
-        System.out.println("type the username for the new user");
+        System.out.println("Type the username for the new user");
         String username = scanner.next();
-        System.out.println("type the password for the new user");
+        System.out.println("Type the password for the new user");
         String password = scanner.next();
         atm.getBM().createUser(username, password);
     }
@@ -127,7 +127,7 @@ public class BankManagerInterface extends GeneralInterface{
         int count2 = 0;
         while (user == null) {
             if (count != 0) {
-                System.out.println("type in the username of the user that would like to create an account: ");
+                System.out.println("Type in the username of the user that would like to create an account: ");
             }
             String username = scanner.nextLine();
             for (User parameter : atm.getListOfUsers()) {

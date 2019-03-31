@@ -35,12 +35,12 @@ public class GeneralInterface {
             System.out.println(toPrint);
         }
 
-        String type = scanner.next();
+        String type = null;
         boolean validselection = false;
 
 
         while (!validselection) {
-            type = scanner.nextLine();
+            type = scanner.next();
 
             if (type.equals("1") || type.equals("2") || type.equals("3") || type.equals("4") || (!transferOut && type.equals("5"))) {
                 validselection = true;
@@ -131,7 +131,7 @@ public class GeneralInterface {
         // Allows users to select an account by entering their account number. Returns that account.
 
         System.out.println("Enter the account number you want to " + action + ": ");
-        String accountNumTo = scanner.nextLine();
+        String accountNumTo = scanner.next();
         StringBuilder accountNumToB = new StringBuilder(accountNumTo);
 
 

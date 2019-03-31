@@ -78,7 +78,7 @@ public class TransactionInterface extends GeneralInterface{
 
         while (running) {
             System.out.println("Input amount (The amount has to be a multiple of five, no cents allowed): ");
-            String amount = scanner.nextLine();
+            String amount = scanner.next();
             StringBuilder amountB = new StringBuilder(amount);
 
             boolean valid = true;
@@ -139,7 +139,7 @@ public class TransactionInterface extends GeneralInterface{
         printChoices(user, false, type);
         Account accountFrom = selectAccount(user, "pay the bill from", listOfAccounts(user, type));
         System.out.println("Enter the name of the receiver of the bill: ");
-        String receiver = scanner.nextLine();
+        String receiver = scanner.next();
 
         double amount = selectAmount();
 
