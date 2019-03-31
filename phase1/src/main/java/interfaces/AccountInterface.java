@@ -6,8 +6,20 @@ import account.*;
 import java.io.*;
 import java.util.*;
 
+/***
+ * Class representing the account menu for users to manage their accounts.
+ *
+ */
 public class AccountInterface implements Serializable {
+
+    /***
+     * The ATM that this interface is running on.
+     */
     public ATM atm;
+
+    /***
+     * The class
+     */
     public GeneralInterfaceMethods general;
     transient Scanner scanner;
 
