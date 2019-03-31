@@ -18,7 +18,7 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
     public void displayManagerMenu(BankManager bm){
 
         boolean loggedOut = false;
-        Scanner scanner = new Scanner(System.in);
+
         while (!loggedOut){
             printOptions();
             String option = scanner.next();
@@ -42,7 +42,6 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
                 case "4": {
                     restockMachine(bm);
                     break;
-
                 }
                 case "5": {
                     undoTransaction();
@@ -60,8 +59,7 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 7.");
                     break;
                 }
-            }if (!loggedOut) displayManagerMenu(bm);
-            scanner.close();
+            }
         }
     }
 
@@ -79,7 +77,6 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
 
     private void setDate() {
         boolean condition = false;
-        Scanner scanner = new Scanner(System.in);
         String year = null, month = null, day = null;
         while(!condition){
             condition = true;
@@ -103,7 +100,6 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
         System.out.println("Date set, but note that time sensitive operations might not execute immediately " +
                 "(such as addSavingsInterest, which happens after the system boots). Also note that the " +
                 "date will still increment another day if you restart the system via the manager");
-        scanner.close();
     }
 
 
@@ -127,7 +123,6 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
         boolean created = false;
         int count = 0;
         int count2 = 0;
-        Scanner scanner = new Scanner(System.in);
         while (user == null) {
             if (count != 0) {
                 System.out.println("Type in the username of the user that would like to create an account: ");
@@ -147,7 +142,6 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
             count += 1;
             count2 += 1;
         }
-        scanner.close();
     }
 
     private void checkAlerts(){
@@ -168,7 +162,6 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
     }
 
     private void restockMachine(BankManager bm){
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Select what type of bill to restock.");
         System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars");
         String dollarType = scanner.next();
@@ -189,34 +182,31 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
                 System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 4 or quit.");
                 break;
         }
-        scanner.close();
     }
 
     private void undoTransaction(){
-        User user = null;
-        int count = 0;
-        int count2 = 0;
-        Scanner scanner = new Scanner(System.in);
-        while (user == null) {
-            if (count2 != 0){
-                System.out.println("Type in the username of the user that would like to undo their last transaction: ");
-            }
-            String username = scanner.next();
-            System.out.println(username);
-            for (User parameter : atm.getListOfUsers()) {
-                if (parameter.getUsername().equals(username)) {
-                    user = parameter;
-                    break;
-                }
-            } if (count != 0){System.out.println("The username is not valid, please try again.");}
-            count += 1;
-            count2 += 1;
-            //System.out.println("The username is not valid, please try again.");
-        }
-        scanner.close();
+        System.out.println("Type in the name of the user that would like to undo their last transaction: ");
+        String username = scanner.next();
+        User user = findUser(username);
 
-        Account account = selectAccount(user, "undo its last transaction", user.getAccounts());
-        atm.getBM().undoTransaction(user, account);
+        while (user == null) {
+            System.out.println("The username you entered is not valid. Please enter a valid username or press * to" +
+                    "go back to the main menu");
+            username = scanner.next();
+
+            if (username.equals("*")) {
+                break;
+            }
+
+            user = findUser(username);
+        }
+
+        if (!username.equals("*")) {
+            String type = selectTypeOfAccount(false, user);
+            printChoices(user, false, type);
+            Account account = selectAccount(user, "undo its last transaction", user.getAccounts());
+            atm.getBM().undoTransaction(user, account);
+        }
     }
 
     private void shutDownSystem(){

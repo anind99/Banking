@@ -37,8 +37,6 @@ public class GeneralInterface implements Serializable {
 
         String type = null;
         boolean validselection = false;
-        Scanner scanner = new Scanner(System.in);
-
 
         while (!validselection) {
             type = scanner.next();
@@ -49,7 +47,6 @@ public class GeneralInterface implements Serializable {
                 System.out.println("That is not a valid selection. Please try again.");
             }
         }
-        scanner.close();
 
         return returnTypeOfAccount(type, transferOut);
     }
@@ -133,10 +130,8 @@ public class GeneralInterface implements Serializable {
         // Allows users to select an account by entering their account number. Returns that account.
 
         System.out.println("Enter the account number you want to " + action + ": ");
-        Scanner scanner = new Scanner(System.in);
         String accountNumTo = scanner.next();
         StringBuilder accountNumToB = new StringBuilder(accountNumTo);
-        scanner.close();
 
 
         boolean valid = true;
@@ -165,9 +160,7 @@ public class GeneralInterface implements Serializable {
         // Returns the amount a user would like to deposit/transfer.
 
         System.out.println("Enter the desired amount you would like to transfer: ");
-        Scanner scanner = new Scanner(System.in);
         String amount = scanner.next();
-        scanner.close();
         StringBuilder amountB = new StringBuilder(amount);
 
         // Checks that the amount entered by the user is valid.
