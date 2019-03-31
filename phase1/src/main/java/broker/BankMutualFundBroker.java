@@ -5,9 +5,10 @@ import atm.User;
 import investments.MutualFund;
 import investments.Stock;
 
+import java.io.*;
 import java.util.Calendar;
 
-public class BankMutualFundBroker {
+public class BankMutualFundBroker implements Serializable {
     public Calendar date;
     public ATM atm;
 
@@ -100,5 +101,17 @@ public class BankMutualFundBroker {
             fund.getInvestors().get(shareholder).set(1, newPercent);
             shareholder.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).set(1, newPercent);
         }
+    }
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

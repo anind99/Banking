@@ -1,5 +1,6 @@
 package broker;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import atm.ATM;
 import atm.User;
 import investments.*;
 
-public class MutualFundsBroker {
+public class MutualFundsBroker implements Serializable {
 
     public MutualFund lowRiskFund;
     public MutualFund mediumRiskFund;
@@ -65,5 +66,16 @@ public class MutualFundsBroker {
         for(Stock stock : lowRiskFund.getStocks()){stock.updateStock(date);}
         for(Stock stock : mediumRiskFund.getStocks()){stock.updateStock(date);}
         for(Stock stock : highRiskFund.getStocks()){stock.updateStock(date);}
+    }
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }
