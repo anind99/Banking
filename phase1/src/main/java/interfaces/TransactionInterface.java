@@ -61,7 +61,7 @@ public class TransactionInterface extends GeneralInterface{
 
         for (Account a : chequingAccounts) {
             Chequing account = (Chequing)a;
-            if (account.primary) {
+            if (account.primaryStatus) {
                 account.deposit();
                 break;
             }
