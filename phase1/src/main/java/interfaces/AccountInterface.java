@@ -13,7 +13,6 @@ public class AccountInterface extends GeneralInterface{
     }
 
     public void displayAccountMenu(User user) {
-        boolean validselection = false;
         boolean goBack = false;
 
         while (!goBack) {
@@ -23,20 +22,24 @@ public class AccountInterface extends GeneralInterface{
             switch (option) {
                 case "1":
                     createAccount(user);
+                    break;
                 case "2":
                     requestJointAccountCreation(user);
+                    break;
                 case "3":
                     addUserToExistingAccount(user);
+                    break;
                 case "4":
                     summary(user);
+                    break;
                 case "5":
                     goBack = true;
+                    break;
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 5.");
                     break;
             }
         }
-
     }
 
     private void printOptions() {
@@ -55,15 +58,20 @@ public class AccountInterface extends GeneralInterface{
 
         User user2 = findUser(username);
 
-        while (user2 == null) {
-            System.out.println("The user name you entered is not valid. Please enter a valid username: ");
+        while (user2 == null || user2 == user1) {
+            System.out.println("The user name you entered is not valid. Please enter a valid username (Press * to quit): ");
             username = scanner.next();
 
             user2 = findUser(username);
+            if (username.equals("*")) {
+                break;
+            }
         }
 
-        String type = selectTypeOfAccount(false, user1);
-        atm.getBM().createJointAccount(user1, user2, type);
+        if (!username.equals("*")) {
+            String type = selectTypeOfAccount(false, user1);
+            atm.getBM().createJointAccount(user1, user2, type);
+        }
     }
 
     private void addUserToExistingAccount(User user1) {
@@ -76,33 +84,30 @@ public class AccountInterface extends GeneralInterface{
 
         User user2 = findUser(username);
 
-        while (user2 == null) {
-            System.out.println("The user name you entered is not valid. Please enter a valid username: ");
+        while (user2 == null || user2 == user1 ) {
+            System.out.println("The user name you entered is not valid. Please enter a valid username (Press * to quit): ");
             username = scanner.next();
 
             user2 = findUser(username);
+            if (username.equals("*")) {
+                break;
+            }
         }
 
-        atm.getBM().addExistingUserToAccount(user2, accountToAddUser);
+        if (!username.equals("*")) {
+            atm.getBM().addExistingUserToAccount(user2, accountToAddUser);
+        }
     }
 
     private void summary(User user) {
         // Method for users to see a summary of their accounts.
 
         printChoices(user, true, "chequing");
-        printChoices(user, true, "LOC");
+        printChoices(user, true, "loc");
         printChoices(user, true, "savings");
         printChoices(user, true, "creditcard");
+        printChoices(user, true, "stock");
         System.out.println("Your net total is: " + user.getNetTotal());
 
-    }
-
-    private User findUser(String username) {
-        for (User user : atm.getListOfUsers()) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
     }
 }

@@ -2,7 +2,7 @@ package atm;
 
 import account.Account;
 import investments.InvestmentPortfolio;
-import subscriptions.subscription;
+import subscriptions.Subscription;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,28 +13,29 @@ public class User implements Serializable {
     private String username;
     private String pass;
     protected ArrayList<Account> accounts;
-    protected InvestmentPortfolio investments;
-    protected ArrayList<subscription> subscriptions;
+    protected InvestmentPortfolio investmentPortfolio;
+    protected ArrayList<Subscription> subscriptions;
 
-    public User(String username, String password, ArrayList accounts){
+    public User(String username, String password, ArrayList<Account> accounts){
         this.username = username;
         this.pass = password;
         this.accounts = accounts;
         this.subscriptions = new ArrayList<>();
+        this.investmentPortfolio = new InvestmentPortfolio();
     }
 
     public double getNetTotal(){
         double sum = 0;
         for (Account acc : accounts){
-            if (acc.getType().equals("chequing") || acc.getType().equals("savings")){
+            if (acc.getType().equals("chequing") || acc.getType().equals("savings") || acc.getType().equals("stock")) {
             sum += acc.getBalance();
             }else{sum -= acc.getBalance();}
         }
         return sum;
     }
 
-    public InvestmentPortfolio getInvestments(){
-        return investments;
+    public InvestmentPortfolio getInvestmentPortfolio(){
+        return investmentPortfolio;
     }
 
     public ArrayList<Account> getAccounts(){
@@ -61,11 +62,11 @@ public class User implements Serializable {
         return this.pass;
     }
 
-    public ArrayList<subscription> getSubscriptions(){
+    public ArrayList<Subscription> getSubscriptions(){
         return this.subscriptions;
     }
 
-    public void addSubscription(subscription s){
+    public void addSubscription(Subscription s){
         subscriptions.add(s);
     }
 
@@ -74,7 +75,7 @@ public class User implements Serializable {
     }
 
     public void removeSubsciption(String name){
-        for (subscription sub: subscriptions){
+        for (Subscription sub: subscriptions){
             if (sub.getName().equalsIgnoreCase(name)){
                 subscriptions.remove(sub);
             }
@@ -84,6 +85,7 @@ public class User implements Serializable {
     public void setUsername(String s){
         this.username = s;
     }
+
     public void setPassword(String s){
         this.pass = s;
     }

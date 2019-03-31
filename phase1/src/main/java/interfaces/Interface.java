@@ -54,12 +54,24 @@ public class Interface implements Serializable {
         System.out.println("1. Broker");
         System.out.println("2. User");
         String option = scanner.next();
-        switch (option) {
-            case "1": {
-                brokerInterface.displayBrokerMenu();
-            }
-            case "2": {
-                userInterface.displayUserMenu(atm.getUser("broker"));
+        boolean validselection = false;
+
+        while (!validselection) {
+            switch (option) {
+                case "1": {
+                    validselection = true;
+                    brokerInterface.displayBrokerMenu();
+                    break;
+                }
+                case "2": {
+                    validselection = true;
+                    userInterface.displayUserMenu(atm.getUser("broker"));
+                    break;
+                }
+                default: {
+                    System.out.println("There is no option " + option + ". Please try again.");
+                    break;
+                }
             }
         }
     }

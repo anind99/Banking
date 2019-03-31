@@ -3,12 +3,13 @@ package interfaces;
 import account.*;
 import atm.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.*;
 
-public class GeneralInterface {
-    Scanner scanner = new Scanner(System.in);
+public class GeneralInterface implements Serializable {
     ATM atm;
+    Scanner scanner = new Scanner(System.in);
 
     public GeneralInterface(ATM atm) {
         this.atm = atm;
@@ -27,20 +28,20 @@ public class GeneralInterface {
 
 
         if (transferOut) {
+            toPrint.append("\n 4. Stocks");
             System.out.println(toPrint);
         } else {
-            toPrint.append("\n 4. Credit Card");
+            toPrint.append("\n 4. Stocks \n 5. Credit Card");
             System.out.println(toPrint);
         }
 
         String type = null;
         boolean validselection = false;
 
-
         while (!validselection) {
-            type = scanner.nextLine();
+            type = scanner.next();
 
-            if (type.equals("1") || type.equals("2") || type.equals("3") || (!transferOut && type.equals("4"))) {
+            if (type.equals("1") || type.equals("2") || type.equals("3") || type.equals("4") || (!transferOut && type.equals("5"))) {
                 validselection = true;
             } else {
                 System.out.println("That is not a valid selection. Please try again.");
@@ -62,7 +63,9 @@ public class GeneralInterface {
             toReturn = "loc";
         } else if (selection.equals("3")) {
             toReturn = "savings";
-        } else if (!transferOut && selection.equals("4")) {
+        } else if (selection.equals("4")){
+            toReturn = "stock";
+        } else if (!transferOut && selection.equals("5")) {
             toReturn = "creditcard";
         }
 
@@ -127,7 +130,7 @@ public class GeneralInterface {
         // Allows users to select an account by entering their account number. Returns that account.
 
         System.out.println("Enter the account number you want to " + action + ": ");
-        String accountNumTo = scanner.nextLine();
+        String accountNumTo = scanner.next();
         StringBuilder accountNumToB = new StringBuilder(accountNumTo);
 
 
@@ -188,6 +191,39 @@ public class GeneralInterface {
 
         System.out.println("The amount you entered is not possible, please enter an amount rounded to a whole number or to 2 digits.");
         return selectAmount();
+    }
+
+    public User findUser(String username) {
+        for (User user : atm.getListOfUsers()) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("GeneralInterface writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("GeneralInterface readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("GeneralInterface readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 
 }

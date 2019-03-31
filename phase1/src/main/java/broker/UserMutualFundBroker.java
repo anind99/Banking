@@ -5,10 +5,11 @@ import atm.ATM;
 import atm.User;
 import investments.MutualFund;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserMutualFundBroker {
+public class UserMutualFundBroker implements Serializable {
     private final BankMutualFundBroker bankMutualFundBroker;
 
     public UserMutualFundBroker(ATM atm) {
@@ -38,7 +39,7 @@ public class UserMutualFundBroker {
     }
     //calculates how much the user's investment into a certain fund is worth
     double calculateUserMoney(User user, MutualFund fund){
-        HashMap<MutualFund, ArrayList<Double>> portfolio = user.getInvestments().getMutualFundPortfolio();
+        HashMap<MutualFund, ArrayList<Double>> portfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
         double percentOwned = portfolio.get(fund).get(1);
         double fundTotalValue = fund.getValue();
         return (fundTotalValue / 100) * percentOwned;
@@ -87,7 +88,7 @@ public class UserMutualFundBroker {
     //Stores information about a users purchase in their investment portfolio and stores the users info in the fund's information
     public void updateFundInvestors(User user, MutualFund fund, double amount){
         double percentOfFund = amount / fund.getValue() * 100;
-        HashMap<MutualFund, ArrayList<Double>> userInvestments = user.getInvestments().getMutualFundPortfolio();
+        HashMap<MutualFund, ArrayList<Double>> userInvestments = user.getInvestmentPortfolio().getMutualFundPortfolio();
         boolean found = false;
         for (MutualFund userFund : userInvestments .keySet()){
             if(userFund.equals(fund)){
@@ -101,17 +102,17 @@ public class UserMutualFundBroker {
             ArrayList<Double> investment = new ArrayList<>();
             investment.add(amount);
             investment.add(percentOfFund);
-            user.getInvestments().setMutualFundsPortfolio(fund, investment);
+            user.getInvestmentPortfolio().setMutualFundsPortfolio(fund, investment);
             fund.setInvestors(user, investment);}
     }
 
-    //Calculate the %profit or loss of the user's investments in mutual funds
+    //Calculate the %profit or loss of the user's investmentPortfolio in mutual funds
     public double calculateInvestmentIncrease(User user){
         double invested = 0.0;
         double netWorth = 0.0;
-        for (MutualFund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
-            invested += user.getInvestments().getMutualFundPortfolio().get(fund).get(0);
-            netWorth += (fund.getValue() * (user.getInvestments().getMutualFundPortfolio().get(fund).get(1) / 100));
+        for (MutualFund fund : user.getInvestmentPortfolio().getMutualFundPortfolio().keySet()){
+            invested += user.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).get(0);
+            netWorth += (fund.getValue() * (user.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).get(1) / 100));
         } return (netWorth / invested) * 100;
     }
 
@@ -119,15 +120,28 @@ public class UserMutualFundBroker {
     public String toString(User user){
         String mutualFundInvestments = "";
         double total = 0.0;
-        for (MutualFund fund : user.getInvestments().getMutualFundPortfolio().keySet()){
-            double value = fund.getValue() * (user.getInvestments().getMutualFundPortfolio().get(fund).get(1) / 100);
-            mutualFundInvestments += "\n Your mutual fund investments are worth the following:\n" + fund.getName()
+        for (MutualFund fund : user.getInvestmentPortfolio().getMutualFundPortfolio().keySet()){
+            double value = fund.getValue() * (user.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).get(1) / 100);
+            mutualFundInvestments += "\n Your mutual fund investmentPortfolio are worth the following:\n" + fund.getName()
                     + ":" + value;
             total += value;
         }
-        mutualFundInvestments += "\n The total value of your mutual fund investments is $" + total;
+        mutualFundInvestments += "\n The total value of your mutual fund investmentPortfolio is $" + total;
         mutualFundInvestments += "\n Your total mutual fund investment increase is " +
                 calculateInvestmentIncrease(user) + " $";
         return mutualFundInvestments;
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

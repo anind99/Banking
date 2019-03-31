@@ -2,11 +2,12 @@ package interfaces;
 
 import atm.*;
 import account.*;
-import investments.MutualFund;
+import investments.*;
 
+import java.io.*;
 import java.util.*;
 
-public class InvestmentInterface {
+public class InvestmentInterface implements Serializable {
     private final ATM atm;
     private Scanner scanner = new Scanner(System.in);
 
@@ -23,20 +24,28 @@ public class InvestmentInterface {
             switch (option) {
                 case "1":
                     buyStocks(user);
+                    break;
                 case "2":
                     sellStocks(user);
+                    break;
                 case "3":
                     buyMutualFunds(user);
+                    break;
                 case "4":
                     sellMutualFunds(user);
+                    break;
                 case "5":
                     System.out.println(atm.getBroker().getStockBroker().stocksToString(user));
+                    break;
                 case "6":
                     System.out.println(atm.getBroker().getMutualFundsBroker().toString(user));
+                    break;
                 case "7":
                     System.out.println(atm.getBroker().getStockBroker().getTotalStockWorth(user));
+                    break;
                 case "8":
                     goBack = true;
+                    break;
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 8.");
                     break;
@@ -51,9 +60,9 @@ public class InvestmentInterface {
         System.out.println("2. Sell Stocks");
         System.out.println("3. Buy Mutual Funds");
         System.out.println("4. Sell Mutual Funds");
-        System.out.println("5. View your Stocks investments");
+        System.out.println("5. View your Stocks investmentPortfolio");
         System.out.println("6. View total money in stocks");
-        System.out.println("7. View your Mutual Funds investments");
+        System.out.println("7. View your Mutual Funds investmentPortfolio");
         System.out.println("8. Go Back");
         System.out.println("Enter the number: ");
     }
@@ -62,6 +71,12 @@ public class InvestmentInterface {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Stock symbol: ");
         String symbol = scanner.next();
+
+        while (!atm.getBroker().checkIfStockIsValid(symbol)) {
+            System.out.println("Stock symbol is not valid. Please enter again: ");
+            symbol = scanner.next();
+        }
+
         System.out.println("Enter number of shares: ");
 
         int shares;
@@ -72,7 +87,7 @@ public class InvestmentInterface {
         }
 
         if (shares != -1) {
-            atm.getBroker().getStockBroker().buyStocks(symbol, shares, findStockAccount(user), user.getInvestments());
+            atm.getBroker().getStockBroker().buyStocks(symbol, shares, findStockAccount(user), user.getInvestmentPortfolio());
         }
         else {
             System.out.println("Please enter integer greater than 0");
@@ -85,6 +100,13 @@ public class InvestmentInterface {
 
         System.out.println("Enter Stock symbol: ");
         String sym = scanner.next();
+
+        // Makes the user re-enter the symbol if they do not have this stock.
+        while (!atm.getBroker().getStockBroker().checkIfUserHasStock(user, sym)) {
+            System.out.println("Stock symbol is not valid. Please enter again: ");
+            sym = scanner.next();
+        }
+
         System.out.println("Enter number of shares: ");
         int shares;
         try {
@@ -94,7 +116,7 @@ public class InvestmentInterface {
         }
 
         if (shares != -1) {
-            atm.getBroker().getStockBroker().sellStocks(findStockAccount(user), sym, shares, user.getInvestments());
+            atm.getBroker().getStockBroker().sellStocks(findStockAccount(user), sym, shares, user.getInvestmentPortfolio());
         }
         else {
             System.out.println("Please enter integer greater than 0.");
@@ -155,7 +177,7 @@ public class InvestmentInterface {
     }
 
     private void viewUserMutualFunds(User user) {
-        HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestments().getMutualFundPortfolio();
+        HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
 
         for (Map.Entry<MutualFund, ArrayList<Double>> entry : mutualFundsPortfolio.entrySet()) {
             System.out.println(entry.getKey() + " = " + entry.getValue());
@@ -164,7 +186,7 @@ public class InvestmentInterface {
     }
 
     private MutualFund findMutualFund(User user, String name) {
-        HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestments().getMutualFundPortfolio();
+        HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
 
         for (Map.Entry<MutualFund, ArrayList<Double>> entry : mutualFundsPortfolio.entrySet()) {
             if (entry.getKey().getName().equals(name)) {
@@ -177,10 +199,34 @@ public class InvestmentInterface {
 
     private Asset findStockAccount(User user) {
         for (Account account : user.getAccounts()) {
-            if (account.getType().equals("stock")) {
+            if (account.getType().equalsIgnoreCase("stock")) {
                 return (Asset)account;
             }
         }
         return null;
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("InvestmentInterface writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("InvestmentInterface readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("InvestmentInterface readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

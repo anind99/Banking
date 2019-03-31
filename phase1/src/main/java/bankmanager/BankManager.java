@@ -48,8 +48,24 @@ public class BankManager implements Serializable{
         accountManager.addExistingUserToAccount(user, account);
     }
 
+    /***
+     * Creates a new user. When the Bank Manager creates a new user, all account types will be open for this user.
+     *
+     * @param username the username the user uses to log in
+     * @param password the password the user uses to log in
+     * @return the new user
+     * @see User
+     */
     public User createUser(String username, String password) {
-        return userManager.createUser(username, password);
+        User user = userManager.createUser(username, password);
+
+        accountManager.createAccount(user, "chequing");
+        accountManager.createAccount(user, "creditcard");
+        accountManager.createAccount(user, "loc");
+        accountManager.createAccount(user, "savings");
+        accountManager.createAccount(user, "stock");
+
+        return user;
     }
 
     public void undoTransaction(User usr, Account acct) {

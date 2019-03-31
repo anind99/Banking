@@ -3,8 +3,10 @@ package bankmanager;
 import account.*;
 import atm.*;
 
+import java.io.*;
 
-public class AccountManager {
+
+public class AccountManager implements Serializable {
 
     ATM atm;
     private int acct_counter = 1000;
@@ -142,6 +144,30 @@ public class AccountManager {
             user.getAccounts().add(account);
             account.setIsJoint(true);
         }
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("AM writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("AM readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("AM readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 
 }

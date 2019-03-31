@@ -13,7 +13,6 @@ public class TransactionInterface extends GeneralInterface{
     }
 
     public void displayTransactionMenu(User user) {
-        boolean validselection = false;
         boolean goBack = false;
 
         while (!goBack) {
@@ -22,21 +21,26 @@ public class TransactionInterface extends GeneralInterface{
             switch (option) {
                 case "1":
                     deposit(user);
+                    break;
                 case "2":
                     withdraw(user);
+                    break;
                 case "3":
                     transferIn(user);
+                    break;
                 case "4":
                     transferOut(user);
+                    break;
                 case "5":
                     payBill(user);
+                    break;
                 case "6":
                     goBack = true;
+                    break;
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 6.");
                     break;
             }
-
         }
     }
 
@@ -72,7 +76,7 @@ public class TransactionInterface extends GeneralInterface{
 
         while (running) {
             System.out.println("Input amount (The amount has to be a multiple of five, no cents allowed): ");
-            String amount = scanner.nextLine();
+            String amount = scanner.next();
             StringBuilder amountB = new StringBuilder(amount);
 
             boolean valid = true;
@@ -133,8 +137,7 @@ public class TransactionInterface extends GeneralInterface{
         printChoices(user, false, type);
         Account accountFrom = selectAccount(user, "pay the bill from", listOfAccounts(user, type));
         System.out.println("Enter the name of the receiver of the bill: ");
-        String receiver = scanner.nextLine();
-
+        String receiver = scanner.next();
         double amount = selectAmount();
 
         accountFrom.payBill(amount, receiver.trim());

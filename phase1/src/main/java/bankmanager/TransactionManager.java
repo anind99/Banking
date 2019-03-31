@@ -2,9 +2,10 @@ package bankmanager;
 import account.Account;
 import atm.*;
 
+import java.io.*;
 import java.util.ArrayList;
 
-public class TransactionManager{
+public class TransactionManager implements Serializable {
 
     public void undoTransaction(User usr, Account acct){
         // Allows Bank Manager to undo any type of transaction.
@@ -80,4 +81,27 @@ public class TransactionManager{
         lst.remove(lst.size() - 1);
     }
 
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("BM writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("BM readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("BM readObjectNoData, this should never happen!");
+        System.exit(-1);
+    }
 }

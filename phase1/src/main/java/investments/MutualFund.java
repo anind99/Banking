@@ -2,10 +2,14 @@ package investments;
 
 import atm.User;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MutualFund {
+/***
+ *
+ */
+public class MutualFund implements Serializable {
     public int risk; // 1 is low risk, 2 is medium risk, 3 is high risk
     public String name;
     public ArrayList<Stock> stocks; // a list of stocks in this mutual fund
@@ -25,9 +29,7 @@ public class MutualFund {
         }return total;
     }
 
-    public String getName(){
-        return name;
-    }
+    public String getName(){return name;}
 
     public ArrayList<Stock> getStocks(){
         return stocks;
@@ -40,15 +42,15 @@ public class MutualFund {
     public void setInvestors(User user, ArrayList<Double> investment){
         investors.put(user, investment);
         }
-
-    public void setSharesStocks(Stock stock, int num) {
-        for (Stock fundStock : stocks) {
-            if (fundStock.equals(stock)){
-            stock.setNumShares(num);}
-        }
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
     }
 
-    public int getShares(){
-        return stocks.get(0).getNumShares();
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

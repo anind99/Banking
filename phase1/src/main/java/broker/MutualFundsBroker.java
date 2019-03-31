@@ -1,5 +1,6 @@
 package broker;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import atm.ATM;
 import atm.User;
 import investments.*;
 
-public class MutualFundsBroker {
+public class MutualFundsBroker implements Serializable {
 
     public MutualFund lowRiskFund;
     public MutualFund mediumRiskFund;
@@ -16,11 +17,12 @@ public class MutualFundsBroker {
     public MutualFundsStocks mutualFundsStocks;
     public ATM atm;
     public Calendar date;
+    Broker broker;
     public BankMutualFundBroker bankMutualFundBroker;
     public UserMutualFundBroker userMutualFundBroker;
 
 
-    public MutualFundsBroker(ATM atm){
+    public MutualFundsBroker(ATM atm, Broker broker){
         this.atm = atm;
         date = atm.getDate();
         this.mutualFundsStocks = new MutualFundsStocks(atm);
@@ -29,6 +31,7 @@ public class MutualFundsBroker {
         this.highRiskFund = new MutualFund(3, "highRiskFund1", mutualFundsStocks.getHighRiskStocks());
         this.bankMutualFundBroker = new BankMutualFundBroker(atm);
         this.userMutualFundBroker = new UserMutualFundBroker(atm);
+        this.broker = broker;
 
     }
 
@@ -55,7 +58,7 @@ public class MutualFundsBroker {
     }
 
     public void sellStocksFund(MutualFund fundToSell, String symbol, Integer valueOf) {
-        bankMutualFundBroker.buyStocksFund(fundToSell, symbol, valueOf);
+        bankMutualFundBroker.sellStocksFund(fundToSell, symbol, valueOf);
     }
 
     //updates the price the fund every day upon ATM restart
@@ -63,5 +66,16 @@ public class MutualFundsBroker {
         for(Stock stock : lowRiskFund.getStocks()){stock.updateStock(date);}
         for(Stock stock : mediumRiskFund.getStocks()){stock.updateStock(date);}
         for(Stock stock : highRiskFund.getStocks()){stock.updateStock(date);}
+    }
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }
