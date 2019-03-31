@@ -60,7 +60,7 @@ public class UserInterface {
         System.out.println("2. Manage Accounts");
         System.out.println("3. Manage Investments");
         System.out.println("4. Update User Profile");
-        System.out.println("5: Manage subscriptions");
+        System.out.println("5. Manage subscriptions");
         System.out.println("6. Logout");
         System.out.println("Enter a number: ");
     }

@@ -16,8 +16,8 @@ public class BankManagerInterface extends GeneralInterface{
 
     public void displayManagerMenu(BankManager bm){
         boolean loggedOut = false;
-        boolean validselection = false;
-        while (!validselection){
+
+        while (!loggedOut){
             printOptions();
             String option = scanner.next();
             switch (option) {
@@ -27,32 +27,26 @@ public class BankManagerInterface extends GeneralInterface{
                 }
                 case "1": {
                     createUser();
-                    validselection = true;
                     break;
                 }
                 case "2": {
                     creatingAccount();
-                    validselection = true;
                     break;
                 }
                 case "3": {
                     checkAlerts();
-                    validselection = true;
                     break;
                 }
                 case "4": {
                     restockMachine(bm);
-                    validselection = true;
                     break;
 
                 }
                 case "5": {
                     undoTransaction();
-                    validselection = true;
                     break;
                 }
                 case "6": {
-                    validselection = true;
                     loggedOut = true;
                     break;
                 }
