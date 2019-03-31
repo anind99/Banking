@@ -108,13 +108,20 @@ public class BankManagerInterface extends GeneralInterface implements Serializab
      *
      */
     private void createUser(){
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Type the username for the new user");
         String username = scanner.next();
+
+        User user = findUser(username);
+
+        while (user != null) {
+            System.out.println("Username is already taken. Please enter a new username:");
+            username = scanner.next();
+            user = findUser(username);
+        }
+
         System.out.println("Type the password for the new user");
         String password = scanner.next();
         atm.getBM().createUser(username, password);
-        scanner.close();
     }
 
     private void creatingAccount() {
