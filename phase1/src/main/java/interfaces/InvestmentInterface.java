@@ -66,7 +66,6 @@ public class InvestmentInterface {
         System.out.println("Enter the number: ");
     }
 
-    // TODO: Check whether stock symbol is valid
     private void buyStocks(User user) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Stock symbol: ");
