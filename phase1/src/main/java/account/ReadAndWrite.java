@@ -3,14 +3,30 @@ package account;
 import java.io.*;
 import atm.*;
 
+/**
+ * This class is used to read and write text files related to accounts.
+ */
 public class ReadAndWrite implements Serializable {
+    /**
+     * Keeps track of the line number in deposits.txt
+     * to make sure the ATM does not run out of transaction
+     * information for a deposit transaction.
+     */
     private int depositNum = 0;
+
+    /**
+     *Instance of {@link ATM}.
+     */
     private ATM atm;
 
     ReadAndWrite(ATM atm){
         this.atm = atm;
     }
 
+    /**
+     * Reads deposits.txt line by line and returns the amount being deposited.
+     * @return amount of the
+     */
     Double depositReader() {
         Double amount;
         try {
@@ -25,8 +41,11 @@ public class ReadAndWrite implements Serializable {
             while (line != null && count < depositNum) {
                 count += 1;
                 line = r.readLine();
-            } amount = depositReaderHelper(line, count, firstLine);
+            }
+
+            amount = depositReaderHelper(line, count, firstLine);
             r.close();
+
             return amount;
         } catch (IOException e) {
             System.err.println("Problem reading the file deposits.txt");
