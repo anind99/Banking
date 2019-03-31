@@ -44,7 +44,7 @@ public class BankMutualFundBroker {
         bought.updateStock(date);
         fund.getStocks().add(bought);
     }
-    
+
     //Lets the mutual funds broker sell stocks from a specified mutual fund given that the stock exists in the fund
     public void sellStocksFund(MutualFund fund, String symbol, int shares) {
         boolean valid = atm.getBroker().checkIfStockIsValid(symbol);
