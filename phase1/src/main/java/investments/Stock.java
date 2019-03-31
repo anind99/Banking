@@ -135,62 +135,6 @@ public class Stock {
                 System.exit(-1);
             }
         }
-
-//        try {
-//
-//
-//
-//            JSONObject jsonobject = readJsonFromUrl("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY" +
-//                    "&symbol=" + symbol + "&outputsize=full&apikey=07UY8RAZ5L3DZ0VT");
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//            Calendar yesterday = (Calendar) date.clone();
-//
-//
-//            yesterday.add(Calendar.DATE, -1);
-//            String todayString = sdf.format(date.getTime());
-//            String yesterdayString = sdf.format(yesterday.getTime());
-//
-//            url = "https://www.quandl.com/api/v3/datasets/WIKI/" + symbol + "/data.json?&start_date=" + todayString
-//                    + "&end_date=" + todayString + "&api_key=Hr_Vc1vsvQMfwf7xeK4S";
-//
-//
-//
-//            System.out.println(jsonobject);
-//
-//            if (!jsonobject.getJSONObject("Time Series (Daily)").has(todayString)){
-//                System.out.println("updateStock in Stock.java failed: Cannot find dateString in JSONObject. " +
-//                        "Is your ATM time ahead in the future of actual time?");
-//                System.exit(-1);
-//            }
-//
-//            if (jsonobject.has("Error Message")){
-//                System.out.println("Error from AlphaVantage. Is your stock symbol correct?");
-//                System.exit(-1);
-//            }
-//            String todayPriceAsString = jsonobject.getJSONObject("Time Series (Daily)")
-//                    .getJSONObject(todayString).getString("1. open");
-//            String yesterdayPriceAsString = jsonobject.getJSONObject("Time Series (Daily)")
-//                    .getJSONObject(yesterdayString).getString("1. open");
-//
-//            this.currentPrice = Double.valueOf(todayPriceAsString);
-//            this.yesterdayPrice = Double.valueOf(yesterdayPriceAsString);
-//
-//
-//        } catch (MalformedURLException e){
-//            System.out.println(e.getMessage());
-//            System.out.println("updateStock failed, malformed URL. This should never happen!");
-//
-//
-//            System.exit(-1);
-//        } catch (IOException e){
-//            System.out.println(e.getMessage());
-//            System.out.println("updateStock failed, IOException in url.openStream. This should never happen!");
-//            System.out.println("Do you have the appropriate certificate installed on your JVM?");
-//            System.out.println("Check the readme file for steps on how to install the certificate on your machine. ");
-//            System.exit(-1);
-//
-//        }
-
         return true;
     }
 

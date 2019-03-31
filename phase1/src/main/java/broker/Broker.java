@@ -25,8 +25,8 @@ public class Broker {
 
     public Broker(ATM atm, BankManager bm) {
         this.atm = atm;
-        this.stockBroker = new StockBroker(atm);
-        this.mutualFundsBroker = new MutualFundsBroker(atm);
+        this.stockBroker = new StockBroker(atm, this);
+        this.mutualFundsBroker = new MutualFundsBroker(atm, this);
         this.json = loadJSONFromText();
         bm.createUser("broker", "password");
 
@@ -72,25 +72,5 @@ public class Broker {
         return json.getString(symbol);
     }
 
-    private String readAll(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-        return sb.toString();
-    }
-
-    public JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-        InputStream is = new URL(url).openStream();
-        try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            String jsonText = readAll(rd);
-            JSONObject json = new JSONObject(jsonText);
-            return json;
-        } finally {
-            is.close();
-        }
-    }
 }
 
