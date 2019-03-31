@@ -24,16 +24,22 @@ public class ATM implements Serializable {
      [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
 
     private Bills bills;
-    private ArrayList<User> listOfUsers = new ArrayList<User>();
+    private ArrayList<User> listOfUsers;
     private BankManager BM = new BankManager(this);
-    private Calendar date = Calendar.getInstance();
+    private Calendar date;
     private final Interface interfaces;
-    private final Broker broker = new Broker(this, BM);
-    private availableSubscriptions subscriptions= new availableSubscriptions();
-    private Subscriber subscriber = new Subscriber(this);
+    private final Broker broker;
+    private availableSubscriptions subscriptions;
+    private Subscriber subscriber;
 
     public ATM() {
         this.interfaces = new Interface(this);
+        this.listOfUsers = new ArrayList<User>();
+        this.date = Calendar.getInstance();
+        this.date.add(Calendar.YEAR, -3);
+        this.broker = new Broker(this, BM);
+        this.subscriptions = new availableSubscriptions();
+        this.subscriber = new Subscriber(this);
         bills = new Bills(100, 100, 100, 100);
     }
 
