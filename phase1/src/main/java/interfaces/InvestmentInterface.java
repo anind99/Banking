@@ -17,10 +17,10 @@ public class InvestmentInterface implements Serializable {
 
     public void displayInvestmentMenu(User user) {
         boolean goBack = false;
-        printOptions();
         scanner = new Scanner(System.in);
 
         while(!goBack) {
+            printOptions();
             String option = scanner.next();
             switch (option) {
                 case "1":
@@ -50,7 +50,6 @@ public class InvestmentInterface implements Serializable {
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 8.");
                     break;
-
             }
         }
     }
