@@ -17,17 +17,18 @@ import account.*;
  * and will be able to buy and sell into the mutual funds.
  *
  */
-public class Broker {
+public class Broker implements Serializable {
     public ATM atm;
     public StockBroker stockBroker;
     public MutualFundsBroker mutualFundsBroker;
-    JSONObject json;
+    String json;
 
     public Broker(ATM atm, BankManager bm) {
         this.atm = atm;
         this.stockBroker = new StockBroker(atm, this);
         this.mutualFundsBroker = new MutualFundsBroker(atm, this);
-        this.json = loadJSONFromText();
+        JSONObject jsonObject = loadJSONFromText();
+        json = jsonObject.toString();
         bm.createUser("broker", "password");
 
     }
@@ -65,11 +66,36 @@ public class Broker {
     }
 
     public boolean checkIfStockIsValid(String symbol){
-        return json.has(symbol);
+        JSONObject jsonObject = new JSONObject(json);
+        return jsonObject.has(symbol);
     }
 
     public String companyNameFromSymbol(String symbol){
-        return json.getString(symbol);
+        JSONObject jsonObject = new JSONObject(json);
+        return jsonObject.getString(symbol);
     }
 
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("Broker writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("Broker readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("Broker readObjectNoData, this should never happen!");
+        System.exit(-1);
+    }
 }

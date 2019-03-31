@@ -14,6 +14,7 @@ public class AccountInterface extends GeneralInterface{
 
     public void displayAccountMenu(User user) {
         boolean goBack = false;
+        Scanner scanner = new Scanner(System.in);
 
         while (!goBack) {
             printOptions();
@@ -40,7 +41,7 @@ public class AccountInterface extends GeneralInterface{
                     break;
             }
         }
-
+    scanner.close();
     }
 
     private void printOptions() {
@@ -55,6 +56,7 @@ public class AccountInterface extends GeneralInterface{
 
     private void requestJointAccountCreation(User user1) {
         System.out.println("Enter the username of the user you would like to open an account with: ");
+        Scanner scanner = new Scanner(System.in);
         String username = scanner.next();
 
         User user2 = findUser(username);
@@ -73,9 +75,11 @@ public class AccountInterface extends GeneralInterface{
             String type = selectTypeOfAccount(false, user1);
             atm.getBM().createJointAccount(user1, user2, type);
         }
+        scanner.close();
     }
 
     private void addUserToExistingAccount(User user1) {
+        Scanner scanner = new Scanner(System.in);
         String type = selectTypeOfAccount(false, user1);
         printChoices(user1, false, type);
 
@@ -98,6 +102,7 @@ public class AccountInterface extends GeneralInterface{
         if (!username.equals("*")) {
             atm.getBM().addExistingUserToAccount(user2, accountToAddUser);
         }
+        scanner.close();
     }
 
     private void summary(User user) {

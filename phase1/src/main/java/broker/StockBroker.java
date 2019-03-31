@@ -8,9 +8,10 @@ import investments.InvestmentPortfolio;
 import investments.MutualFundsStocks;
 import investments.Stock;
 
+import java.io.*;
 import java.util.ArrayList;
 
-public class StockBroker {
+public class StockBroker implements Serializable {
 
     /**
      * CLass to Implement Functions of Broker related to stocks.
@@ -199,6 +200,30 @@ public class StockBroker {
             }
         }
         return false;
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("StockBroker writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("StockBroker readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("StockBroker readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }
 

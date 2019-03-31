@@ -2,10 +2,11 @@ package investments;
 
 import atm.ATM;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MutualFundsStocks {
+public class MutualFundsStocks implements Serializable {
     public ArrayList<Stock> lowRiskStocks = new ArrayList<>();
     public ArrayList<Stock> mediumRiskStocks = new ArrayList<>();
     public ArrayList<Stock> highRiskStocks = new ArrayList<>();
@@ -61,6 +62,17 @@ public class MutualFundsStocks {
     public ArrayList<Stock> getMediumRiskStocks(){return mediumRiskStocks;}
 
     public ArrayList<Stock> getHighRiskStocks(){return highRiskStocks;}
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
+    }
 
 }
 

@@ -1,8 +1,9 @@
 package subscriptions;
 
+import java.io.*;
 import java.util.ArrayList;
 
-public class AvailableSubscriptions {
+public class AvailableSubscriptions implements Serializable {
     /**
      * Class that stores the available subscriptions.
      *
@@ -44,5 +45,17 @@ public class AvailableSubscriptions {
             System.out.println("Added: "+name);
         }
 
+    }
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

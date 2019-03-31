@@ -7,16 +7,18 @@ import bankmanager.*;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Scanner;
 
-public class BankManagerInterface extends GeneralInterface{
+public class BankManagerInterface extends GeneralInterface implements Serializable{
 
     public BankManagerInterface(ATM atm) {
         super(atm);
     }
 
     public void displayManagerMenu(BankManager bm){
-        boolean loggedOut = false;
 
+        boolean loggedOut = false;
+        Scanner scanner = new Scanner(System.in);
         while (!loggedOut){
             printOptions();
             String option = scanner.next();
@@ -59,6 +61,7 @@ public class BankManagerInterface extends GeneralInterface{
                     break;
                 }
             }if (!loggedOut) displayManagerMenu(bm);
+            scanner.close();
         }
     }
 
@@ -76,6 +79,7 @@ public class BankManagerInterface extends GeneralInterface{
 
     private void setDate() {
         boolean condition = false;
+        Scanner scanner = new Scanner(System.in);
         String year = null, month = null, day = null;
         while(!condition){
             condition = true;
@@ -99,6 +103,7 @@ public class BankManagerInterface extends GeneralInterface{
         System.out.println("Date set, but note that time sensitive operations might not execute immediately " +
                 "(such as addSavingsInterest, which happens after the system boots). Also note that the " +
                 "date will still increment another day if you restart the system via the manager");
+        scanner.close();
     }
 
 
@@ -107,18 +112,22 @@ public class BankManagerInterface extends GeneralInterface{
      *
      */
     private void createUser(){
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Type the username for the new user");
         String username = scanner.next();
         System.out.println("Type the password for the new user");
         String password = scanner.next();
         atm.getBM().createUser(username, password);
+        scanner.close();
     }
 
     private void creatingAccount() {
+
         User user = null;
         boolean created = false;
         int count = 0;
         int count2 = 0;
+        Scanner scanner = new Scanner(System.in);
         while (user == null) {
             if (count != 0) {
                 System.out.println("Type in the username of the user that would like to create an account: ");
@@ -138,6 +147,7 @@ public class BankManagerInterface extends GeneralInterface{
             count += 1;
             count2 += 1;
         }
+        scanner.close();
     }
 
     private void checkAlerts(){
@@ -158,6 +168,7 @@ public class BankManagerInterface extends GeneralInterface{
     }
 
     private void restockMachine(BankManager bm){
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Select what type of bill to restock.");
         System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars");
         String dollarType = scanner.next();
@@ -178,12 +189,14 @@ public class BankManagerInterface extends GeneralInterface{
                 System.out.println("There is no option " + dollarType + ". Pick a number from 1 to 4 or quit.");
                 break;
         }
+        scanner.close();
     }
 
     private void undoTransaction(){
         User user = null;
         int count = 0;
         int count2 = 0;
+        Scanner scanner = new Scanner(System.in);
         while (user == null) {
             if (count2 != 0){
                 System.out.println("Type in the username of the user that would like to undo their last transaction: ");
@@ -200,14 +213,39 @@ public class BankManagerInterface extends GeneralInterface{
             count2 += 1;
             //System.out.println("The username is not valid, please try again.");
         }
+        scanner.close();
 
         Account account = selectAccount(user, "undo its last transaction", user.getAccounts());
         atm.getBM().undoTransaction(user, account);
     }
 
     private void shutDownSystem(){
-        atm.testShutDown();
+        atm.shutDown();
         System.out.println("System now shutting down");
         System.exit(0);
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("BMI writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("BMI readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("BMI readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

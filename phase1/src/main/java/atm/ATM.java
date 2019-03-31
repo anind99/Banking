@@ -23,7 +23,7 @@ public class ATM implements Serializable {
 
     private Bills bills;
     private ArrayList<User> listOfUsers;
-    private BankManager BM = new BankManager(this);
+    private BankManager BM;
     private Calendar date;
     private final Interface interfaces;
     private final Broker broker;
@@ -32,9 +32,11 @@ public class ATM implements Serializable {
 
     public ATM() {
         this.interfaces = new Interface(this);
+        this.BM = new BankManager(this);
         this.listOfUsers = new ArrayList<User>();
         this.date = Calendar.getInstance();
-        this.date.add(Calendar.YEAR, -3);
+        this.date.add(Calendar.YEAR, -1);
+        this.date.add(Calendar.MONTH, -3);
         this.broker = new Broker(this, BM);
         this.subscriptions = new AvailableSubscriptions();
         this.subscriber = new Subscriber(this);
@@ -82,7 +84,6 @@ public class ATM implements Serializable {
 
     public void run(){
         boolean running = true;
-        testBoot();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Booting on " + sdf.format(date.getTime()));
         addSavingsInterest();
@@ -129,7 +130,7 @@ public class ATM implements Serializable {
         getListOfUsers().add(u);
     }
 
-    public void testShutDown(){
+    public void shutDown(){
         date.add(Calendar.DATE, 1);
         try {
             File file = new File("serialized.blob");
@@ -137,43 +138,9 @@ public class ATM implements Serializable {
             file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(bills);
-            oos.writeObject(listOfUsers);
-            oos.writeObject(BM);
-            oos.writeObject(date);
+            oos.writeObject(this);
             oos.close();
         } catch (IOException e){
-            System.out.println(e.getMessage());
-            System.exit(-1);
-        }
-    }
-
-    private void testBoot(){
-        boolean bool = false;
-
-        try {
-            File file = new File("serialized.blob");
-            FileInputStream fis = new FileInputStream(file);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-
-            bills = (Bills) ois.readObject();
-            listOfUsers = (ArrayList<User>) ois.readObject();
-            BM = (BankManager) ois.readObject();
-            date = (Calendar) ois.readObject();
-            bool = true;
-            ois.close();
-        }
-
-        catch (FileNotFoundException e){
-            System.out.println("System booting up for the first time!");
-            if (bool) {
-                System.out.println("....exiting here because this should never happen");
-                System.exit(-1);
-            }
-
-        }
-
-        catch (Exception e){
             System.out.println(e.getMessage());
             System.exit(-1);
         }
@@ -203,8 +170,5 @@ public class ATM implements Serializable {
         System.exit(-1);
     }
 
-    private void test(){
-        //will this push?
-    }
 
 }

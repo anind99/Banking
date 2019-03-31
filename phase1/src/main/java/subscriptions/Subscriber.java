@@ -5,10 +5,11 @@ import account.CreditCard;
 import atm.ATM;
 import atm.User;
 
+import java.io.*;
 import java.util.Calendar;
 import java.util.Scanner;
 
-public class Subscriber {
+public class Subscriber implements Serializable {
     /**
      * Class that handles the user's subscribing functions
      *
@@ -156,6 +157,17 @@ public class Subscriber {
         user.removeSubsciption(name);
     }
 
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
 
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
+    }
 
 }

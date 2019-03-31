@@ -1,5 +1,6 @@
 package investments;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,7 +10,7 @@ import java.util.HashMap;
  * a user has invested in.
  *
  */
-public class InvestmentPortfolio {
+public class InvestmentPortfolio implements Serializable {
 
     /** An array list of stocks the user has invested in. */
     private ArrayList <Stock> stockPortfolio = new ArrayList<>();
@@ -48,5 +49,18 @@ public class InvestmentPortfolio {
      */
     public HashMap<MutualFund, ArrayList<Double>> getMutualFundPortfolio(){
         return mutualFundsPortfolio;
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

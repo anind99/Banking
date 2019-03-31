@@ -5,10 +5,11 @@ import atm.ATM;
 import atm.User;
 import investments.MutualFund;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserMutualFundBroker {
+public class UserMutualFundBroker implements Serializable {
     private final BankMutualFundBroker bankMutualFundBroker;
 
     public UserMutualFundBroker(ATM atm) {
@@ -129,5 +130,18 @@ public class UserMutualFundBroker {
         mutualFundInvestments += "\n Your total mutual fund investment increase is " +
                 calculateInvestmentIncrease(user) + " $";
         return mutualFundInvestments;
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }

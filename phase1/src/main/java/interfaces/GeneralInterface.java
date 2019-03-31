@@ -3,11 +3,11 @@ package interfaces;
 import account.*;
 import atm.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.*;
 
-public class GeneralInterface {
-    Scanner scanner = new Scanner(System.in);
+public class GeneralInterface implements Serializable {
     ATM atm;
 
     public GeneralInterface(ATM atm) {
@@ -36,6 +36,7 @@ public class GeneralInterface {
 
         String type = null;
         boolean validselection = false;
+        Scanner scanner = new Scanner(System.in);
 
 
         while (!validselection) {
@@ -47,6 +48,7 @@ public class GeneralInterface {
                 System.out.println("That is not a valid selection. Please try again.");
             }
         }
+        scanner.close();
 
         return returnTypeOfAccount(type, transferOut);
     }
@@ -130,8 +132,10 @@ public class GeneralInterface {
         // Allows users to select an account by entering their account number. Returns that account.
 
         System.out.println("Enter the account number you want to " + action + ": ");
+        Scanner scanner = new Scanner(System.in);
         String accountNumTo = scanner.next();
         StringBuilder accountNumToB = new StringBuilder(accountNumTo);
+        scanner.close();
 
 
         boolean valid = true;
@@ -160,7 +164,9 @@ public class GeneralInterface {
         // Returns the amount a user would like to deposit/transfer.
 
         System.out.println("Enter the desired amount you would like to transfer: ");
+        Scanner scanner = new Scanner(System.in);
         String amount = scanner.next();
+        scanner.close();
         StringBuilder amountB = new StringBuilder(amount);
 
         // Checks that the amount entered by the user is valid.
@@ -191,6 +197,30 @@ public class GeneralInterface {
 
         System.out.println("The amount you entered is not possible, please enter an amount rounded to a whole number or to 2 digits.");
         return selectAmount();
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("GeneralInterface writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("GeneralInterface readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("GeneralInterface readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 
 }
