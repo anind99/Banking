@@ -1,6 +1,8 @@
 package subscriptions;
 
-public class Subscription {
+import java.io.*;
+
+public class Subscription implements Serializable {
     /**
      * Suscription class.
      *
@@ -24,4 +26,16 @@ public class Subscription {
         return this.cost;
     }
 
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        ois.defaultReadObject();
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("readObjectNoData, this should never happen!");
+        System.exit(-1);
+    }
 }

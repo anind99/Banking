@@ -21,13 +21,14 @@ public class Broker implements Serializable {
     public ATM atm;
     public StockBroker stockBroker;
     public MutualFundsBroker mutualFundsBroker;
-    JSONObject json;
+    String json;
 
     public Broker(ATM atm, BankManager bm) {
         this.atm = atm;
         this.stockBroker = new StockBroker(atm, this);
         this.mutualFundsBroker = new MutualFundsBroker(atm, this);
-        this.json = loadJSONFromText();
+        JSONObject jsonObject = loadJSONFromText();
+        json = jsonObject.toString();
         bm.createUser("broker", "password");
 
     }
@@ -65,11 +66,13 @@ public class Broker implements Serializable {
     }
 
     public boolean checkIfStockIsValid(String symbol){
-        return json.has(symbol);
+        JSONObject jsonObject = new JSONObject(json);
+        return jsonObject.has(symbol);
     }
 
     public String companyNameFromSymbol(String symbol){
-        return json.getString(symbol);
+        JSONObject jsonObject = new JSONObject(json);
+        return jsonObject.getString(symbol);
     }
 
     private void writeObject(ObjectOutputStream oos) throws IOException {

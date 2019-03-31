@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.Random;
 
 
-public class Stock {
+public class Stock implements Serializable {
     String name;
     String symbol;
     double currentPrice;
@@ -162,6 +162,30 @@ public class Stock {
     public String toString() {
         return this.name + " (" + this.symbol + "):\n" + this.numShares + " shares\n" + "total value: "
                 + (this.numShares * this.currentPrice) + "\n";
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        try {
+            oos.defaultWriteObject();
+        } catch (IOException e){
+            System.out.println("Stock writeObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
+        try{
+            ois.defaultReadObject();
+        } catch (Exception e){
+            System.out.println("Stock readObject Failed!");
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+    }
+
+    private void readObjectNoData() throws ObjectStreamException {
+        System.out.println("Stock readObjectNoData, this should never happen!");
+        System.exit(-1);
     }
 }
 
