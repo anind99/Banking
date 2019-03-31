@@ -38,14 +38,15 @@ public abstract class Debt extends Account{
      */
     public void removeMoney(double amount){
         if (checkFundsSufficient(amount)) {
-            System.out.println("Transaction declined. This account has reached the maximum credit limit!");
-        } else {
             this.balance += amount;
+
+        } else {
+            System.out.println("Transaction declined. This account has reached the maximum credit limit!");
         }
     }
 
     @Override
     public boolean checkFundsSufficient(double amount) {
-        return (balance + amount) >= creditLimit;
+        return (balance + amount) <= creditLimit;
     }
 }
