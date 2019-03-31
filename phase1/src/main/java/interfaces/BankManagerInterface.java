@@ -58,6 +58,7 @@ public class BankManagerInterface extends GeneralInterface{
                 }
                 case "7":{
                     shutDownSystem();
+                    break;
                 }
                 default: {
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 7.");

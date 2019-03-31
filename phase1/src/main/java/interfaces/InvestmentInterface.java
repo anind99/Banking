@@ -23,20 +23,28 @@ public class InvestmentInterface {
             switch (option) {
                 case "1":
                     buyStocks(user);
+                    break;
                 case "2":
                     sellStocks(user);
+                    break;
                 case "3":
                     buyMutualFunds(user);
+                    break;
                 case "4":
                     sellMutualFunds(user);
+                    break;
                 case "5":
                     System.out.println(atm.getBroker().getStockBroker().stocksToString(user));
+                    break;
                 case "6":
                     System.out.println(atm.getBroker().getMutualFundsBroker().toString(user));
+                    break;
                 case "7":
                     System.out.println(atm.getBroker().getStockBroker().getTotalStockWorth(user));
+                    break;
                 case "8":
                     goBack = true;
+                    break;
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 8.");
                     break;

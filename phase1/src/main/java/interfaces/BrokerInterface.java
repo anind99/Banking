@@ -27,16 +27,19 @@ public class BrokerInterface {
             switch (option){
                 case "1": {
                     buyFunds();
+                    break;
                 }
                 case "2": {
                     sellFunds();
+                    break;
                 }
                 case "3":{
                     logout = true;
-
+                    break;
                 }
                 default: {
                     System.out.println("There is no option \"" + option + "\". Please try again.");
+                    break;
                 }
             }
         }

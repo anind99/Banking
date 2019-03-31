@@ -23,14 +23,19 @@ public class AccountInterface extends GeneralInterface{
             switch (option) {
                 case "1":
                     createAccount(user);
+                    break;
                 case "2":
                     requestJointAccountCreation(user);
+                    break;
                 case "3":
                     addUserToExistingAccount(user);
+                    break;
                 case "4":
                     summary(user);
+                    break;
                 case "5":
                     goBack = true;
+                    break;
                 default:
                     System.out.println("There is no option " + option + ". Pick a number from 1 to 5.");
                     break;

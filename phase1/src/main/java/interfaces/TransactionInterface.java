@@ -22,14 +22,19 @@ public class TransactionInterface extends GeneralInterface{
             switch (option) {
                 case "1":
                     deposit(user);
+                    break;
                 case "2":
                     withdraw(user);
+                    break;
                 case "3":
                     transferIn(user);
+                    break;
                 case "4":
                     transferOut(user);
+                    break;
                 case "5":
                     payBill(user);
+                    break;
                 case "6":
                     goBack = true;
                     break;
