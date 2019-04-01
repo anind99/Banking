@@ -197,6 +197,12 @@ public class TransactionInterface implements Serializable {
         accountFrom.payBill(amount, receiver.trim());
     }
 
+    /**
+     * Used in serialization to store the TransactionInterface object.
+     *
+     * @param oos instance of the ObjectOutputStream class to write the account interface object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -206,6 +212,14 @@ public class TransactionInterface implements Serializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * Used in serialization to restore the transaction interface's information after the ATM is restarted.
+     *
+     * @param ois instance of the ObjectInputStream class used to read the account object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -216,6 +230,11 @@ public class TransactionInterface implements Serializable {
         }
     }
 
+    /**
+     * Reads an object with no data stored in it.
+     *
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("TransactionInterface readObjectNoData, this should never happen!");
         System.exit(-1);
