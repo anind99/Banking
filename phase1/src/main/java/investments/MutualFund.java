@@ -50,7 +50,7 @@ public class MutualFund implements Serializable {
     public double getValue(){
         double total = 0.0;
         for (Stock stock : stocks) {
-            total += stock.getValue();
+            total += stock.getValue() * stock.getNumShares();
         }return total;
     }
 

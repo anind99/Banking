@@ -97,7 +97,7 @@ public class UserMutualFundBroker implements Serializable {
     //Stores information about a users purchase in their investment portfolio and stores the users info in the fund's information
     public void updateFundInvestors(User user, MutualFund fund, double amount){
         double percentOfFund = amount / fund.getValue() * 100;
-        boolean found = findFundInvestors(user, fund, amount);
+        boolean found = findFundInvestors(user, fund, (amount /2));
         if(!found){
             ArrayList<Double> investment = new ArrayList<>();
             investment.add(amount);
@@ -117,7 +117,8 @@ public class UserMutualFundBroker implements Serializable {
                 userInvestments.get(userFund).set(1, userInvestments.get(userFund).get(1) + percentOfFund);
                 fund.getInvestors().get(user).set(0, fund.getInvestors().get(user).get(0) + amount);
                 fund.getInvestors().get(user).set(1, fund.getInvestors().get(user).get(1) + percentOfFund);
-                found = true;}}
+                found = true;
+                break;}}
         return found;
     }
 
