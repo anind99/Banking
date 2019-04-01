@@ -26,7 +26,7 @@ public class UserMutualFundBroker implements Serializable {
     public void sellMutualFunds(User user, MutualFund fund, double amount){
         double currentInvestment = calculateUserMoney(user, fund);
         if(amount <= currentInvestment){
-            double sold = -1 * amount;
+            double sold = (-1 * amount) / 2;
             updateFundInvestors(user, fund, sold);
             for (Account account: user.getAccounts()){
                 if (account.getType().equals("stock")){
@@ -72,7 +72,7 @@ public class UserMutualFundBroker implements Serializable {
         for (Account account: user.getAccounts()){
             if (account.getType().equals("stock")){
                 account.removeMoney(amount);
-                System.out.println("You have invested " + amount + " $into " + fund.getName() + " fund");
+                System.out.println("The broker has invested " + amount + "$ into " + fund.getName() + " fund for you");
                 break;
             }
         }
@@ -128,7 +128,7 @@ public class UserMutualFundBroker implements Serializable {
         for (MutualFund fund : user.getInvestmentPortfolio().getMutualFundPortfolio().keySet()){
             invested += user.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).get(0);
             netWorth += (fund.getValue() * (user.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).get(1) / 100));
-        } return (netWorth / invested) * 100;
+        } return ((netWorth - invested)/ invested) * 100;
     }
 
     // prints the funds the user invested in and how much their investment is worth currently
