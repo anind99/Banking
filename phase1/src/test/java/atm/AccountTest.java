@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
-public class AccountTest {
+class AccountTest {
 
     private Account accountCh;
     private Account accountS;

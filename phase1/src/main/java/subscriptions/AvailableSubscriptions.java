@@ -13,7 +13,7 @@ public class AvailableSubscriptions implements Serializable {
     /**
      * A list that stores all the current subscriptions.
      */
-    private ArrayList<Subscription> listOfSubscriptions = new ArrayList<>();
+    private final ArrayList<Subscription> listOfSubscriptions = new ArrayList<>();
 
 
     /**

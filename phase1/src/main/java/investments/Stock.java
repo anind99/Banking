@@ -30,12 +30,12 @@ public class Stock implements Serializable {
      * numshares: int number of shares of stock
      * updated: boolean is true when stock is updated with current value.
      */
-    String name;
-    String symbol;
-    double currentPrice;
+    private String name;
+    private String symbol;
+    private double currentPrice;
 
-    int numShares;
-    boolean updated;
+    private int numShares;
+    private boolean updated;
 
 
     // risk might also be obsolete but im leaving it here for now for legacy reasons.
@@ -209,7 +209,7 @@ public class Stock implements Serializable {
      * @throws JSONException : JSON exception
      */
 
-    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+    private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
         InputStream is = new URL(url).openStream();
         try {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));

@@ -9,19 +9,19 @@ import java.util.*;
 /***
  * Class for the transaction interface that the user will see. This allows users to perform transactions.
  */
-public class TransactionInterface implements Serializable {
+class TransactionInterface implements Serializable {
     /***
      * The ATM that this interface runs on.
      */
-    private ATM atm;
+    private final ATM atm;
     /***
      * The scanner attribute for user inputs
      */
-    transient Scanner scanner;
+    private transient Scanner scanner;
     /***
      * GeneralInterfaceMethods represents a class that contains helper methods that TransactionInterface uses.
      */
-    private GeneralInterfaceMethods general;
+    private final GeneralInterfaceMethods general;
 
     /***
      * Constructor for TransactionInterface.

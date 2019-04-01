@@ -8,11 +8,11 @@ import java.util.*;
 /***
  * A class for the what the user will be able see when they log in to ATM.
  */
-public class UserInterface implements Serializable {
+class UserInterface implements Serializable {
     /***
      * The scanner attribute that the user inputs.
      */
-    transient Scanner scanner = new Scanner(System.in);
+    private transient Scanner scanner = new Scanner(System.in);
     /***
      * The ATM that the interface runs on.
      */

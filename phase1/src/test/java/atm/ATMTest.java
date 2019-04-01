@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 
-public class ATMTest {
+class ATMTest {
 
     private void reset() {
         // Switch the atm variables to private

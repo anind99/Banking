@@ -6,7 +6,7 @@ import atm.*;
 /**
  * This class is used to read and write text files related to accounts.
  */
-public class ReadAndWrite implements Serializable {
+class ReadAndWrite implements Serializable {
     /**
      * Keeps track of the line number in deposits.txt
      * to make sure the ATM does not run out of transaction
@@ -17,7 +17,7 @@ public class ReadAndWrite implements Serializable {
     /**
      *Instance of {@link ATM}.
      */
-    private ATM atm;
+    private final ATM atm;
 
     ReadAndWrite(ATM atm){
         this.atm = atm;

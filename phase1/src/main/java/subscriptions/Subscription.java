@@ -9,12 +9,12 @@ public class Subscription implements Serializable {
     /**
      * cost of the subscription.
      */
-    private double cost;
+    private final double cost;
 
     /**
      * Name of the subscription.
      */
-    private String name;
+    private final String name;
 
     /**
      * Subscription constructor.

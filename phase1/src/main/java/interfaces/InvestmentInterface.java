@@ -11,7 +11,7 @@ import java.util.*;
  * Class for the investments interface. Deals with buying and selling stocks and mutual funds.
  *
  */
-public class InvestmentInterface implements Serializable {
+class InvestmentInterface implements Serializable {
     /***
      * The ATM that the interface is running on.
      */
@@ -19,7 +19,7 @@ public class InvestmentInterface implements Serializable {
     /***
      * The scanner attribute that is used for inputs.
      */
-    transient Scanner scanner = new Scanner(System.in);
+    private transient Scanner scanner = new Scanner(System.in);
 
     /***
      * Constructor for InvestmentInterface.

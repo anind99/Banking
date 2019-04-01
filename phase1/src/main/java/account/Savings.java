@@ -10,7 +10,7 @@ public class Savings extends Asset {
      * The monthly interest rate applied to the balance in the savings account at the end of each month.
      * {@see ATM#addSavingsInterest()}
      */
-    public final double interestRate;
+    private final double interestRate;
 
     /**
      * Savings constructor calls on super {@link Asset} and

@@ -4,10 +4,10 @@ import java.io.*;
 
 public class Transaction implements Serializable {
 
-    String type;
-    int accountNum = 0;
-    double amount;
-    String billPayee = null;
+    private final String type;
+    private int accountNum = 0;
+    private final double amount;
+    private String billPayee = null;
 
     /**
      * Transaction constructor for Transfer In/Out trasnactions

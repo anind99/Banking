@@ -17,10 +17,10 @@ import account.*;
  * and will be able to buy and sell into the mutual funds.
  */
 public class Broker implements Serializable {
-    public ATM atm;
-    public StockBroker stockBroker;
-    public MutualFundsBroker mutualFundsBroker;
-    protected String json;
+    private final ATM atm;
+    private final StockBroker stockBroker;
+    private final MutualFundsBroker mutualFundsBroker;
+    private final String json;
 
     public Broker(ATM atm, BankManager bm) {
         this.atm = atm;

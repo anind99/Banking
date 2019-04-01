@@ -36,7 +36,7 @@ public class Subscriber implements Serializable {
     /**
      * Performs functions for the specified atm object.
      */
-    private ATM atm;
+    private final ATM atm;
 
     /**
      * Subscriber constructor

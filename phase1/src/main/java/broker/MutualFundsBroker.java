@@ -11,15 +11,15 @@ import investments.*;
 
 public class MutualFundsBroker implements Serializable {
 
-    public MutualFund lowRiskFund;
-    public MutualFund mediumRiskFund;
-    public MutualFund highRiskFund;
-    public MutualFundsStocks mutualFundsStocks;
-    public ATM atm;
-    public Calendar date;
-    public Broker broker;
-    public BankMutualFundBroker bankMutualFundBroker;
-    public UserMutualFundBroker userMutualFundBroker;
+    private final MutualFund lowRiskFund;
+    private final MutualFund mediumRiskFund;
+    private final MutualFund highRiskFund;
+    private final MutualFundsStocks mutualFundsStocks;
+    private final ATM atm;
+    private final Calendar date;
+    private final Broker broker;
+    private final BankMutualFundBroker bankMutualFundBroker;
+    private final UserMutualFundBroker userMutualFundBroker;
 
 
     public MutualFundsBroker(ATM atm, Broker broker){

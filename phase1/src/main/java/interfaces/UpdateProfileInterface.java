@@ -11,7 +11,7 @@ import java.util.Scanner;
 /***
  * Class for updating profile interface for the user.
  */
-public class UpdateProfileInterface implements Serializable {
+class UpdateProfileInterface implements Serializable {
     /**
      * The ATM that the interface runs on.
      */
@@ -19,7 +19,7 @@ public class UpdateProfileInterface implements Serializable {
     /***
      * The scanner attribute for user inputs
      */
-    transient Scanner scanner = new Scanner(System.in);
+    private transient Scanner scanner = new Scanner(System.in);
 
     /***
      * Constructor for UpdateProfileInterface.

@@ -14,20 +14,20 @@ public class MutualFund implements Serializable {
     /***
      * The risk level of the mutual fund: 1 is low risk, 2 is medium risk and 3 is a high risk fund
      */
-    public int risk;
+    private final int risk;
     /***
      * The name of the mutual fund
      */
-    public String name;
+    private final String name;
     /***
      * The stocks in that are in this mutual fund
      */
-    public ArrayList<Stock> stocks;
+    private final ArrayList<Stock> stocks;
     /***
      * A hash map of users that have invested into this fund as keys and an array list of doubles in the following
      * format: {amount user invested, percentage of the fund the user owns through this investment}
      */
-    public HashMap<User, ArrayList<Double>> investors = new HashMap<>();
+    private final HashMap<User, ArrayList<Double>> investors = new HashMap<>();
 
     /***
      * Constructor for MutualFund.

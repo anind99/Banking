@@ -12,7 +12,7 @@ import java.util.Scanner;
  * and sell mutual funds for the ATM.
  *
  */
-public class BrokerInterface implements Serializable {
+class BrokerInterface implements Serializable {
 
     /***
      * The ATM that this interface is running on.
@@ -21,7 +21,7 @@ public class BrokerInterface implements Serializable {
     /***
      * The scanner attribute that is used for the brokerto enter inputs into the function.
      */
-    transient Scanner scanner;
+    private transient Scanner scanner;
 
     /***
      * Constructor for BrokerInterface

@@ -13,7 +13,7 @@ public abstract class Asset extends Account{
      * @param accountNum unique account number
      * @param atm instance of the ATM
      */
-    public Asset(int accountNum, ATM atm) {
+    Asset(int accountNum, ATM atm) {
         super(accountNum, atm);
     }
 

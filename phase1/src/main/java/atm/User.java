@@ -16,7 +16,7 @@ public class User implements Serializable {
     /**
      * Unique identifier used to login to the ATM machine.
      */
-    private String username;
+    private final String username;
 
     /**
      * User's password used to login to the ATM machine.
@@ -26,17 +26,17 @@ public class User implements Serializable {
     /**
      * A list of all the accounts a user owns.
      */
-    protected ArrayList<Account> accounts;
+    private final ArrayList<Account> accounts;
 
     /**
      * The user's investment portfolio.
      */
-    protected InvestmentPortfolio investmentPortfolio;
+    private final InvestmentPortfolio investmentPortfolio;
 
     /**
      * A list of the user's subscriptions.
      */
-    protected ArrayList<Subscription> subscriptions;
+    private ArrayList<Subscription> subscriptions;
 
     /**
      * User constructor.

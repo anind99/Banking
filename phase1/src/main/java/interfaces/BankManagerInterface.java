@@ -15,19 +15,19 @@ import java.util.Scanner;
  * for users, shut down the system.
  *
  */
-public class BankManagerInterface implements Serializable{
+class BankManagerInterface implements Serializable{
     /***
      * The ATM that this interface runs on.
      */
-    private ATM atm;
+    private final ATM atm;
     /***
      * GeneralInterfaceMethods represents a class that contains helper methods that BankManagerInterface uses.
      */
-    public GeneralInterfaceMethods general;
+    private final GeneralInterfaceMethods general;
     /***
      * The scanner attribute that is used for the bank manager to enter inputs into the function.
      */
-    transient Scanner scanner;
+    private transient Scanner scanner;
 
     /***
      * Constructor for the BankManagerInterface.

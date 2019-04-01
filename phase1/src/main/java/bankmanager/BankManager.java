@@ -13,7 +13,7 @@ public class BankManager implements Serializable{
     /**
      * Instance of {@link ATM}
      */
-    final ATM atm;
+    private final ATM atm;
 
     /**
      * Instance of {@link AccountManager}

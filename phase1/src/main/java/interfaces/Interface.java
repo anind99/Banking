@@ -14,7 +14,7 @@ public class Interface implements Serializable {
     /***
      * The ATM that this interface runs on.
      */
-    protected final ATM atm;
+    private final ATM atm;
     /***
      * The bank manager interface that the bank manager will see.
      */
@@ -30,7 +30,7 @@ public class Interface implements Serializable {
     /***
      * The scanner attribute that is used for inputs.
      */
-    transient Scanner scanner;
+    private transient Scanner scanner;
 
     /***
      * Constructor for Interface.

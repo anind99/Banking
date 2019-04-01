@@ -8,12 +8,12 @@ import java.util.ArrayList;
 /**
  * The User Manager handles all requests related to {@link User} delegated from {@link BankManager}.
  */
-public class UserManager implements Serializable {
+class UserManager implements Serializable {
 
     /**
      * Instance of the ATM being used.
      */
-    private ATM atm;
+    private final ATM atm;
 
     /**
      * User Manager Constructor.

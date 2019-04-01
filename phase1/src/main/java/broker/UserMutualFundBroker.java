@@ -33,7 +33,7 @@ public class UserMutualFundBroker implements Serializable {
      * @param amount the amount that the mutual fund is bought for
      * @return returns the broker free
      */
-    public double calculateBrokerFree(double amount){
+    private double calculateBrokerFree(double amount){
         double fee = amount / 100;
         return fee;
     }
@@ -69,7 +69,7 @@ public class UserMutualFundBroker implements Serializable {
      * @param fund the fund that the user has invested in
      * @return the money that user's investment is worth
      */
-    public double calculateUserMoney(User user, MutualFund fund){
+    private double calculateUserMoney(User user, MutualFund fund){
         HashMap<MutualFund, ArrayList<Double>> portfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
         double percentOwned = portfolio.get(fund).get(1);
         double fundTotalValue = fund.getValue();
@@ -108,7 +108,7 @@ public class UserMutualFundBroker implements Serializable {
      * @param amount
      */
     //tells the bank to buy more stocks into a fund so the user can invest more money
-    public void refillToSell(User user, MutualFund fund, double amount){
+    private void refillToSell(User user, MutualFund fund, double amount){
         if (!possibleToBuy(fund, amount)){
             bankMutualFundBroker.refillFunds(fund, amount);}
         updateFundInvestors(user, fund, amount);
@@ -129,7 +129,7 @@ public class UserMutualFundBroker implements Serializable {
      * @param amount the amount that is bought
      * @return true if it is possible to buy this amount and false otherwise
      */
-    public boolean possibleToBuy(MutualFund fund, double amount) {
+    private boolean possibleToBuy(MutualFund fund, double amount) {
         if (fund.getValue() < amount) {
             return false;
         } else {
@@ -151,7 +151,7 @@ public class UserMutualFundBroker implements Serializable {
      * @param fund the fund that the user has purchased into
      * @param amount the amount that the user has purchased
      */
-    public void updateFundInvestors(User user, MutualFund fund, double amount){
+    private void updateFundInvestors(User user, MutualFund fund, double amount){
         double percentOfFund = amount / fund.getValue() * 100;
         boolean found = findFundInvestors(user, fund, (amount /2));
         if(!found){
@@ -170,7 +170,7 @@ public class UserMutualFundBroker implements Serializable {
      * @param amount the amount that the user has invested
      * @return true if the user has successfully invested in a fund and the fund has updated accordingly, false otherwise
      */
-    public boolean findFundInvestors(User user, MutualFund fund, double amount){
+    private boolean findFundInvestors(User user, MutualFund fund, double amount){
         double percentOfFund = amount / fund.getValue() * 100;
         HashMap<MutualFund, ArrayList<Double>> userInvestments = user.getInvestmentPortfolio().getMutualFundPortfolio();
         boolean found = false;
@@ -192,7 +192,7 @@ public class UserMutualFundBroker implements Serializable {
      * @return the percentage profit made or percentage profit loss
      */
     //Calculate the %profit or loss of the user's investmentPortfolio in mutual funds
-    public double calculateInvestmentIncrease(User user){
+    private double calculateInvestmentIncrease(User user){
         double invested = 0.0;
         double netWorth = 0.0;
         for (MutualFund fund : user.getInvestmentPortfolio().getMutualFundPortfolio().keySet()){

@@ -3,7 +3,7 @@ package account;
 import atm.ATM;
 
 public class StockAccount extends Asset {
-    protected double profitmade;
+    private final double profitmade;
     double totalDeposited;
 
     public StockAccount(int accountNum, ATM atm) {

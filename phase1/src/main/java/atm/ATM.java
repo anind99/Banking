@@ -22,22 +22,22 @@ public class ATM implements Serializable {
     /**Stores the total amount of the bills in the ATM in an array with the following order:
      *  [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills].
      */
-    private Bills bills;
+    private final Bills bills;
 
     /**
      * The list of all users who can use the ATM.
      */
-    private ArrayList<User> listOfUsers;
+    private final ArrayList<User> listOfUsers;
 
     /**
      * The Bank Manager.
      */
-    private BankManager BM;
+    private final BankManager BM;
 
     /**
      * Today's date.
      */
-    private Calendar date;
+    private final Calendar date;
 
     /**
      * ATM's interface displayed to users.
@@ -52,12 +52,12 @@ public class ATM implements Serializable {
     /**
      * All available services users can currently subscribe to through the ATM.
      */
-    private AvailableSubscriptions subscriptions;
+    private final AvailableSubscriptions subscriptions;
 
     /**
      * Handles subscriptions for users.
      */
-    private Subscriber subscriber;
+    private final Subscriber subscriber;
 
     /**
      * ATM constructor.
@@ -176,7 +176,7 @@ public class ATM implements Serializable {
     }
 
     /**
-     * Adds the specified {@link Savings#interestRate} to the balances
+     * Adds the specified interestRate to the balances
      * of all savings account at the beginning of each month.
      *
      * @see Savings

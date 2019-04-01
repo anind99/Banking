@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 /***
  * A class that contains the main() method. Where the program will begin running.
  */
-public class Run {
+class Run {
 
     /**
      * The main function, where the code runs

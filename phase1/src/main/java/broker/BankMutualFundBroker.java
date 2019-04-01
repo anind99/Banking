@@ -16,11 +16,11 @@ public class BankMutualFundBroker implements Serializable {
     /***
      * The date that is set in the ATM.
      */
-    public Calendar date;
+    private final Calendar date;
     /**
      * The ATM that this broker is working in.
      */
-    public ATM atm;
+    private final ATM atm;
 
     /***
      * Constructor for BankMutualFundBroker.
@@ -57,7 +57,7 @@ public class BankMutualFundBroker implements Serializable {
      * @param shares the number of shares the the broker wants to buy
      * @return true if the broker has successfully bought a valid stock in the mutual fund and false otherwise
      */
-    public boolean checkIfStockOwned(MutualFund fund, String symbol, int shares){
+    private boolean checkIfStockOwned(MutualFund fund, String symbol, int shares){
         for(Stock stock : fund.getStocks()){
             if (stock.getSymbol().equals(symbol)){
                 stock.increaseNumShares(shares);
@@ -74,7 +74,7 @@ public class BankMutualFundBroker implements Serializable {
      * @param symbol the symbol of the stock the broker wants to buy
      * @param shares the number of shares the broker wants to buy
      */
-    public void buyStockBank(MutualFund fund, String symbol, int shares){
+    private void buyStockBank(MutualFund fund, String symbol, int shares){
         String stockName = atm.getBroker().companyNameFromSymbol(symbol);
         Stock bought = new Stock(stockName, symbol,0.0);
         bought.setNumShares(shares);
@@ -108,7 +108,7 @@ public class BankMutualFundBroker implements Serializable {
      * @param shares the number of shares that the broker wants to sell
      * @return true if it is possible to sell the stock and false otherwise
      */
-    public boolean sellPossible(MutualFund fund, String symbol, int shares){
+    private boolean sellPossible(MutualFund fund, String symbol, int shares){
         for (Stock stock : fund.getStocks()) {
             if (stock.getSymbol().equals(symbol)) {
                 if (stock.getNumShares() >= shares) {
@@ -144,7 +144,7 @@ public class BankMutualFundBroker implements Serializable {
      * @param fund the fund that needs to be refilled
      * @param amount the amount of the fund needs to be
      */
-    public void calculateRefill(MutualFund fund, double amount){
+    private void calculateRefill(MutualFund fund, double amount){
         double netWorth = fund.getValue();
         int  increase =  (int) (amount / netWorth) + 1;
         for (Stock stock: fund.getStocks()){
@@ -159,7 +159,7 @@ public class BankMutualFundBroker implements Serializable {
      * @param oldValue the old value of the fund
      * @param newValue the new value of the fund
      */
-    public void updateShareHolders(MutualFund fund, double oldValue, double newValue){
+    private void updateShareHolders(MutualFund fund, double oldValue, double newValue){
         double increase = newValue / oldValue;
         for (User shareholder : fund.getInvestors().keySet()){
             double oldPercent = fund.getInvestors().get(shareholder).get(1);

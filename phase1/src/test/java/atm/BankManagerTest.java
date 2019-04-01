@@ -1,7 +1,7 @@
 package atm;
 import org.junit.*;
 
-public class BankManagerTest {
+class BankManagerTest {
 //    @Before
 //
 //    @Test

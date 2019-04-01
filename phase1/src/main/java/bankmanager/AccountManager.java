@@ -8,12 +8,12 @@ import java.io.*;
 /**
  * Account Manager handles all requests relating to {@link Account} delegated from Bank Manager.
  */
-public class AccountManager implements Serializable {
+class AccountManager implements Serializable {
 
     /**
      * Instance of {@link ATM}
      */
-    ATM atm;
+    private final ATM atm;
 
     /**
      * Keeps track of the last account number assigned to an account to generate unique account numbers.
@@ -60,7 +60,7 @@ public class AccountManager implements Serializable {
      * @param user the user that owns the primary account.
      * @see Account#setPrimary()
      */
-    protected void setPrimaryAccount(User user) {
+    private void setPrimaryAccount(User user) {
         boolean primary = false;
         for (Account a : user.getAccounts()) {
             if(a.isPrimary()) {
@@ -117,7 +117,7 @@ public class AccountManager implements Serializable {
      * @param user the user that wants to create the line of credit account
      * @param atm the ATM that user uses to create the line of credit account
      */
-    protected void createLOC(User user, ATM atm) {
+    private void createLOC(User user, ATM atm) {
         user.getAccounts().add(new LOC(acct_counter, atm));
         System.out.println("New Line of Credit created.");
         acct_counter+=1;
@@ -129,7 +129,7 @@ public class AccountManager implements Serializable {
      * @param user the user that wants to create the stock account
      * @param atm the ATM that user uses to create the stock account
      */
-    protected void createStockAccount(User user, ATM atm) {
+    private void createStockAccount(User user, ATM atm) {
         user.getAccounts().add(new StockAccount(acct_counter, atm));
         System.out.println("New Stock Account created.");
         acct_counter+=1;

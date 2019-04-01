@@ -16,28 +16,27 @@ public abstract class Account implements Serializable {
     /**
      * The account type (i.e chequing, saving, credit card, loc, and stock).
      */
-    public String type;
+    String type;
 
     /**
      * The unique account number.
      */
-    public final int accountNum;
+    private final int accountNum;
 
     /**
      * The dollar balance on the account.
      */
-    public double balance;
+    double balance;
 
     /**
      * A list of {@link Transaction} objects representing transactions performed through the account.
      * Deposits are not recorded in this list because they cannot be undone
-     * {@link bankmanager.TransactionManager#undoTransaction(User, Account)}.
      */
-    public ArrayList<Transaction> listOfTransactions = new ArrayList<>();
+    private final ArrayList<Transaction> listOfTransactions = new ArrayList<>();
     /**
      * The date the account was created.
      */
-    public Calendar dateCreated;
+    private final Calendar dateCreated;
 
     /**
      * An instance of the ATM object{@link ATM}.
@@ -54,14 +53,14 @@ public abstract class Account implements Serializable {
      * An instance of the ReadAndWrite class
      *
      */
-    private ReadAndWrite readAndWrite;
+    private final ReadAndWrite readAndWrite;
 
     /**
      * Account constructor.
      * @param accountNum  assigns a unique account number to each account
      * @param atm an instance of the ATM
      */
-    public Account(int accountNum, ATM atm) {
+    Account(int accountNum, ATM atm) {
         this.accountNum = accountNum;
         this.atm = atm;
         this.balance = 0;
@@ -276,7 +275,7 @@ public abstract class Account implements Serializable {
      * Adds a {@link Transaction} to the end of the account's list of transactions.
      * @param transaction a {@link Transaction} object
      */
-    public void updateTransactionList(Transaction transaction){
+    private void updateTransactionList(Transaction transaction){
         this.listOfTransactions.add(transaction);
     }
 

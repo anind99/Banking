@@ -9,7 +9,7 @@ import java.util.Scanner;
 /***
  * Class for subscription interface which manages all subscriptions for a user.
  */
-public class SubscriptionInterface implements Serializable {
+class SubscriptionInterface implements Serializable {
     /***
      * The ATM that this interface runs on.
      */
@@ -17,7 +17,7 @@ public class SubscriptionInterface implements Serializable {
     /***
      * The scanner attribute for user inputs.
      */
-    transient Scanner scanner = new Scanner(System.in);
+    private transient Scanner scanner = new Scanner(System.in);
 
     /***
      * Constructor for SubscriptionInterface.

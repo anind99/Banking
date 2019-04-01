@@ -13,14 +13,14 @@ public abstract class Debt extends Account{
     /**
      * The maximum credit limit available for the user to spend per credit card account.
      */
-    protected final double creditLimit = 50000;
+    private final double creditLimit = 50000;
 
     /**
      * Debt constructor calls on super {@link Account}.
      * @param accountNum unique account number
      * @param atm instance of the ATM
      */
-    public Debt(int accountNum, ATM atm) {
+    Debt(int accountNum, ATM atm) {
         super(accountNum, atm);
     }
 

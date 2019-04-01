@@ -10,21 +10,21 @@ import java.util.*;
  * Class representing the account menu that will be displayed in the interface for users to manage their accounts.
  *
  */
-public class AccountInterface implements Serializable {
+class AccountInterface implements Serializable {
 
     /***
      * The ATM that this interface is running on.
      */
-    public ATM atm;
+    private final ATM atm;
 
     /***
      * GeneralInterfaceMethods represents a class that contains helper methods that AccountInterface uses.
      */
-    public GeneralInterfaceMethods general;
+    private final GeneralInterfaceMethods general;
     /***
      * The scanner attribute that is used for the user to enter inputs into the function.
      */
-    transient Scanner scanner;
+    private transient Scanner scanner;
 
     /***
      * Constructor for AccountInterface.

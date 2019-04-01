@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class UserTest {
+class UserTest {
     private User usr;
     private Chequing c1;
     private Savings s1;

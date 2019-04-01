@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * The Transaction Manager handles all requests related to {@link Transaction} as delegated by the {@link BankManager}.
  */
-public class TransactionManager implements Serializable {
+class TransactionManager implements Serializable {
 
     /**
      * Used to undo any type of transaction except Deposits because deposits cannot be reversed.
@@ -40,7 +40,7 @@ public class TransactionManager implements Serializable {
      *
      * @param acct the account from which money was withdrawn
      */
-    protected void undoWithdraw(Account acct) {
+    private void undoWithdraw(Account acct) {
         acct.addMoney(acct.getLastTransaction().getTransactionAmount());
         removeLastTransactionFromList(acct);
     }
@@ -50,7 +50,7 @@ public class TransactionManager implements Serializable {
      * @param usr the user who transferred the money
      * @param acct the account the money was transferred into
      */
-    protected void undoTransferIn(User usr, Account acct) {
+    private void undoTransferIn(User usr, Account acct) {
         Account TransferAcct = null;
         for (Account acct2:usr.getAccounts()){
             if (acct2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()){
@@ -71,7 +71,7 @@ public class TransactionManager implements Serializable {
      * @param usr the user who transferred the money
      * @param acct the account the money was transferred out of
      */
-    protected void undoTransferOut(User usr, Account acct) {
+    private void undoTransferOut(User usr, Account acct) {
         // TransferAct refers to the account that was transferred from.
         Account TransferAcct = null;
         for (Account acct2 : usr.getAccounts()) {
@@ -92,7 +92,7 @@ public class TransactionManager implements Serializable {
      *
      * @param acct the account used to pay a bill from
      */
-    protected void undoPayBill(Account acct) {
+    private void undoPayBill(Account acct) {
         acct.addMoney(acct.getLastTransaction().getTransactionAmount());
         removeLastTransactionFromList(acct);
     }
@@ -102,7 +102,7 @@ public class TransactionManager implements Serializable {
      *
      * @param account the account the transaction is being removed from
      */
-    public void removeLastTransactionFromList(Account account) {
+    private void removeLastTransactionFromList(Account account) {
         ArrayList<Transaction> lst = account.getListOfTransactions();
         lst.remove(lst.size() - 1);
     }

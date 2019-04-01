@@ -30,7 +30,7 @@ public class StockBroker implements Serializable {
      * updateAllStocks(): Updates every stock owned by all the users.
      */
 
-    private ATM atm;
+    private final ATM atm;
 
     StockBroker(ATM Atm){
         this.atm = Atm;
@@ -130,7 +130,7 @@ public class StockBroker implements Serializable {
      */
 
 
-    public Stock fetchStock(String symbol){
+    private Stock fetchStock(String symbol){
         String stockName = atm.getBroker().companyNameFromSymbol(symbol);
         Stock st = new Stock(stockName, symbol,0);
         st.updateStock(atm.getDate());

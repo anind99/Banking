@@ -17,11 +17,11 @@ public class GeneralInterfaceMethods implements Serializable {
     /***
      * The ATM that this interface runs on.
      */
-    ATM atm;
+    private final ATM atm;
     /***
      * The scanner attribute that is used for the user to enter inputs into the function.
      */
-    transient Scanner scanner;
+    private transient Scanner scanner;
 
     /***
      * Constructor for GeneralInterfaceMethods.

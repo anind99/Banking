@@ -10,7 +10,7 @@ public class Bills implements Serializable {
     /**
      * A list that stores the number of each type of bill available in the ATM.
      */
-    private int[] bills = new int[4];
+    private final int[] bills = new int[4];
 
     /**
      * Bills constructor.
@@ -42,7 +42,7 @@ public class Bills implements Serializable {
      * @param index the index at which the type of bill is located in the bills array
      * @return the number of bills that the type of bill specified at index has
      */
-    int getNumBills(int index) {
+    private int getNumBills(int index) {
         return bills[index];
     }
 
@@ -130,7 +130,7 @@ public class Bills implements Serializable {
     /**Alerts the manager when the amount of any denomination of bills goes below 20.
      * The alert is written alerts.txt to which the Bank Manager has accessed to.
      * */
-    public void alertManager() {
+    private void alertManager() {
         boolean fiveBills = true;
         boolean tenBills = true;
         boolean twentyBills = true;
