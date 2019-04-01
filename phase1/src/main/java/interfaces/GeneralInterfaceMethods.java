@@ -7,20 +7,52 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.*;
 
+/***
+ * A class that has methods that can be implemented in multiple classes, such as AccountInterface, BankManagerInterface
+ * and TransactionInterface. The reason for this class is to get rid of duplicate code in those classes these
+ * methods can be reused in all those classes.
+ *
+ */
 public class GeneralInterfaceMethods implements Serializable {
+    /***
+     * The ATM that this interface runs on.
+     */
     ATM atm;
+    /***
+     * The scanner attribute that is used for the user to enter inputs into the function.
+     */
     transient Scanner scanner;
 
+    /***
+     * Constructor for GeneralInterfaceMethods.
+     *
+     * @param atm the atm that this interface runs on
+     */
     public GeneralInterfaceMethods(ATM atm) {
         this.atm = atm;
     }
 
+    /***
+     * Allows the user to create an account. The user will be able to choose the type of account they want to create.
+     *
+     * @param user the user that wants to create an account
+     */
     public void createAccount(User user) {
-        String type = selectTypeOfAccount(false, user);
+        String type = selectTypeOfAccount(false);
         atm.getBM().createAccount(user, type);
     }
 
-    public String selectTypeOfAccount(boolean transferOut, User user) {
+    /***
+     * Allows the user to select the type of account they want to access, whether it's a chequing, line of credit,
+     * savings, stocks or credit card account. Returns the type of account as a string. This method accepts a
+     * transferout boolean as a parameter because if the user wants to transfer out, they are not allowed to transfer
+     * out from a credit card account and so this will not be displayed as an option for the users.
+     *
+     * @param transferOut a boolean representing the type of transaction the user viewing this current interface
+     *                    wants to do is transfer out or not
+     * @return the type of account
+     */
+    public String selectTypeOfAccount(boolean transferOut) {
         // Allows users to pick the type of account they want to access and returns their type as a string.
 
         StringBuilder toPrint = new StringBuilder("Select the type of account: \n 1. Chequing \n" +
@@ -53,6 +85,14 @@ public class GeneralInterfaceMethods implements Serializable {
         return returnTypeOfAccount(type, transferOut);
     }
 
+    /***
+     * Helper method for selectTypeOfAccount(). Returns the type of account specified by selectTypeOfAccount() as a string
+     * that matches the the type specified in each account class.
+     *
+     * @param selection the selection made in selectTypeOfAccount()
+     * @param transferOut the same boolean transferOut from selectTypeOfAccount()
+     * @return the account type as a string
+     */
     private String returnTypeOfAccount(String selection, boolean transferOut) {
         // Helper function for selectTypeOfAccount. The function recognizes the selection the user makes and returns
         // the corresponding account type as a string.
@@ -74,6 +114,17 @@ public class GeneralInterfaceMethods implements Serializable {
         return toReturn;
     }
 
+    /***
+     * Prints out all the accounts of a certain type that a user has.
+     *
+     * @param listOfAccounts the list of accounts to be printed
+     * @param summary whether this prints a summary or not, if summary is true, this means that the user would like
+     *                to view a summary of all their accounts and so will print all details of their accounts such
+     *                as the last transaction, previous transaction and date created, otherwise it will just print the
+     *                account number and balance
+     * @return a StringBuilder with the account number, balance, last transaction and date created of the accounts
+     * in listOfAccounts
+     */
     private StringBuilder printListOfAccounts(ArrayList<Account> listOfAccounts, boolean summary) {
         // Will return a StringBuilder with the account number, balance, last transaction and date
         // created of the accounts a user has.
@@ -97,6 +148,14 @@ public class GeneralInterfaceMethods implements Serializable {
         return choices;
     }
 
+    /***
+     * Returns an array list of all accounts of a certain type of account that the user has specified. For example,
+     * returns all the chequing accounts a user has.
+     *
+     * @param user the user that wants its list of accounts
+     * @param typeOfAccount the type of account
+     * @return
+     */
     public ArrayList<Account> listOfAccounts(User user, String typeOfAccount) {
         // Helper function for printListOfAccounts. This method returns an array list of a certain type of account
         // (taken as a parameter) that a user has.
@@ -112,6 +171,14 @@ public class GeneralInterfaceMethods implements Serializable {
         return accounts;
     }
 
+    /***
+     * Prints out the the the accounts a user has.
+     *
+     * @param user the user that wants to see their list of accounts
+     * @param summary true if the user wants to see a complete summary of their accounts, otherwise the user will just
+     *                see the account number and balance
+     * @param typeOfAccount the type of account that the user wants to see
+     */
     public void printChoices(User user, boolean summary, String typeOfAccount) {
         // Prints out the accounts a user has.
 
@@ -128,7 +195,15 @@ public class GeneralInterfaceMethods implements Serializable {
         System.out.println(choices);
     }
 
-    public Account selectAccount(User user, String action, ArrayList<Account> listOfAccounts) {
+    /***
+     * Returns the account that the user has selected. Allows the user to enter the account number the user
+     * wants to perform a transaction on and return that account.
+     *
+     * @param action the type of action the user would like to perform, this can be deposit, withdraw, transfer in, etc.
+     * @param listOfAccounts the list of accounts that the user can select from
+     * @return the account the user has selected
+     */
+    public Account selectAccount(String action, ArrayList<Account> listOfAccounts) {
         // Allows users to select an account by entering their account number. Returns that account.
 
         System.out.println("Enter the account number you want to " + action + ": ");
@@ -157,11 +232,16 @@ public class GeneralInterfaceMethods implements Serializable {
         }
 
         System.out.println("The account number you entered is not valid. Please try again.");
-        return selectAccount(user, action, listOfAccounts);
+        return selectAccount(action, listOfAccounts);
     }
 
+    /***
+     * Allows the user to input an amount that they would like to transfer in/out. This method also checks whether
+     * the user has input the valid amount. If not, then the method will ask the user to enter again.
+     *
+     * @return the amount the user has input
+     */
     public double selectAmount() {
-        // Returns the amount a user would like to deposit/transfer.
 
         System.out.println("Enter the desired amount you would like to transfer: ");
         scanner = new Scanner(System.in);
@@ -199,6 +279,12 @@ public class GeneralInterfaceMethods implements Serializable {
         return selectAmount();
     }
 
+    /***
+     * Returns the user of the given username.
+     *
+     * @param username the username of the user
+     * @return
+     */
     public User findUser(String username) {
         for (User user : atm.getListOfUsers()) {
             if (user.getUsername().equals(username)) {

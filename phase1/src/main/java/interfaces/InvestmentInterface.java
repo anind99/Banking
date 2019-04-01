@@ -7,14 +7,32 @@ import investments.*;
 import java.io.*;
 import java.util.*;
 
+/***
+ * Class for the investments interface. Deals with buying and selling stocks and mutual funds.
+ *
+ */
 public class InvestmentInterface implements Serializable {
+    /***
+     * The ATM that the interface is running on.
+     */
     private final ATM atm;
+    /***
+     * The scanner attribute that is used for inputs.
+     */
     transient Scanner scanner = new Scanner(System.in);
 
+    /***
+     * Constructor for InvestmentInterface.
+     * @param atm the ATM that this interface is running on
+     */
     public InvestmentInterface(ATM atm) {
         this.atm = atm;
     }
 
+    /***
+     * The investment menu that the user will see in the interface.
+     * @param user the user that wants to view the investment menu
+     */
     public void displayInvestmentMenu(User user) {
         boolean goBack = false;
         scanner = new Scanner(System.in);
@@ -55,6 +73,10 @@ public class InvestmentInterface implements Serializable {
         }
     }
 
+    /***
+     * The options that the user can pick from in the investments interface.
+     *
+     */
     private void printOptions() {
         System.out.println("Select an option:");
         System.out.println("1. Buy Stocks");
@@ -68,6 +90,11 @@ public class InvestmentInterface implements Serializable {
         System.out.println("Enter the number: ");
     }
 
+    /***
+     * Allows the user to buy stocks. Will ask the user to input the stock symbol and the number of shares
+     * they wish to buy.
+     * @param user the user that 
+     */
     private void buyStocks(User user) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Stock symbol: ");

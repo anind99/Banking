@@ -73,10 +73,10 @@ public class TransactionInterface implements Serializable {
     }
 
     private void withdraw(User user) {
-        String type = general.selectTypeOfAccount(false, user);
+        String type = general.selectTypeOfAccount(false);
         general.printChoices(user, false, type);
 
-        Account account = general.selectAccount(user, "withdraw from", general.listOfAccounts(user, type));
+        Account account = general.selectAccount("withdraw from", general.listOfAccounts(user, type));
         boolean running = true;
 
         while (running) {
@@ -104,14 +104,14 @@ public class TransactionInterface implements Serializable {
         // Method for users to transfer in.
 
         System.out.println("Which account do you want to transfer to?");
-        String type = general.selectTypeOfAccount(false, user);
+        String type = general.selectTypeOfAccount(false);
         general.printChoices(user, false, type);
-        Account accountTo = general.selectAccount(user, "transfer to", general.listOfAccounts(user, type));
+        Account accountTo = general.selectAccount("transfer to", general.listOfAccounts(user, type));
 
         System.out.println("Which account do you want to transfer out from?");
-        String typeTwo = general.selectTypeOfAccount(true, user);
+        String typeTwo = general.selectTypeOfAccount(true);
         general.printChoices(user, false, typeTwo);
-        Account accountFrom = general.selectAccount(user, "transfer from", general.listOfAccounts(user, typeTwo));
+        Account accountFrom = general.selectAccount("transfer from", general.listOfAccounts(user, typeTwo));
         double amount = general.selectAmount();
 
         accountTo.transferIn(amount, accountFrom);
@@ -121,14 +121,14 @@ public class TransactionInterface implements Serializable {
         // Method for users to transfer out.
 
         System.out.println("Which account do you want to transfer out from?");
-        String type = general.selectTypeOfAccount(true, user);
+        String type = general.selectTypeOfAccount(true);
         general.printChoices(user, false, type);
-        Account accountFrom = general.selectAccount(user, "transfer out from", general.listOfAccounts(user, type));
+        Account accountFrom = general.selectAccount("transfer out from", general.listOfAccounts(user, type));
 
         System.out.println("Which account do you want to transfer to?");
-        String typeTwo = general.selectTypeOfAccount(false, user);
+        String typeTwo = general.selectTypeOfAccount(false);
         general.printChoices(user, false, typeTwo);
-        Account accountTo = general.selectAccount(user, "transfer to", general.listOfAccounts(user, typeTwo));
+        Account accountTo = general.selectAccount("transfer to", general.listOfAccounts(user, typeTwo));
 
         double amount = general.selectAmount();
 
@@ -139,9 +139,9 @@ public class TransactionInterface implements Serializable {
         // Method for users to pay bills.
 
         System.out.println("From which account would you like to pay the bill?");
-        String type = general.selectTypeOfAccount(true, user);
+        String type = general.selectTypeOfAccount(true);
         general.printChoices(user, false, type);
-        Account accountFrom = general.selectAccount(user, "pay the bill from", general.listOfAccounts(user, type));
+        Account accountFrom = general.selectAccount("pay the bill from", general.listOfAccounts(user, type));
         System.out.println("Enter the name of the receiver of the bill: ");
         scanner = new Scanner(System.in);
         String receiver = scanner.next();

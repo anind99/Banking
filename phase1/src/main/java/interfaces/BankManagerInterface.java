@@ -275,9 +275,9 @@ public class BankManagerInterface implements Serializable{
         }
 
         if (!username.equals("*")) {
-            String type = general.selectTypeOfAccount(false, user);
+            String type = general.selectTypeOfAccount(false);
             general.printChoices(user, false, type);
-            Account account = general.selectAccount(user, "undo its last transaction", user.getAccounts());
+            Account account = general.selectAccount("undo its last transaction", user.getAccounts());
             atm.getBM().undoTransaction(user, account);
         }
     }

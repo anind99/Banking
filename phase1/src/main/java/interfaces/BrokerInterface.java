@@ -19,7 +19,7 @@ public class BrokerInterface implements Serializable {
      */
     private final ATM atm;
     /***
-     * The scanner attribute that is used for the user to enter inputs into the function.
+     * The scanner attribute that is used for the brokerto enter inputs into the function.
      */
     transient Scanner scanner;
 
