@@ -73,7 +73,7 @@ public class StockBroker implements Serializable {
      */
 
 
-    private boolean buyOwnedStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
+    private boolean buyOwnedStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv) {
         if (shares > 0) {
             for (Stock st : Iv.getStockPortfolio()) {
                 if (st.getSymbol().equalsIgnoreCase(symbol)) {
@@ -100,7 +100,7 @@ public class StockBroker implements Serializable {
      * @return : Returns True if bought.
      */
 
-    private boolean buyNewStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
+    private boolean buyNewStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv) {
         boolean valid = atm.getBroker().checkIfStockIsValid(symbol);
         if (valid){
         Stock st = fetchStock(symbol);
@@ -183,7 +183,7 @@ public class StockBroker implements Serializable {
      * @return Amount of type double, of the user's networth in Stocks.
      */
 
-    public double getTotalStockWorth(User user){
+    public double getTotalStockWorth(User user) {
         double total = 0.0;
         for (Stock st: user.getInvestmentPortfolio().getStockPortfolio()){
             total += st.getValue() * st.getNumShares();
@@ -196,7 +196,7 @@ public class StockBroker implements Serializable {
      * @param user: user object.
      */
 
-    public void viewUserStocks(User user){
+    public void viewUserStocks(User user) {
         ArrayList<Stock> Iv = user.getInvestmentPortfolio().getStockPortfolio();
         System.out.println("User Currently owns: "+Iv.size()+" types of stocks");
         for (Stock st: Iv){

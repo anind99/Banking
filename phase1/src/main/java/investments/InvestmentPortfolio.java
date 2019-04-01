@@ -13,12 +13,12 @@ import java.util.HashMap;
 public class InvestmentPortfolio implements Serializable {
 
     /** An array list of stocks the user has invested in. */
-    private ArrayList <Stock> stockPortfolio = new ArrayList<>();
+    private ArrayList<Stock> stockPortfolio = new ArrayList<>();
 
     /** A hash map that stores the mutual fund the user has invested in as a key and stores an array list containing
      * two values: [amount user invested in the mutual fund, the percentage of the fund the user owns through this
      * investment]. */
-    private HashMap<MutualFund , ArrayList<Double>> mutualFundsPortfolio = new HashMap<>();
+    private HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = new HashMap<>();
     // maps name of the fund: [amount user invested, %owned of the fund through this investment]
 
     /***
@@ -26,7 +26,7 @@ public class InvestmentPortfolio implements Serializable {
      *
      * @return the stock portfolio
      */
-    public ArrayList <Stock> getStockPortfolio(){
+    public ArrayList<Stock> getStockPortfolio(){
         return stockPortfolio;
     }
 

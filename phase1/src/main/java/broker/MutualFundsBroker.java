@@ -17,7 +17,7 @@ public class MutualFundsBroker implements Serializable {
     public MutualFundsStocks mutualFundsStocks;
     public ATM atm;
     public Calendar date;
-    Broker broker;
+    public Broker broker;
     public BankMutualFundBroker bankMutualFundBroker;
     public UserMutualFundBroker userMutualFundBroker;
 

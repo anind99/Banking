@@ -40,7 +40,7 @@ public class UserMutualFundBroker implements Serializable {
 
     }
     //calculates how much the user's investment into a certain fund is worth
-    double calculateUserMoney(User user, MutualFund fund){
+    public double calculateUserMoney(User user, MutualFund fund){
         HashMap<MutualFund, ArrayList<Double>> portfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
         double percentOwned = portfolio.get(fund).get(1);
         double fundTotalValue = fund.getValue();

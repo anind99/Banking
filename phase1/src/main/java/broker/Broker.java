@@ -21,7 +21,7 @@ public class Broker implements Serializable {
     public ATM atm;
     public StockBroker stockBroker;
     public MutualFundsBroker mutualFundsBroker;
-    String json;
+    protected String json;
 
     public Broker(ATM atm, BankManager bm) {
         this.atm = atm;
