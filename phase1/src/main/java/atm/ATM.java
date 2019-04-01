@@ -148,7 +148,12 @@ public class ATM implements Serializable {
     }
 
     /**
-     * Reboots the ATM.
+     * Reboots the ATM. Every time the ATM is rebooted, all stocks, mutual funds and subscriptions are updated with
+     * the newest prices. Furthermore, it checks adds interest to savings every month. Every time the ATM is run,
+     * the login menu will be displayed. If the ATM is run for the first time, then the only two people that are allowed
+     * to log in are Bank Manager and Broker with the usernames "manager" and "broker" and passwords "password" and
+     * "password," respectively.
+     *
      */
     public void run(){
         boolean running = true;

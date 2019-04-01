@@ -34,6 +34,7 @@ public class Subscription implements Serializable {
         ois.defaultReadObject();
     }
 
+
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("readObjectNoData, this should never happen!");
         System.exit(-1);
