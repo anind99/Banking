@@ -105,10 +105,10 @@ public class Bills implements Serializable {
      * </p>
      *
      *
-     * @param amountToWithdraw the amount of money that user wants to withdraw from the ATM
+     * @param amountToWithdraw the amount of money the user wants to withdraw from the ATM
      * @param typeOfBill the type of bill to withdraw (either a 50, 20, 10 or 5 dollar bill)
-     * @param index the index where typeOfBill is stored in bills array
-     * @return int the number of a certain type of bill to withdraw
+     * @param index the index where typeOfBill is stored in {@link #bills} array
+     * @return the number of a certain type of bill to withdraw
      */
     private int maximizeBillWithdrawal(int amountToWithdraw, int typeOfBill, int index) {
 
