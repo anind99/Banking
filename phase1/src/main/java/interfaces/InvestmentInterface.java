@@ -137,8 +137,8 @@ public class InvestmentInterface implements Serializable {
 
         // Makes the user re-enter the symbol if they do not have this stock.
         while (!atm.getBroker().getStockBroker().checkIfUserHasStock(user, sym)) {
-            System.out.println("Stock symbol is not valid. Please enter again: ");
-            sym = scanner.next();
+            System.out.println("You don't own shares of this stock");
+            return;
         }
 
         System.out.println("Enter number of shares: ");
@@ -206,7 +206,7 @@ public class InvestmentInterface implements Serializable {
         System.out.println("1. Low Risk Fund");
         System.out.println("2. Medium Risk Fund");
         System.out.println("3. High Risk Fund");
-        System.out.println("4. Enter the number: ");
+        System.out.println("Enter the number: ");
         scanner = new Scanner(System.in);
         boolean validSelection = false;
 
@@ -238,7 +238,7 @@ public class InvestmentInterface implements Serializable {
         HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
 
         for (Map.Entry<MutualFund, ArrayList<Double>> entry : mutualFundsPortfolio.entrySet()) {
-            System.out.println(entry.getKey().getName() + " = " + entry.getValue().get(1) * entry.getKey().getValue());
+            System.out.println(entry.getKey().getName() + " = " + (entry.getValue().get(1) / 100) * entry.getKey().getValue());
         }
 
     }
