@@ -88,6 +88,12 @@ public class UpdateProfileInterface implements Serializable {
         System.out.println("\nPassword change successful");
     }
 
+    /**
+     * Used in serialization to store the UpdateProfileInterface object.
+     *
+     * @param oos instance of the ObjectOutputStream class to write the account interface object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -97,6 +103,14 @@ public class UpdateProfileInterface implements Serializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * Used in serialization to restore the update profile interface's information after the ATM is restarted.
+     *
+     * @param ois instance of the ObjectInputStream class used to read the account object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -107,6 +121,11 @@ public class UpdateProfileInterface implements Serializable {
         }
     }
 
+    /**
+     * Reads an object with no data stored in it.
+     *
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("UPI readObjectNoData, this should never happen!");
         System.exit(-1);

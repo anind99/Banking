@@ -5,15 +5,43 @@ import atm.*;
 import java.io.*;
 import java.util.*;
 
+/***
+ * A class for the what the user will be able see when they log in to ATM.
+ */
 public class UserInterface implements Serializable {
+    /***
+     * The scanner attribute that the user inputs.
+     */
     transient Scanner scanner = new Scanner(System.in);
+    /***
+     * The ATM that the interface runs on.
+     */
     private final ATM atm;
+    /***
+     * The account interface that the user interface will be able to access.
+     */
     private final AccountInterface accountInterface;
+    /***
+     * The transaction interface that the user interface will be able to access.
+     */
     private final TransactionInterface transactionInterface;
+    /***
+     * The investment interface that the user interface will be able to access.
+     */
     private final InvestmentInterface investmentInterface;
+    /***
+     * The update profile interface tha the user interface will be able to access.
+     */
     private final UpdateProfileInterface updateProfileInterface;
+    /***
+     * The subscription interface that the user interface will be able to access.
+     */
     private final SubscriptionInterface subscriptionInterface;
 
+    /***
+     * The constructor for UserInterface.
+     * @param atm the ATM that this user interface runs on
+     */
     public UserInterface(ATM atm) {
         this.atm = atm;
         this.accountInterface = new AccountInterface(atm);
@@ -23,6 +51,11 @@ public class UserInterface implements Serializable {
         this.subscriptionInterface = new SubscriptionInterface(atm);
     }
 
+    /***
+     * The menu that the user will see when they log in to ATM
+     *
+     * @param user the user that is viewing the menu
+     */
     public void displayUserMenu(User user) {
         boolean logout = false;
         scanner = new Scanner(System.in);
@@ -57,6 +90,10 @@ public class UserInterface implements Serializable {
 
     }
 
+    /***
+     * The options the user will be able to select in the user menu.
+     *
+     */
     private void printOptions() {
         System.out.println("Select an option:");
         System.out.println("1. Perform Transactions");
@@ -68,6 +105,12 @@ public class UserInterface implements Serializable {
         System.out.println("Enter a number: ");
     }
 
+    /**
+     * Used in serialization to store the UserInterface object.
+     *
+     * @param oos instance of the ObjectOutputStream class to write the account interface object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -77,6 +120,14 @@ public class UserInterface implements Serializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * Used in serialization to restore the user interface's information after the ATM is restarted.
+     *
+     * @param ois instance of the ObjectInputStream class used to read the account object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -87,6 +138,11 @@ public class UserInterface implements Serializable {
         }
     }
 
+    /**
+     * Reads an object with no data stored in it.
+     *
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("UserInterface readObjectNoData, this should never happen!");
         System.exit(-1);
