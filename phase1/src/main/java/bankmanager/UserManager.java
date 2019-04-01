@@ -5,20 +5,31 @@ import atm.*;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * The User Manager handles all requests related to {@link User} delegated from {@link BankManager}.
+ */
 public class UserManager implements Serializable {
 
+    /**
+     * Instance of the ATM being used.
+     */
     private ATM atm;
 
+    /**
+     * User Manager Constructor.
+     * @param atm instance of {@link ATM} representing the ATM being used
+     */
     public UserManager(ATM atm) {
         this.atm = atm;
 
     }
 
     /***
-     * Creates a new user.
+     * Creates and returns a new user.
      *
      * @param username the username this user uses to log in
      * @param password the password this user uses to log in
+     * @return the new {@link User} created
      */
     public User createUser(String username, String password){
         ArrayList<Account> accounts = new ArrayList<>();
@@ -38,6 +49,11 @@ public class UserManager implements Serializable {
         return null;
     }
 
+    /**
+     * Used in serialization to store the User Manager object.
+     * @param oos instance of the ObjectOutputStream class to write the user manager object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -47,6 +63,14 @@ public class UserManager implements Serializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * Used in serialization to restore the user manager's information after the ATM is restarted.
+     *
+     * @param ois instance of the ObjectInputStream class used to read the user manager object.
+     * @throws ClassNotFoundException if the class of the serialized object could not be found.
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -57,6 +81,11 @@ public class UserManager implements Serializable {
         }
     }
 
+    /**
+     * Reads an object with no data stored in it.
+     *
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails.
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("BM readObjectNoData, this should never happen!");
         System.exit(-1);

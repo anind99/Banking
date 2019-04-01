@@ -314,6 +314,7 @@ public abstract class Account implements Serializable {
 
     /**
      * Reads an object with no data stored in it.
+     *
      * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
      */
     private void readObjectNoData() throws ObjectStreamException {
