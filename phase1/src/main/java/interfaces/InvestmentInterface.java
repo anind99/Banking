@@ -93,7 +93,7 @@ public class InvestmentInterface implements Serializable {
     /***
      * Allows the user to buy stocks. Will ask the user to input the stock symbol and the number of shares
      * they wish to buy.
-     * @param user the user that
+     * @param user the user that wants to buy stocks
      */
     private void buyStocks(User user) {
         Scanner scanner = new Scanner(System.in);
@@ -122,6 +122,11 @@ public class InvestmentInterface implements Serializable {
         }
     }
 
+    /***
+     * Allows the user to sell stocks. Will ask the user to input the stock symbol and the number of shares
+     * they wish to sell.
+     * @param user the user that wants to sell stocks
+     */
     private void sellStocks(User user) {
         atm.getBroker().getStockBroker().viewUserStocks(user);
         System.out.println("What would you like to sell?");
@@ -152,6 +157,12 @@ public class InvestmentInterface implements Serializable {
         }
     }
 
+    /***
+     * Allows the user to buy mutual funds. Will ask the user which fund they would like to invest in and the amount
+     * they would like to buy.
+     *
+     * @param user the user that wants to buy the mutual funds
+     */
     private void buyMutualFunds(User user) {
         MutualFund fundToBuy = listFunds();
         System.out.println("Enter the amount you would like to invest: ");
@@ -161,6 +172,12 @@ public class InvestmentInterface implements Serializable {
         atm.getBroker().getMutualFundsBroker().buyMutualFunds(user, fundToBuy, Double.valueOf(amount));
     }
 
+    /***
+     * Allows the user to sell mutual funds. Will ask the user which fund they would like to sell and the amount
+     * they would like to sell.
+     *
+     * @param user the user that wants to sell mutual funds
+     */
     private void sellMutualFunds(User user) {
         viewUserMutualFunds(user);
         System.out.println("Enter the fund you would like to sell: ");
@@ -180,6 +197,10 @@ public class InvestmentInterface implements Serializable {
         atm.getBroker().getMutualFundsBroker().sellMutualFunds(user, fundToSell, Double.valueOf(amount));
     }
 
+    /***
+     * Allows the user to select the type of fund. Either a low risk, medium risk or high risk fund.
+     * @return The fund the user has selected
+     */
     private MutualFund listFunds() {
         System.out.println("Select the type of fund you would like to invest in:");
         System.out.println("1. Low Risk Fund");
@@ -207,6 +228,12 @@ public class InvestmentInterface implements Serializable {
         return null;
     }
 
+    /***
+     * Allows the user to view all the mutual funds they have invested in. They will be allowed to see the fund name,
+     * and the amount they have invested in the fund.
+     *
+     * @param user the user that would like to view their mutual funds
+     */
     private void viewUserMutualFunds(User user) {
         HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
 
@@ -216,6 +243,15 @@ public class InvestmentInterface implements Serializable {
 
     }
 
+    /***
+     * Returns the mutual fund that is in the user's mutual funds portfolio. Returns null if the mutual fund is not
+     * in the user's mutual funds portfolio.
+     *
+     * @param user the user that would like to find the mutual fund
+     * @param name the name of the fund that the user wants to find
+     * @return the mutual fund that the user wants to find, null if the mutual fund is not found in the user's
+     * portfolio
+     */
     private MutualFund findMutualFund(User user, String name) {
         HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
 
@@ -228,12 +264,19 @@ public class InvestmentInterface implements Serializable {
         return null;
     }
 
+    /***
+     * Returns the user's stock account. Each user will only have one stock account.
+     *
+     * @param user the user that would like to find their stock account
+     * @return the stock account
+     */
     private Asset findStockAccount(User user) {
         for (Account account : user.getAccounts()) {
             if (account.getType().equalsIgnoreCase("stock")) {
                 return (Asset)account;
             }
         }
+        // This will never happen because every user will always have one stock account.
         return null;
     }
 
