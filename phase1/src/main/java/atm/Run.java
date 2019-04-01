@@ -7,8 +7,11 @@ import java.io.ObjectInputStream;
 
 public class Run {
 
-    public static void main(String args[]) {
+    /***
+     * A class that contains the main() method. Where the program will begin running.
+     */
 
+    public static void main(String args[]) {
         ATM atm = null;
         ObjectInputStream ois;
         try {
