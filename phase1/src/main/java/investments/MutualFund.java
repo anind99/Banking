@@ -71,24 +71,52 @@ public class MutualFund implements Serializable {
     }
 
     /***
-     * Returns the
+     * Returns the hash map of users that have invested into this fund as keys and an array list of doubles in the
+     * following format: {amount user invested, percentage of the fund the user owns through this investment}
      *
-     * @return
+     * @return the hash map
      */
     public HashMap<User, ArrayList<Double>> getInvestors(){
         return investors;
     }
 
+    /***
+     * Adds user and how much they invested into the mutual fund.
+     *
+     * @param user the user that has invested into this mutual fund
+     * @param investment an array list of doubles in the following format: {amount user invested, percentage of the
+     *                   fund the user owns through this investment}
+     */
     public void setInvestors(User user, ArrayList<Double> investment){
         investors.put(user, investment);
         }
+
+    /**
+     * Used in serialization to store the MutualFund object.
+     *
+     * @param oos instance of the ObjectOutputStream class to write the account interface object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
     }
+
+    /**
+     * Used in serialization to restore the mutual fund's information after the ATM is restarted.
+     *
+     * @param ois instance of the ObjectInputStream class used to read the account object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         ois.defaultReadObject();
     }
 
+    /**
+     * Reads an object with no data stored in it.
+     *
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("readObjectNoData, this should never happen!");
         System.exit(-1);
