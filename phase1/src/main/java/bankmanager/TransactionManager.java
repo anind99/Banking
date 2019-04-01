@@ -5,10 +5,17 @@ import atm.*;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * The Transaction Manager handles all requests related to {@link Transaction} as delegated by the {@link BankManager}.
+ */
 public class TransactionManager implements Serializable {
 
+    /**
+     * Used to undo any type of transaction except Deposits because deposits cannot be reversed.
+     * @param usr the user that owns the account
+     * @param acct the account used to perform the transaction being reversed
+     */
     public void undoTransaction(User usr, Account acct){
-        // Allows Bank Manager to undo any type of transaction.
         if (acct.getLastTransaction() == null){
             System.out.println("No previous transactions");
         } else {
@@ -28,18 +35,22 @@ public class TransactionManager implements Serializable {
         }
     }
 
-//    protected void undoDeposit(Account acct) {
-//        acct.removeMoney(acct.getLastTransaction().getTransactionAmount());
-//        removeLastTransactionFromList(acct);
-//    }
-
+    /**
+     * Used to undo transactions of type Withdrawal.
+     *
+     * @param acct the account from which money was withdrawn
+     */
     protected void undoWithdraw(Account acct) {
         acct.addMoney(acct.getLastTransaction().getTransactionAmount());
         removeLastTransactionFromList(acct);
     }
 
+    /**
+     * Used to undo transactions of type Transfer In.
+     * @param usr the user who transferred the money
+     * @param acct the account the money was transferred into
+     */
     protected void undoTransferIn(User usr, Account acct) {
-        // TransferAct refers to the account that was transferred to.
         Account TransferAcct = null;
         for (Account acct2:usr.getAccounts()){
             if (acct2.getAccountNum() == acct.getLastTransaction().getTransactionAccount()){
@@ -54,6 +65,12 @@ public class TransactionManager implements Serializable {
         }
     }
 
+    /**
+     * Used to undor transactions of type Transfer Out.
+     *
+     * @param usr the user who transferred the money
+     * @param acct the account the money was transferred out of
+     */
     protected void undoTransferOut(User usr, Account acct) {
         // TransferAct refers to the account that was transferred from.
         Account TransferAcct = null;
@@ -70,17 +87,33 @@ public class TransactionManager implements Serializable {
         }
     }
 
+    /**
+     * Used to undo transactions of type Pay Bill.
+     *
+     * @param acct the account used to pay a bill from
+     */
     protected void undoPayBill(Account acct) {
         acct.addMoney(acct.getLastTransaction().getTransactionAmount());
         removeLastTransactionFromList(acct);
     }
 
+    /**
+     * Deletes the last {@link Transaction} from the account's list of transactions
+     *
+     * @param account the account the transaction is being removed from
+     */
     public void removeLastTransactionFromList(Account account) {
-        // Remove the last transaction from listOfTransactions.
         ArrayList<Transaction> lst = account.getListOfTransactions();
         lst.remove(lst.size() - 1);
     }
 
+
+    /**
+     * Used in serialization to store the Transaction Manager object.
+     *
+     * @param oos instance of the ObjectOutputStream class to write the transaction manager object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -90,6 +123,14 @@ public class TransactionManager implements Serializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * Used in serialization to restore the Transcation Manager's information after the ATM is restarted.
+     *
+     * @param ois instance of the ObjectInputStream class used to read the transaction manager object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -100,6 +141,10 @@ public class TransactionManager implements Serializable {
         }
     }
 
+    /**
+     * Reads an object with no data stored in it.
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("BM readObjectNoData, this should never happen!");
         System.exit(-1);
