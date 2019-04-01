@@ -36,9 +36,9 @@ public class SubscriptionInterface implements Serializable {
     public void displaySubscriptionMenu(User user) {
 
         boolean goBack = false;
-        printChoices();
         scanner = new Scanner(System.in);
         while (!goBack) {
+            printChoices();
             String choice = scanner.next();
             switch(choice) {
                 case "1":
