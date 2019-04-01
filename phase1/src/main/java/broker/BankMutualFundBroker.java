@@ -159,7 +159,6 @@ public class BankMutualFundBroker implements Serializable {
      * @param oldValue the old value of the fund
      * @param newValue the new value of the fund
      */
-    //update % owned of the shareholders
     public void updateShareHolders(MutualFund fund, double oldValue, double newValue){
         double increase = newValue / oldValue;
         for (User shareholder : fund.getInvestors().keySet()){
