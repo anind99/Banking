@@ -15,7 +15,6 @@ import account.*;
 /***
  * Broker is a class that creates a new Broker for the ATM. A broker will be able to trade stocks and mutual funds
  * and will be able to buy and sell into the mutual funds.
- *
  */
 public class Broker implements Serializable {
     public ATM atm;
@@ -32,15 +31,27 @@ public class Broker implements Serializable {
         bm.createUser("broker", "password");
 
     }
-
+    /**
+     * Gets a StockBroker instance.
+     * @return stockbroker
+     */
     public StockBroker getStockBroker() {
         return stockBroker;
     }
 
+    /**
+     * Gets a MutualFundsBroker instance.
+     * @return mutualFundsBroker
+     */
     public MutualFundsBroker getMutualFundsBroker() {
         return mutualFundsBroker;
     }
 
+
+    /**
+     * Loads a JSONObject that contains a mapping of stocks to their names
+     * @return a JSONObject that contains a mapping of stocks to their names
+     */
     private JSONObject loadJSONFromText(){
         JSONObject json = null;
         try {
@@ -64,12 +75,18 @@ public class Broker implements Serializable {
         }
         return json;
     }
-
+    /**
+     * Checks if a given symbol is in the database we are sourcing from.
+     * @return true if a stock symbol is in the database, false otherwise.
+     */
     public boolean checkIfStockIsValid(String symbol){
         JSONObject jsonObject = new JSONObject(json);
         return jsonObject.has(symbol);
     }
-
+    /**
+     * Returns the company name given a stock symbol
+     * @return the company name of the stock symbol.
+     */
     public String companyNameFromSymbol(String symbol){
         JSONObject jsonObject = new JSONObject(json);
         return jsonObject.getString(symbol);
