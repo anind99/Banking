@@ -93,7 +93,7 @@ public class InvestmentInterface implements Serializable {
     /***
      * Allows the user to buy stocks. Will ask the user to input the stock symbol and the number of shares
      * they wish to buy.
-     * @param user the user that 
+     * @param user the user that
      */
     private void buyStocks(User user) {
         Scanner scanner = new Scanner(System.in);
