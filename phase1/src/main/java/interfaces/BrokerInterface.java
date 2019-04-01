@@ -158,7 +158,7 @@ public class BrokerInterface implements Serializable {
     /**
      * Used in serialization to store the BrokerInterface object.
      *
-     * @param oos instance of the ObjectOutputStream class to write the account interface object
+     * @param oos instance of the ObjectOutputStream class to serialize the broker interface object
      * @throws IOException if an IO error occurs.
      */
     private void writeObject(ObjectOutputStream oos) throws IOException {
@@ -174,7 +174,7 @@ public class BrokerInterface implements Serializable {
     /**
      * Used in serialization to restore the broker interface's information after the ATM is restarted.
      *
-     * @param ois instance of the ObjectInputStream class used to read the account object
+     * @param ois instance of the ObjectInputStream class used to deserialize object
      * @throws ClassNotFoundException if the class of the serialized object could not be found
      * @throws IOException if an IO error occurs
      */
