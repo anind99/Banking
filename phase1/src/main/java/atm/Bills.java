@@ -2,10 +2,23 @@ package atm;
 
 import java.io.*;
 
+/**
+ * Bills represents the bills in the ATM machine.
+ */
 public class Bills implements Serializable {
 
+    /**
+     * A list that stores the number of each type of bill available in the ATM.
+     */
     private int[] bills = new int[4];
 
+    /**
+     * Bills constructor.
+     * @param five number of $5 bills in the ATM
+     * @param ten number of $10 bills in the ATM
+     * @param twenty number of $20 bills in the ATM
+     * @param fifty number of $50 bills in the ATM
+     */
     Bills(int five, int ten, int twenty, int fifty) {
         bills[0] = five;
         bills[1] = ten;
@@ -53,8 +66,9 @@ public class Bills implements Serializable {
     }
 
     /***
+     * Decreases the number of bills in the ATM.
      *
-     * @param index the index at which the type of bill (50, 20, 10, 5 dollar bill) is located in the bills array
+     * @param index the index at which the type of bill ($50, $20, $10, $5 bill) is located in the bills array
      * @param number the number of bills to remove from the ATM
      */
     private void removeBills(int index, int number){
@@ -69,7 +83,6 @@ public class Bills implements Serializable {
      *              5 because you cannot withdraw cents from the ATM and there are only 5, 10, 20, 50 dollar bills
      *               available in the ATM
      */
-
 
     public void withdrawBills(double amount){
         int amountToWithdraw = (int) amount;
@@ -114,7 +127,9 @@ public class Bills implements Serializable {
         return amountToWithdraw;
     }
 
-    /**Alerts the manager when the amount of any denomination goes below 20.*/
+    /**Alerts the manager when the amount of any denomination of bills goes below 20.
+     * The alert is written alerts.txt to which the Bank Manager has accessed to.
+     * */
     public void alertManager() {
         boolean fiveBills = true;
         boolean tenBills = true;
@@ -142,6 +157,11 @@ public class Bills implements Serializable {
         }
     }
 
+    /**
+     * Used to serialize the Bills object.
+     * @param oos instance of the ObjectOutputStream class to serialize the Bills object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -151,6 +171,14 @@ public class Bills implements Serializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * Used to deserialize the Bills object after the ATM is rebooted.
+     *
+     * @param ois instance of the ObjectInputStream class used to deserialize the Bills object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -161,6 +189,11 @@ public class Bills implements Serializable {
         }
     }
 
+    /**
+     * Reads an object with no data stored in it.
+     *
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("Bills readObjectNoData, this should never happen!");
         System.exit(-1);
