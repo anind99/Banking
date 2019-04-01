@@ -1,4 +1,12 @@
-﻿Starting Up
+﻿(Important note) To use Stock functions follow these steps:
+Install Maven Library for JSON:
+File > Project Structure > Project Settings > Libraries
+Click on the + sing on the top left corner > From Maven
+Paste this address: org.json:json:20180813
+Click on the search button.
+Add this.
+
+Starting Up
 To start the program, run the main function in the class Run.
 
 Shutting down the system
@@ -171,33 +179,25 @@ Explanation of Subscriptions:
 A user can subscribe to a to given subscription, for which there is a cost. The user must have a credit card account, and is charged monthly in that account for their subscriptions.
 
 
-Stocks Account
+
+Stocks
 BankManager can open a new stocks account for a user.
 Can only buy/sell stocks.
 How much money you want to invest.
 Which sector you want to invest in (5 sectors).
-User enters risk level
 Users can pick and buy stocks by themselves. Users can also pick and buy mutual funds, which is a pool of funds that the StockBroker can use to invest in a portfolio of stocks.
 Mutual funds are rated by risk level, which indicates how volatile the asset is.
 
+Stock Account
+Asset account that is used to buy stocks and mutual funds. Money earned from selling stocks and mutual funds also go to this account.
 
+Investment Portfolio:
+Stores the user’s assets in stocks and mutual funds.
 
 Broker
-Handles stocks account
-Could also be a user with their accounts.
+Handles stocks account.
+Could also be a user with their own accounts.
 Buys and Sell funds for the atm.
 
-
-Stock Market:
-Install Maven Library for JSON:
-File > Project Structure > Project Settings > Libraries
-Click on the + sing on the top left corner > From Maven
-Paste this address: org.json:json:20180813
-Click on the search button.
-Add this.
-
-Only Stocks listed on the WIKIP database can be accessed using our program. There are a total of around 3000 stocks listed. Here is a sample of 15 you can use:
-COKE, V, DIS, GOOGL, AAPL, GOLD, NFLX, MSFT, MITK, CUR, STRL, WSTL, GPX, APA, T
-
-Or you can pick a symbol from stocklist.txt which is in the following format:
-{Symbol: Company Name, Symbol: Company Name, etc.}
+Subscriber
+Handles subscription functionalities for the user (subscribe, de-subscribe, view, etc)
