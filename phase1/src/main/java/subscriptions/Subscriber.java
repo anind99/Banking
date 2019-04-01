@@ -9,12 +9,15 @@ import java.io.*;
 import java.util.Calendar;
 import java.util.Scanner;
 
+/**
+ * Class that handles the user's subscribing functions
+ */
 public class Subscriber implements Serializable {
     /**
-     * Class that handles the user's subscribing functions
+     *
      *
      * attributes:
-     * ATM atm: Performs functions for the specified atm.
+     * ATM atm:
      *
      * Methods:
      *
@@ -30,18 +33,25 @@ public class Subscriber implements Serializable {
      * removeSubscription: Removes given Subscription from user's list.
      */
 
+    /**
+     * Performs functions for the specified atm object.
+     */
     private ATM atm;
 
+    /**
+     * Subscriber constructor
+     * @param a the ATM machine being used
+     */
     public Subscriber(ATM a){
         this.atm = a;
     }
 
 
     /**
-     * addSubscription: Adds a new subscription to the user subscriptions ArrayList.
-     * Note a subscription can only be added to a user if they have a CreditCard Account.
-     * @param user: user that adds a subscription.
-     * @param name: name of the subscription.
+     * Adds a new subscription to the user subscriptions ArrayList.
+     * A subscription can only be added to a user if they have a CreditCard Account.
+     * @param user user that adds a subscription.
+     * @param name name of the subscription.
      */
 
     public void addSubscription(User user, String name){
@@ -72,11 +82,11 @@ public class Subscriber implements Serializable {
     }
 
     /**
-     * checkCredit: Checks if user has a credit card account.
-     * @param user: User Object.
-     * @return returns a CreditCard object from the user's accounts.
+     * Checks if user has a credit card account.
+     *
+     * @param user the User whose credit is being checked
+     * @return returns a CreditCard object from the user's accounts
      */
-
     private CreditCard checkCredit(User user){
         for (Account ac: user.getAccounts()){
             if (ac instanceof CreditCard){
@@ -88,11 +98,10 @@ public class Subscriber implements Serializable {
     }
 
     /**
-     * createSubscription: Creates a new Subscription.
-     * @param name: name attribute of Subscription object.
-     * @return : Subscription object that is newly created.
+     * Creates a new Subscription.
+     * @param name name of the subscription created
+     * @return Subscription object that is newly created
      */
-
     private Subscription createSubscription(String name){
         Scanner sc = new Scanner(System.in);
 
@@ -122,12 +131,10 @@ public class Subscriber implements Serializable {
     }
 
     /**
-     * hasSubscriptionAtm: Checks if ATM has a subscription.
-     * @param name : Name of subscription to be queried.
-     * @return : Subscription object
+     * Checks if ATM currently offers any subscriptions.
+     * @param name Name of subscription to be queried.
+     * @return {@link Subscription} matching the name queried
      */
-
-
     private Subscription hasSubscriptionAtm(String name){
         for (Subscription sub: atm.getSubscriptions().getListOfSubscriptions()){
             if (sub.getName().equalsIgnoreCase(name)){
@@ -138,12 +145,11 @@ public class Subscriber implements Serializable {
     }
 
     /**
-     * hasSubscriptionUser: Checks if user has a certain subscription.
-     * @param name : name of subscription.
-     * @param user : User object
-     * @return : Subscription object
+     * Checks if user has a certain subscription.
+     * @param name name of subscription
+     * @param user the User
+     * @return Subscription that the user has
      */
-
     private Subscription hasSubscriptionUser(String name, User user){
         for (Subscription sub: user.getSubscriptions()){
             if (sub.getName().equalsIgnoreCase(name)){
@@ -154,9 +160,8 @@ public class Subscriber implements Serializable {
     }
 
     /**
-     * updateAllSubscriptions: On the 1st of every month, all the users are charged for their subscriptions.
+     * Charges users for their subscriptions on the 1st of every month.
      */
-
     public void updateAllSubscriptions(){
         Calendar date = atm.getDate();
         int day = date.get(Calendar.DAY_OF_MONTH);
@@ -181,9 +186,8 @@ public class Subscriber implements Serializable {
     }
 
     /**
-     * Prints all the subscriptions currently in the atm.
+     * Prints all the subscriptions currently offered by the atm.
      */
-
     public void showAllSubscriptions(){
         for (Subscription sub: atm.getSubscriptions().getListOfSubscriptions()){
             System.out.println("Subscription: "+sub.getName()+" Cost: "+sub.getCost());
@@ -192,9 +196,8 @@ public class Subscriber implements Serializable {
 
     /**
      * Prints all the subscriptions of a user.
-     * @param user : User object.
+     * @param user the User with the subscriptions
      */
-
     public void showUserSubscriptions(User user){
         for (Subscription sub: user.getSubscriptions()){
             System.out.println("Subscription: "+sub.getName()+" Cost: "+sub.getCost());
@@ -202,25 +205,38 @@ public class Subscriber implements Serializable {
     }
 
     /**
-     * removes a subscription from a User Object
-     * @param user : User Object
-     * @param name : name of subscription.
+     * Removes a subscription from a User's list of subscriptions.
+     * @param user the User unsubscribing
+     * @param name name of subscription
      */
-
     public void removeSubscription(User user, String name){
         user.removeSubsciption(name);
     }
 
-    // Serialization.
-
+    /**
+     * Used to serialize Subscriber object.
+     * @param oos instance of the ObjectOutputStream class to write the object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
     }
 
+    /**
+     * Used to deserialize Susbscriber object after the ATM is rebooted.
+     *
+     * @param ois instance of the ObjectInputStream class used to read the object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         ois.defaultReadObject();
     }
 
+    /**
+     * Used in serialization when class inheritance is not as expected*
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("readObjectNoData, this should never happen!");
         System.exit(-1);
