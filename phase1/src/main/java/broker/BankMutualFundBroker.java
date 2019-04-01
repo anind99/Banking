@@ -169,15 +169,31 @@ public class BankMutualFundBroker implements Serializable {
         }
     }
 
-
+    /**
+     * Used to serialize the BankMutualFundBroker object.
+     *
+     * @param oos instance of the ObjectOutputStream class to write the UserMutualFundBroker object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
     }
 
+    /**
+     * Used to deserialize an BankMutualFundBroker object to store the BankMutualFundBroker's information after the ATM is rebooted.
+     *
+     * @param ois instance of the ObjectInputStream class used to read the account object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         ois.defaultReadObject();
     }
 
+    /**
+     * Used in serialization when class inheritance is not as expected*
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("readObjectNoData, this should never happen!");
         System.exit(-1);
