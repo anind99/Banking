@@ -19,13 +19,24 @@ import java.util.Random;
 
 
 public class Stock implements Serializable {
+    /**
+     * Stock Object:
+     *
+     * Attributes:
+     *
+     * name: String name of stock
+     * symbol: String symbol of stock
+     * currentPrice: double current price of the stock
+     * numshares: int number of shares of stock
+     * updated: boolean is true when stock is updated with current value.
+     */
     String name;
     String symbol;
     double currentPrice;
-    double yesterdayPrice;
+
     int numShares;
     boolean updated;
-    double totalSpent;
+
 
     // risk might also be obsolete but im leaving it here for now for legacy reasons.
     // Risk is an int from 1 to 5 that indicates the volatility of a stock.
@@ -42,6 +53,10 @@ public class Stock implements Serializable {
         this.numShares = 0;
         this.updated = false;
     }
+
+    /**
+     * This Static is for connecting to https websites without certificates.
+     */
 
     //Source: https://stackoverflow.com/questions/18576069/how-to-save-the-file-from-https-url-in-java
     static {
@@ -71,25 +86,63 @@ public class Stock implements Serializable {
         }
     }
 
+    /**
+     * Getter function for value.
+     * @return : returns currentPrice attribute.
+     */
+
     public double getValue(){
         return currentPrice;
     }
 
+    /**
+     * Getter function for shares.
+     * @return : returns num shares  attribute.
+     */
+
     public int getNumShares(){return numShares;}
+
+    /**
+     * Getter function for symbol.
+     * @return : returns symbol  attribute.
+     */
 
     public String getSymbol(){return symbol;}
 
+    /**
+     * Getter function for name.
+     * @return : returns name  attribute.
+     */
+
     public String getName() {return name;}
+
+    /**
+     * Setter function for name of the name.
+     */
 
     public void setName(String name){this.name = name;}
 
+    /**
+     * Sets name attribute.
+     */
+
     public void setNumShares(int shares){this.numShares = shares;}
+
+    /**
+     * sets num shares attribute.
+     */
 
     public void increaseNumShares(int shares){numShares += shares;}
 
+    /**
+     * Increasing function for num shares.
+     */
+
     public void decreaseNumShares(int shares){numShares -= shares;}
 
-
+    /**
+     * Updates the currentPrice of the stock to the latest price available from the server.
+     */
 
     public void updateStock(Calendar date){
 
@@ -132,6 +185,13 @@ public class Stock implements Serializable {
         }
     }
 
+    /**
+     * Helper function that reads from the url stream
+     * @param rd: Reader
+     * @return : returns string for JSON reader that is used as input for the JSON constructor
+     * @throws IOException : IO exception
+     */
+
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;
@@ -140,6 +200,14 @@ public class Stock implements Serializable {
         }
         return sb.toString();
     }
+
+    /**
+     * Produces a JSON object from the given url.
+     * @param url : url to be searched from.
+     * @return : JSONObject that is produced from the url.
+     * @throws IOException : IO exception
+     * @throws JSONException : JSON exception
+     */
 
     public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
         InputStream is = new URL(url).openStream();
@@ -153,10 +221,18 @@ public class Stock implements Serializable {
         }
     }
 
+    /**
+     * @return : returns a string containing all stock information.
+     */
+
     public String toString() {
         return this.name + " (" + this.symbol + "):\n" + this.numShares + " shares\n" + "total value of shares: "
                 + (this.numShares * this.currentPrice) + "\n";
     }
+
+    /**
+     * Used in serialization to restore the Stock state after it reboots.
+     */
 
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
@@ -167,6 +243,10 @@ public class Stock implements Serializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * Used in serialization to store the stock state when the system is closed.
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
