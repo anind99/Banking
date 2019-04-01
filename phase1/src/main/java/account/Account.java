@@ -205,8 +205,8 @@ public abstract class Account implements Serializable {
     /**
      * Transfers money out of the account into another account
      * and prints the result of the transaction.
-     * @param amount
-     * @param accountTo
+     * @param amount the amount being transferred
+     * @param accountTo the account transferred to
      */
     public void transferOut(double amount, Account accountTo) {
         boolean sufficientFunds = checkFundsSufficient(amount);
