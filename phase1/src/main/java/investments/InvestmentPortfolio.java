@@ -51,14 +51,32 @@ public class InvestmentPortfolio implements Serializable {
         return mutualFundsPortfolio;
     }
 
+    /**
+     * Used in serialization to store the InvestmentPortfolio object.
+     *
+     * @param oos instance of the ObjectOutputStream class to write the account interface object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
     }
 
+    /**
+     * Used in serialization to restore the investment portfolio's information after the ATM is restarted.
+     *
+     * @param ois instance of the ObjectInputStream class used to read the account object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         ois.defaultReadObject();
     }
 
+    /**
+     * Reads an object with no data stored in it.
+     *
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("readObjectNoData, this should never happen!");
         System.exit(-1);
