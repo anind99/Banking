@@ -15,21 +15,53 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/** This class represents an ATM machine.*/
+
 public class ATM implements Serializable {
 
-
-    /** Stores the total amount of the bills in the ATM in an array with the following order:
-     [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills]. */
-
+    /**Stores the total amount of the bills in the ATM in an array with the following order:
+     *  [5 dollar bills, 10, dollar bills, 20 dollar bills, 50 dollar bills].
+     */
     private Bills bills;
+
+    /**
+     * The list of all users who can use the ATM.
+     */
     private ArrayList<User> listOfUsers;
+
+    /**
+     * The Bank Manager.
+     */
     private BankManager BM;
+
+    /**
+     * Today's date.
+     */
     private Calendar date;
+
+    /**
+     * ATM's interface displayed to users.
+     */
     private final Interface interfaces;
+
+    /**
+     * The Broker responsible for investments.
+     */
     private final Broker broker;
+
+    /**
+     * All available services users can currently subscribe to through the ATM.
+     */
     private AvailableSubscriptions subscriptions;
+
+    /**
+     * Handles subscriptions for users.
+     */
     private Subscriber subscriber;
 
+    /**
+     * ATM constructor.
+     */
     public ATM() {
         this.interfaces = new Interface(this);
         this.BM = new BankManager(this);
@@ -43,34 +75,67 @@ public class ATM implements Serializable {
         bills = new Bills(100, 100, 100, 100);
     }
 
+    /**
+     * Gets the number of each of type of bill available in the ATM.
+     *
+     * @return list of bills currently in the ATM
+     */
     public Bills getBills() {
         return bills;
     }
 
+    /**
+     * @return the bank manager responsible for the ATM
+     */
     public BankManager getBM(){
         return BM;
     }
 
+    /**
+     * @return the Broker responsible for investments done through the ATM
+     */
     public Broker getBroker() {
         return broker;
     }
 
+    /**
+     *
+     * @return set of services users can currently subscribe to through the ATM
+     */
     public AvailableSubscriptions getSubscriptions(){
         return this.subscriptions;
     }
 
+    /**
+     *
+     * @return the subsciber responsible for handling subscriptions offered by the ATM
+     */
     public Subscriber getSubscriber(){
         return this.subscriber;
     }
 
+    /**
+     *
+     * @return the current date used by the ATM
+     */
     public Calendar getDate(){
         return (Calendar) date.clone();
     }
 
+    /**
+     *
+     * @return list of all users who can use the ATM
+     */
     public ArrayList<User> getListOfUsers(){
         return listOfUsers;
     }
 
+    /**
+     * Returns a user if they are recognized by the ATM.
+     *
+     * @param username the username of the person trying to use the ATM
+     * @return the verified {@link User}
+     */
     public User getUser(String username) {
         for (User usr : listOfUsers) {
             if (usr.getUsername().equals(username)) {
@@ -82,6 +147,9 @@ public class ATM implements Serializable {
         return null;
     }
 
+    /**
+     * Reboots the ATM.
+     */
     public void run(){
         boolean running = true;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -102,6 +170,12 @@ public class ATM implements Serializable {
         }
     }
 
+    /**
+     * Adds the specified {@link Savings#interestRate} to the balances
+     * of all savings account at the beginning of each month.
+     *
+     * @see Savings
+     */
     private void addSavingsInterest(){
         if (date.get(Calendar.DAY_OF_MONTH) == 1){
             for (User user : listOfUsers){
@@ -117,6 +191,12 @@ public class ATM implements Serializable {
 
     }
 
+    /**
+     * Sets the date of the ATM machine for dates specific demoing purposes.
+     *
+     * @param sdfFormattedDate a string that is formatted in "YYYY-MM-DD" where YYYY is the year, MM is the month
+     *                         and DD is the date.
+     */
     public void setDate(String sdfFormattedDate){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try{
@@ -127,10 +207,18 @@ public class ATM implements Serializable {
         }
     }
 
+    /**
+     * Adds a new user to the list of users who can use the ATM.
+     *
+     * @param u the new user to add to the ATM's list of recognized users
+     */
     public void addUserToList(User u){
         getListOfUsers().add(u);
     }
 
+    /**
+     * Shuts down the ATM. Uses serialization to store the current state of the ATM machine.
+     */
     public void shutDown(){
         date.add(Calendar.DATE, 1);
         try {
@@ -147,6 +235,11 @@ public class ATM implements Serializable {
         }
     }
 
+    /**
+     * Used in serialization to store the ATM object.
+     * @param oos instance of the ObjectOutputStream class to write the ATM object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -156,6 +249,14 @@ public class ATM implements Serializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * Used in serialization to restore the ATM's state after it reboots.
+     *
+     * @param ois instance of the ObjectInputStream class used to deserialize the ATM object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -166,6 +267,12 @@ public class ATM implements Serializable {
         }
     }
 
+
+    /**
+     * Reads an object with no data stored in it.
+     *
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails.
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("ATM readObjectNoData, this should never happen!");
         System.exit(-1);
