@@ -8,13 +8,33 @@ import com.sun.xml.internal.bind.v2.TODO;
 import java.io.*;
 import java.util.Scanner;
 
+/***
+ * Class for updating profile interface for the user.
+ */
 public class UpdateProfileInterface implements Serializable {
+    /**
+     * The ATM that the interface runs on.
+     */
     private final ATM atm;
+    /***
+     * The scanner attribute for user inputs
+     */
     transient Scanner scanner = new Scanner(System.in);
 
+    /***
+     * Constructor for UpdateProfileInterface.
+     *
+     * @param atm the ATM that the interface runs on
+     */
     public UpdateProfileInterface(ATM atm) {
         this.atm = atm;
     }
+
+    /**
+     * The update profile menu that the user sees in the interface.
+     *
+     * @param user the user that is viewing the update profile menu
+     */
 
     public void displayUpdateProfileMenu(User user) {
         boolean goBack = false;
@@ -38,6 +58,11 @@ public class UpdateProfileInterface implements Serializable {
         }
     }
 
+    /***
+     * The options that the user sees in the interface. Will allow the users to change their password or go back
+     * to the main menu.
+     *
+     */
     private void printOptions() {
         System.out.println("Select an option:");
         System.out.println("1. Change password");
@@ -45,6 +70,12 @@ public class UpdateProfileInterface implements Serializable {
         System.out.println("Enter a number: ");
     }
 
+    /***
+     * Allows the user to change their password. The user is not allowed to enter a password with a space. If
+     * the user enters a password with a space then only
+     *
+     * @param user the user that would like to change their password
+     */
     private void changePassword(User user) {
         // Method for users to change their password.
         scanner = new Scanner(System.in);
