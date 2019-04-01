@@ -197,6 +197,10 @@ public class InvestmentInterface implements Serializable {
         atm.getBroker().getMutualFundsBroker().sellMutualFunds(user, fundToSell, Double.valueOf(amount));
     }
 
+    /***
+     * Allows the user to select the type of fund. Either a low risk, medium risk or high risk fund.
+     * @return The fund the user has selected
+     */
     private MutualFund listFunds() {
         System.out.println("Select the type of fund you would like to invest in:");
         System.out.println("1. Low Risk Fund");
@@ -224,6 +228,12 @@ public class InvestmentInterface implements Serializable {
         return null;
     }
 
+    /***
+     * Allows the user to view all the mutual funds they have invested in. They will be allowed to see the fund name,
+     * and the amount they have invested in the fund.
+     *
+     * @param user the user that would like to view their mutual funds
+     */
     private void viewUserMutualFunds(User user) {
         HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
 
@@ -233,6 +243,15 @@ public class InvestmentInterface implements Serializable {
 
     }
 
+    /***
+     * Returns the mutual fund that is in the user's mutual funds portfolio. Returns null if the mutual fund is not
+     * in the user's mutual funds portfolio.
+     *
+     * @param user the user that would like to find the mutual fund
+     * @param name the name of the fund that the user wants to find
+     * @return the mutual fund that the user wants to find, null if the mutual fund is not found in the user's
+     * portfolio
+     */
     private MutualFund findMutualFund(User user, String name) {
         HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
 
@@ -245,12 +264,19 @@ public class InvestmentInterface implements Serializable {
         return null;
     }
 
+    /***
+     * Returns the user's stock account. Each user will only have one stock account.
+     *
+     * @param user the user that would like to find their stock account
+     * @return the stock account
+     */
     private Asset findStockAccount(User user) {
         for (Account account : user.getAccounts()) {
             if (account.getType().equalsIgnoreCase("stock")) {
                 return (Asset)account;
             }
         }
+        // This will never happen because every user will always have one stock account.
         return null;
     }
 
