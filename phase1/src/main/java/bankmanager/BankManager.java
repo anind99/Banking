@@ -124,9 +124,9 @@ public class BankManager implements Serializable{
     }
 
     /**
-     *
-     * @param oos
-     * @throws IOException
+     *Used in serialization to store the Bank Manager object.
+     * @param oos instance of the ObjectOutputStream class to write the bank manager object
+     * @throws IOException IOException if an IO error occurs
      */
     private void writeObject(ObjectOutputStream oos) throws IOException{
         try {
@@ -140,9 +140,10 @@ public class BankManager implements Serializable{
 
     /**
      *
-     * @param ois
-     * @throws ClassNotFoundException
-     * @throws IOException
+     * Used in serialization to restore the bank manager's information after the ATM is restarted.
+     * @param ois instance of the ObjectInputStream class used to read the Bank Manager object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
      */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
@@ -155,8 +156,8 @@ public class BankManager implements Serializable{
     }
 
     /**
-     *
-     * @throws ObjectStreamException
+     * Reads an object with no data stored in it.
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
      */
     private void readObjectNoData() throws ObjectStreamException{
         System.out.println("BM readObjectNoData, this should never happen!");
