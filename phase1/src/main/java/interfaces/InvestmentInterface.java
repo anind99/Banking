@@ -109,12 +109,12 @@ public class InvestmentInterface implements Serializable {
 
         int shares;
         try {
-            shares = Integer.valueOf(scanner.next());
+            shares = Integer.parseInt(scanner.next());
         } catch (Exception e){
             shares = -1;
         }
 
-        if (shares != -1) {
+        if (shares > 0) {
             atm.getBroker().getStockBroker().buyStocks(symbol, shares, findStockAccount(user), user.getInvestmentPortfolio());
         }
         else {
