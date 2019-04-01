@@ -6,16 +6,37 @@ import account.*;
 import java.io.*;
 import java.util.*;
 
+/***
+ * Class for the transaction interface that the user will see. This allows users to perform transactions.
+ */
 public class TransactionInterface implements Serializable {
+    /***
+     * The ATM that this interface runs on.
+     */
     private ATM atm;
+    /***
+     * The scanner attribute for user inputs
+     */
     transient Scanner scanner;
+    /***
+     * GeneralInterfaceMethods represents a class that contains helper methods that TransactionInterface uses.
+     */
     private GeneralInterfaceMethods general;
 
+    /***
+     * Constructor for TransactionInterface.
+     *
+     * @param atm The ATM that this interface runs on
+     */
     public TransactionInterface(ATM atm) {
         this.atm = atm;
         this.general = new GeneralInterfaceMethods(atm);
     }
 
+    /***
+     * The transaction menu that the user sees
+     * @param user the user that is viewing the transaction menu
+     */
     public void displayTransactionMenu(User user) {
         boolean goBack = false;
         scanner = new Scanner(System.in);
@@ -49,6 +70,11 @@ public class TransactionInterface implements Serializable {
         }
     }
 
+    /***
+     * The options that that user can pick from in the transaction menu. The user is allowed to perform the following
+     * transactions.
+     *
+     */
     private void printOptions() {
         System.out.println("Select an option:");
         System.out.println("1. Deposit");
@@ -60,6 +86,12 @@ public class TransactionInterface implements Serializable {
         System.out.println("Enter a number: ");
     }
 
+    /***
+     * Allows the user to deposit into their account. Each deposit and the amount that will be deposited is read from
+     * deposits.txt and the deposit will always go into their primary chequing account.
+     *
+     * @param user the user that would like to perform the deposit
+     */
     private void deposit(User user) {
         ArrayList<Account> chequingAccounts = general.listOfAccounts(user, "chequing");
 
@@ -72,6 +104,11 @@ public class TransactionInterface implements Serializable {
         }
     }
 
+    /***
+     * Allows the user to withdraw from their account.
+     *
+     * @param user the user that would like to withdraw from their account
+     */
     private void withdraw(User user) {
         String type = general.selectTypeOfAccount(false);
         general.printChoices(user, false, type);
@@ -100,9 +137,12 @@ public class TransactionInterface implements Serializable {
         }
     }
 
+    /***
+     * Allows the user to transfer in to their account from another one of their accounts.
+     *
+     * @param user the user that would like to transfer in
+     */
     private void transferIn(User user) {
-        // Method for users to transfer in.
-
         System.out.println("Which account do you want to transfer to?");
         String type = general.selectTypeOfAccount(false);
         general.printChoices(user, false, type);
@@ -117,9 +157,13 @@ public class TransactionInterface implements Serializable {
         accountTo.transferIn(amount, accountFrom);
     }
 
+    /***
+     * Allows the user to transfer out from one of their accounts to another one of their accounts. You cannot
+     * transfer out from a credit card account.
+     *
+     * @param user the user that would like to transfer out
+     */
     private void transferOut(User user) {
-        // Method for users to transfer out.
-
         System.out.println("Which account do you want to transfer out from?");
         String type = general.selectTypeOfAccount(true);
         general.printChoices(user, false, type);
@@ -135,9 +179,12 @@ public class TransactionInterface implements Serializable {
         accountFrom.transferOut(amount, accountTo);
     }
 
+    /***
+     * Allows the user to pay bill from one of their accounts to a receiver.
+     *
+     * @param user the user that would like to pay a bill
+     */
     private void payBill(User user) {
-        // Method for users to pay bills.
-
         System.out.println("From which account would you like to pay the bill?");
         String type = general.selectTypeOfAccount(true);
         general.printChoices(user, false, type);
