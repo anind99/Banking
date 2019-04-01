@@ -65,7 +65,7 @@ public class Transaction implements Serializable {
 
     /**
      *
-     * @return the unique account number from which the transaction was performed
+     * @return the unique number of the account from which the transaction was performed
      */
     public int getTransactionAccount() {
         return this.accountNum;
@@ -85,6 +85,11 @@ public class Transaction implements Serializable {
         }
     }
 
+    /**
+     * Used to serialize a Transaction object.
+     * @param oos instance of the ObjectOutputStream class to write the Transaction object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -95,6 +100,13 @@ public class Transaction implements Serializable {
         }
     }
 
+    /**
+     * Used to deserialize Transaction objects after ATM machine reboots.
+     *
+     * @param ois instance of the ObjectInputStream class used to deserialize Transaction object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -105,6 +117,11 @@ public class Transaction implements Serializable {
         }
     }
 
+    /**
+     * Reads an object with no data stored in it.
+     *
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails.
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("Transaction readObjectNoData, this should never happen!");
         System.exit(-1);

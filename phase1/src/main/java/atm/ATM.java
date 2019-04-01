@@ -236,7 +236,7 @@ public class ATM implements Serializable {
     }
 
     /**
-     * Used in serialization to store the ATM object.
+     * Used to serialize the ATM object.
      * @param oos instance of the ObjectOutputStream class to write the ATM object
      * @throws IOException if an IO error occurs.
      */
