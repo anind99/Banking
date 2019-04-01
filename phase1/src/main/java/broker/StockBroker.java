@@ -200,7 +200,7 @@ public class StockBroker implements Serializable {
         ArrayList<Stock> Iv = user.getInvestmentPortfolio().getStockPortfolio();
         System.out.println("User Currently owns: "+Iv.size()+" types of stocks");
         for (Stock st: Iv){
-            System.out.println("Stock: "+st.getSymbol()+" Shares: "+st.getNumShares());
+            System.out.println("Stock: "+st.getSymbol()+"; Shares: "+st.getNumShares());
         }
     }
 
@@ -208,7 +208,7 @@ public class StockBroker implements Serializable {
         String totalStocks = "";
         for (Stock stock : user.getInvestmentPortfolio().getStockPortfolio()){
             totalStocks += stock.toString();
-        } return totalStocks + "Total value of all your stocks:" + getTotalStockWorth(user);
+        } return totalStocks + "\nTotal value of all your stocks: " + getTotalStockWorth(user) + "$";
     }
 
     public boolean checkIfUserHasStock(User user, String symbol) {

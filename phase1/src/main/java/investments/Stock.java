@@ -154,7 +154,7 @@ public class Stock implements Serializable {
     }
 
     public String toString() {
-        return this.name + " (" + this.symbol + "):\n" + this.numShares + " shares\n" + "total value: "
+        return this.name + " (" + this.symbol + "):\n" + this.numShares + " shares\n" + "total value of shares: "
                 + (this.numShares * this.currentPrice) + "\n";
     }
 

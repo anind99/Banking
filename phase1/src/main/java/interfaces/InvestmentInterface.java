@@ -40,7 +40,7 @@ public class InvestmentInterface implements Serializable {
                     break;
                 case "6":
                     System.out.println("Your stocks are worth: " +
-                            atm.getBroker().getStockBroker().getTotalStockWorth(user));
+                            atm.getBroker().getStockBroker().getTotalStockWorth(user) + "$");
                     break;
                 case "7":
                     System.out.println(atm.getBroker().getMutualFundsBroker().toString(user));
@@ -112,12 +112,12 @@ public class InvestmentInterface implements Serializable {
         System.out.println("Enter number of shares: ");
         int shares;
         try {
-            shares = Integer.getInteger(scanner.next());
+            shares = Integer.parseInt(scanner.next());
         } catch (Exception e){
             shares = -1;
         }
 
-        if (shares != -1) {
+        if (shares > 0) {
             atm.getBroker().getStockBroker().sellStocks(findStockAccount(user), sym, shares, user.getInvestmentPortfolio());
         }
         else {
@@ -184,7 +184,7 @@ public class InvestmentInterface implements Serializable {
         HashMap<MutualFund, ArrayList<Double>> mutualFundsPortfolio = user.getInvestmentPortfolio().getMutualFundPortfolio();
 
         for (Map.Entry<MutualFund, ArrayList<Double>> entry : mutualFundsPortfolio.entrySet()) {
-            System.out.println(entry.getKey() + " = " + entry.getValue());
+            System.out.println(entry.getKey().getName() + " = " + entry.getValue().get(1) * entry.getKey().getValue());
         }
 
     }

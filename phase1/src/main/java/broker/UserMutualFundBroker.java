@@ -31,7 +31,7 @@ public class UserMutualFundBroker implements Serializable {
             for (Account account: user.getAccounts()){
                 if (account.getType().equals("stock")){
                     account.addMoney(amount);
-                    System.out.println("You have sold " + amount + " $ of your " + fund.getName() + " fund investment");
+                    System.out.println("You have sold " + amount + "$ of your " + fund.getName() + " fund investment");
                     break;
                 }
             }
@@ -72,7 +72,7 @@ public class UserMutualFundBroker implements Serializable {
         for (Account account: user.getAccounts()){
             if (account.getType().equals("stock")){
                 account.removeMoney(amount);
-                System.out.println("You have invested " + amount + " $ into " + fund.getName() + " fund");
+                System.out.println("You have invested " + amount + " $into " + fund.getName() + " fund");
                 break;
             }
         }
@@ -137,8 +137,8 @@ public class UserMutualFundBroker implements Serializable {
         double total = 0.0;
         for (MutualFund fund : user.getInvestmentPortfolio().getMutualFundPortfolio().keySet()){
             double value = fund.getValue() * (user.getInvestmentPortfolio().getMutualFundPortfolio().get(fund).get(1) / 100);
-            mutualFundInvestments += "\n Your mutual fund investmentPortfolio are worth the following:\n" + fund.getName()
-                    + ":" + value;
+            mutualFundInvestments += "\n Your mutual fund investment in " + fund.getName()
+                    + " is worth " + value + "$";
             total += value;
         }
         mutualFundInvestments += "\n The total value of your mutual fund investmentPortfolio is $" + total;
