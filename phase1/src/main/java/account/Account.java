@@ -297,6 +297,7 @@ public abstract class Account implements Serializable {
 
     /**
      * Used in serialization to restore the account's information after the ATM is restarted.
+     *
      * @param ois instance of the ObjectInputStream class used to read the account object
      * @throws ClassNotFoundException if the class of the serialized object could not be found
      * @throws IOException if an IO error occurs

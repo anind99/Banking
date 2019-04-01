@@ -5,12 +5,26 @@ import atm.*;
 
 import java.io.*;
 
-
+/**
+ * Account Manager handles all requests relating to {@link Account} delegated from Bank Manager.
+ */
 public class AccountManager implements Serializable {
 
+    /**
+     * Instance of {@link ATM}
+     */
     ATM atm;
+
+    /**
+     * Keeps track of the last account number assigned to an account to generate unique account numbers.
+     */
     private int acct_counter = 1000;
 
+    /**
+     * Account Manager constructor.
+     *
+     * @param atm Instance of {@link ATM}
+     */
     public AccountManager(ATM atm){
         this.atm = atm;
     }
@@ -37,11 +51,16 @@ public class AccountManager implements Serializable {
         } else if (acct_type.equalsIgnoreCase("stock")) {
             createStockAccount(user, atm);
         }
-        checkForPrimary(user);
+        setPrimaryAccount(user);
     }
 
-    protected void checkForPrimary(User user) {
-        // Checks for primary account. The first chequing account the user makes is always the primary account.
+    /**
+     * Specifies the primary account for a user to which all deposits will automatically get added to.
+     *
+     * @param user the user that owns the primary account.
+     * @see Account#setPrimary()
+     */
+    protected void setPrimaryAccount(User user) {
         boolean primary = false;
         for (Account a : user.getAccounts()) {
             if(a.isPrimary()) {
@@ -56,7 +75,7 @@ public class AccountManager implements Serializable {
         }
     }
 
-    /***
+    /**
      * Creates a new chequing account.
      *
      * @param user the user that wants to create a new chequing account
@@ -146,6 +165,12 @@ public class AccountManager implements Serializable {
         }
     }
 
+    /**
+     * Used in serialization to store the Account Manager object.
+     *
+     * @param oos instance of the ObjectOutputStream class to write the account manager object
+     * @throws IOException if an IO error occurs.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();
@@ -155,6 +180,14 @@ public class AccountManager implements Serializable {
             System.exit(-1);
         }
     }
+
+    /**
+     * Used in serialization to restore the account mananger's information after the ATM is restarted.
+     *
+     * @param ois instance of the ObjectInputStream class used to read the account object
+     * @throws ClassNotFoundException if the class of the serialized object could not be found
+     * @throws IOException if an IO error occurs
+     */
     private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException{
         try{
             ois.defaultReadObject();
@@ -165,6 +198,11 @@ public class AccountManager implements Serializable {
         }
     }
 
+    /**
+     * Reads an object with no data stored in it.
+     *
+     * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
+     */
     private void readObjectNoData() throws ObjectStreamException {
         System.out.println("AM readObjectNoData, this should never happen!");
         System.exit(-1);
