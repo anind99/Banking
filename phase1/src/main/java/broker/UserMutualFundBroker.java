@@ -55,23 +55,28 @@ public class UserMutualFundBroker implements Serializable {
         for (Account account: user.getAccounts()){
             if (account.getType().equals("stock")){
                 enoughStockBalance = account.checkFundsSufficient(total);
-                break;
-            }
+                break;}
         }
         if(enoughStockBalance){
-            if (!possibleToBuy(fund, amount)){
-                bankMutualFundBroker.refillFunds(fund, amount);}
-            updateFundInvestors(user, fund, amount);
-            for (Account account: user.getAccounts()){
-                if (account.getType().equals("stock")){
-                    account.removeMoney(amount);
-                    System.out.println("You have sold " + amount + " $ of your " + fund.getName() + " fund investment");
-                    break;
-                }
-            }
+            refillToSell(user, fund, amount);
         }else{
             System.out.println("\nNot enough funds in your stock account");
         }
+    }
+
+    //tells the bank to buy more stocks into a fund so the user can invest more money
+    public void refillToSell(User user, MutualFund fund, double amount){
+        if (!possibleToBuy(fund, amount)){
+            bankMutualFundBroker.refillFunds(fund, amount);}
+        updateFundInvestors(user, fund, amount);
+        for (Account account: user.getAccounts()){
+            if (account.getType().equals("stock")){
+                account.removeMoney(amount);
+                System.out.println("You have invested " + amount + " $ into " + fund.getName() + " fund");
+                break;
+            }
+        }
+
     }
 
     //Checks the %of the fund that has been bought
@@ -92,6 +97,18 @@ public class UserMutualFundBroker implements Serializable {
     //Stores information about a users purchase in their investment portfolio and stores the users info in the fund's information
     public void updateFundInvestors(User user, MutualFund fund, double amount){
         double percentOfFund = amount / fund.getValue() * 100;
+        boolean found = findFundInvestors(user, fund, amount);
+        if(!found){
+            ArrayList<Double> investment = new ArrayList<>();
+            investment.add(amount);
+            investment.add(percentOfFund);
+            user.getInvestmentPortfolio().setMutualFundsPortfolio(fund, investment);
+            fund.setInvestors(user, investment);}
+    }
+
+    //return if a users have already invested in a fund and updates accordingly
+    public boolean findFundInvestors(User user, MutualFund fund, double amount){
+        double percentOfFund = amount / fund.getValue() * 100;
         HashMap<MutualFund, ArrayList<Double>> userInvestments = user.getInvestmentPortfolio().getMutualFundPortfolio();
         boolean found = false;
         for (MutualFund userFund : userInvestments .keySet()){
@@ -101,13 +118,7 @@ public class UserMutualFundBroker implements Serializable {
                 fund.getInvestors().get(user).set(0, fund.getInvestors().get(user).get(0) + amount);
                 fund.getInvestors().get(user).set(1, fund.getInvestors().get(user).get(1) + percentOfFund);
                 found = true;}}
-
-        if(!found){
-            ArrayList<Double> investment = new ArrayList<>();
-            investment.add(amount);
-            investment.add(percentOfFund);
-            user.getInvestmentPortfolio().setMutualFundsPortfolio(fund, investment);
-            fund.setInvestors(user, investment);}
+        return found;
     }
 
     //Calculate the %profit or loss of the user's investmentPortfolio in mutual funds
