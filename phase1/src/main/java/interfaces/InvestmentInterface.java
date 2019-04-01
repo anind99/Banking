@@ -93,7 +93,7 @@ public class InvestmentInterface implements Serializable {
     /***
      * Allows the user to buy stocks. Will ask the user to input the stock symbol and the number of shares
      * they wish to buy.
-     * @param user the user that
+     * @param user the user that wants to buy stocks
      */
     private void buyStocks(User user) {
         Scanner scanner = new Scanner(System.in);
@@ -122,6 +122,11 @@ public class InvestmentInterface implements Serializable {
         }
     }
 
+    /***
+     * Allows the user to sell stocks. Will ask the user to input the stock symbol and the number of shares
+     * they wish to sell.
+     * @param user the user that wants to sell stocks
+     */
     private void sellStocks(User user) {
         atm.getBroker().getStockBroker().viewUserStocks(user);
         System.out.println("What would you like to sell?");
@@ -152,6 +157,12 @@ public class InvestmentInterface implements Serializable {
         }
     }
 
+    /***
+     * Allows the user to buy mutual funds. Will ask the user which fund they would like to invest in and the amount
+     * they would like to buy.
+     *
+     * @param user the user that wants to buy the mutual funds
+     */
     private void buyMutualFunds(User user) {
         MutualFund fundToBuy = listFunds();
         System.out.println("Enter the amount you would like to invest: ");
@@ -161,6 +172,12 @@ public class InvestmentInterface implements Serializable {
         atm.getBroker().getMutualFundsBroker().buyMutualFunds(user, fundToBuy, Double.valueOf(amount));
     }
 
+    /***
+     * Allows the user to sell mutual funds. Will ask the user which fund they would like to sell and the amount
+     * they would like to sell.
+     *
+     * @param user the user that wants to sell mutual funds
+     */
     private void sellMutualFunds(User user) {
         viewUserMutualFunds(user);
         System.out.println("Enter the fund you would like to sell: ");
