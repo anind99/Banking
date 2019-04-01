@@ -205,8 +205,7 @@ public class User implements Serializable {
     }
 
     /**
-     * Reads an object with no data stored in it.
-     *
+     * Used in serialization when class inheritance is not as expected*
      * @throws ObjectStreamException when an attempt to deserialize a back-reference fails.
      */
     private void readObjectNoData() throws ObjectStreamException {

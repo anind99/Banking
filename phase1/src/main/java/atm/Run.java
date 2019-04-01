@@ -5,12 +5,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 
+/***
+ * A class that contains the main() method. Where the program will begin running.
+ */
 public class Run {
 
-    /***
-     * A class that contains the main() method. Where the program will begin running.
+    /**
+     * The main function, where the code runs
+     *
+     * @param args flags that are given to Java when running the program. We don't need any flags.
      */
-
     public static void main(String args[]) {
         ATM atm = null;
         ObjectInputStream ois;
