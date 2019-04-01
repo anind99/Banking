@@ -150,7 +150,7 @@ public class ReadAndWrite implements Serializable {
     }
 
     /**
-     * 
+     *
      * @throws ObjectStreamException when an attempt to deserialize a back-reference fails
      */
     private void readObjectNoData() throws ObjectStreamException {
