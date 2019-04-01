@@ -2,18 +2,40 @@ package interfaces;
 
 import atm.*;
 import bankmanager.*;
-import broker.Broker;
 
 import java.io.*;
 import java.util.Scanner;
 
+/***
+ * Main interface class that whoever is running the ATM will see.
+ *
+ */
 public class Interface implements Serializable {
+    /***
+     * The ATM that this interface runs on.
+     */
     protected final ATM atm;
+    /***
+     * The bank manager interface that the bank manager will see.
+     */
     private final BankManagerInterface bankManagerInterface;
+    /***
+     * The user interface that a user will see.
+     */
     private final UserInterface userInterface;
+    /***
+     * The broker interface that the broker will see.
+     */
     private final BrokerInterface brokerInterface;
+    /***
+     * The scanner attribute that is used for inputs.
+     */
     transient Scanner scanner;
 
+    /***
+     * Constructor for Interface.
+     * @param atm the atm that this interface is running on.
+     */
     public Interface(ATM atm) {
         this.atm = atm;
         this.bankManagerInterface = new BankManagerInterface(atm);
@@ -22,6 +44,12 @@ public class Interface implements Serializable {
         this.scanner = new Scanner(System.in);
     }
 
+    /***
+     * The login menu that appears automatically when the ATM is run.
+     *
+     * @return the username that the user has input, if the user has not input a valid username, this method will
+     * return ""
+     */
     public String displayLoginMenu() {
         scanner = new Scanner(System.in);
         System.out.println("Welcome. Please login.");
@@ -51,7 +79,12 @@ public class Interface implements Serializable {
         return "";
     }
 
-    public void displayBrokerOrUserChoice(Broker broker) {
+    /***
+     * The broker will be able to choose whether they want to see the broker interface or the user interface since
+     * a broker can also be a user. This is what the method is for.
+     *
+     */
+    public void displayBrokerOrUserChoice() {
 
         scanner = new Scanner(System.in);
 
@@ -81,14 +114,22 @@ public class Interface implements Serializable {
         }
     }
 
+    /***
+     * Allows the interface to display the user menu.
+     * @param user the user that wants to log in to the user menu
+     */
     public void displayUserMenu(User user) {
         userInterface.displayUserMenu(user);
     }
 
+    /***
+     * Allows the interface to display the bank manager menu
+     * @param bankManager the bank manager that wants to log in to the bank manager menu
+     */
     public void displayManagerMenu(BankManager bankManager) {
         bankManagerInterface.displayManagerMenu(bankManager);
     }
-
+    
     private void writeObject(ObjectOutputStream oos) throws IOException {
         try {
             oos.defaultWriteObject();

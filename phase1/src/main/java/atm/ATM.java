@@ -163,7 +163,7 @@ public class ATM implements Serializable {
             if (username.equals("manager")) {
                 interfaces.displayManagerMenu(BM);
             } else if (username.equals("broker")) {
-                interfaces.displayBrokerOrUserChoice(broker);
+                interfaces.displayBrokerOrUserChoice();
             } else if (!username.equals("")){
                 interfaces.displayUserMenu(getUser(username));
             }

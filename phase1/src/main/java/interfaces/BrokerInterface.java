@@ -7,15 +7,36 @@ import java.awt.*;
 import java.io.*;
 import java.util.Scanner;
 
+/***
+ * Class representing the broker menu that will be displayed in the interface for broker to be able to buy
+ * and sell mutual funds for the ATM.
+ *
+ */
 public class BrokerInterface implements Serializable {
+
+    /***
+     * The ATM that this interface is running on.
+     */
     private final ATM atm;
+    /***
+     * The scanner attribute that is used for the brokerto enter inputs into the function.
+     */
     transient Scanner scanner;
 
+    /***
+     * Constructor for BrokerInterface
+     *
+     * @param atm the atm that this atm is running on
+     */
     public BrokerInterface(ATM atm) {
         this.atm = atm;
     }
 
 
+    /***
+     * The broker menu that the broker sees in the interface.
+     *
+     */
     void displayBrokerMenu(){
         String option;
         boolean logout = false;
@@ -47,6 +68,10 @@ public class BrokerInterface implements Serializable {
         }
     }
 
+    /***
+     * Allows the broker to buy funds for the ATM. The broker will have to select the type of fund they want to buy,
+     * enter the stock symbol and enter the amount of shares they would like to buy.
+     */
     private void buyFunds() {
         MutualFund fundToBuy = listFunds();
 
@@ -62,6 +87,10 @@ public class BrokerInterface implements Serializable {
         else{System.out.println("Not a valid input, please try again");}
     }
 
+    /***
+     * Allows the broker to sell funds from the ATM. The broker will have to selec the type of fund they want to sell,
+     * enter the stock symbol and enter the amount of shares they would like to sell.
+     */
     private void sellFunds() {
         MutualFund fundToSell = listFunds();
 
@@ -77,6 +106,12 @@ public class BrokerInterface implements Serializable {
         else{System.out.println("Not a valid input, please try again");}
     }
 
+    /***
+     * Returns true if the number of shares the broker enters is a valid amount, and false otherwise.
+     *
+     * @param shares the number of shares that the broker enters
+     * @return a boolean: true if the number of shares the broker enters is a valid amount, and false otherwise.
+     */
     private boolean checkIfValid(String shares){
        StringBuilder s = new StringBuilder(shares);
        boolean valid = true;
@@ -86,6 +121,11 @@ public class BrokerInterface implements Serializable {
        }return valid;
     }
 
+    /***
+     * Allows the broker to select the type of fund they want: either low risk, medium risk or high risk.
+     *
+     * @return the fund that the broker chooses: either low risk fund, medium risk fund or high risk fund
+     */
     private MutualFund listFunds() {
         System.out.println("Select the type of fund:");
         System.out.println("1. Low Risk Fund");
@@ -111,7 +151,7 @@ public class BrokerInterface implements Serializable {
                     break;
             }
         }
-
+        // Will never return null because the above loop will keep looping until the user selects a valid option.
         return null;
     }
 

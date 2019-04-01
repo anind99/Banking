@@ -108,7 +108,7 @@ public class AccountInterface implements Serializable {
         }
 
         if (!username.equals("*")) {
-            String type = general.selectTypeOfAccount(false, user1);
+            String type = general.selectTypeOfAccount(false);
             atm.getBM().createJointAccount(user1, user2, type);
         }
     }
@@ -121,10 +121,10 @@ public class AccountInterface implements Serializable {
     private void addUserToExistingAccount(User user1) {
         scanner = new Scanner(System.in);
 
-        String type = general.selectTypeOfAccount(false, user1);
+        String type = general.selectTypeOfAccount(false);
         general.printChoices(user1, false, type);
 
-        Account accountToAddUser = general.selectAccount(user1, "add user to", general.listOfAccounts(user1, type));
+        Account accountToAddUser = general.selectAccount("add user to", general.listOfAccounts(user1, type));
         System.out.println("Enter the username of the user you would to like to add to this account: ");
         String username = scanner.next();
 

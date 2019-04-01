@@ -199,7 +199,7 @@ public abstract class Account implements Serializable {
             updateTransactionList(new Transaction(accountFrom.accountNum, amount, "TransferIn"));
             System.out.println("\n" + amount + " has been transferred");}
         else{
-            System.out.println("\nThis transaction i;s not possible: insufficient funds");
+            System.out.println("\nThis transaction is not possible: insufficient funds");
         }
     }
 
