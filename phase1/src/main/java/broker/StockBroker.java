@@ -49,26 +49,44 @@ public class StockBroker implements Serializable {
     public void buyStocks(String symbol, int shares, Account sa, InvestmentPortfolio Iv) {
 
         boolean bought = false;
-        boolean contains = false;
+        boolean contains = buyOwnedStock(symbol, shares, sa, Iv);
+
+        if (shares <= 0){
+            System.out.println("Enter Share amount greater than 0");
+        } else if (!contains){
+            bought = buyNewStock(symbol, shares, sa, Iv);
+        }
+
+        if (!bought){
+            System.out.println("Stocks not purchase because of insufficient funds or invalid symbol");}
+    }
+
+    /**
+     *buyOwnedStock():
+     * Buys stocks of given share amount for a user (if the user already owns some shares of it)
+     *
+     * @param symbol: the symbol in String of the stock the user wants to purchase.
+     * @param Iv : The user's investment portfolio.
+     * @param sa : The user's stocks account.
+     * @param shares : The number of shares to be purchased.
+     * @return : Returns True if bought.
+     */
+
+
+    private boolean buyOwnedStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
         if (shares > 0) {
             for (Stock st : Iv.getStockPortfolio()) {
                 if (st.getSymbol().equalsIgnoreCase(symbol)) {
                     if ((st.getValue() * shares) <= sa.getBalance()) {
                         sa.removeMoney(st.getValue() * shares);
                         st.increaseNumShares(shares);
-                        bought = true;
+                        System.out.println("You have bought " + shares + " shares of " + st.getName());
+                        return true;
                     }
-                    contains = true;
                 }
             }
         }
-        if (shares <= 0){
-            System.out.println("Enter Share amount greater than 0");
-        } else if (!contains){
-            bought = buyNewStock(symbol, shares, sa, Iv);
-        }
-        if (!bought){
-            System.out.println("Stocks not purchase because of insufficient funds or invalid symbol");}
+        return false;
     }
 
 
@@ -79,6 +97,7 @@ public class StockBroker implements Serializable {
      * @param shares: The number of shares to be purchased.
      * @param sa: The user's stocks account.
      * @param Iv: The user's investment portfolio.
+     * @return : Returns True if bought.
      */
 
     private boolean buyNewStock(String symbol, int shares, Account sa, InvestmentPortfolio Iv){
@@ -90,6 +109,7 @@ public class StockBroker implements Serializable {
                 Iv.getStockPortfolio().add(st);
                 st.setNumShares(shares);
                 sa.removeMoney(st.getValue() * shares);
+                System.out.println("You have bought " + shares + " shares of " + st.getName());
                 return true;
             }
         } else {
@@ -134,6 +154,7 @@ public class StockBroker implements Serializable {
                     st.decreaseNumShares(shares);
                     SA.addMoney(shares * st.getValue());
                     sold = true;
+                    System.out.println("You have sold " + shares + " shares of " + st.getName());
                     break;
                 }
             }

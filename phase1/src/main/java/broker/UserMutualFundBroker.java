@@ -31,6 +31,8 @@ public class UserMutualFundBroker implements Serializable {
             for (Account account: user.getAccounts()){
                 if (account.getType().equals("stock")){
                     account.addMoney(amount);
+                    System.out.println("You have sold " + amount + " $ of your " + fund.getName() + " fund investment");
+                    break;
                 }
             }
         }else{System.out.println("\nNot enough funds to sell");}
@@ -63,6 +65,8 @@ public class UserMutualFundBroker implements Serializable {
             for (Account account: user.getAccounts()){
                 if (account.getType().equals("stock")){
                     account.removeMoney(amount);
+                    System.out.println("You have sold " + amount + " $ of your " + fund.getName() + " fund investment");
+                    break;
                 }
             }
         }else{

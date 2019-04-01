@@ -9,16 +9,40 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
+/***
+ * A class representing the bank manager menu that will be displayed in the interface for bank managers to perform
+ * the required tasks: set date, create user, create account, check alerts, restock machine, undo transactions
+ * for users, shut down the system.
+ *
+ */
 public class BankManagerInterface implements Serializable{
+    /***
+     * The ATM that this interface runs on.
+     */
     private ATM atm;
+    /***
+     * GeneralInterfaceMethods represents a class that contains helper methods that BankManagerInterface uses.
+     */
     public GeneralInterfaceMethods general;
+    /***
+     * The scanner attribute that is used for the bank manager to enter inputs into the function.
+     */
     transient Scanner scanner;
 
+    /***
+     * Constructor for the BankManagerInterface.
+     *
+     * @param atm the atm that this interface runs on
+     */
     public BankManagerInterface(ATM atm) {
         this.atm = atm;
         this.general = new GeneralInterfaceMethods(atm);
     }
 
+    /***
+     * The bank manager menu that the bank manager sees in the interface.
+     * @param bm the bank manager that is viewing this interface
+     */
     public void displayManagerMenu(BankManager bm){
 
         boolean loggedOut = false;
@@ -68,6 +92,9 @@ public class BankManagerInterface implements Serializable{
         }
     }
 
+    /***
+     * The options the bank manager choose to perform in the interface.
+     */
     private void printOptions() {
         System.out.println("Select an option:");
         System.out.println("0. Set Date");
@@ -80,6 +107,10 @@ public class BankManagerInterface implements Serializable{
         System.out.println("7. Turn Off System");
     }
 
+    /***
+     * The method that allows the bank manager to set the date for the ATM.
+     *
+     */
     private void setDate() {
         boolean condition = false;
         String year = null, month = null, day = null;
@@ -110,7 +141,7 @@ public class BankManagerInterface implements Serializable{
 
 
     /***
-     * Creates a new user. All account types will be automatically opened for each user.
+     * Creates a new user. All account types will be automatically opened for each user when a new user is created.
      *
      */
     private void createUser(){
@@ -132,6 +163,11 @@ public class BankManagerInterface implements Serializable{
         atm.getBM().createUser(username, password);
     }
 
+    /***
+     * Creates a new account for a certain user. The username of the user and the type of account are inputs from
+     * the bank manager.
+     *
+     */
     private void creatingAccount() {
         scanner = new Scanner(System.in);
         User user = null;
@@ -159,6 +195,14 @@ public class BankManagerInterface implements Serializable{
         }
     }
 
+    /***
+     * Method that allows the bank manager to check alerts. The ATM will alert the bank manager every time the
+     * amount of any denomination in the ATM goes below 20. This method will read from alerts.txt because
+     * every time the amount of any denomination in the ATM goes below 20, the ATM will automatically write into
+     * alerts.txt. The bank manager will be able to check this file through this method and this is a signal for the
+     * bank manager to restock the machine.
+     *
+     */
     private void checkAlerts(){
         try {System.out.println(System.getProperty("user.dir"));
             File file = new File(System.getProperty("user.dir") + "/phase1/src/main/Text Files/alerts.txt");
@@ -176,6 +220,12 @@ public class BankManagerInterface implements Serializable{
         }
     }
 
+    /***
+     * Allows the bank manager to restock the machine. The bank manager will be allowed to select the type of bill
+     * to restock. The number of that type of bill the bank manager picks will increase by 100.
+     *
+     * @param bm the bank manager that is restocking the machine
+     */
     private void restockMachine(BankManager bm){
         System.out.println("Select what type of bill to restock.");
         System.out.println("1. Five dollars, 2. Ten dollars, 3. Twenty dollars, 4. Fifty dollars");
@@ -200,6 +250,12 @@ public class BankManagerInterface implements Serializable{
         }
     }
 
+    /***
+     * Allows the bank manager to undo all transactions, except for deposit transactions, from all types of accounts.
+     * The method will ask the bank manager which user would like to undo their transaction and ask for their account
+     * number.
+     *
+     */
     private void undoTransaction(){
         System.out.println("Type in the name of the user that would like to undo their last transaction: ");
         scanner = new Scanner(System.in);
@@ -226,6 +282,11 @@ public class BankManagerInterface implements Serializable{
         }
     }
 
+    /***
+     * The method that allows bank manager to shut down the system. When the system is shut down, all data will be
+     * serialized and stored in serialized.blob.
+     *
+     */
     private void shutDownSystem(){
         atm.shutDown();
         System.out.println("System now shutting down");
